@@ -1,0 +1,334 @@
+# Autofill engine prior art
+
+Research for [#5](https://github.com/maxdubmors/rimlock/issues/5). It feeds the decision in #15 and does not make that decision.
+Researched 2026-10-06. Every code claim links to a pinned commit:
+
+| Project | Repo @ commit | License |
+|---|---|---|
+| Bitwarden browser extension | [`bitwarden/clients@a6ffbe6`][bw] (2026-10-06) | GPL-3.0, except `/bitwarden_license` ([LICENSE.txt][bw-lic]) |
+| KeePassXC-Browser 1.10.4.1 | [`keepassxreboot/keepassxc-browser@8b0b2c4`][kx] (2026-10-02) | GPL-3.0 ([LICENSE][kx-lic]) |
+| KeePassXC (desktop, browser side) | [`keepassxreboot/keepassxc@9e0f57a`][kxc] (2026-09-22) | GPL-2.0/3.0 |
+| Proton Pass extension | [`ProtonMail/WebClients@d09d706`][pp] (2026-10-06) | GPL-3.0 ([package.json][pp-pkg]) |
+| Proton form classifier | npm [`@protontech/autofill@0.0.38040317`][npm-pa] and [`@protontech/fathom`][npm-pf] | MPL-2.0 |
+| 1Password | closed source, so only public docs were used | proprietary |
+
+## Question
+
+How do mature password managers implement browser autofill, and what can rimlock reuse under GPL-3.0 (ADR-0001)? The ticket covers six sub-questions:
+
+1. Login form and field detection: heuristics, SPAs, multi-step logins, iframes, shadow DOM.
+2. The inline menu (field icon plus dropdown): how it is isolated from the page, and how it resists clickjacking and spoofing.
+3. Detecting a submit so the extension can offer save/update.
+4. TOTP fill, and matching Entries to the current origin (eTLD+1, subdomains, ports, custom rules).
+5. Known autofill attacks and their mitigations.
+6. License and modularity of the reusable parts.
+
+## Summary
+
+| Concern | Bitwarden | KeePassXC-Browser | Proton Pass | 1Password (docs only) |
+|---|---|---|---|---|
+| Field detection | Hand-written heuristics: attribute and keyword lists plus page-context rules. Optional per-site "targeting rules" (Forms Map) fetched from a CDN | Simple sequential pairing (text input followed by password input), visibility checks, a hard-coded site exception list | ML: Proton fork of Mozilla Fathom with random-forest models, plus per-site rules JSON fetched from proton.me | "Variety of checks" (not public) |
+| DOM traversal | Deep query and TreeWalker, MutationObserver, pierces **closed** shadow roots via `chrome.dom.openOrClosedShadowRoot` / `openOrClosedShadowRoot` | MutationObserver, pierces closed shadow roots via the same APIs | Fathom over the DOM, `shadowPiercingContains`, mutation and idle based re-detection | n/a |
+| Inline menu host | Custom element with a **closed shadow root** that holds an **extension-origin `<iframe>`** (web-accessible `overlay/menu.html`), placed in the top layer via `popover="manual"` | Closed shadow root rendered **directly in the page** (no iframe), with `popover="manual"` | Custom element (random tag name) with a closed shadow root that holds an **extension-origin iframe** (`dropdown.html`), placed in the top layer via `popover` | Not public |
+| Clickjacking defence | `isTrusted` checks, `html`/`body` opacity > 0.6, `elementFromPoint` overlay check, mutation-loop guard | `isTrusted` checks, `html`/`body` opacity observer, `elementFromPoint` at 3 points | `TopLayerManager.ensureTopLevel`: must be the top-most top-layer element, 150 ms "poison" window, opacity ≥ 0.9, no `filter`/`mix-blend-mode` | Confirmation dialog for cards. Optional confirm-before-fill since 8.11.7. Tóth's 2026 update lists it as still vulnerable |
+| Save/update prompt | Content script captures values on submit or button click. Background watches `webRequest` POST/PUT/PATCH from that origin, and `onCompleted` with OK status triggers the notification | Content `submit`/click listener (trusted events only) leads to a credential banner | Content form tracker (submit, then form detached within 250 ms or timeout) plus a worker XHR tracker (`webRequest`, failed requests suppress). Top frame only (iframe autosave is a TODO) | n/a |
+| Origin matching | Per-URI strategy: Domain (eTLD+1 via `tldts`, private suffixes honoured, scheme and port ignored), Host, StartsWith, Exact, Regex, Never. Server-side "equivalent domains" | Done in KeePassXC desktop: base domain via the PSL, entry host must be a suffix of the site host, port only if the entry has one, scheme optional, wildcards and `"exact"` in `KP2A_URL` | Ranked: exact > parent > sibling. Port and protocol checks; https page may use http item. Private-suffix aware. Modes: Default, Exact, ExactPath, StartWith, Pattern (glob), Regex (ReDoS-guarded), Never | Default eTLD+1 (PSL plus custom rules), "exact host incl. port", "never" |
+| Cross-origin iframe | Fills but asks "untrusted iframe" `confirm()` if the frame URL doesn't match the item | Blocked unless frame origin == tab origin, or a per-site opt-in | Candidates scoped to the **field's own frame URL**. Sandboxed frames skipped. Cards get domain-level scope | Won't fill a Login into a frame whose origin doesn't match. Cards do fill cross-origin |
+| TOTP | Generated by `@bitwarden/sdk-internal` (Rust, GPL-3.0 or SDK license). Filled into `one-time-code` / keyword fields, or auto-copied | Generated by KeePassXC desktop (`get-totp`). Detects single and segmented OTP fields | `otpauth` npm library. Detection by the ML "otp" model | n/a |
+| Reusability for rimlock | High value but heavy coupling (Angular/rxjs state, `@bitwarden/common`, `BrowserApi`, lit). ~14k LOC in `services/` alone | Small and readable (~10k LOC total), but global-namespace JS that monkey-patches prototypes and is tied to the native-messaging protocol | Engine split into a permissive npm package (MPL-2.0) plus a GPL extension tightly bound to Proton's redux store and worker | None |
+
+**Short answer:** all three open-source engines are legally reusable by a GPL-3.0 project. None of them is a drop-in library.
+
+- The parts that extract most cleanly are:
+  - Proton's classifier (`@protontech/autofill` + `@protontech/fathom`), which is already a standalone MPL-2.0 package.
+  - Bitwarden's pure helpers: URI matching, field-qualification predicates and keyword constants.
+  - The Forms Map dataset (GPL-3.0).
+  - Specific defensive patterns from all three, which are short enough to re-implement.
+- The inline-menu design both commercial-grade open-source products converged on is the same: a closed-shadow custom element, an extension-origin iframe inside it, and the top layer via `popover`, plus active anti-clickjacking checks.
+
+## Findings
+
+### 1. Field detection, SPAs, multi-step logins, iframes, shadow DOM
+
+**Bitwarden: heuristics, with an optional per-site map.**
+
+- `CollectAutofillContentService` builds an `AutofillPageDetails` snapshot. Each field gets an `opid` plus label text from `<label>`, siblings and ARIA, along with `autocomplete`, `data-*` and visibility ([collect-autofill-content.service.ts][bw-collect]).
+- SPA handling:
+  - A `MutationObserver` with burst cooldown (500 ms), max wait (5 s) and debounced re-collection ([L76–L134, L1512–L1711][bw-collect]).
+  - A URL-change reset path that also resets shadow-root tracking ([L1583–L1604][bw-collect]).
+- Shadow DOM:
+  - `DomQueryService` deep-queries open roots. It falls back to a `TreeWalker`, and reaches **closed** roots via `chrome.dom.openOrClosedShadowRoot` (Chromium) or `element.openOrClosedShadowRoot` (Firefox) ([dom-query.service.ts L526–L566][bw-domq]).
+  - A `ShadowHostHydrationTracker` waits for custom elements that attach their root late ([shadow-host-hydration-tracker.ts][bw-shadow]).
+- Login-vs-signup qualification is a hand-tuned decision tree ([inline-menu-field-qualification.service.ts L394–L600][bw-qual]):
+  - `autocomplete=current-password` / `username` wins.
+  - One username plus one password means login.
+  - More than one visible password in a form means signup.
+  - A lone text field in a form with no password is treated as the first step of a multi-step login, unless a tie-breaker (`isAmbiguousFieldNonLogin`) says otherwise.
+  - Keyword lists live in [autofill-constants.ts][bw-const] (1,077 lines).
+- **Targeting rules / "Map the Web".** Bitwarden now fetches a versioned "Forms Map" every 6 h ([targeting-rules-data.service.ts][bw-trules]). The default source is `https://fillassist.bitwarden.com`, formerly the GitHub releases of `bitwarden/map-the-web` ([constants/index.ts L194–L203][bw-trconst]).
+  - The map is keyed by `host` (with port when non-default) and optional pathname.
+  - It describes form containers, field selectors per field key, and `next`/`submit` actions. This covers multi-step SPAs at one URL ([types/index.ts][bw-trtypes]).
+  - Selectors may cross iframe boundaries. These are routed to the iframe's own content script ([collect-autofill-content.service.ts L504–L600][bw-collect]).
+  - The dataset repo [`bitwarden/map-the-web`][mtw] is **GPL-3.0**, marked experimental with no schema stability guarantees, and currently covers a few dozen hosts ([forms.jsonc][mtw-forms]).
+- Iframes: content scripts run in all frames. Each frame reports its own page details, and the background decides (see §5).
+
+**KeePassXC-Browser: simple pairing.**
+
+- `kpxcFields.getAllCombinations` walks visible inputs in order and pairs "last text input before a password input". It also accepts a lone username field if `autocomplete` contains `username`/`email`, or if the user enabled single-input mode for the site ([fields.js L16–L70][kx-fields]).
+- Visibility requires all of the following ([fields.js L476–L571][kx-fields]):
+  - Non-negative position and a minimum size.
+  - `elementFromPoint` at three points must hit the input or its label.
+  - No known overlay on top.
+  - CSS visibility, and opacity within limits on the element and its parents.
+- SPAs and shadow DOM: a `MutationObserver` helper re-scans added nodes and pierces closed roots with `openOrClosedShadowRoot` ([observer-helper.js L80–L383][kx-obs]).
+- Site quirks are hard-coded in [sites.js][kx-sites]: Google's two-step form, TOTP exceptions, submit-button exceptions and so on.
+- Users can also pick "Custom Login Fields" manually.
+
+**Proton Pass: ML classifier.**
+
+- The detector runs Proton's fork of Mozilla Fathom. Rulesets come from `@protontech/autofill`, with a bundled random-forest model or a runtime-downloaded model artifact ([detector.service.ts L1–L60][pp-detector]).
+- Models exist per form type: login, register, password-change, recovery, OTP. The JSON weights are 22–56 KB each in the npm tarball, `models/random_forest/params/*.json`.
+- Per-site overrides come from `https://proton.me/download/pass/auto-detection/rules.json` ([constants.ts L52][pp-const], [website-rules.saga.ts][pp-rulessaga]).
+- Shadow DOM is handled by `shadowPiercingContains` / `flagSubtreeAsIgnored` from the same package. Sandboxed iframes without `allow-scripts allow-same-origin` are skipped ([frame.ts L126–L152][pp-frame]).
+- Proton reports that a mid-2026 detection upgrade (iframe-aware) resolved most reported autofill issues ([Proton blog][pp-blog]). The blog was not reachable from this network, so this rests on the search snippet only.
+
+**1Password** publishes no detection details. Its docs say only that it uses "a variety of checks to avoid filling hidden fields" ([browser-autofill-security][op-sec]).
+
+### 2. Inline menu: isolation, clickjacking, spoofing
+
+**Bitwarden**
+
+- Button and list are each a custom element. Each one does `attachShadow({mode: "closed"})` with a hardening stylesheet for `:host` pseudo-elements, and inside sits an `<iframe src="chrome-extension://…/overlay/menu.html">` ([autofill-inline-menu-iframe-element.ts L14][bw-iframe-el], [autofill-inline-menu-iframe.service.ts L90–L138][bw-iframe-svc]).
+- Credentials are rendered **inside the extension-origin iframe**, so page script cannot read item names or usernames.
+- Messaging:
+  - The iframe talks to the background over a `runtime.Port`.
+  - The content side forwards with a `portKey` token.
+  - The container page allow-lists background commands ([autofill-inline-menu-container.ts L13–L32][bw-container]).
+- The top layer is used via `popover="manual"` + `showPopover()`, and `z-index: 2147483647` ([autofill-inline-menu-content.service.ts L243–L379][bw-menu-content]).
+- Anti-clickjacking (post Tóth, fixed in 2025.8.2 per [Tóth][toth]):
+  - `getPageIsOpaque` requires computed opacity > 0.6 on `html` and `body` ([L671–L697][bw-menu-content]).
+  - `elementFromPoint` checks that the menu isn't covered by the page's last child ([L795–L812][bw-menu-content]).
+  - MutationObservers watch `style`/`popover` attributes on its own elements and on `html`/`body`, with an "excessive mutation" circuit breaker.
+  - List clicks and keys require `event.isTrusted` ([autofill-inline-menu-list.ts L298][bw-list], [event-security.ts][bw-evsec]).
+  - The code's own TODO admits that intermediate ancestors between `html` and `body` aren't checked ([L677–L678][bw-menu-content]).
+- Content scripts can't use `customElements` in Chromium's isolated world, so Bitwarden loads the `@webcomponents/custom-elements` polyfill ([autofill-overlay-content.service.ts L1–L2][bw-overlay]).
+- Cost: the iframe pages must be `web_accessible_resources` for `<all_urls>` ([manifest.v3.json L159–L171][bw-manifest]). This makes the extension detectable by pages.
+
+**Proton Pass**
+
+- Same overall shape: a `protonpass-root-<hash>` custom element with a closed shadow root ([create-element.ts L40][pp-createel]) holding an extension-origin iframe `dropdown.html#iframe=<random id>`. Messages to it go through `postMessage` with the extension origin as target, and the ready event is validated by the random id ([inline.app.ts L130–L215][pp-inlineapp]).
+- The custom element strips any attribute the page adds. After 25 attempts it gives up, to avoid MutationObserver wars ([ProtonPassElement.ts][pp-element]).
+- Custom elements are registered in the MAIN world (`elements.js`) because of Firefox and Chromium isolated-world limitations ([register.ts][pp-register]).
+- **Strongest anti-clickjacking of the three.** `TopLayerManager` ([popover.ts L18–L123][pp-popover]):
+  - It tracks every `:popover-open`/`:modal` element through `toggle` events.
+  - A user action from the iframe is honoured only if Proton's root is the **last** top-layer element (this defeats `pointer-events:none` overlays, which `elementsFromPoint` misses).
+  - No foreign top-layer element may have appeared in the last 150 ms (this defeats 1 ms overlay cycling).
+  - The root's computed opacity must be ≥ 0.9, with `visibility` visible, no `filter` and no `mix-blend-mode`.
+- WARs are restricted to `http(s)` matches ([manifest-chrome.json L88–L106][pp-manifest]).
+
+**KeePassXC-Browser**
+
+- The autocomplete list, icons and banners are `div`s in a **closed shadow root appended to `document.body`**, with no iframe, using `popover="manual"` ([autocomplete.js L90–L140][kx-ac]).
+- Usernames are therefore DOM nodes in the page process. Closed mode and the isolated world keep them away from page JS, but not from other extensions (`openOrClosedShadowRoot`), and the page still controls layout and stacking around them.
+- It overrides `Element.prototype.attachShadow` in its isolated world to always force `closed`, and adds helpers to `Object.prototype` ([ui.js L342–L355][kx-ui]).
+- Anti-clickjacking:
+  - A page observer clears all UI if `html`/`body` opacity drops below a threshold ([ui.js L262–L278][kx-ui]).
+  - Every click handler checks `isTrusted`.
+  - Fixed in 1.9.11 per [Tóth][toth].
+
+**1Password** says it never fills without user input ([browser-autofill-security][op-sec]). It calls clickjacking "a browser-level limitation, not something a single browser extension can fully solve". Its mitigation is an optional confirm-before-fill alert that "cannot be hidden or overlaid" ([1Password blog, 2025-08-26][op-clickjack]). Tóth's January 2026 update still lists 1Password ≤ 8.11.27.2 as vulnerable ([Tóth][toth]).
+
+**Spoofing (fake inline UI).** Anliker, Lain and Čapkun (USENIX Security 2025) built pages that imitate a *locked* password-manager inline UI. In a 29,800-person phishing simulation, more than 30% of detected PM users typed their master password, and up to 58% for one product ([paper][anliker]). They find personalised UI elements ineffective, and conclude that in-viewport extension UI is inherently spoofable ([§7.1.2][anliker]).
+
+Design consequence for rimlock: the in-page menu should **never** collect the Database master key or key file. Unlocking belongs in extension chrome (the action popup or an extension window). Bitwarden's locked menu likewise only offers an "unlock" button that opens the popup (`unlockVault` in [ALLOWED_BG_COMMANDS][bw-container]).
+
+### 3. Submit detection for save/update
+
+- **Bitwarden** combines two signals:
+  - Content side: listeners on the form's `submit`, on the nearest submit button or button-like anchor (also outside the form), and on Enter/Space (`isTrusted` events only). These capture the field values ([autofill-overlay-content.service.ts L493–L812][bw-overlay]).
+  - Background side: `webRequest.onBeforeRequest`/`onCompleted` for POST/PUT/PATCH from origins that had fields. A non-error status code, plus a `webNavigation.onCompleted` fallback, triggers the add-login or change-password notification ([overlay-notifications.background.ts L209–L445][bw-notif]).
+  - This needs the `webRequest` and `webNavigation` permissions ([manifest.v3.json L49–L66][bw-manifest]). Non-blocking `webRequest` remains available in MV3.
+- **Proton Pass**:
+  - A content `FormTracker` treats a submit as real if the form is detached within 250 ms, or after an idle timeout. It stages the submission in the worker ([form.tracker.ts (content) L22–L232][pp-ftc]).
+  - A worker XHR tracker watches `xmlhttprequest` requests per tab and suppresses the prompt if they fail ([xmlhttp-request.tracker.ts][pp-xhr], [form.tracker.ts (worker) L98–L130][pp-ftw]).
+  - Iframe autosave is explicitly not implemented yet ([form.tracker.ts (worker) L54–L56][pp-ftw]).
+- **KeePassXC-Browser** listens for trusted `submit` and clicks on detected submit buttons. It then shows an in-page "credential banner". Submitted values survive navigation in the background (`page_get_submitted`) ([form.js L196–L283][kx-form]). No network signal is used.
+
+### 4. TOTP fill and Entry ↔ origin matching
+
+**TOTP**
+
+- Bitwarden:
+  - Codes come from `@bitwarden/sdk-internal` ([totp.service.ts][bw-totp]). That repo is dual licensed, GPL-3.0 or the Bitwarden SDK License, except `bitwarden_license/` ([sdk-internal LICENSE][bw-sdk-lic]).
+  - A field is a TOTP target if it has `autocomplete=one-time-code`, or matches `TotpFieldNames` keywords and not recovery-code keywords ([inline-menu-field-qualification.service.ts L1149–L1162][bw-qual], [autofill.service.ts L1193–L1204][bw-autofill]).
+  - Otherwise the code is auto-copied to the clipboard after a login fill.
+- Proton uses the `otpauth` npm library ([otp.ts][pp-otp]) and an ML "otp" model for detection.
+- KeePassXC-Browser:
+  - Asks the desktop for the code (`get-totp`) ([keepass.js L568–L596][kx-keepass]).
+  - Detects single fields ([totp-field.js][kx-totp]) and segmented one-digit-per-box OTP inputs ([fields.js L124, L367][kx-fields]).
+- KeePass-ecosystem storage conventions rimlock must read, all from KeePassXC ([Totp.h L70–L78][kxc-totp]):
+  - KeePassXC: an `otp` attribute holding an `otpauth://` URI.
+  - Legacy: `TOTP Seed` / `TOTP Settings`.
+  - KeePass 2.47+: `TimeOtp-Secret-Base32`, `TimeOtp-Algorithm`, `TimeOtp-Length`, `TimeOtp-Period`.
+
+**Origin matching**
+
+- **Bitwarden** `LoginUriView.matchesUri` ([login-uri.view.ts L143–L223][bw-uri]) supports these strategies ([domain-service.ts L14–L21][bw-ums]):
+  - `Domain` (default): eTLD+1 via `tldts` with `allowPrivateDomains: true` ([utils.ts L483–L505][bw-utils]). Scheme and port are ignored. Server-side "equivalent domains" are merged in. Unicode and punycode are normalised. A tiny blacklist excludes `script.google.com` from `google.com` ([utils.ts L74–L76][bw-utils]).
+  - `Host`: hostname plus port.
+  - `StartsWith`, `Exact`, `RegularExpression` (unguarded `new RegExp`), and `Never`.
+- **KeePassXC** (desktop) `handleURL` ([BrowserService.cpp L1470–L1557][kxc-bs]):
+  - Base domains must be equal, computed with the Public Suffix List via Qt's cookie jar ([UrlTools.cpp L50–L100][kxc-url]).
+  - The site host must *end with* the entry host. So an entry for `example.com` matches `login.example.com`, but an entry for `login.example.com` does not match `example.com`.
+  - Port must match only if the entry specifies one. Scheme must match if `matchUrlScheme` is on.
+  - Additional URLs live in `KP2A_URL*` attributes, which also allow `*` wildcards and `"…"` for exact match ([L1367–L1392][kxc-bs], [EntryAttributes.cpp L43][kxc-attr]).
+  - Per-entry and per-group options are stored in `CustomData`: `BrowserHideEntry`, `BrowserSkipAutoSubmit`, `BrowserOmitWww`, `BrowserOnlyHttpAuth`, and so on ([BrowserService.cpp L55–L70][kxc-bs]). Allowed/denied host lists live in the "KeePassXC-Browser Settings" JSON ([BrowserEntryConfig.cpp][kxc-bec]).
+  - These are the de-facto conventions inside `.kdbx` Databases that rimlock users already have.
+- **Proton Pass** ([match-url.ts][pp-match]) ranks results instead of returning a boolean:
+  - `EXACT_MATCH` (same host) > `TOP_MATCH` (item host is a parent of the page host) > `SUB_MATCH` (siblings under the same eTLD+1, disabled in `strict`).
+  - Port must match if the page has one. An https page may use an http item, but not the reverse ([L24–L27][pp-match]).
+  - On PSL-private domains (e.g. `*.github.io`), only a direct top-domain match is allowed ([L35–L52][pp-match]).
+  - `Pattern` globs match the host against the hostname alone, as an explicit anti-spoofing measure ([L82–L113][pp-match]).
+  - Regexes go through a ReDoS-checked `safe-regex` worker ([lib/urls/safe-regex][pp-saferegex]).
+  - In iframes, candidates are computed for the **field's frame URL**, never the tab URL ([autofill.ts L400–L430][pp-autofill]).
+- **1Password**: the default is "Fill anywhere on this website" (eTLD+1, PSL plus custom rules). Alternatives are "Only fill on this exact host" (host including port; `www` is distinct) and "Never fill" ([autofill-behavior][op-behavior]).
+
+### 5. Known autofill attacks and mitigations
+
+| Attack | Source | Mitigations seen in code |
+|---|---|---|
+| Fill-on-load "sweep" attacks: a network attacker injects forms or iframes for many sites and harvests credentials with no user action | Silver, Jana, Boneh, Chen, Jackson, USENIX Sec 2014 ([paper][silver]) | All three require user interaction by default. 1Password: "will never Autofill without your input" ([op-sec]) |
+| XSS on the site, or on *any subdomain* when matching is eTLD+1, reads filled values | Oesch & Ruoti, USENIX Sec 2020 ([paper][oesch], §6.5, §7.1). Tóth 2025 subdomain angle ([Tóth][toth]) | Per-Entry exact-host mode (all). Proton ranks exact host first. Stock & Johns' nonce-substitution idea (fill a placeholder, swap on the wire) is not implemented by anyone ([oesch] §6.5) |
+| Cross-origin iframe harvesting: a malicious iframe on a trusted page gets the parent's credentials | Flashpoint, Mar 2023, against Bitwarden ([write-up][flashpoint]). Oesch & Ruoti found Bitwarden and Dashlane filling cross-origin frames ([oesch]) | Bitwarden: `inUntrustedIframe` plus a `confirm()` warning ([autofill.service.ts L1677–L1705][bw-autofill], [insert-autofill-content.service.ts L68–L118][bw-insert]). KeePassXC-Browser: block unless same origin ([page.js L348–L363][kx-page]). Proton: scope to the frame URL. 1Password: no Login fill into a non-matching frame origin ([op-sec]) |
+| Hidden or invisible forms harvesting autofilled identifiers (e.g. trackers collecting emails) | Acar, Englehardt, Narayanan, 2017: about 1,110 sites, Adthink and OnAudience ([CITP blog][acar]) | Visibility checks: Bitwarden `DomElementVisibilityService` (opacity < 0.1, clip-path, `elementFromPoint`) ([dom-element-visibility.service.ts][bw-vis]). KeePassXC-Browser `isVisible` / `isTopElement` ([fields.js][kx-fields]) |
+| HTTP downgrade: credentials saved for https are filled on http | Oesch & Ruoti ([paper][oesch]) | Bitwarden `confirm()` warning on http when the saved URI is https ([insert-autofill-content.service.ts L68–L82][bw-insert]). Proton refuses https item → http page ([match-url.ts L26][pp-match]) |
+| DOM-based extension clickjacking: opacity on the host or `html`/`body`, overlays with `pointer-events:none` plus popovers, so one click leaks credentials, TOTP or cards | Tóth, DEF CON 33, 2025-08-09, 11 PMs, ~40M installs; updated 2026-01-14 ([blog][toth]) | See §2. Proton's `TopLayerManager` is the most complete. 1Password and LastPass were listed as still vulnerable at the last update |
+| Fake locked-PM UI phishing the master password | Anliker, Lain, Čapkun, USENIX Sec 2025 ([paper][anliker]) | Never ask for the master key in-page. No vendor has a technical fix |
+| Event forgery: page dispatches synthetic clicks or keys into extension UI | General | `event.isTrusted` checks (all three) |
+
+Desktop "universal autofill" attacks (Infantino et al., NDSS 2026, [paper][vaultraider]) are out of scope for a browser extension.
+
+### 6. License and modularity
+
+- **Bitwarden.**
+  - The browser autofill tree (`apps/browser/src/autofill`) is GPL-3.0. Only admin-console policy UI under `/bitwarden_license` mentions autofill, and no file in the autofill tree carries a Bitwarden License header (checked by grep at the pinned commit).
+  - Trademarks are excluded ([LICENSE.txt][bw-lic]).
+  - Scale: 265 non-test TS files, about 48k LOC, of which `services/` alone is about 14k LOC.
+  - Coupling:
+    - Content-side services import `@bitwarden/common` constants and types, `BrowserApi`, rxjs state providers (in background), `lit` and the custom-elements polyfill.
+    - The background is entangled with `CipherService`, account and premium checks, `ConfigService` feature flags, and the SDK.
+    - The fill pipeline relies on a legacy `opid`/fill-script protocol (`fill_by_opid`, `click_on_opid`) ([autofill-script.ts][bw-script]).
+  - **Extractable with moderate effort:**
+    - `CollectAutofillContentService` + `DomQueryService` + `DomElementVisibilityService` + `InsertAutofillContentService`. Their dependencies are mostly constants and the page-details model.
+    - The pure predicates in `InlineMenuFieldQualificationService` and `utils/`, plus the keyword constants.
+    - `LoginUriView.matchesUri` logic, which needs `tldts`.
+  - **Not practically extractable:** the background orchestration (`overlay.background.ts` 3.8k LOC, `notification.background.ts` 2.1k, `autofill.service.ts` 3.4k).
+  - TOTP lives in the Rust SDK and isn't worth pulling in. `otpauth` or a 50-line RFC 6238 does the job.
+- **KeePassXC-Browser.**
+  - GPL-3.0, about 10k LOC of plain JS. It's easy to read and to cherry-pick ideas from (visibility tests, segmented TOTP, site exceptions).
+  - Its globals, prototype monkey-patching and the native-messaging protocol (`keepass.js`) make wholesale reuse a poor fit for a self-contained extension.
+  - The matching rules live in the C++ desktop app (GPL). rimlock would have to **re-implement** them in TS to stay compatible with `KP2A_URL` and the `CustomData` options.
+- **Proton Pass.**
+  - The extension is GPL-3.0, but its inline, form and autosave services depend on Proton's redux store, worker message broker and `@proton/pass` utils.
+  - Small pure modules are liftable: `TopLayerManager` (`packages/pass/utils/dom/popover.ts`), `match-url.ts`, `safe-regex`.
+  - The **classifier is separately packaged**: `@protontech/autofill` and `@protontech/fathom` on npm are **MPL-2.0**. The package says only "Model weights used by the Proton fork of Fathom".
+  - The package ships compiled JS with source maps that embed sources, and the 5 random-forest weight files. It totals about 20 MB unpacked, mostly `features/`. No public source repo or training pipeline was found.
+  - MPL-2.0 code may be combined into a GPL-3.0 work under MPL §3.3 (GPL is a "Secondary License"), unless the files carry an "Incompatible With Secondary Licenses" notice. None was seen, but this was not exhaustively verified.
+- **Map the Web** forms dataset: GPL-3.0 data, consumable as-is. It is experimental, small, and can break the schema without notice.
+- **1Password:** nothing reusable. Its public docs are useful as a behavioural spec.
+
+## Open risks / unknowns
+
+- **Proton classifier provenance.**
+  - It is npm-only, with no source repo, no training data, and versions like `0.0.38040317`. It is unclear whether its sources are maintained as a stable public API, or how big the bundled model is after tree-shaking (the tarball is about 20 MB unpacked).
+  - Some of it runs as WASM (`*.wasm` WARs in the Proton manifest). This was not checked.
+  - Bundle size and Firefox AMO review (minified or generated code) are unassessed.
+- **The Bitwarden extraction cost is an estimate.** No trial extraction was done. A short spike would settle it: lift `collect` + `insert` + `qualification` into a scratch MV3 extension.
+- **Clickjacking is not solved by anyone.** Proton's checks are the best available but heuristic. 1Password calls it a browser limitation. An optional confirm-before-fill path, in the extension popup or a browser notification, is the only "can't be overlaid" UI.
+- **Closed shadow roots are not private from other extensions.** Bitwarden and KeePassXC-Browser both pierce them. Only the iframe approach hides Entry data from co-installed extensions and from page layout probing.
+- **The WAR iframe makes the extension fingerprintable.** Chrome's `use_dynamic_url` and Proton's http(s)-only matches reduce exposure. Not evaluated for Safari.
+- **Safari.** Proton ships a Safari manifest and a MAIN-world custom-element workaround. Bitwarden ships Safari too. Popover, top-layer and `openOrClosedShadowRoot` support in Safari Web Extensions was not verified.
+- **Subdomain default.** Every product defaults to eTLD+1 or parent-domain matching, which Tóth shows widens the XSS blast radius. KeePassXC's rule (entry host is a suffix of the site host) is narrower than Bitwarden's Domain mode. Which default rimlock adopts is a #15 question.
+- **Network-based submit detection** needs `webRequest` (and Bitwarden also uses `webNavigation`). It is unclear whether rimlock wants those permissions.
+- **Not covered here:** passkeys/WebAuthn interception (all three do it), HTTP Basic auth (`webRequestAuthProvider`), credit card and identity fill.
+
+<!-- references -->
+[bw]: https://github.com/bitwarden/clients/tree/a6ffbe65a3b63b22c1435cd2b4813c703480c863
+[bw-lic]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/LICENSE.txt
+[bw-collect]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/collect-autofill-content.service.ts
+[bw-domq]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/dom-query.service.ts#L526-L566
+[bw-shadow]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/shadow-host-hydration-tracker.ts
+[bw-qual]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/inline-menu-field-qualification.service.ts
+[bw-const]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/autofill-constants.ts
+[bw-trules]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/targeting-rules-data.service.ts
+[bw-trconst]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/libs/common/src/autofill/constants/index.ts#L194-L203
+[bw-trtypes]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/libs/common/src/autofill/types/index.ts
+[bw-iframe-el]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/overlay/inline-menu/iframe-content/autofill-inline-menu-iframe-element.ts#L14
+[bw-iframe-svc]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/overlay/inline-menu/iframe-content/autofill-inline-menu-iframe.service.ts#L90-L138
+[bw-container]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/overlay/inline-menu/pages/menu-container/autofill-inline-menu-container.ts#L13-L32
+[bw-menu-content]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/overlay/inline-menu/content/autofill-inline-menu-content.service.ts
+[bw-list]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/overlay/inline-menu/pages/list/autofill-inline-menu-list.ts#L298
+[bw-evsec]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/utils/event-security.ts
+[bw-overlay]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/autofill-overlay-content.service.ts
+[bw-manifest]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/manifest.v3.json
+[bw-notif]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/background/overlay-notifications.background.ts#L209-L445
+[bw-totp]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/libs/common/src/vault/services/totp.service.ts
+[bw-sdk-lic]: https://github.com/bitwarden/sdk-internal/blob/main/LICENSE
+[bw-autofill]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/autofill.service.ts
+[bw-insert]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/insert-autofill-content.service.ts#L68-L118
+[bw-vis]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/services/dom-element-visibility.service.ts
+[bw-uri]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/libs/common/src/vault/models/view/login-uri.view.ts#L143-L223
+[bw-ums]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/libs/common/src/models/domain/domain-service.ts#L14-L21
+[bw-utils]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/libs/common/src/platform/misc/utils.ts
+[bw-script]: https://github.com/bitwarden/clients/blob/a6ffbe65a3b63b22c1435cd2b4813c703480c863/apps/browser/src/autofill/models/autofill-script.ts
+[mtw]: https://github.com/bitwarden/map-the-web/tree/924680b5a8667c203d3abec21c0f74dee05f2d8a
+[mtw-forms]: https://github.com/bitwarden/map-the-web/blob/924680b5a8667c203d3abec21c0f74dee05f2d8a/maps/forms/forms.jsonc
+[kx]: https://github.com/keepassxreboot/keepassxc-browser/tree/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48
+[kx-lic]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/LICENSE
+[kx-fields]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/content/fields.js
+[kx-obs]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/content/observer-helper.js
+[kx-sites]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/common/sites.js
+[kx-ac]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/content/autocomplete.js#L90-L140
+[kx-ui]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/content/ui.js
+[kx-form]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/content/form.js#L196-L283
+[kx-page]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/background/page.js#L348-L363
+[kx-keepass]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/background/keepass.js#L568-L596
+[kx-totp]: https://github.com/keepassxreboot/keepassxc-browser/blob/8b0b2c4347126f4983f59ea7dd6ca2a2a667cf48/keepassxc-browser/content/totp-field.js
+[kxc]: https://github.com/keepassxreboot/keepassxc/tree/9e0f57a4a4c6c629fa6d0a593acb7d089b1d95cd
+[kxc-bs]: https://github.com/keepassxreboot/keepassxc/blob/9e0f57a4a4c6c629fa6d0a593acb7d089b1d95cd/src/browser/BrowserService.cpp
+[kxc-bec]: https://github.com/keepassxreboot/keepassxc/blob/9e0f57a4a4c6c629fa6d0a593acb7d089b1d95cd/src/browser/BrowserEntryConfig.cpp
+[kxc-url]: https://github.com/keepassxreboot/keepassxc/blob/9e0f57a4a4c6c629fa6d0a593acb7d089b1d95cd/src/gui/UrlTools.cpp#L50-L100
+[kxc-attr]: https://github.com/keepassxreboot/keepassxc/blob/9e0f57a4a4c6c629fa6d0a593acb7d089b1d95cd/src/core/EntryAttributes.cpp#L43
+[kxc-totp]: https://github.com/keepassxreboot/keepassxc/blob/9e0f57a4a4c6c629fa6d0a593acb7d089b1d95cd/src/core/Totp.h#L70-L78
+[pp]: https://github.com/ProtonMail/WebClients/tree/d09d7069e68b631142b153eb67616096ba96817d
+[pp-pkg]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/package.json
+[pp-detector]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/content/services/detector/detector.service.ts#L1-L60
+[pp-const]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/constants.ts#L52
+[pp-rulessaga]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/store/sagas/static-assets/website-rules.saga.ts
+[pp-frame]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/content/utils/frame.ts#L126-L152
+[pp-createel]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/utils/dom/create-element.ts#L40
+[pp-inlineapp]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/content/services/inline/inline.app.ts#L130-L215
+[pp-element]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/content/services/inline/custom-elements/ProtonPassElement.ts
+[pp-register]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/content/services/inline/custom-elements/register.ts
+[pp-popover]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/utils/dom/popover.ts#L18-L123
+[pp-manifest]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/manifest-chrome.json#L88-L106
+[pp-ftc]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/content/services/form/form.tracker.ts
+[pp-xhr]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/worker/services/xmlhttp-request.tracker.ts
+[pp-ftw]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/worker/services/form.tracker.ts
+[pp-otp]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/lib/otp/otp.ts
+[pp-match]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/lib/urls/search/match-url.ts
+[pp-saferegex]: https://github.com/ProtonMail/WebClients/tree/d09d7069e68b631142b153eb67616096ba96817d/packages/pass/lib/urls/safe-regex
+[pp-autofill]: https://github.com/ProtonMail/WebClients/blob/d09d7069e68b631142b153eb67616096ba96817d/applications/pass-extension/src/app/worker/services/autofill.ts#L400-L430
+[pp-blog]: https://proton.me/blog/pass-improved-autofill
+[npm-pa]: https://www.npmjs.com/package/@protontech/autofill
+[npm-pf]: https://www.npmjs.com/package/@protontech/fathom
+[op-sec]: https://support.1password.com/browser-autofill-security/
+[op-behavior]: https://support.1password.com/autofill-behavior/
+[op-clickjack]: https://1password.com/blog/clickjacking-what-it-means-for-1password-users
+[toth]: https://marektoth.com/blog/dom-based-extension-clickjacking/
+[anliker]: https://www.usenix.org/system/files/usenixsecurity25-anliker.pdf
+[silver]: https://www.usenix.org/conference/usenixsecurity14/technical-sessions/presentation/silver
+[oesch]: https://www.usenix.org/system/files/sec20-oesch_0.pdf
+[flashpoint]: https://flashpoint.io/blog/bitwarden-password-pilfering/
+[acar]: https://blog.citp.princeton.edu/2017/12/27/no-boundaries-for-user-identities-web-trackers-exploit-browser-login-managers/
+[vaultraider]: https://www.ndss-symposium.org/wp-content/uploads/2026-s1067-paper.pdf
