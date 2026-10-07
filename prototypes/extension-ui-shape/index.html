@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PROTOTYPE — rimlock Extension UI shape</title>
+<!--
+  PROTOTYPE — throwaway. Do not ship, do not build on.
+  Question (rimlock #10 "Sketch the Extension UI shape"): what shape should the Extension UI take?
+  Three structurally different variants of the whole Extension UI, switchable via ?variant=A|B|C
+  (or the floating bar / arrow keys), hosted in a fake browser window with a fake login page.
+  All state is in memory; reload resets it.
+-->
+<style>
+:root{--bg:#e9ecef;--fg:#1f2328;--mut:#6a737d;--line:#d0d7de;--acc:#5b3cc4;--accbg:#efeafd;--danger:#c92a2a;font:13px/1.4 system-ui,sans-serif;color:var(--fg)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg)}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:#fff;color:inherit;border-radius:6px;padding:4px 10px}
+button:disabled{opacity:.5;cursor:default}
+button.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+button.danger{color:var(--danger)}
+button.small{padding:2px 8px;font-size:12px}
+button.ghost{border-color:transparent;background:transparent}
+button.link{border:0;background:none;color:var(--acc);padding:0}
+button.ib{border:0;background:none;padding:2px 5px;border-radius:4px}
+button.ib:hover{background:#0001}
+button.ib.on{background:var(--accbg)}
+input,select,textarea{font:inherit;border:1px solid var(--line);border-radius:6px;padding:5px 8px;width:100%;background:#fff;color:inherit}
+input[type=checkbox],input[type=range]{width:auto}
+input[type=range]{width:100%}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+.muted{color:var(--mut)}
+.small{font-size:11px}
+.stage{display:flex;gap:14px;padding:14px 14px 60px;height:100vh}
+/* fake browser */
+.browser{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff;border:1px solid #adb5bd;border-radius:10px;overflow:hidden;box-shadow:0 4px 18px #0002}
+.tabs{display:flex;gap:2px;background:#dee2e6;padding:6px 8px 0}
+.tab{padding:6px 14px;border-radius:8px 8px 0 0;background:#ced4da;font-size:12px;cursor:pointer;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tab.active{background:#f8f9fa}
+.toolbar{display:flex;align-items:center;gap:10px;padding:6px 10px;background:#f8f9fa;border-bottom:1px solid var(--line)}
+.navbtns{color:#adb5bd;letter-spacing:6px}
+.addr{flex:1;display:flex;align-items:center;gap:6px;background:#e9ecef;border-radius:16px;padding:3px 12px;font-size:12px}
+.addr select{border:0;background:transparent;padding:2px;width:auto}
+.exticon{position:relative;border:0;background:none;font-size:16px;padding:2px 6px}
+.exticon.active{background:var(--accbg)}
+.badge{position:absolute;right:-2px;top:-3px;background:var(--acc);color:#fff;font-size:9px;border-radius:8px;padding:0 4px}
+.viewport{flex:1;display:flex;position:relative;min-height:0}
+/* fake page */
+.page{flex:1;overflow:auto;position:relative;background:#f6f8fa;padding:40px 20px}
+.login{width:340px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px}
+.sitelogo{font-size:28px;text-align:center}
+.login h2{text-align:center;font-weight:400;font-size:20px;margin:6px 0 16px}
+.pf{position:relative;margin-bottom:12px}
+.pf>span{display:block;font-weight:600;margin-bottom:4px}
+.pfwrap{position:relative}
+.infield{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;padding:2px 4px}
+.signin{width:100%;background:var(--brand);color:#fff;border:0;padding:7px}
+.hint{font-size:11px;color:var(--mut);margin-top:14px}
+/* inline menu */
+.inline{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px #0003;z-index:20;overflow:hidden}
+.inline-B{left:auto;width:250px}
+.inl-head{display:flex;justify-content:space-between;font-size:11px;color:var(--mut);padding:5px 10px;background:#f8f9fa;border-bottom:1px solid var(--line)}
+.inl-row{display:flex;gap:8px;align-items:center;padding:7px 10px;cursor:pointer}
+.inl-row:hover{background:var(--accbg)}
+.inl-row small{display:block;color:var(--mut);word-break:break-all}
+.inl-search{border:0;border-bottom:1px solid var(--line);border-radius:0}
+.inl-empty{padding:8px 10px;color:var(--mut)}
+.inl-foot{padding:6px 10px;border-top:1px solid var(--line);font-size:12px;color:var(--acc);cursor:pointer}
+/* shared bits */
+.ico{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;color:#fff;font-weight:700;flex:none}
+.ico.sm{width:20px;height:20px;font-size:11px;border-radius:4px}
+.ico.lg{width:36px;height:36px;font-size:16px}
+.brand{font-weight:800;color:var(--acc);white-space:nowrap}
+.dbn{font-weight:600}
+.sync{color:#2b8a3e;font-size:10px}
+.ph{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:1px solid var(--line);background:#fbfbfd}
+.pbody{flex:1;overflow:auto;position:relative}
+.pfoot{padding:8px;border-top:1px solid var(--line)}
+.wide{width:100%}
+.searchbar{padding:8px 10px}
+.section h5{margin:8px 12px 4px;font-size:11px;text-transform:uppercase;color:var(--mut);letter-spacing:.04em}
+.erow{display:flex;gap:9px;align-items:center;padding:6px 12px;cursor:pointer}
+.erow:hover{background:#f3f0ff}
+.et{flex:1;min-width:0}
+.et b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.et small{display:block;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ea{display:flex;gap:2px;align-items:center}
+.fillbtn{background:var(--accbg);border-color:transparent;color:var(--acc);font-weight:600;padding:2px 10px}
+.empty{padding:14px;color:var(--mut);text-align:center}
+.subhead{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:2}
+.grow{display:flex;gap:8px;align-items:center;padding:8px 12px;cursor:pointer;border-bottom:1px solid #f1f3f5}
+.grow span{flex:1}
+.grow small{color:var(--mut)}
+.grow:hover{background:#f3f0ff}
+.grow.bin{color:var(--mut)}
+.pad{padding:10px 12px}
+.fld{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #f1f3f5}
+.fl{width:74px;color:var(--mut);font-size:12px;flex:none;padding-top:2px}
+.fv{flex:1;min-width:0;word-break:break-all}
+.fv pre{margin:0;white-space:pre-wrap;font:inherit}
+.fa{display:flex}
+.sub{font-size:12px;margin-top:2px}
+.tag{display:inline-block;background:#f1f3f5;border-radius:10px;padding:0 7px;font-size:11px;color:var(--mut)}
+.meta{font-size:11px;color:var(--mut);margin:8px 0}
+.hrow{display:flex;gap:8px;font-size:12px;padding:3px 0;align-items:center}
+.hrow span:first-child{width:80px;color:var(--mut)}
+.hrow .mono{flex:1}
+.binnote{background:#fff4e6;color:#a6570f;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12px}
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.ef{display:block;margin-bottom:8px}
+.ef>span{display:block;font-size:12px;color:var(--mut);margin-bottom:3px}
+.row{display:flex;gap:4px;align-items:center}
+.seg{display:flex;margin-bottom:8px}
+.seg button{flex:1;border-radius:0}
+.seg button:first-child{border-radius:6px 0 0 6px}
+.seg button:last-child{border-radius:0 6px 6px 0}
+.seg button.on{background:var(--accbg);color:var(--acc);font-weight:600}
+.genout{font-size:15px;padding:10px;background:#f8f9fa;border:1px solid var(--line);border-radius:6px;word-break:break-all;margin-bottom:6px}
+.checks{display:flex;flex-wrap:wrap;gap:4px 12px;margin:6px 0}
+.totp{display:inline-flex;gap:4px;align-items:center;cursor:pointer}
+.totp b{color:var(--acc);letter-spacing:.05em}
+.totp i{font-style:normal;font-size:10px;color:var(--mut)}
+.unlock{padding:28px 22px;display:flex;flex-direction:column;gap:12px}
+.unlock .logo{font-size:22px;font-weight:800;color:var(--acc);text-align:center}
+.dbline{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px}
+.keyfile{font-size:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{background:#f1f3f5;border-radius:10px;padding:1px 8px}
+/* A: popup */
+.popup{position:absolute;top:2px;right:8px;width:380px;height:600px;max-height:calc(100% - 8px);background:#fff;border:1px solid #adb5bd;border-radius:8px;box-shadow:0 10px 30px #0004;display:flex;flex-direction:column;z-index:40;overflow:hidden}
+.tabbar{display:flex;border-top:1px solid var(--line)}
+.tabbar button{flex:1;border:0;border-radius:0;padding:8px;background:#fff;color:var(--mut)}
+.tabbar button.on{color:var(--acc);font-weight:600;box-shadow:inset 0 2px var(--acc)}
+.fab{position:absolute;right:14px;bottom:50px;width:40px;height:40px;border-radius:50%;background:var(--acc);color:#fff;font-size:20px;border:0;box-shadow:0 3px 10px #0003;padding:0}
+.pcard{position:absolute;top:8px;right:12px;width:320px;background:#fff;border:1px solid #adb5bd;border-radius:8px;box-shadow:0 10px 30px #0003;padding:10px;z-index:30}
+/* B: side panel */
+.side{width:380px;flex:none;border-left:1px solid #adb5bd;display:flex;flex-direction:column;background:#fff;min-height:0}
+.strip{padding:4px 10px 8px;border-bottom:1px solid var(--line)}
+.sl{font-size:11px;text-transform:uppercase;color:var(--mut);margin-bottom:4px}
+.chip-e{display:flex;gap:6px;align-items:center;padding:4px 6px;border-radius:6px;cursor:pointer}
+.chip-e>.ce{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip-e:hover,.chip-e.sel{background:#f3f0ff}
+.tree{flex:1;overflow:auto;min-height:0;padding:4px 0}
+.tree.half{flex:0 0 34%}
+.tg{padding:4px 8px;cursor:pointer;font-weight:600;font-size:12px}
+.tg small{color:var(--mut);font-weight:400}
+.tg:hover{background:#f8f9fa}
+.tg.bin{color:var(--mut)}
+.tl{display:flex;gap:6px;align-items:center;padding:3px 8px;cursor:pointer}
+.tl b{font-weight:500;white-space:nowrap}
+.tl small{color:var(--mut);margin-left:auto;padding-right:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50%}
+.tl:hover{background:#f8f9fa}
+.tl.sel{background:var(--accbg)}
+.dpane{flex:1;min-height:0;overflow:auto;border-top:2px solid var(--line)}
+.drawer{border-bottom:1px solid var(--line);padding:8px 10px;background:#fbfbfd}
+.pbanner{background:#fff9db;border-bottom:1px solid #ffe066;padding:8px 10px}
+/* prompts */
+.pbar{margin:-40px -20px 20px;display:flex;gap:6px 14px;align-items:center;flex-wrap:wrap;background:#fff;border-bottom:1px solid #adb5bd;padding:8px 16px;box-shadow:0 2px 8px #0002}
+.pbar .pbody-inline{display:flex;gap:6px 14px;align-items:center;flex-wrap:wrap;flex:1}
+.pbar .prow,.pbar .pbtns{margin:0}
+.pbar .prow input{width:160px}
+.pt{margin-bottom:4px}
+.prow{display:flex;gap:6px;margin:6px 0}
+.pbtns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.warn{color:#a6570f}
+/* C: quick popup + manager */
+.popup-c{width:320px;height:auto;max-height:560px}
+.card{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+.cardbtns{width:100%;display:flex;gap:6px;align-items:center}
+.cardbtns .totp{margin-left:auto}
+.quickgen{display:flex;gap:4px;align-items:center;margin:8px 10px;padding:6px 8px;background:#f8f9fa;border-radius:6px}
+.quickgen .mono{flex:1;word-break:break-all;font-size:12px}
+.mgr{flex:1;display:flex;flex-direction:column;min-width:0;position:relative;background:#fff}
+.mgr-lock{width:360px;margin:60px auto;border:1px solid var(--line);border-radius:8px}
+.mgr-top{display:flex;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--line);background:#fbfbfd;flex-wrap:wrap}
+.msearch{width:200px}
+.mgr-cols{flex:1;display:flex;min-height:0}
+.mgr-groups{width:180px;flex:none;border-right:1px solid var(--line);overflow:auto;padding:6px 0;background:#fbfbfd}
+.mg{padding:4px 10px;cursor:pointer;display:flex;gap:6px;white-space:nowrap}
+.mg small{margin-left:auto;color:var(--mut)}
+.mg.sel{background:var(--accbg);color:var(--acc);font-weight:600}
+.mg.bin{margin-top:8px;border-top:1px solid var(--line);padding-top:8px;color:var(--mut)}
+.mgr-list{flex:1;min-width:0;overflow:auto}
+.mlhead{display:flex;align-items:center;padding:8px 10px;font-weight:600;border-bottom:1px solid var(--line);min-height:37px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;color:var(--mut);font-weight:500;padding:4px 8px;border-bottom:1px solid var(--line)}
+td{padding:4px 8px;border-bottom:1px solid #f1f3f5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px}
+tr[data-act]{cursor:pointer}
+tr[data-act]:hover{background:#f8f9fa}
+tr.sel{background:var(--accbg)}
+.mgr-detail{width:330px;flex:none;border-left:1px solid var(--line);overflow:auto}
+.dtabs{display:flex;border-bottom:1px solid var(--line)}
+.dtabs button{border:0;border-radius:0;background:none;padding:6px 10px;color:var(--mut)}
+.dtabs button.on{color:var(--acc);box-shadow:inset 0 -2px var(--acc)}
+.modal-bg{position:absolute;inset:0;background:#0004;display:flex;align-items:center;justify-content:center;z-index:50}
+.modal{width:400px;background:#fff;border-radius:8px;box-shadow:0 10px 40px #0005;overflow:hidden}
+/* notes column + prototype chrome */
+.notes{width:300px;flex:none;overflow:auto;font-size:12px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.notes h3{margin:6px 0 8px;font-size:14px}
+.notes h4{margin:12px 0 4px}
+.notes ul{padding-left:18px;margin:4px 0}
+.notes p{margin:4px 0}
+.notes pre{font-size:10px;background:#f8f9fa;padding:6px;border-radius:6px;white-space:pre-wrap;word-break:break-all}
+.proto{display:inline-block;background:#ffe066;color:#5c3c00;font-weight:700;font-size:10px;padding:1px 6px;border-radius:4px;letter-spacing:.05em}
+.switcher{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:#111;color:#fff;border-radius:22px;padding:5px 8px;box-shadow:0 6px 20px #0006;z-index:100;font-size:13px;white-space:nowrap}
+.switcher button{background:#333;color:#fff;border:0;border-radius:50%;width:28px;height:28px;padding:0}
+.toast{position:fixed;left:50%;bottom:60px;transform:translateX(-50%);background:#2b2d31;color:#fff;padding:7px 14px;border-radius:6px;font-size:12px;z-index:100}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ---------------------------------------------------------------- helpers
+const $app = document.getElementById('app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DAY = 864e5, now0 = Date.now(), T = d => now0 - d * DAY;
+const ago = t => { const d = Math.round((Date.now() - t) / DAY); return d <= 0 ? 'today' : d === 1 ? 'yesterday' : d + ' days ago'; };
+const host = u => { try { return new URL(u).hostname; } catch { return ''; } };
+const reg = h => h.split('.').slice(-2).join('.');
+
+// ---------------------------------------------------------------- variants
+const VARIANTS = {
+  A: { name: 'Popup · search-first', notes: `
+    <p><b>Premise:</b> one surface, the toolbar popup (~380×600). Push/pop navigation like a phone app.
+    What lands first is <i>matches for this site</i> + search; Groups are secondary (Browse tab).
+    All editing, the Recycle Bin and the generator live in the popup too.</p>
+    <p><b>Inline menu:</b> drops down automatically when a login field gets focus.</p>
+    <p><b>Save prompt:</b> a card injected into the page near the toolbar (a popup cannot open itself everywhere).</p>
+    <h4>Trade-offs</h4><ul>
+    <li>+ One UI to build; popups behave the same in Chrome, Firefox and Safari.</li>
+    <li>− A popup closes on any click outside it: a half-typed edit is lost; copying between page and popup is fiddly.</li>
+    <li>− Small canvas for history, notes and custom fields.</li></ul>` },
+  B: { name: 'Side panel · tree explorer', notes: `
+    <p><b>Premise:</b> a persistent panel docked beside the page (Chrome <code>sidePanel</code>, Firefox <code>sidebar_action</code>).
+    KeePassXC-like Group tree with Entries as leaves; selecting an Entry splits the panel with its detail; edit happens in place.
+    Generator is a drawer under the header.</p>
+    <p><b>Inline menu:</b> only an icon inside the field; the menu opens on click, never by itself.</p>
+    <p><b>Save prompt:</b> a banner at the top of the panel; badge on the toolbar icon if the panel is closed.</p>
+    <h4>Trade-offs</h4><ul>
+    <li>+ Survives page interaction: copy fields while filling multi-step forms, edit without losing work.</li>
+    <li>+ Least intrusive inline UI (fewer clickjacking surfaces).</li>
+    <li>− Eats page width. Firefox's sidebar is shared with bookmarks/history. Safari has no side panel, so a popup fallback is needed anyway.</li></ul>` },
+  C: { name: 'Quick popup + full-tab manager', notes: `
+    <p><b>Premise:</b> two surfaces with separate jobs. The popup is <i>use-only</i>: fill, copy, TOTP, quick generate, search.
+    Everything organisational (Groups, editing, history, Recycle Bin, advanced/CustomData, full generator) lives in a
+    full extension tab with KeePassXC-like three columns.</p>
+    <p><b>Inline menu:</b> auto-opens on focus and can search the whole Database from the page.</p>
+    <p><b>Save prompt:</b> a bar across the top of the page.</p>
+    <h4>Trade-offs</h4><ul>
+    <li>+ Each surface stays simple; the manager has room for history, CustomData and bulk actions.</li>
+    <li>+ The manager tab is a normal extension page: works identically on every browser, Safari included.</li>
+    <li>− Two UIs to build; editing means leaving the page you are on.</li></ul>` },
+};
+const SITES = {
+  'github.com': { url: 'https://github.com/login', name: 'GitHub', tab: 'Sign in to GitHub · GitHub', title: 'Sign in to GitHub', logo: '🐙', brand: '#2da44e', user: 'Username or email address', btn: 'Sign in' },
+  'accounts.google.com': { url: 'https://accounts.google.com/signin', name: 'Google', tab: 'Sign in – Google Accounts', title: 'Sign in', logo: '🔵', brand: '#1a73e8', user: 'Email or phone', btn: 'Next' },
+  'news.ycombinator.com': { url: 'https://news.ycombinator.com/login', name: 'Hacker News', tab: 'Login | Hacker News', title: 'Login', logo: '🟧', brand: '#ff6600', user: 'username', btn: 'login' },
+};
+
+// ---------------------------------------------------------------- fake Database
+const db = {
+  groups: [
+    { id: 'root', name: 'Personal', parent: null },
+    { id: 'g-internet', name: 'Internet', parent: 'root' },
+    { id: 'g-email', name: 'Email', parent: 'root' },
+    { id: 'g-bank', name: 'Banking', parent: 'root' },
+    { id: 'g-work', name: 'Work', parent: 'root' },
+    { id: 'g-servers', name: 'Servers', parent: 'g-work' },
+    { id: 'g-bin', name: 'Recycle Bin', parent: 'root', bin: true },
+  ],
+  entries: [],
+};
+let n = 0;
+const mk = (group, title, username, password, url, o = {}) => ({ id: 'e' + (++n), group, title, username, password, url, urls: [], totp: null, notes: '', tags: [], history: [], custom: {}, created: T(400), modified: T(o.mod ?? 30), uuid: crypto.randomUUID(), ...o });
+db.entries = [
+  mk('g-internet', 'GitHub', 'alex-dev', 'gH7$kq2!vLx9pR', 'https://github.com', { totp: 'JBSWY3DPEHPK3PXP', tags: ['dev'], mod: 12, history: [{ modified: T(90), username: 'alex-dev', password: 'old-gh-pass-1' }, { modified: T(200), username: 'alex', password: 'older-gh-pass' }], custom: { 'KeePassXC-Browser Settings': '{"Allow":["github.com"],"Deny":[]}' } }),
+  mk('g-work', 'GitHub (work)', 'alex-examplecorp', 'Wk!92nB#xq', 'https://github.com', { urls: ['https://github.example-corp.com'], totp: 'KRSXG5CTMVRXEZLU', tags: ['work'], mod: 3 }),
+  mk('g-email', 'Google', 'alex@example.com', 'Gm-7731-pass', 'https://accounts.google.com', { urls: ['androidapp://com.google.android.gm'], totp: 'GEZDGNBVGY3TQOJQ', mod: 45 }),
+  mk('g-email', 'Proton Mail', 'alex@proton.example', 'pm$4qL0w', 'https://account.proton.me', { mod: 80 }),
+  mk('g-internet', 'Reddit', 'alex_r', 'rd-88-QWE', 'https://www.reddit.com', { mod: 150 }),
+  mk('g-internet', 'Amazon', 'alex@example.com', 'Amz!2024x', 'https://www.amazon.com', { mod: 20, notes: 'Prime renews in March' }),
+  mk('g-internet', 'Steam', 'alexgames', 'St3am!!pw', 'https://store.steampowered.com', { totp: 'MFRGGZDFMZTWQ2LK', mod: 7 }),
+  mk('g-bank', 'Monzo', 'alex@example.com', 'Mz-9911', 'https://monzo.com', { notes: 'Card PIN is NOT stored here.\nSupport: +44 20 0000 0000', mod: 60 }),
+  mk('g-bank', 'Revolut', '+44 7700 900000', 'Rv0lut#22', 'https://app.revolut.com', { totp: 'ONSWG4TFOQYTEMZT', mod: 15 }),
+  mk('g-work', 'Jira', 'alex@example-corp.com', 'J1ra-pass', 'https://example-corp.atlassian.net', { mod: 2 }),
+  mk('g-work', 'Slack', 'alex@example-corp.com', 'Sl@ck-77', 'https://example-corp.slack.com', { mod: 9 }),
+  mk('g-servers', 'prod-db-01', 'postgres', 'pg-very-secret-01', 'ssh://10.0.0.12', { notes: 'Bastion: bastion.example-corp.com\nPort 5432 via tunnel', tags: ['prod', 'db'], mod: 30 }),
+  mk('g-servers', 'Grafana', 'admin', 'graf-adm-9', 'https://grafana.example-corp.com', { mod: 100 }),
+  mk('g-bin', 'Twitter (old)', 'alex_tw', 'tw-old-pass', 'https://twitter.com', { prevGroup: 'g-internet', mod: 300 }),
+  mk('g-bin', 'Dropbox', 'alex@example.com', 'dbx-pass', 'https://www.dropbox.com', { prevGroup: 'g-internet', mod: 250 }),
+];
+const E = id => db.entries.find(e => e.id === id);
+const G = id => db.groups.find(g => g.id === id);
+const inBin = e => e.group === 'g-bin';
+const childGroups = gid => db.groups.filter(g => g.parent === gid && !g.bin);
+const groupEntries = gid => db.entries.filter(e => e.group === gid);
+const countDeep = gid => groupEntries(gid).length + childGroups(gid).reduce((s, g) => s + countDeep(g.id), 0);
+const path = gid => { const out = []; let g = G(gid); while (g) { out.unshift(g.name); g = G(g.parent); } return out.join(' / '); };
+const isMatch = e => !inBin(e) && [e.url, ...e.urls].some(u => { const h = host(u); return h && reg(h) === reg(state.site); });
+const matches = () => db.entries.filter(isMatch);
+const searchEntries = q => { q = q.toLowerCase(); return db.entries.filter(e => !inBin(e) && [e.title, e.username, e.url, ...e.urls, e.notes, ...e.tags].join(' ').toLowerCase().includes(q)); };
+
+// fake TOTP: stable per 30 s window, not real RFC 6238
+const code = s => { const w = Math.floor(Date.now() / 30000); let h = 7; for (const c of s + w) h = (h * 31 + c.charCodeAt(0)) >>> 0; return String(h % 1e6).padStart(6, '0'); };
+const fmtCode = c => c.slice(0, 3) + ' ' + c.slice(3);
+const left = () => 30 - Math.floor(Date.now() / 1000) % 30;
+
+// generator
+const WORDS = 'acorn badge cobalt delta ember fable glider harbor ivory jasper kettle lantern marble nectar orbit pebble quartz raven saddle timber umber velvet walnut yonder zephyr anchor birch cinder dune falcon granite hollow island juniper kiln lagoon meadow nimbus otter prairie quill ridge spruce thistle'.split(' ');
+const rnd = k => { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0] % k; };
+function pool() {
+  const g = state.gen; let p = '';
+  if (g.upper) p += g.noAmbig ? 'ABCDEFGHJKLMNPQRSTUVWXYZ' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (g.lower) p += g.noAmbig ? 'abcdefghijkmnpqrstuvwxyz' : 'abcdefghijklmnopqrstuvwxyz';
+  if (g.digits) p += g.noAmbig ? '23456789' : '0123456789';
+  if (g.symbols) p += '!@#$%^&*-_=+?';
+  return p || 'abcdefghijklmnopqrstuvwxyz';
+}
+function generate() {
+  const g = state.gen;
+  if (g.mode === 'words') { let w = [...Array(g.words)].map(() => WORDS[rnd(WORDS.length)]); if (g.cap) w = w.map(x => x[0].toUpperCase() + x.slice(1)); return w.join(g.sep); }
+  const p = pool(); return [...Array(g.length)].map(() => p[rnd(p.length)]).join('');
+}
+const bits = () => state.gen.mode === 'words' ? Math.round(state.gen.words * Math.log2(7776)) : Math.round(state.gen.length * Math.log2(pool().length));
+
+// ---------------------------------------------------------------- state
+const params = new URLSearchParams(location.search);
+const state = {
+  variant: VARIANTS[params.get('variant')] ? params.get('variant') : 'A',
+  site: 'github.com',
+  locked: true, unlocking: false, unlockPw: '', rememberKey: true,
+  surfaceOpen: true,
+  page: { username: '', password: '' },
+  inline: null, inlineSearch: '',
+  prompt: null,
+  search: '',
+  reveal: {}, histOpen: {},
+  toast: '',
+  draft: null,
+  recent: ['e3', 'e7', 'e10'],
+  gen: { mode: 'chars', length: 20, upper: true, lower: true, digits: true, symbols: true, noAmbig: false, words: 5, sep: '-', cap: true, value: '' },
+  a: { stack: [{ s: 'home' }] },
+  b: { panelOpen: true, sel: null, editing: false, open: { 'g-internet': true }, gen: false },
+  c: { tab: 'page', mgr: false, group: 'g-internet', sel: null, editing: false, detailTab: 'entry', genDialog: false, quickPw: '' },
+};
+state.gen.value = generate();
+state.c.quickPw = generate();
+
+// ---------------------------------------------------------------- shared widgets
+const brand = () => `<span class="brand">◆ rimlock</span>`;
+const COLORS = ['#d9480f', '#1971c2', '#2b8a3e', '#7048e8', '#c2255c', '#0b7285', '#e67700'];
+const ico = (e, size = '') => `<span class="ico ${size}" style="background:${COLORS[[...e.title].reduce((s, c) => s + c.charCodeAt(0), 0) % COLORS.length]}">${esc(e.title[0])}</span>`;
+const totp = e => e.totp ? `<span class="totp" data-act="copy" data-what="TOTP code" title="Copy TOTP code"><b class="mono" data-totp="${e.totp}">${fmtCode(code(e.totp))}</b><i data-left>${left()}s</i></span>` : '';
+const copyBtn = (what, glyph = '⧉') => `<button class="ib" data-act="copy" data-what="${what}" title="Copy ${what}">${glyph}</button>`;
+const fld = (label, html, actions = '') => `<div class="fld"><div class="fl">${label}</div><div class="fv">${html}</div><div class="fa">${actions}</div></div>`;
+const groupOptions = sel => db.groups.filter(g => !g.bin).map(g => `<option value="${g.id}" ${g.id === sel ? 'selected' : ''}>${esc(path(g.id))}</option>`).join('');
+
+function unlockForm() {
+  return `<div class="unlock">
+    <div class="logo">◆ rimlock</div>
+    <div class="dbline"><b>Personal.kdbx</b><span class="muted">WebDAV · cloud.example.org</span><button class="link small" data-act="nyi">Change Database…</button></div>
+    <div class="ef"><span>Master password</span><input id="unlock-pw" type="password" data-bind="unlockPw" value="${esc(state.unlockPw)}" placeholder="any value works here"></div>
+    <div class="keyfile">Key file: <span class="chip">personal.key</span><button class="link small" data-act="nyi">Choose…</button>
+      <label><input type="checkbox" data-bindc="rememberKey" ${state.rememberKey ? 'checked' : ''}> Remember on this device</label></div>
+    <button class="primary" data-act="unlock" ${state.unlocking ? 'disabled' : ''}>${state.unlocking ? 'Deriving key (Argon2id)…' : 'Unlock'}</button>
+    <div class="muted small" style="text-align:center">Auto-lock 1 h after last use · on screen lock · when the browser closes</div>
+  </div>`;
+}
+
+function historyBlock(e) {
+  if (!e.history.length) return '';
+  const open = state.histOpen[e.id];
+  return `<div><button class="link small" data-act="hist-toggle" data-id="${e.id}">${open ? '▾' : '▸'} History (${e.history.length})</button>
+    ${open ? e.history.map((h, i) => `<div class="hrow"><span>${ago(h.modified)}</span><span class="mono">${esc(h.username)} · ${state.reveal[e.id] ? esc(h.password) : '••••••'}</span><button class="link small" data-act="hist-restore" data-id="${e.id}" data-i="${i}">Restore</button></div>`).join('') : ''}</div>`;
+}
+
+function detail(e, { history = true } = {}) {
+  const rev = state.reveal[e.id];
+  return `<div class="detail">
+    ${inBin(e) ? `<div class="binnote">In Recycle Bin · was in ${esc(path(e.prevGroup || 'root'))}</div>` : ''}
+    ${fld('Username', esc(e.username), copyBtn('username'))}
+    ${fld('Password', `<span class="mono">${rev ? esc(e.password) : '••••••••••••'}</span>`, `<button class="ib" data-act="reveal" data-id="${e.id}" title="Reveal">👁</button>${copyBtn('password')}`)}
+    ${e.totp ? fld('TOTP', totp(e)) : ''}
+    ${fld('URL', `<a href="#" onclick="return false">${esc(e.url)}</a>${e.urls.map(u => `<div class="sub">${esc(u)} <span class="tag">extra URL</span></div>`).join('')}`)}
+    ${e.notes ? fld('Notes', `<pre>${esc(e.notes)}</pre>`) : ''}
+    ${e.tags.length ? fld('Tags', e.tags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')) : ''}
+    ${fld('Group', esc(path(e.group)))}
+    <div class="meta">Modified ${ago(e.modified)}</div>
+    ${history ? historyBlock(e) : ''}
+  </div>`;
+}
+
+const inp = (label, key, ph = '') => `<div class="ef"><span>${label}</span><input id="d-${key}" data-bind="draft.${key}" value="${esc(state.draft[key])}" placeholder="${ph}"></div>`;
+function editForm() {
+  const d = state.draft;
+  return `<div class="editform">
+    ${inp('Title', 'title')}
+    ${inp('Username', 'username')}
+    <div class="ef"><span>Password</span><div class="row"><input id="d-password" class="mono" type="${state.reveal.draft ? 'text' : 'password'}" data-bind="draft.password" value="${esc(d.password)}">
+      <button class="ib" data-act="reveal-draft" title="Reveal">👁</button><button class="ib" data-act="draft-gen" title="Generate with current generator settings">🎲</button></div></div>
+    ${inp('URL', 'url')}
+    <div class="ef"><span>Additional URLs <small>(one per line; stored as KP2A_URL*)</small></span><textarea id="d-urls" data-bind="draft.urlsText" rows="2">${esc(d.urlsText)}</textarea></div>
+    ${inp('TOTP', 'totp', 'otpauth://… or base32 secret')}
+    <div class="ef"><span>Group</span><select id="d-group" data-bind="draft.group">${groupOptions(d.group)}</select></div>
+    ${inp('Tags', 'tagsText', 'comma separated')}
+    <div class="ef"><span>Notes</span><textarea id="d-notes" data-bind="draft.notes" rows="3">${esc(d.notes)}</textarea></div>
+    <button class="link small" data-act="nyi">+ Add custom field</button>
+  </div>`;
+}
+
+const chk = (k, l) => `<label><input type="checkbox" data-bindc="gen.${k}" data-regen ${state.gen[k] ? 'checked' : ''}> ${l}</label>`;
+function genPanel() {
+  const g = state.gen;
+  return `<div class="gen">
+    <div class="seg"><button class="${g.mode === 'chars' ? 'on' : ''}" data-act="gen-mode" data-mode="chars">Characters</button><button class="${g.mode === 'words' ? 'on' : ''}" data-act="gen-mode" data-mode="words">Passphrase</button></div>
+    <div class="genout mono">${esc(g.value)}</div>
+    <div class="row"><span class="muted">≈ ${bits()} bits</span><span style="flex:1"></span><button class="small" data-act="gen-regen">⟳ New</button><button class="small primary" data-act="copy" data-what="generated password">Copy</button></div>
+    ${g.mode === 'chars' ? `
+      <div class="ef" style="margin-top:8px"><span>Length: ${g.length}</span><input type="range" min="8" max="64" id="g-len" data-bind="gen.length" data-num data-regen value="${g.length}"></div>
+      <div class="checks">${chk('upper', 'A–Z')}${chk('lower', 'a–z')}${chk('digits', '0–9')}${chk('symbols', '!@#$')}${chk('noAmbig', 'No look-alikes')}</div>`
+    : `
+      <div class="ef" style="margin-top:8px"><span>Words: ${g.words}</span><input type="range" min="3" max="10" id="g-words" data-bind="gen.words" data-num data-regen value="${g.words}"></div>
+      <div class="ef"><span>Separator</span><select id="g-sep" data-bind="gen.sep" data-regen>${['-', ' ', '.', '_'].map(s => `<option value="${s}" ${s === g.sep ? 'selected' : ''}>${s === ' ' ? 'space' : s}</option>`).join('')}</select></div>
+      <div class="checks">${chk('cap', 'Capitalise')}</div>`}
+    <div class="muted small">Saved profiles / per-site rules: not prototyped</div>
+  </div>`;
+}
+
+function binList(selAct) {
+  const items = groupEntries('g-bin');
+  return `<div class="row" style="padding:6px 12px"><span class="muted" style="flex:1">${items.length} deleted Entries</span><button class="small danger" data-act="empty-bin" ${items.length ? '' : 'disabled'}>Empty Recycle Bin</button></div>
+    ${items.map(e => `<div class="erow" ${selAct ? `data-act="${selAct}" data-id="${e.id}"` : ''}>${ico(e, 'sm')}<div class="et"><b>${esc(e.title)}</b><small>was in ${esc(path(e.prevGroup || 'root'))}</small></div>
+      <div class="ea"><button class="small" data-act="restore" data-id="${e.id}">Restore</button><button class="small danger" data-act="purge" data-id="${e.id}">Delete</button></div></div>`).join('') || '<div class="empty">Recycle Bin is empty</div>'}`;
+}
+
+function promptBody() {
+  const p = state.prompt;
+  if (p.kind === 'update') {
+    const e = E(p.id);
+    return `<div class="pt">Update password for <b>${esc(e.title)}</b> (${esc(e.username)})?</div>
+      <div class="muted small">The old password stays in the Entry's history.</div>
+      <div class="pbtns"><button class="primary small" data-act="prompt-update">Update</button><button class="small" data-act="prompt-new">Save as new</button><button class="small ghost" data-act="prompt-dismiss">Not now</button></div>`;
+  }
+  return `<div class="pt">Save login for <b>${esc(state.site)}</b>?</div>
+    <div class="prow"><input id="p-title" data-bind="prompt.title" value="${esc(p.title)}"><select id="p-group" data-bind="prompt.group">${groupOptions(p.group)}</select></div>
+    <div class="muted small mono">${esc(p.username)} · ${'•'.repeat(Math.min(p.password.length, 12))}</div>
+    ${p.locked ? '<div class="warn small">Database is Locked: saving asks for the Master password first, then checks for an existing Entry.</div>' : ''}
+    <div class="pbtns"><button class="primary small" data-act="prompt-save">Save</button><button class="small ghost" data-act="prompt-dismiss">Not now</button><button class="small ghost" data-act="prompt-never">Never for this site</button></div>`;
+}
+
+// ---------------------------------------------------------------- fake browser + page
+function browserFrame({ tabs, content, side = '', overlay = '' }) {
+  const v = state.variant;
+  const m = state.locked ? 0 : matches().length;
+  const badge = state.prompt ? '1' : m ? String(m) : '';
+  const onMgr = v === 'C' && state.c.tab === 'mgr';
+  const active = v === 'B' ? state.b.panelOpen : state.surfaceOpen;
+  return `<div class="browser">
+    <div class="tabs">${tabs}</div>
+    <div class="toolbar">
+      <span class="navbtns">◀ ▶ ⟳</span>
+      <div class="addr">${onMgr ? '🧩 extension://rimlock/manager.html' : `🔒 <select id="site-select" data-bind="site" title="Switch the fake site">${Object.entries(SITES).map(([k, s]) => `<option value="${k}" ${k === state.site ? 'selected' : ''}>${s.url}</option>`).join('')}</select>`}</div>
+      <button class="exticon ${active ? 'active' : ''}" data-act="toggle-surface" title="rimlock">🔑${badge ? `<span class="badge">${badge}</span>` : ''}</button>
+    </div>
+    <div class="viewport">${content}${side}${overlay}</div>
+  </div>`;
+}
+const pageTab = () => `<div class="tab active">${esc(SITES[state.site].tab)}</div>`;
+
+function inlineRow(e) {
+  return `<div class="inl-row" data-act="fill" data-id="${e.id}">${ico(e, 'sm')}<div><b>${esc(e.title)}</b><small>${esc(e.username)}</small></div></div>`;
+}
+function inlineMenu(field) {
+  const v = state.variant;
+  const head = v !== 'B' ? `<div class="inl-head"><span>◆ rimlock</span><span>Esc to dismiss</span></div>` : '';
+  if (state.locked) return `<div class="inline inline-${v}">${head}<div class="inl-row" data-act="inline-unlock">🔒 <div><b>rimlock is Locked</b><small>Click to unlock</small></div></div></div>`;
+  let rows = matches().map(inlineRow).join('');
+  let search = '';
+  if (v === 'C') {
+    search = `<input id="inl-search" class="inl-search" placeholder="Search all Entries…" data-bind="inlineSearch" data-rerender value="${esc(state.inlineSearch)}">`;
+    if (state.inlineSearch) rows = searchEntries(state.inlineSearch).slice(0, 5).map(inlineRow).join('') || '<div class="inl-empty">No results</div>';
+  }
+  if (!rows) rows = `<div class="inl-empty">No Entries for ${esc(state.site)}</div>`;
+  const gen = field === 'password' ? `<div class="inl-row" data-act="inline-gen">🎲 <div><b>Use a generated password</b><small class="mono">${esc(state.gen.value)}</small></div></div>` : '';
+  const foot = v === 'C' ? `<div class="inl-foot" data-act="open-mgr">Open manager ↗</div>` : '';
+  return `<div class="inline inline-${v}">${head}${search}${rows}${gen}${foot}</div>`;
+}
+
+function page() {
+  const s = SITES[state.site], v = state.variant;
+  const field = (name, type, label) => `<div class="pf"><span>${esc(label)}</span><div class="pfwrap">
+      <input id="page-${name}" type="${type}" data-page="${name}" data-bind="page.${name}" value="${esc(state.page[name])}" autocomplete="off">
+      ${v === 'B' ? `<button class="infield" data-act="inline-open" data-field="${name}" title="rimlock">🔑</button>` : ''}
+    </div>${state.inline === name ? inlineMenu(name) : ''}</div>`;
+  return `<div class="page" data-act="page-bg">
+    ${v === 'C' && state.prompt ? `<div class="pbar">${brand()}<div class="pbody-inline">${promptBody()}</div></div>` : ''}
+    <div class="login" style="--brand:${s.brand}">
+      <div class="sitelogo">${s.logo}</div><h2>${esc(s.title)}</h2>
+      ${field('username', 'text', s.user)}
+      ${field('password', 'password', 'Password')}
+      <button class="signin" data-act="page-submit">${esc(s.btn)}</button>
+      <p class="hint">Fake page. Focus a field for the inline menu. Type new credentials and submit to see the save prompt.</p>
+    </div>
+    ${v === 'A' && state.prompt ? `<div class="pcard">${brand()}${promptBody()}</div>` : ''}
+  </div>`;
+}
+
+// ---------------------------------------------------------------- Variant A: popup, search-first
+function rowA(e, { showPath = false, showFill = false } = {}) {
+  return `<div class="erow" data-act="a-push" data-s="entry" data-id="${e.id}">${ico(e)}
+    <div class="et"><b>${esc(e.title)}</b><small>${esc(showPath ? path(e.group) : e.username)}</small>${showFill && e.totp ? `<small>${totp(e)}</small>` : ''}</div>
+    <div class="ea">${showFill ? `<button class="fillbtn" data-act="fill" data-id="${e.id}">Fill</button>` : ''}${copyBtn('password')}</div></div>`;
+}
+const section = (title, body) => `<div class="section"><h5>${title}</h5>${body}</div>`;
+function screenA(t) {
+  switch (t.s) {
+    case 'home': {
+      const q = state.search, m = matches();
+      return `<div class="searchbar"><input id="a-search" placeholder="Search Personal.kdbx" data-bind="search" data-rerender value="${esc(q)}"></div>
+        ${q ? section(`Results`, searchEntries(q).map(e => rowA(e, { showPath: true })).join('') || '<div class="empty">No results</div>') : `
+          ${section(`On ${esc(state.site)}`, m.length ? m.map(e => rowA(e, { showFill: true })).join('') : `<div class="empty">No Entries for this site<br><button class="link" data-act="a-new">+ New Entry</button></div>`)}
+          ${section('Recently used', state.recent.map(E).filter(e => e && !inBin(e)).map(e => rowA(e)).join(''))}`}`;
+    }
+    case 'browse': {
+      const gid = t.g || 'root', g = G(gid), back = gid !== 'root' ? `<button class="ib" data-act="a-pop">‹</button>` : '';
+      if (g.bin) return `<div class="subhead">${back}<b>🗑 Recycle Bin</b></div>${binList('a-entry')}`;
+      return `<div class="subhead">${back}<b>${esc(g.name)}</b><span style="flex:1"></span><button class="ib" data-act="nyi" title="Group actions: rename, move, new subgroup">⋯</button></div>
+        ${childGroups(gid).map(c => `<div class="grow" data-act="a-push" data-s="browse" data-g="${c.id}">📁 <span>${esc(c.name)}</span><small>${countDeep(c.id)}</small> ›</div>`).join('')}
+        ${groupEntries(gid).map(e => rowA(e)).join('')}
+        ${gid === 'root' ? `<div class="grow bin" data-act="a-push" data-s="browse" data-g="g-bin">🗑 <span>Recycle Bin</span><small>${groupEntries('g-bin').length}</small> ›</div>` : ''}`;
+    }
+    case 'entry': {
+      const e = E(t.id); if (!e) return '';
+      return `<div class="subhead"><button class="ib" data-act="a-pop">‹</button>${ico(e)}<b>${esc(e.title)}</b><span style="flex:1"></span>${inBin(e) ? '' : `<button class="small" data-act="a-edit" data-id="${e.id}">Edit</button>`}</div>
+        <div class="pad">${detail(e)}
+          <div class="actions">${isMatch(e) ? `<button class="primary" data-act="fill" data-id="${e.id}">Fill on ${esc(state.site)}</button>` : ''}
+          ${inBin(e) ? `<button data-act="restore" data-id="${e.id}">Restore</button><button class="danger" data-act="purge" data-id="${e.id}">Delete permanently</button>` : `<button class="ghost danger" data-act="trash" data-id="${e.id}">Move to Recycle Bin</button>`}</div></div>`;
+    }
+    case 'edit':
+      return `<div class="subhead"><button class="link" data-act="a-cancel">Cancel</button><b style="flex:1;text-align:center">${state.draft.id ? 'Edit Entry' : 'New Entry'}</b><button class="primary small" data-act="a-save">Save</button></div><div class="pad">${editForm()}</div>`;
+    case 'gen':
+      return `<div class="pad">${genPanel()}</div>`;
+  }
+  return '';
+}
+function popupA() {
+  if (state.locked) return `<div class="popup">${unlockForm()}</div>`;
+  const top = state.a.stack.at(-1);
+  const fab = (top.s === 'home' || (top.s === 'browse' && top.g !== 'g-bin')) ? `<button class="fab" data-act="a-new" data-g="${top.g || ''}" title="New Entry">+</button>` : '';
+  return `<div class="popup">
+    <div class="ph">${brand()}<span class="dbn">Personal.kdbx ▾</span><span class="sync" title="WebDAV · synced 2 min ago">●</span><span style="flex:1"></span><button class="ib" data-act="lock" title="Lock">🔒</button></div>
+    <div class="pbody">${screenA(top)}</div>${fab}
+    <nav class="tabbar">${[['home', '⌂ Home'], ['browse', '▤ Browse'], ['gen', '🎲 Generator']].map(([s, l]) => `<button class="${state.a.stack[0].s === s ? 'on' : ''}" data-act="a-tab" data-s="${s}">${l}</button>`).join('')}</nav>
+  </div>`;
+}
+
+// ---------------------------------------------------------------- Variant B: side panel, tree explorer
+const leaf = (e, d, showPath = false) => `<div class="tl ${state.b.sel === e.id ? 'sel' : ''}" style="padding-left:${24 + d * 14}px" data-act="b-sel" data-id="${e.id}">${ico(e, 'sm')}<b>${esc(e.title)}</b><small>${esc(showPath ? path(e.group) : e.username)}</small></div>`;
+function treeB(gid, d) {
+  let h = '';
+  for (const c of childGroups(gid)) {
+    const open = state.b.open[c.id];
+    h += `<div class="tg" style="padding-left:${8 + d * 14}px" data-act="b-toggle" data-g="${c.id}">${open ? '▾' : '▸'} 📁 ${esc(c.name)} <small>${countDeep(c.id)}</small></div>`;
+    if (open) h += treeB(c.id, d + 1);
+  }
+  h += groupEntries(gid).map(e => leaf(e, d)).join('');
+  if (gid === 'root') {
+    const open = state.b.open['g-bin'];
+    h += `<div class="tg bin" style="padding-left:8px" data-act="b-toggle" data-g="g-bin">${open ? '▾' : '▸'} 🗑 Recycle Bin <small>${groupEntries('g-bin').length}</small></div>`;
+    if (open) h += `<div style="padding-left:14px">${binList('b-sel')}</div>`;
+  }
+  return h;
+}
+function detailPaneB() {
+  const b = state.b;
+  if (b.editing) return `<div class="dpane"><div class="subhead"><b>${state.draft.id ? 'Edit Entry' : 'New Entry'}</b><span style="flex:1"></span><button class="small" data-act="b-cancel">Cancel</button><button class="small primary" data-act="b-save">Save</button></div><div class="pad">${editForm()}</div></div>`;
+  const e = E(b.sel); if (!e) return '';
+  return `<div class="dpane"><div class="subhead">${ico(e)}<b>${esc(e.title)}</b><span style="flex:1"></span>
+    ${inBin(e) ? `<button class="small" data-act="restore" data-id="${e.id}">Restore</button><button class="small danger" data-act="purge" data-id="${e.id}">Delete</button>`
+      : `${isMatch(e) ? `<button class="small fillbtn" data-act="fill" data-id="${e.id}">Fill</button>` : ''}<button class="small" data-act="b-edit">Edit</button><button class="ib" data-act="trash" data-id="${e.id}" title="Move to Recycle Bin">🗑</button>`}
+    <button class="ib" data-act="b-close" title="Close">✕</button></div><div class="pad">${detail(e)}</div></div>`;
+}
+function sideB() {
+  const b = state.b; if (!b.panelOpen) return '';
+  return `<aside class="side">
+    <div class="ph">${brand()}<span class="dbn">Personal.kdbx ▾</span><span class="sync" title="WebDAV · synced 2 min ago">●</span><span style="flex:1"></span>
+      ${state.locked ? '' : `<button class="ib ${b.gen ? 'on' : ''}" data-act="b-gen" title="Generator">🎲</button><button class="ib" data-act="b-new" title="New Entry">＋</button><button class="ib" data-act="lock" title="Lock">🔒</button>`}
+      <button class="ib" data-act="toggle-surface" title="Close panel">✕</button></div>
+    ${state.prompt ? `<div class="pbanner">${promptBody()}</div>` : ''}
+    ${state.locked ? `<div class="pbody">${unlockForm()}</div>` : `
+      <div class="searchbar"><input id="b-search" placeholder="Search Personal.kdbx" data-bind="search" data-rerender value="${esc(state.search)}"></div>
+      ${b.gen ? `<div class="drawer">${genPanel()}</div>` : ''}
+      <div class="strip"><div class="sl">On this page · ${esc(state.site)}</div>
+        ${matches().map(e => `<div class="chip-e ${b.sel === e.id ? 'sel' : ''}" data-act="b-sel" data-id="${e.id}">${ico(e, 'sm')}<span class="ce"><b>${esc(e.title)}</b> <span class="muted">${esc(e.username)}</span></span>${totp(e)}<button class="small fillbtn" data-act="fill" data-id="${e.id}">Fill</button></div>`).join('') || '<div class="muted small">Nothing saved for this site.</div>'}</div>
+      <div class="tree ${b.sel || b.editing ? 'half' : ''}">${state.search ? (searchEntries(state.search).map(e => leaf(e, 0, true)).join('') || '<div class="empty">No results</div>') : treeB('root', 0)}</div>
+      ${b.sel || b.editing ? detailPaneB() : ''}`}
+  </aside>`;
+}
+
+// ---------------------------------------------------------------- Variant C: quick popup + manager tab
+function popupC() {
+  if (state.locked) return `<div class="popup popup-c">${unlockForm()}</div>`;
+  const q = state.search;
+  return `<div class="popup popup-c">
+    <div class="ph">${brand()}<span class="dbn">${esc(state.site)}</span><span style="flex:1"></span><button class="ib" data-act="lock" title="Lock">🔒</button></div>
+    <div class="pbody">
+      ${q ? '' : matches().map(e => `<div class="card">${ico(e, 'lg')}<div class="et"><b>${esc(e.title)}</b><small>${esc(e.username)}</small></div>
+          <div class="cardbtns"><button class="primary" data-act="fill" data-id="${e.id}">Fill</button><button class="small" data-act="copy" data-what="password">Copy password</button>${totp(e)}</div></div>`).join('')
+        || `<div class="empty">Nothing saved for ${esc(state.site)}<br><button class="link" data-act="open-mgr" data-new="1">+ Add an Entry in the manager</button></div>`}
+      <div class="searchbar"><input id="c-search" placeholder="Search all Entries" data-bind="search" data-rerender value="${esc(q)}"></div>
+      ${q ? searchEntries(q).slice(0, 6).map(e => `<div class="erow" data-act="open-mgr" data-id="${e.id}" title="Open in manager">${ico(e, 'sm')}<div class="et"><b>${esc(e.title)}</b><small>${esc(e.username)}</small></div>
+          <div class="ea">${copyBtn('username', '👤')}${copyBtn('password')}</div></div>`).join('') || '<div class="empty">No results</div>' : ''}
+      <div class="quickgen" title="Quick generator (current settings)"><span class="mono">${esc(state.c.quickPw)}</span><button class="ib" data-act="c-quick-regen">⟳</button>${copyBtn('generated password')}</div>
+    </div>
+    <div class="pfoot"><button class="wide" data-act="open-mgr">Open manager ↗</button></div>
+  </div>`;
+}
+function mgrTree(gid, d) {
+  const g = G(gid);
+  return `<div class="mg ${state.c.group === gid && !state.search ? 'sel' : ''}" style="padding-left:${10 + d * 14}px" data-act="c-group" data-g="${gid}">📁 ${esc(g.name)}<small>${countDeep(gid)}</small></div>`
+    + childGroups(gid).map(c => mgrTree(c.id, d + 1)).join('');
+}
+function advanced(e) {
+  const rows = [['UUID', e.uuid], ['Created', ago(e.created)], ['Modified', ago(e.modified)], ['Expires', 'never'], ['Auto-Type', 'enabled'],
+    ...e.urls.map((u, i) => [i ? `KP2A_URL_${i}` : 'KP2A_URL', u]), ...Object.entries(e.custom).map(([k, v]) => ['CustomData: ' + k, v])];
+  return `<table>${rows.map(([k, v]) => `<tr><td class="muted">${esc(k)}</td><td title="${esc(v)}">${esc(v)}</td></tr>`).join('')}</table>
+    <p class="muted small" style="padding:0 8px">Unknown fields and CustomData from other clients are kept untouched on save.</p>`;
+}
+function mgrDetail() {
+  const c = state.c;
+  if (c.editing) return `<div class="subhead"><b>${state.draft.id ? 'Edit Entry' : 'New Entry'}</b><span style="flex:1"></span><button class="small" data-act="c-cancel">Cancel</button><button class="small primary" data-act="c-save">Save</button></div><div class="pad">${editForm()}</div>`;
+  const e = E(c.sel);
+  if (!e) return '<div class="empty">Select an Entry</div>';
+  const tabs = [['entry', 'Entry'], ['history', `History (${e.history.length})`], ['advanced', 'Advanced']];
+  let body;
+  if (c.detailTab === 'history') body = e.history.length ? e.history.map((h, i) => `<div class="hrow"><span>${ago(h.modified)}</span><span class="mono">${esc(h.username)} · ${state.reveal[e.id] ? esc(h.password) : '••••••'}</span><button class="link small" data-act="hist-restore" data-id="${e.id}" data-i="${i}">Restore</button></div>`).join('') : '<div class="empty">No history yet</div>';
+  else if (c.detailTab === 'advanced') body = advanced(e);
+  else body = detail(e, { history: false });
+  return `<div class="subhead">${ico(e)}<b>${esc(e.title)}</b><span style="flex:1"></span>
+      ${inBin(e) ? `<button class="small" data-act="restore" data-id="${e.id}">Restore</button><button class="small danger" data-act="purge" data-id="${e.id}">Delete</button>`
+        : `<button class="small" data-act="c-edit">Edit</button><button class="ib" data-act="trash" data-id="${e.id}" title="Move to Recycle Bin">🗑</button>`}</div>
+    <div class="dtabs">${tabs.map(([k, l]) => `<button class="${c.detailTab === k ? 'on' : ''}" data-act="c-detail-tab" data-t="${k}">${l}</button>`).join('')}</div>
+    <div class="pad">${body}</div>`;
+}
+function manager() {
+  const c = state.c;
+  if (state.locked) return `<div class="mgr"><div class="mgr-lock">${unlockForm()}</div></div>`;
+  const g = G(c.group), q = state.search;
+  const items = q ? searchEntries(q) : groupEntries(c.group);
+  const binView = g.bin && !q;
+  return `<div class="mgr">
+    <div class="mgr-top">${brand()}<b>Personal.kdbx</b><span class="muted small">WebDAV · cloud.example.org · synced 2 min ago</span><span style="flex:1"></span>
+      <input id="m-search" class="msearch" placeholder="Search Personal.kdbx" data-bind="search" data-rerender value="${esc(q)}">
+      <button data-act="c-new">+ New Entry</button><button data-act="c-gen-dialog">🎲 Generator</button><button data-act="lock">🔒 Lock</button></div>
+    <div class="mgr-cols">
+      <nav class="mgr-groups">${mgrTree('root', 0)}
+        <div class="mg bin ${binView ? 'sel' : ''}" data-act="c-group" data-g="g-bin">🗑 Recycle Bin<small>${groupEntries('g-bin').length}</small></div>
+        <div style="padding:6px 10px"><button class="link small" data-act="nyi">+ New Group</button></div></nav>
+      <section class="mgr-list">
+        <div class="mlhead">${q ? `Search results for “${esc(q)}”` : esc(path(c.group))}<span style="flex:1"></span>${binView ? `<button class="small danger" data-act="empty-bin" ${items.length ? '' : 'disabled'}>Empty Recycle Bin</button>` : ''}</div>
+        <table><thead><tr><th></th><th>Title</th><th>Username</th><th>URL</th><th>Modified</th>${binView ? '<th></th>' : ''}</tr></thead><tbody>
+          ${items.map(e => `<tr class="${c.sel === e.id ? 'sel' : ''}" data-act="c-sel" data-id="${e.id}"><td>${ico(e, 'sm')}</td><td>${esc(e.title)}</td><td>${esc(e.username)}</td><td>${esc(host(e.url) || e.url)}</td><td>${ago(e.modified)}</td>
+            ${binView ? `<td><button class="small" data-act="restore" data-id="${e.id}">Restore</button></td>` : ''}</tr>`).join('')}
+        </tbody></table>${items.length ? '' : '<div class="empty">No Entries here</div>'}
+      </section>
+      <section class="mgr-detail">${mgrDetail()}</section>
+    </div>
+    ${c.genDialog ? `<div class="modal-bg"><div class="modal"><div class="subhead"><b>Password generator</b><span style="flex:1"></span><button class="ib" data-act="c-gen-dialog">✕</button></div><div class="pad">${genPanel()}</div></div></div>` : ''}
+  </div>`;
+}
+function tabsC() {
+  const c = state.c;
+  return `<div class="tab ${c.tab === 'page' ? 'active' : ''}" data-act="c-tab" data-t="page">${esc(SITES[state.site].tab)}</div>`
+    + (c.mgr ? `<div class="tab ${c.tab === 'mgr' ? 'active' : ''}" data-act="c-tab" data-t="mgr">◆ rimlock — Personal.kdbx <span data-act="close-mgr-tab" title="Close tab">✕</span></div>` : '');
+}
+
+// ---------------------------------------------------------------- root view
+function notesColumn() {
+  const v = state.variant, vs = state[v.toLowerCase()];
+  const snapshot = { variant: v, site: state.site, locked: state.locked, surfaceOpen: v === 'B' ? state.b.panelOpen : state.surfaceOpen,
+    inlineMenu: state.inline, savePrompt: state.prompt && state.prompt.kind, draft: state.draft ? (state.draft.id || 'new') : null,
+    entries: db.entries.length, inRecycleBin: groupEntries('g-bin').length, [v.toLowerCase()]: vs };
+  return `<aside class="notes"><span class="proto">PROTOTYPE · throwaway</span>
+    <h3>${v} — ${VARIANTS[v].name}</h3>${VARIANTS[v].notes}
+    <h4>Things to try</h4><ul>
+      <li>Unlock (any password).</li>
+      <li>Focus the Username / Password field on the page.</li>
+      <li>Switch site in the address bar: news.ycombinator.com has no Entries.</li>
+      <li>Type new credentials and submit → save prompt. Use <code>alex-dev</code> + another password on GitHub → update prompt.</li>
+      <li>Open an Entry → Edit → Save → History. Move to Recycle Bin, then restore.</li>
+      <li>Generator: characters vs passphrase.</li></ul>
+    <h4>State</h4><pre>${esc(JSON.stringify(snapshot, null, 1))}</pre></aside>`;
+}
+function view() {
+  const v = state.variant;
+  let frame;
+  if (v === 'A') frame = browserFrame({ tabs: pageTab(), content: page(), overlay: state.surfaceOpen ? popupA() : '' });
+  if (v === 'B') frame = browserFrame({ tabs: pageTab(), content: page(), side: sideB() });
+  if (v === 'C') frame = browserFrame({ tabs: tabsC(), content: state.c.tab === 'mgr' ? manager() : page(), overlay: state.surfaceOpen ? popupC() : '' });
+  return `<div class="stage">${frame}${notesColumn()}</div>
+    <div class="switcher"><button data-act="sw" data-d="-1" title="Previous variant (←)">‹</button><span>${v} · ${VARIANTS[v].name}</span><button data-act="sw" data-d="1" title="Next variant (→)">›</button></div>
+    ${state.toast ? `<div class="toast">${esc(state.toast)}</div>` : ''}`;
+}
+
+let restoringFocus = false;
+function render() {
+  const a = document.activeElement, id = a && a.id, s = a && a.selectionStart;
+  $app.innerHTML = view();
+  if (id) { const el = document.getElementById(id); if (el) { restoringFocus = true; el.focus(); restoringFocus = false; try { el.setSelectionRange(s, s); } catch {} } }
+}
+let toastTimer;
+function toast(msg) { state.toast = msg; clearTimeout(toastTimer); toastTimer = setTimeout(() => { state.toast = ''; render(); }, 2400); }
+
+// ---------------------------------------------------------------- domain-ish actions (in memory)
+function startEdit(id, group) {
+  if (id) { const e = E(id); state.draft = { ...e, urlsText: e.urls.join('\n'), tagsText: e.tags.join(', ') }; }
+  else state.draft = { id: null, title: '', username: '', password: generate(), url: 'https://' + state.site, urlsText: '', totp: '', notes: '', tagsText: '', group: group || 'g-internet' };
+  state.reveal.draft = false;
+}
+function saveDraft() {
+  const d = state.draft;
+  const fields = { title: d.title || 'Untitled', username: d.username, password: d.password, url: d.url, urls: d.urlsText.split('\n').map(s => s.trim()).filter(Boolean),
+    totp: d.totp || null, notes: d.notes, tags: d.tagsText.split(',').map(s => s.trim()).filter(Boolean), group: d.group };
+  let e;
+  if (d.id) {
+    e = E(d.id);
+    if (e.password !== fields.password || e.username !== fields.username) e.history.unshift({ modified: e.modified, username: e.username, password: e.password });
+    Object.assign(e, fields, { modified: Date.now() });
+  } else { e = mk(fields.group, fields.title, fields.username, fields.password, fields.url, { ...fields, mod: 0 }); db.entries.push(e); }
+  state.draft = null;
+  toast('Saved · committed to the local copy, syncing to WebDAV…');
+  return e.id;
+}
+function lock() {
+  Object.assign(state, { locked: true, draft: null, reveal: {}, inline: null, search: '' });
+  state.a.stack = [{ s: 'home' }];
+  Object.assign(state.b, { sel: null, editing: false, gen: false });
+  Object.assign(state.c, { sel: null, editing: false, genDialog: false });
+}
+const touch = id => { state.recent = [id, ...state.recent.filter(x => x !== id)].slice(0, 4); };
+
+// ---------------------------------------------------------------- events
+function setPath(p, v) { const ks = p.split('.'); let o = state; for (const k of ks.slice(0, -1)) o = o[k]; o[ks.at(-1)] = v; }
+function handleBind(t) {
+  let rerender = 'rerender' in t.dataset || 'regen' in t.dataset;
+  if (t.dataset.bind) setPath(t.dataset.bind, 'num' in t.dataset ? +t.value : t.value);
+  if (t.dataset.bindc) { setPath(t.dataset.bindc, t.checked); rerender = true; }
+  if ('regen' in t.dataset) state.gen.value = generate();
+  if (t.dataset.bind === 'site') { state.page = { username: '', password: '' }; state.inline = null; state.prompt = null; rerender = true; }
+  if (rerender) render();
+}
+document.addEventListener('input', ev => { const t = ev.target; if (t.type === 'range' || t.type === 'checkbox' || t.tagName === 'SELECT') return; handleBind(t); });
+document.addEventListener('change', ev => { const t = ev.target; if (t.type === 'range' || t.type === 'checkbox' || t.tagName === 'SELECT') handleBind(t); });
+document.addEventListener('focusin', ev => {
+  const f = ev.target.dataset && ev.target.dataset.page;
+  if (f && !restoringFocus && state.variant !== 'B' && state.inline !== f) { state.inline = f; state.inlineSearch = ''; render(); }
+});
+document.addEventListener('keydown', ev => {
+  const t = ev.target, typing = t.matches && t.matches('input,textarea,select,[contenteditable]');
+  if (ev.key === 'Escape') { if (state.inline) state.inline = null; else if (state.c.genDialog) state.c.genDialog = false; else state.surfaceOpen = false; render(); return; }
+  if (ev.key === 'Enter' && t.id === 'unlock-pw') { act('unlock', {}); return; }
+  if (!typing && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight')) act('sw', { d: ev.key === 'ArrowLeft' ? -1 : 1 });
+});
+document.addEventListener('click', ev => {
+  const el = ev.target.closest('[data-act]');
+  if (!el) return;
+  if (el.tagName === 'A') ev.preventDefault();
+  act(el.dataset.act, el.dataset, ev);
+});
+
+function act(a, d, ev) {
+  const v = state.variant, b = state.b, c = state.c;
+  switch (a) {
+    case 'sw': { const ks = Object.keys(VARIANTS); state.variant = ks[(ks.indexOf(v) + (+d.d) + ks.length) % ks.length];
+      history.replaceState(null, '', '?variant=' + state.variant); state.inline = null; state.surfaceOpen = true; b.panelOpen = true; break; }
+    case 'toggle-surface': if (v === 'B') b.panelOpen = !b.panelOpen; else state.surfaceOpen = !state.surfaceOpen; break;
+    case 'page-bg':
+      if (v !== 'B') state.surfaceOpen = false;
+      if (!ev.target.closest('.pf')) state.inline = null;
+      break;
+    case 'nyi': toast('Not prototyped'); return;
+    // lock state
+    case 'unlock':
+      if (state.unlocking) return;
+      state.unlocking = true;
+      setTimeout(() => { Object.assign(state, { locked: false, unlocking: false, unlockPw: '' }); render(); }, 700);
+      break;
+    case 'lock': lock(); toast('Locked'); break;
+    // fields
+    case 'copy': toast(`Copied ${d.what} · clipboard clears in 30 s`); return;
+    case 'reveal': state.reveal[d.id] = !state.reveal[d.id]; break;
+    case 'reveal-draft': state.reveal.draft = !state.reveal.draft; break;
+    case 'draft-gen': state.draft.password = generate(); state.reveal.draft = true; break;
+    case 'hist-toggle': state.histOpen[d.id] = !state.histOpen[d.id]; break;
+    case 'hist-restore': { const e = E(d.id), h = e.history[+d.i];
+      e.history.unshift({ modified: e.modified, username: e.username, password: e.password });
+      Object.assign(e, { username: h.username, password: h.password, modified: Date.now() }); toast('Restored from history (current version kept in history)'); break; }
+    // recycle bin
+    case 'trash': { const e = E(d.id); e.prevGroup = e.group; e.group = 'g-bin'; toast('Moved to Recycle Bin');
+      if (v === 'A' && state.a.stack.at(-1).id === d.id) state.a.stack.pop();
+      if (v === 'C') c.sel = null; break; }
+    case 'restore': { const e = E(d.id); e.group = e.prevGroup || 'root'; delete e.prevGroup; toast(`Restored to ${path(e.group)}`); break; }
+    case 'purge': if (!confirm('Delete this Entry permanently?')) return;
+      db.entries = db.entries.filter(e => e.id !== d.id);
+      if (v === 'A' && state.a.stack.at(-1).id === d.id) state.a.stack.pop();
+      if (b.sel === d.id) b.sel = null; if (c.sel === d.id) c.sel = null; break;
+    case 'empty-bin': { const k = groupEntries('g-bin').length; if (!confirm(`Permanently delete ${k} Entries?`)) return;
+      db.entries = db.entries.filter(e => !inBin(e)); b.sel = null; c.sel = null; toast('Recycle Bin emptied'); break; }
+    // generator
+    case 'gen-mode': state.gen.mode = d.mode; state.gen.value = generate(); break;
+    case 'gen-regen': state.gen.value = generate(); break;
+    // page, inline menu, fill
+    case 'inline-open': state.inline = state.inline === d.field ? null : d.field; break;
+    case 'inline-unlock':
+      state.inline = null; if (v === 'B') b.panelOpen = true; else state.surfaceOpen = true;
+      toast(v === 'B' ? 'Opens the side panel' : 'Opens the popup (Chrome: action.openPopup; elsewhere may need a tab)'); break;
+    case 'inline-gen': state.page.password = state.gen.value; state.gen.value = generate(); state.inline = null; toast('Generated password filled; you will be offered to save it on submit'); break;
+    case 'fill': { const e = E(d.id); state.page = { username: e.username, password: e.password }; state.inline = null; touch(e.id);
+      if (v !== 'B') state.surfaceOpen = false; if (v === 'C') c.tab = 'page'; toast(`Filled ${e.title}`); break; }
+    case 'page-submit': {
+      const { username: u, password: p } = state.page;
+      if (!u || !p) { toast('Fill both fields first'); return; }
+      if (v !== 'B') state.surfaceOpen = false;
+      state.inline = null;
+      if (state.locked) { state.prompt = { kind: 'new', title: SITES[state.site].name, username: u, password: p, group: 'g-internet', locked: true }; break; }
+      const m = matches().find(e => e.username === u);
+      if (m && m.password === p) { toast('Signed in (fake). Credentials already saved'); state.page = { username: '', password: '' }; break; }
+      state.prompt = m ? { kind: 'update', id: m.id, username: u, password: p } : { kind: 'new', title: SITES[state.site].name, username: u, password: p, group: 'g-internet' };
+      break; }
+    case 'prompt-new': { const p = state.prompt; state.prompt = { kind: 'new', title: SITES[state.site].name + ' (2)', username: p.username, password: p.password, group: 'g-internet' }; break; }
+    case 'prompt-save': { const p = state.prompt;
+      if (p.locked) { state.locked = false; toast('(Would unlock first.) Saved new Entry'); } else toast('Saved new Entry');
+      db.entries.push(mk(p.group, p.title || SITES[state.site].name, p.username, p.password, 'https://' + state.site, { mod: 0 }));
+      state.prompt = null; state.page = { username: '', password: '' }; break; }
+    case 'prompt-update': { const p = state.prompt, e = E(p.id);
+      e.history.unshift({ modified: e.modified, username: e.username, password: e.password }); e.password = p.password; e.modified = Date.now();
+      state.prompt = null; state.page = { username: '', password: '' }; toast(`Updated ${e.title}`); break; }
+    case 'prompt-dismiss': state.prompt = null; break;
+    case 'prompt-never': state.prompt = null; toast(`Won't ask again on ${state.site}`); break;
+    // A
+    case 'a-tab': state.a.stack = [d.s === 'browse' ? { s: 'browse', g: 'root' } : { s: d.s }]; state.draft = null; break;
+    case 'a-push': state.a.stack.push({ s: d.s, id: d.id, g: d.g }); if (d.s === 'entry') touch(d.id); break;
+    case 'a-entry': state.a.stack.push({ s: 'entry', id: d.id }); break;
+    case 'a-pop': if (state.a.stack.length > 1) state.a.stack.pop(); break;
+    case 'a-edit': startEdit(d.id); state.a.stack.push({ s: 'edit' }); break;
+    case 'a-new': startEdit(null, d.g && d.g !== 'root' ? d.g : 'g-internet'); state.a.stack.push({ s: 'edit' }); break;
+    case 'a-cancel': state.draft = null; state.a.stack.pop(); break;
+    case 'a-save': { const isNew = !state.draft.id, id = saveDraft(); state.a.stack.pop(); if (isNew) state.a.stack.push({ s: 'entry', id }); break; }
+    // B
+    case 'b-toggle': b.open[d.g] = !b.open[d.g]; break;
+    case 'b-sel': b.sel = d.id; b.editing = false; state.draft = null; touch(d.id); break;
+    case 'b-close': b.sel = null; b.editing = false; state.draft = null; break;
+    case 'b-edit': startEdit(b.sel); b.editing = true; break;
+    case 'b-new': startEdit(null, 'g-internet'); b.editing = true; b.sel = null; break;
+    case 'b-cancel': b.editing = false; state.draft = null; break;
+    case 'b-save': { const id = saveDraft(); b.editing = false; b.sel = id; let g = G(E(id).group); while (g) { b.open[g.id] = true; g = G(g.parent); } break; }
+    case 'b-gen': b.gen = !b.gen; break;
+    // C
+    case 'c-tab': c.tab = d.t; state.surfaceOpen = false; break;
+    case 'close-mgr-tab': c.mgr = false; c.tab = 'page'; break;
+    case 'open-mgr':
+      c.mgr = true; c.tab = 'mgr'; state.surfaceOpen = false; state.inline = null; state.search = '';
+      if (d.id) { c.group = E(d.id).group; c.sel = d.id; c.editing = false; c.detailTab = 'entry'; }
+      if (d.new) { startEdit(null, 'g-internet'); c.editing = true; c.sel = null; }
+      break;
+    case 'c-group': c.group = d.g; c.sel = null; c.editing = false; state.search = ''; break;
+    case 'c-sel': c.sel = d.id; c.editing = false; c.detailTab = 'entry'; state.draft = null; touch(d.id); break;
+    case 'c-edit': startEdit(c.sel); c.editing = true; break;
+    case 'c-new': startEdit(null, c.group === 'g-bin' || c.group === 'root' ? 'g-internet' : c.group); c.editing = true; c.sel = null; break;
+    case 'c-cancel': c.editing = false; state.draft = null; break;
+    case 'c-save': { const id = saveDraft(); c.editing = false; c.sel = id; c.group = E(id).group; break; }
+    case 'c-gen-dialog': c.genDialog = !c.genDialog; break;
+    case 'c-detail-tab': c.detailTab = d.t; break;
+    case 'c-quick-regen': c.quickPw = generate(); break;
+  }
+  render();
+}
+
+setInterval(() => {
+  document.querySelectorAll('[data-totp]').forEach(el => { el.textContent = fmtCode(code(el.dataset.totp)); });
+  document.querySelectorAll('[data-left]').forEach(el => { el.textContent = left() + 's'; });
+}, 1000);
+render();
+</script>
+</body>
+</html>
