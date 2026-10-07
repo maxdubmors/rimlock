@@ -30,6 +30,14 @@ _Avoid_: Cache, offline cache, mirror
 Changes in the Local copy that have not yet been written to the Source.
 _Avoid_: Unsaved changes, dirty state
 
+**Merge**:
+Combining two versions of the same Database into one, object by object: the newer version of each Entry or Group wins, the older one is kept in its history, and deletions on either side are honoured.
+_Avoid_: Conflict resolution, reconcile
+
+**Sync**:
+Bringing a Local copy and its Source back in line: merging in changes found at the Source, then writing the result back.
+_Avoid_: Upload, push, refresh
+
 ### Access
 
 **Master password**:
