@@ -4,4 +4,4 @@ The Extension ships as MV3 on Chrome and Firefox (and on Safari later), with MV3
 
 ## Consequences
 
-The Firefox background is an event page (Firefox has no background service worker or offscreen API), so the Core must run in service-worker, event-page and extension-page contexts. MV2 on Firefox stays a fallback only if [Decide where the unlocked Database lives and how locking works](https://github.com/maxdubmors/rimlock/issues/12) shows that restoring state after a wake-up is unacceptable there.
+The Firefox background is an event page (Firefox has no background service worker or offscreen API), so the Core must run in service-worker, event-page and extension-page contexts. The MV2 fallback on Firefox is not needed: ADR-0005 rebuilds the Unlocked Database on every wake-up the same way in an event page and in a service worker.

@@ -40,6 +40,10 @@ _Avoid_: Master key, credentials
 The state in which the Extension holds a Database decrypted and can read Entries without asking for the Composite key again. Its opposite, **Locked**, holds no decrypted data and no key material.
 _Avoid_: Open, logged in, session
 
+**Auto-lock**:
+Locking an Unlocked Database without the user asking, when a configured condition is met (inactivity, OS screen lock, browser closing, Extension update).
+_Avoid_: Timeout, session expiry
+
 ### Components
 
 **Extension**:

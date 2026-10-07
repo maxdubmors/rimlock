@@ -21,7 +21,7 @@ The boundary follows meaning, not convenience. The Core holds the decrypted Data
   - complete merge with attachments, icons and Meta, or an own merge in the Core;
   - v2 key file hash check;
   - never write above KDBX 4.1, with a verified 3.1 → 4.1 round trip.
-- Opening from a cached transformed key and saving without re-running the KDF depend on the unlocked-state decision.
+- Opening from a cached transformed key and saving without re-running the KDF (reusing the KDF seed with a fresh master seed) are MVP fixes too, per ADR-0005. Note that KeePassXC does not do this: it draws a fresh KDF seed on every save.
 - A challenge-response injection hook is not built for the MVP, but the API must leave room for it. KDBX 4.0 writes are not needed.
 - The Rust toolchain enters the reproducible build AMO requires. The `.wasm` is built in a pinned container, and a Firefox WASM smoke test plus an AMO unlisted dry run come first in implementation.
 - Decision detail: [Lock the stack and the TS/Rust split](https://github.com/maxdubmors/rimlock/issues/11).
