@@ -22,6 +22,24 @@ _Avoid_: Folder, collection
 Where a Database is read from and written back to: a local file or a WebDAV location.
 _Avoid_: Backend, provider, storage
 
+### Access
+
+**Master password**:
+The password the user types to open a Database.
+_Avoid_: Passphrase, PIN
+
+**Key file**:
+A file whose contents form part of the key to a Database, held separately from it.
+_Avoid_: Keyfile, key
+
+**Composite key**:
+Everything required to open a Database combined: the Master password, Key file and any hardware-key response.
+_Avoid_: Master key, credentials
+
+**Unlocked**:
+The state in which the Extension holds a Database decrypted and can read Entries without asking for the Composite key again. Its opposite, **Locked**, holds no decrypted data and no key material.
+_Avoid_: Open, logged in, session
+
 ### Components
 
 **Extension**:
