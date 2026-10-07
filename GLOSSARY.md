@@ -76,6 +76,14 @@ _Avoid_: Engine, backend, SDK
 
 ### Filling
 
+**Match**:
+An Entry matches a page when one of its URLs names the page's site, following the KeePass conventions rimlock honours, and nothing in the Database hides it from that site. Only matching Entries are offered on a page.
+_Avoid_: Suggestion, hit, candidate
+
+**Fill**:
+Putting an Entry's username, password or TOTP code into the fields of a web page. A Fill happens only when the user asks for it, never on page load.
+_Avoid_: Auto-fill, inject, auto-type
+
 **Inline menu**:
 The rimlock menu shown under a login field on a web page, offering the Entries that match the site.
 _Avoid_: Dropdown, overlay, autofill popup
