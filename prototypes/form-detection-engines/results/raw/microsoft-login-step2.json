@@ -1,0 +1,61 @@
+{
+ "name": "microsoft-login-step2",
+ "url": "https://login.live.com/",
+ "kind": "multistep",
+ "note": "step 2 after a known-existing address; no password is entered",
+ "capturedAt": "2026-10-07T19:50:45.394Z",
+ "finalUrl": "https://login.live.com/",
+ "frames": [
+  {
+   "url": "https://login.live.com/",
+   "title": "Enter your password",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "password",
+     "name": "passwd",
+     "htmlId": "passwordEntry",
+     "autocomplete": "current-password",
+     "placeholder": "",
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "https://login.live.com/ppsecure/post.srf?contextid=B2612FBBF55EF414&opid=986AB9CD7E6E0A5E&bk=1791402645&uaid=4d681ee1b8db4062b670971047b599d1&pid=0",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.799999997019768,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 18.5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "current-password"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://fpt.live.com/?session_id=4d681ee1b8db4062b670971047b599d1&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+   "title": "",
+   "fields": []
+  },
+  {
+   "url": "https://df.cfp.microsoft.com/Clear.HTML?ctx=Ls1.0&wl=False&session_id=4d681ee1b8db4062b670971047b599d1&id=ed3870a5-c8a5-58d3-f255-a34768a63a76&w=8DF24AC48775DA3&tkt=&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d",
+   "title": "",
+   "fields": []
+  }
+ ]
+}

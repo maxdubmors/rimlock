@@ -1,0 +1,55 @@
+{
+ "name": "wikipedia-home",
+ "url": "https://en.wikipedia.org/wiki/Main_Page",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T19:58:07.899Z",
+ "finalUrl": "https://en.wikipedia.org/wiki/Main_Page",
+ "frames": [
+  {
+   "url": "https://en.wikipedia.org/wiki/Main_Page",
+   "title": "Wikipedia, the free encyclopedia",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "search",
+     "name": "search",
+     "htmlId": "searchInput",
+     "autocomplete": "off",
+     "placeholder": "Search Wikipedia",
+     "aria": "Search Wikipedia",
+     "label": "Search",
+     "maxlength": null,
+     "form": "/w/index.php",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "search",
+     "name": "search",
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": "Search Wikipedia",
+     "aria": null,
+     "label": "Search",
+     "maxlength": null,
+     "form": "/w/index.php",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 8.400000002235174,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17.699999999254942,
+    "fields": []
+   }
+  }
+ ]
+}

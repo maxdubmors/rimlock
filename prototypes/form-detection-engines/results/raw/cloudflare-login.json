@@ -1,0 +1,78 @@
+{
+ "name": "cloudflare-login",
+ "url": "https://dash.cloudflare.com/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:55:41.082Z",
+ "finalUrl": "https://dash.cloudflare.com/login",
+ "frames": [
+  {
+   "url": "https://dash.cloudflare.com/login",
+   "title": "Cloudflare Dashboard | Manage Your Account",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "email",
+     "htmlId": "email",
+     "autocomplete": "email",
+     "placeholder": null,
+     "aria": null,
+     "label": "Email Email",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": "Password",
+     "label": "Password Password",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 16.699999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rchqtyREYSVCHkmGGwKRsSUWI81wiFf7FMmMzZ0PCNynT8-1791402946-1.3.1.1-lU4bvCmvzziY.qwfvICmDZLTqZ6Rc08K5sTxHycEPX4/23vpo/0x4AAAAAADlYAGQxVeGSor-h/light/fbE/api/flexible?lang=auto",
+   "title": "Checking your Browser…",
+   "fields": []
+  }
+ ]
+}

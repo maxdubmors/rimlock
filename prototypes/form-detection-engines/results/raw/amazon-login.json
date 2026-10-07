@@ -1,0 +1,69 @@
+{
+ "name": "amazon-login",
+ "url": "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:50:23.024Z",
+ "finalUrl": "https://www.amazon.com/ax/claim?arb=1b8719a1-1dbc-4858-aa43-edd3f59bcb87",
+ "frames": [
+  {
+   "url": "https://www.amazon.com/ax/claim?arb=1b8719a1-1dbc-4858-aa43-edd3f59bcb87",
+   "title": "Sign in",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "email",
+     "htmlId": "ap_email_login",
+     "autocomplete": "username",
+     "placeholder": null,
+     "aria": "Enter mobile number or email",
+     "label": "Continue",
+     "maxlength": null,
+     "form": "/ax/claim?arb=8d24b6c8-bd94-45c8-843c-449e9a8e7aa9&openid.assoc_handle=usflex&openid.mode=checkid_setup&policy_handle=Retail-Checkout&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "auth-credential-autofill-hint",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Continue",
+     "maxlength": "1024",
+     "form": "/ax/claim?arb=8d24b6c8-bd94-45c8-843c-449e9a8e7aa9&openid.assoc_handle=usflex&openid.mode=checkid_setup&policy_handle=Retail-Checkout&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.800000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 18.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "form-detection-engines-harness",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@protontech/autofill": "0.0.38040317",
+    "esbuild": "^0.25.0",
+    "puppeteer-core": "^25.12.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,133 @@
+{
+ "name": "steam-login",
+ "url": "https://store.steampowered.com/login/",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:54:58.070Z",
+ "finalUrl": "https://store.steampowered.com/login/",
+ "frames": [
+  {
+   "url": "https://store.steampowered.com/login/",
+   "title": "Sign In",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "term",
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": "Search the store",
+     "aria": null,
+     "label": "Advanced Search",
+     "maxlength": null,
+     "form": "https://store.steampowered.com/search",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": null,
+     "htmlId": "«r4»",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "SIGN IN WITH ACCOUNT NAME",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "password",
+     "name": null,
+     "htmlId": "«r5»",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "PASSWORD",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "text",
+     "name": null,
+     "htmlId": "authcode",
+     "autocomplete": null,
+     "placeholder": "enter your code here",
+     "aria": null,
+     "label": "Contact Steam Support for help with acc",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:4",
+     "type": "text",
+     "name": null,
+     "htmlId": "friendlyname",
+     "autocomplete": null,
+     "placeholder": "enter a friendly name here",
+     "aria": null,
+     "label": "To easily recognize this browser among the list of devices Steam Guard has",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:5",
+     "type": "text",
+     "name": null,
+     "htmlId": "twofactorcode_entry",
+     "autocomplete": "off",
+     "placeholder": "enter your code here",
+     "aria": null,
+     "label": "Contact Steam Support for help with accou",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.399999998509884,
+    "fields": [
+     {
+      "id": "f0:2",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:5",
+      "label": "otp"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 21.5,
+    "fields": [
+     {
+      "id": "f0:2",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:1",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

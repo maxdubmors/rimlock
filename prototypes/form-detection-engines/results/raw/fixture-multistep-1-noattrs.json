@@ -1,0 +1,50 @@
+{
+ "name": "fixture-multistep-1-noattrs",
+ "url": "http://localhost:8123/multistep-1-noattrs.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:31.636Z",
+ "finalUrl": "http://localhost:8123/multistep-1-noattrs.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/multistep-1-noattrs.html",
+   "title": "Log in to Acme",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "value",
+     "htmlId": "email_field",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Enter your email",
+     "maxlength": null,
+     "form": "/continue",
+     "shadow": false,
+     "visible": true,
+     "gt": "username"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

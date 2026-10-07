@@ -1,0 +1,89 @@
+{
+ "name": "zoom-signin",
+ "url": "https://zoom.us/signin",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:52:50.377Z",
+ "finalUrl": "https://zoom.us/signin#/login",
+ "frames": [
+  {
+   "url": "https://zoom.us/signin#/login",
+   "title": "Sign In | Zoom",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "account",
+     "htmlId": "email",
+     "autocomplete": "off",
+     "placeholder": "",
+     "aria": "Enter email, Zoom Mail or phone number",
+     "label": "Enter email, Zoom Mail or phone number",
+     "maxlength": "128",
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": null,
+     "aria": null,
+     "label": "Enter email, Zoom Mail or phone number",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "vendor-search-handler",
+     "htmlId": "vendor-search-handler",
+     "autocomplete": null,
+     "placeholder": "Search...",
+     "aria": null,
+     "label": "Vendor Search",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.400000002235174,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17.5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf2C54aAAAAAOOpnJT1sg39rowHN362Zj2QSyls&co=aHR0cHM6Ly96b29tLnVzOjQ0Mw..&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&theme=light&size=invisible&anchor-ms=20000&execute-ms=30000&cb=h779i0sqtyb2",
+   "title": "reCAPTCHA",
+   "fields": []
+  }
+ ]
+}

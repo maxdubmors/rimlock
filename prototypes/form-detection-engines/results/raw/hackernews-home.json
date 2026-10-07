@@ -1,0 +1,45 @@
+{
+ "name": "hackernews-home",
+ "url": "https://news.ycombinator.com/",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T20:03:08.659Z",
+ "finalUrl": "https://news.ycombinator.com/",
+ "frames": [
+  {
+   "url": "https://news.ycombinator.com/",
+   "title": "Hacker News",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "q",
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": null,
+     "aria": null,
+     "label": "Search:",
+     "maxlength": null,
+     "form": "//hn.algolia.com/",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 8.100000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17,
+    "fields": []
+   }
+  }
+ ]
+}

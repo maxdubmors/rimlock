@@ -1,0 +1,73 @@
+{
+ "name": "fixture-no-attrs",
+ "url": "http://localhost:8123/no-attrs.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:46.285Z",
+ "finalUrl": "http://localhost:8123/no-attrs.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/no-attrs.html",
+   "title": "Member area",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": "E-mail address",
+     "aria": null,
+     "label": "Enter",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": "username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": "Password",
+     "aria": null,
+     "label": "Enter",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": "current-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.800000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 18.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

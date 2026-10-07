@@ -1,0 +1,94 @@
+{
+ "name": "google-login",
+ "url": "https://accounts.google.com/signin",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:51:09.289Z",
+ "finalUrl": "https://accounts.google.com/v3/signin/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1161180955:1791402671022092",
+ "frames": [
+  {
+   "url": "https://accounts.google.com/v3/signin/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1161180955:1791402671022092",
+   "title": "Sign in - Google Accounts",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "identifier",
+     "htmlId": "identifierId",
+     "autocomplete": "username webauthn",
+     "placeholder": null,
+     "aria": "Email or phone",
+     "label": "Email or phone",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "hiddenPassword",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email or phone Forgot email?",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "ca",
+     "htmlId": "ca",
+     "autocomplete": "off",
+     "placeholder": null,
+     "aria": "Type the text you hear or see",
+     "label": "Type the text you hear or see",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.799999997019768,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 26.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://accounts.youtube.com/accounts/CheckConnection?pmpo=https%3A%2F%2Faccounts.google.com&v=-1524906895&timestamp=1791402672943",
+   "title": "",
+   "fields": []
+  },
+  {
+   "url": "https://accounts.google.com/_/bscframe",
+   "title": "",
+   "fields": []
+  }
+ ]
+}

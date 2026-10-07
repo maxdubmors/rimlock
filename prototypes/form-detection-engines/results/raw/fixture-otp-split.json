@@ -1,0 +1,140 @@
+{
+ "name": "fixture-otp-split",
+ "url": "http://localhost:8123/otp-split.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:57.274Z",
+ "finalUrl": "http://localhost:8123/otp-split.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/otp-split.html",
+   "title": "Verify",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Verify",
+     "maxlength": "1",
+     "form": "/verify",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Verify",
+     "maxlength": "1",
+     "form": "/verify",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Verify",
+     "maxlength": "1",
+     "form": "/verify",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    },
+    {
+     "id": "f0:3",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Verify",
+     "maxlength": "1",
+     "form": "/verify",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    },
+    {
+     "id": "f0:4",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Verify",
+     "maxlength": "1",
+     "form": "/verify",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    },
+    {
+     "id": "f0:5",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Verify",
+     "maxlength": "1",
+     "form": "/verify",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.700000002980232,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 21,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "otp"
+     },
+     {
+      "id": "f0:1",
+      "label": "otp"
+     },
+     {
+      "id": "f0:2",
+      "label": "otp"
+     },
+     {
+      "id": "f0:3",
+      "label": "otp"
+     },
+     {
+      "id": "f0:4",
+      "label": "otp"
+     },
+     {
+      "id": "f0:5",
+      "label": "otp"
+     }
+    ]
+   }
+  }
+ ]
+}

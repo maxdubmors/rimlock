@@ -1,0 +1,79 @@
+{
+ "name": "fixture-german-signup",
+ "url": "http://localhost:8123/german-signup.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:08.534Z",
+ "finalUrl": "http://localhost:8123/german-signup.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/german-signup.html",
+   "title": "Konto erstellen",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "benutzer",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Benutzername",
+     "maxlength": null,
+     "form": "/registrieren",
+     "shadow": false,
+     "visible": true,
+     "gt": "signup-username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "kennwort",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Passwort",
+     "maxlength": null,
+     "form": "/registrieren",
+     "shadow": false,
+     "visible": true,
+     "gt": "new-password"
+    },
+    {
+     "id": "f0:2",
+     "type": "password",
+     "name": "kennwort2",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Passwort wiederholen",
+     "maxlength": null,
+     "form": "/registrieren",
+     "shadow": false,
+     "visible": true,
+     "gt": "new-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.799999997019768,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19.100000001490116,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,89 @@
+{
+ "name": "netflix-login",
+ "url": "https://www.netflix.com/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:51:32.887Z",
+ "finalUrl": "https://www.netflix.com/de-en/login?serverState=BgjUv%2BvcAxLgAUZAEzRicrEpWGU2pGYLhl76995RSNsk9CxxIkfbkEhsqUZxcIBOmgr05Hf0WVwqtGay41VbFdexqrZ95JAoOoI4mkDgyCjSepjunzabh7ywk9tnPCGNGxNvXNH8nM52l6QrYaOSaAwX6P%2F5dbux9y7BGly7%2F%2FlTW4ub4qgtoNJImfzdooFjTSUFsgfbUZTKuKUua8gztoC7QqUeSxpGqefwxLyIlbPdBjtZrvEuA0WbWy3BAPyTWTVlwgLwvCKeM2AVeWipjCUZg%2BQjtgWq1L28AUm96OMEZUfdFjClyTp4GAYiDgoMjhD2HKDzPDBab0G7",
+ "frames": [
+  {
+   "url": "https://www.netflix.com/de-en/login?serverState=BgjUv%2BvcAxLgAUZAEzRicrEpWGU2pGYLhl76995RSNsk9CxxIkfbkEhsqUZxcIBOmgr05Hf0WVwqtGay41VbFdexqrZ95JAoOoI4mkDgyCjSepjunzabh7ywk9tnPCGNGxNvXNH8nM52l6QrYaOSaAwX6P%2F5dbux9y7BGly7%2F%2FlTW4ub4qgtoNJImfzdooFjTSUFsgfbUZTKuKUua8gztoC7QqUeSxpGqefwxLyIlbPdBjtZrvEuA0WbWy3BAPyTWTVlwgLwvCKeM2AVeWipjCUZg%2BQjtgWq1L28AUm96OMEZUfdFjClyTp4GAYiDgoMjhD2HKDzPDBab0G7",
+   "title": "Netflix",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "userLoginId",
+     "htmlId": ":R5akql6l9allbaldalkm:",
+     "autocomplete": "email",
+     "placeholder": null,
+     "aria": null,
+     "label": "Email or mobile number",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": ":R59lal6l9allbaldalkm:",
+     "autocomplete": "password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "vendor-search-handler",
+     "htmlId": "vendor-search-handler",
+     "autocomplete": null,
+     "placeholder": "Search…",
+     "aria": "Cookie list search",
+     "label": "Filter Button",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.899999998509884,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 16.800000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf8hrcUAAAAAIpQAFW2VFjtiYnThOjZOA5xvLyR&co=aHR0cHM6Ly93d3cubmV0ZmxpeC5jb206NDQz&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=qvl88ju2bnyl",
+   "title": "reCAPTCHA",
+   "fields": []
+  }
+ ]
+}

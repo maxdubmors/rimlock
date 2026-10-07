@@ -1,0 +1,40 @@
+{
+ "name": "github-search",
+ "url": "https://github.com/search",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T20:04:04.151Z",
+ "finalUrl": "https://github.com/search",
+ "frames": [
+  {
+   "url": "https://github.com/search",
+   "title": "Search · GitHub",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": "Search GitHub",
+     "aria": "Search GitHub",
+     "label": "TipFor an advanced search, use our prefixes",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.600000001490116,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17.5,
+    "fields": []
+   }
+  }
+ ]
+}

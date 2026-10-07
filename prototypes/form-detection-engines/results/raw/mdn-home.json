@@ -1,0 +1,40 @@
+{
+ "name": "mdn-home",
+ "url": "https://developer.mozilla.org/en-US/",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T19:58:12.316Z",
+ "finalUrl": "https://developer.mozilla.org/en-US/",
+ "frames": [
+  {
+   "url": "https://developer.mozilla.org/en-US/",
+   "title": "MDN Web Docs",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "search",
+     "name": "q",
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": "Search",
+     "aria": "Search",
+     "label": "Exit search",
+     "maxlength": null,
+     "form": "/en-US/search",
+     "shadow": true,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.5,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 0.6999999992549419,
+    "fields": []
+   }
+  }
+ ]
+}

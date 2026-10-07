@@ -1,0 +1,85 @@
+{
+ "name": "github-reset",
+ "url": "https://github.com/password_reset",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T19:57:30.068Z",
+ "finalUrl": "https://github.com/password_reset",
+ "frames": [
+  {
+   "url": "https://github.com/password_reset",
+   "title": "Forgot your password? · GitHub",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "email",
+     "htmlId": "email_field",
+     "autocomplete": null,
+     "placeholder": "Enter your email address",
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/password_reset",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": "octocaptcha-token",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/password_reset",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "required_field_fb36",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/password_reset",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 23.399999998509884,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://octocaptcha.com/datadome?origin_page=github_password_reset",
+   "title": "OctoCaptcha",
+   "fields": []
+  }
+ ]
+}

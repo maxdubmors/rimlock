@@ -1,0 +1,126 @@
+{
+ "name": "fixture-login-and-signup",
+ "url": "http://localhost:8123/login-and-signup.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:20.619Z",
+ "finalUrl": "http://localhost:8123/login-and-signup.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/login-and-signup.html",
+   "title": "Account",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "login_email",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": "username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "login_password",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": "current-password"
+    },
+    {
+     "id": "f0:2",
+     "type": "email",
+     "name": "reg_email",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/register",
+     "shadow": false,
+     "visible": true,
+     "gt": "signup-username"
+    },
+    {
+     "id": "f0:3",
+     "type": "password",
+     "name": "reg_password",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/register",
+     "shadow": false,
+     "visible": true,
+     "gt": "new-password"
+    },
+    {
+     "id": "f0:4",
+     "type": "password",
+     "name": "reg_password2",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Repeat password",
+     "maxlength": null,
+     "form": "/register",
+     "shadow": false,
+     "visible": true,
+     "gt": "new-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.599999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 18.600000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:4",
+      "label": "new-password"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,116 @@
+{
+ "name": "hackernews-login",
+ "url": "https://news.ycombinator.com/login",
+ "kind": "login",
+ "note": "login and create-account forms on one page",
+ "capturedAt": "2026-10-07T19:56:15.880Z",
+ "finalUrl": "https://news.ycombinator.com/login",
+ "frames": [
+  {
+   "url": "https://news.ycombinator.com/login",
+   "title": "",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "acct",
+     "htmlId": null,
+     "autocomplete": "username",
+     "placeholder": null,
+     "aria": null,
+     "label": "username:",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "pw",
+     "htmlId": null,
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "password:",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "acct",
+     "htmlId": null,
+     "autocomplete": "username",
+     "placeholder": null,
+     "aria": null,
+     "label": "username:",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "password",
+     "name": "pw",
+     "htmlId": null,
+     "autocomplete": "new-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "password:",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.800000000745058,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:2",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 21.599999997764826,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:2",
+      "label": "signup-username"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,149 @@
+{
+ "name": "wikipedia-signup",
+ "url": "https://en.wikipedia.org/w/index.php?title=Special:CreateAccount",
+ "kind": "signup",
+ "capturedAt": "2026-10-07T19:57:11.943Z",
+ "finalUrl": "https://auth.wikimedia.org/enwiki/wiki/Special:CreateAccount?useformat=desktop&usesul3=1&centralauthLoginToken=1c49c6b190f807229323be6062389b1d",
+ "frames": [
+  {
+   "url": "https://auth.wikimedia.org/enwiki/wiki/Special:CreateAccount?useformat=desktop&usesul3=1&centralauthLoginToken=1c49c6b190f807229323be6062389b1d",
+   "title": "Create account - Wikipedia",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "search",
+     "name": "search",
+     "htmlId": "searchInput",
+     "autocomplete": "off",
+     "placeholder": "Search Wikipedia",
+     "aria": "Search Wikipedia",
+     "label": "",
+     "maxlength": null,
+     "form": "/enwiki/w/index.php",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": "wpName",
+     "htmlId": "wpName2",
+     "autocomplete": "username",
+     "placeholder": "Enter your username",
+     "aria": null,
+     "label": "Username",
+     "maxlength": null,
+     "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=1c49c6b190f807229323be6062389b1d&usesul3=1&useformat=desktop",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "password",
+     "name": "wpPassword",
+     "htmlId": "wpPassword2",
+     "autocomplete": "new-password",
+     "placeholder": "Enter a password",
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=1c49c6b190f807229323be6062389b1d&usesul3=1&useformat=desktop",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "password",
+     "name": "retype",
+     "htmlId": "wpRetype",
+     "autocomplete": "new-password",
+     "placeholder": "Enter password again",
+     "aria": null,
+     "label": "Confirm password",
+     "maxlength": null,
+     "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=1c49c6b190f807229323be6062389b1d&usesul3=1&useformat=desktop",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:4",
+     "type": "email",
+     "name": "email",
+     "htmlId": "wpEmail",
+     "autocomplete": "email",
+     "placeholder": "Enter your email address",
+     "aria": null,
+     "label": "Email address (optional)",
+     "maxlength": "255",
+     "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=1c49c6b190f807229323be6062389b1d&usesul3=1&useformat=desktop",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:5",
+     "type": "search",
+     "name": "search",
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": "Search Wikipedia",
+     "aria": null,
+     "label": "Search",
+     "maxlength": null,
+     "form": "/enwiki/w/index.php",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 10.5,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:4",
+      "label": "signup-username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 26.5,
+    "fields": [
+     {
+      "id": "f0:4",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:1",
+      "label": "signup-username"
+     }
+    ]
+   }
+  }
+ ]
+}

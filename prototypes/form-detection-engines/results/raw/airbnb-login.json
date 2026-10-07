@@ -1,0 +1,50 @@
+{
+ "name": "airbnb-login",
+ "url": "https://www.airbnb.com/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:54:50.068Z",
+ "finalUrl": "https://www.airbnb.com/login",
+ "frames": [
+  {
+   "url": "https://www.airbnb.com/login",
+   "title": "Log In / Sign Up - Airbnb",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": "phone-or-email",
+     "autocomplete": "tel-national",
+     "placeholder": null,
+     "aria": null,
+     "label": "Phone number or email",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 3.899999998509884,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 16,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

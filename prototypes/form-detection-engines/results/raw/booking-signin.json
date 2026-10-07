@@ -1,0 +1,89 @@
+{
+ "name": "booking-signin",
+ "url": "https://account.booking.com/sign-in",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:54:42.811Z",
+ "finalUrl": "https://account.booking.com/sign-in",
+ "frames": [
+  {
+   "url": "https://account.booking.com/sign-in",
+   "title": "Sign in or create an account | Booking.com",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "password",
+     "name": "password",
+     "htmlId": "hidden-password",
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Email address Continue with email or use one of these options Lost access to you",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "email",
+     "name": "username",
+     "htmlId": "username",
+     "autocomplete": "username",
+     "placeholder": "Enter your email address",
+     "aria": null,
+     "label": "Email address",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.300000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:1",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 15.199999999254942,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://www.booking.com/cookiebanner.html",
+   "title": "Cookie Consent Sharing",
+   "fields": []
+  },
+  {
+   "url": "https://asanalytics.booking.com/gWtq7tJI2Yo4Q0DS?cc9b099627aafa02=4fl5P5davV0Gu-4k2euj4YcxFCc8Hg98kgqIMB6P9l443edhzjH87ROTIN8ZW1Q99ocprLZuOOrGU-fwz86lw9Mz0NUKTVIbe5esD11uKtwqJD9mNQBgFnED5YY9s9MGGWQhDXAqDvd2nknM6hY1CJ7LVBm3IbaeLXJenp9V4Y6etAyXrBYrPvSdDjVKqT6ASx8KXBDOgCs5DlCpOJY",
+   "title": "empty",
+   "fields": []
+  },
+  {
+   "url": "https://h.online-metrix.net/941MikVssp5ctv4e?9cb1454b1eabcfed=KMcmYN2LZyFDJsgw1sE0dOmT3ZuntSE-RJLa-AvRxNwc7N2pV6ID6ZuOMD-dRPA4yHw3N0e8y8bm54-_QaUyhMLzDDs3qSn5frkCU8eqzFr98vxaQcIQgDxRmwMF9iDuKWL7IKNtBfdNXZOrg58A26iR_P8Hw8e31p1GrvUiVUy7CsHR88HFOtUxsFJFqsr-XorVP39i6nd3u7xAFlBO",
+   "title": "empty",
+   "fields": []
+  },
+  {
+   "url": "https://asanalytics.booking.com/8kgorELEG6Sc_frb?d85df323dad36081=hGZJiBeX49eRLiEx6FQRZ9bzgKfLMSgLgpkCEOt1bN2Fkp6njhtSor4-7A--CUlatKvo1s_voDo3QQkhfXeR7qQqTbDFyeBayZxNQF8poBx3QnX_tBJ7KnvBkkaTs5SLjpYuL_o6KeBDzPED9B54LwUnSYDUNbQ0h6VcoWoEPycpug6LzBZQWsUzfK3IVBXSQzkT_gb0GzVBVI9Iuuui",
+   "title": "empty",
+   "fields": []
+  }
+ ]
+}

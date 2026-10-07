@@ -1,0 +1,137 @@
+[
+ {
+  "name": "gitlab-login",
+  "url": "https://gitlab.com/users/sign_in",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "facebook-login",
+  "url": "https://www.facebook.com/login/",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "instagram-login",
+  "url": "https://www.instagram.com/accounts/login/",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "linkedin-login",
+  "url": "https://www.linkedin.com/login",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "ebay-login",
+  "url": "https://signin.ebay.com/ws/eBayISAPI.dll?SignIn",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "discord-login",
+  "url": "https://discord.com/login",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "proton-login",
+  "url": "https://account.proton.me/login",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "wordpress-login",
+  "url": "https://wordpress.com/log-in",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "medium-signin",
+  "url": "https://medium.com/m/signin",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "imdb-signin",
+  "url": "https://www.imdb.com/registration/signin",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "aws-signin",
+  "url": "https://signin.aws.amazon.com/signin",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "ozon-login",
+  "url": "https://www.ozon.ru/my/main",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "nextcloud-demo",
+  "url": "https://try.nextcloud.com/",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "gitlab-signup",
+  "url": "https://gitlab.com/users/sign_up",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "stackoverflow-signup",
+  "url": "https://stackoverflow.com/users/signup",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "discord-register",
+  "url": "https://discord.com/register",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "bbc-news",
+  "url": "https://www.bbc.com/news",
+  "why": "unreachable from this network or a bot challenge (Cloudflare, human verification, error page)"
+ },
+ {
+  "name": "bitwarden-vault-login",
+  "url": "https://vault.bitwarden.com/#/login",
+  "why": "web vault never rendered in headless"
+ },
+ {
+  "name": "habr-login",
+  "url": "https://account.habr.com/login/",
+  "why": "no fields rendered"
+ },
+ {
+  "name": "hh-login",
+  "url": "https://hh.ru/account/login",
+  "why": "role picker before the form"
+ },
+ {
+  "name": "sourceforge-login",
+  "url": "https://sourceforge.net/auth/",
+  "why": "no fields rendered"
+ },
+ {
+  "name": "mastodon-signup",
+  "url": "https://mastodon.social/auth/sign_up",
+  "why": "rules acceptance step before the form"
+ },
+ {
+  "name": "paypal-login",
+  "url": "https://www.paypal.com/signin",
+  "why": "captcha challenge"
+ },
+ {
+  "name": "mozilla-accounts",
+  "url": "https://accounts.firefox.com/",
+  "why": "\"Client Challenge\" captcha"
+ },
+ {
+  "name": "github-signup",
+  "url": "https://github.com/signup",
+  "why": "hCaptcha/Arkose challenge instead of the form"
+ },
+ {
+  "name": "mozilla-signup",
+  "url": "https://accounts.firefox.com/signup",
+  "why": "\"Client Challenge\" captcha"
+ },
+ {
+  "name": "etsy-signin",
+  "url": "https://www.etsy.com/signin",
+  "why": "captcha challenge"
+ }
+]

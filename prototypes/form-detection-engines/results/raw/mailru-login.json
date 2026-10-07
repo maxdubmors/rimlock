@@ -1,0 +1,50 @@
+{
+ "name": "mailru-login",
+ "url": "https://account.mail.ru/login",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:56:31.021Z",
+ "finalUrl": "https://id.vk.ru/auth?action=eyJuYW1lIjoibWFpbF9hdXRoIiwicGFyYW1zIjp7Im1haWxfYXV0aF90eXBlIjoiYXV0aF9sb2dpbl9wYWdlIn19&app_id=7539952&app_settings=eyJzZXJ2aWNlX2dyb3VwcyI6eyJvaWQiOiI0Wkh3a240a3hHUkJDTktncWhla0wifX0%3D&code_challenge=2N8RmSe26RcVG0bHkYS00S-fb9ktZmFKK05rPrCW7PU&code_challenge_method=S256&lang_id=3&redirect_state=AG_fm4w7YKTFf3IZtQG1Z6Uo02&redirect_uri=https%3A%2F%2Fauth.mail.ru%2Finbox&response_type=silent_token&scheme=light",
+ "frames": [
+  {
+   "url": "https://id.vk.ru/auth?action=eyJuYW1lIjoibWFpbF9hdXRoIiwicGFyYW1zIjp7Im1haWxfYXV0aF90eXBlIjoiYXV0aF9sb2dpbl9wYWdlIn19&app_id=7539952&app_settings=eyJzZXJ2aWNlX2dyb3VwcyI6eyJvaWQiOiI0Wkh3a240a3hHUkJDTktncWhla0wifX0%3D&code_challenge=2N8RmSe26RcVG0bHkYS00S-fb9ktZmFKK05rPrCW7PU&code_challenge_method=S256&lang_id=3&redirect_state=AG_fm4w7YKTFf3IZtQG1Z6Uo02&redirect_uri=https%3A%2F%2Fauth.mail.ru%2Finbox&response_type=silent_token&scheme=light",
+   "title": "VK ID",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": "email",
+     "autocomplete": "off",
+     "placeholder": "Email account name",
+     "aria": null,
+     "label": "",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.599999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 21,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

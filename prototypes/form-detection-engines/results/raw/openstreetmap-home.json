@@ -1,0 +1,115 @@
+{
+ "name": "openstreetmap-home",
+ "url": "https://www.openstreetmap.org/",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T20:03:45.886Z",
+ "finalUrl": "https://www.openstreetmap.org/#map=6/51.33/10.45",
+ "frames": [
+  {
+   "url": "https://www.openstreetmap.org/#map=6/51.33/10.45",
+   "title": "OpenStreetMap",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "query",
+     "htmlId": "query",
+     "autocomplete": "on",
+     "placeholder": "Search",
+     "aria": null,
+     "label": "Where is this?",
+     "maxlength": null,
+     "form": "/search",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": "route_from",
+     "htmlId": "route_from",
+     "autocomplete": "on",
+     "placeholder": "From",
+     "aria": null,
+     "label": "Route start mark",
+     "maxlength": null,
+     "form": "/directions",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "route_to",
+     "htmlId": "route_to",
+     "autocomplete": "on",
+     "placeholder": "To",
+     "aria": null,
+     "label": "Route end marker",
+     "maxlength": null,
+     "form": "/directions",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "text",
+     "name": "query",
+     "htmlId": "query",
+     "autocomplete": "on",
+     "placeholder": "Search",
+     "aria": null,
+     "label": "Where is this?",
+     "maxlength": null,
+     "form": "/search",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:4",
+     "type": "text",
+     "name": "route_from",
+     "htmlId": "route_from",
+     "autocomplete": "on",
+     "placeholder": "From",
+     "aria": null,
+     "label": "Route start mark",
+     "maxlength": null,
+     "form": "/directions",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:5",
+     "type": "text",
+     "name": "route_to",
+     "htmlId": "route_to",
+     "autocomplete": "on",
+     "placeholder": "To",
+     "aria": null,
+     "label": "Route end marker",
+     "maxlength": null,
+     "form": "/directions",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.099999997764826,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19.399999998509884,
+    "fields": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "name": "fixture-otp-single",
+ "url": "http://localhost:8123/otp-single.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:53.600Z",
+ "finalUrl": "http://localhost:8123/otp-single.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/otp-single.html",
+   "title": "Two-factor authentication",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "otp",
+     "htmlId": "code_field",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Authentication code",
+     "maxlength": "6",
+     "form": "/2fa",
+     "shadow": false,
+     "visible": true,
+     "gt": "otp"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 18,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "otp"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,89 @@
+{
+ "name": "dropbox-login",
+ "url": "https://www.dropbox.com/login",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:51:23.927Z",
+ "finalUrl": "https://www.dropbox.com/login",
+ "frames": [
+  {
+   "url": "https://www.dropbox.com/login",
+   "title": "Login or Sign Up for a Dropbox Account",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "susi_email",
+     "htmlId": "susi_email6510080299059363",
+     "autocomplete": "username webauthn",
+     "placeholder": "name@company.com",
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "autofill-password",
+     "htmlId": "credential-autofill-hint",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.100000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 15.799999997019768,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://marketing.dropbox.com/login?referrer=",
+   "title": "Dropbox",
+   "fields": []
+  },
+  {
+   "url": "https://www.dropbox.com/ccpa_iframe?hide_gdpr=false&should_disable_banner=false&gpc=false&origin=https%253A%252F%252Fwww.dropbox.com&uri_for_logging=dropbox.com%2Flogin&should_show_floating_button=false&should_auto_open_options=undefined&width=1280&locale_override=en&default_non_ccpa=true",
+   "title": "Dropbox",
+   "fields": []
+  },
+  {
+   "url": "https://accounts.google.com/gsi/button?text=continue_with&width=368&logo_alignment=left&click_listener=()%3D%3E%7Bthis.hasPendingAuthFlow%26%26this.getLogger().logLoginCancel(%22google_one_tap%22)%2Cthis.hasPendingAuthFlow%3D!0%2Cthis.getLogger().logLoginStart(%22google_one_tap%22)%7D&is_fedcm_supported=true&client_id=801668726815.apps.googleusercontent.com&iframe_id=gsi_687409_145066&cas=iPn5HjTP43AZI27zxD9mfZQrjmdgLAFYYz0qJ%2B7LPg0&hl=en",
+   "title": "Sign In - Google Accounts",
+   "fields": []
+  },
+  {
+   "url": "https://dropboxcaptcha.com/",
+   "title": "DropboxCaptcha",
+   "fields": []
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "name": "notion-login",
+ "url": "https://www.notion.so/login",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:52:31.164Z",
+ "finalUrl": "https://app.notion.com/login",
+ "frames": [
+  {
+   "url": "https://app.notion.com/login",
+   "title": "Notion - Log in",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": null,
+     "htmlId": ":r4:",
+     "autocomplete": "username",
+     "placeholder": "Enter your email address...",
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Email Use an organization email to easily collaborate with teammates Continue",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 15.599999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://identity.notion.com/authSync",
+   "title": "Notion Identity",
+   "fields": []
+  }
+ ]
+}

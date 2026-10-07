@@ -1,0 +1,60 @@
+{
+ "name": "theguardian-home",
+ "url": "https://www.theguardian.com/international",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T19:58:26.900Z",
+ "finalUrl": "https://www.theguardian.com/international",
+ "frames": [
+  {
+   "url": "https://www.theguardian.com/international",
+   "title": "Latest news, sport and opinion from the Guardian",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "q",
+     "htmlId": "gu-search-mobile",
+     "autocomplete": null,
+     "placeholder": "Search the Guardian",
+     "aria": null,
+     "label": "Search input google-search Search",
+     "maxlength": null,
+     "form": "https://www.google.co.uk/search",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": "q",
+     "htmlId": "gu-search-desktop",
+     "autocomplete": null,
+     "placeholder": "Search the Guardian",
+     "aria": null,
+     "label": "Search input google-search Search",
+     "maxlength": null,
+     "form": "https://www.google.co.uk/search",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 9.300000000745058,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 3.800000000745058,
+    "fields": []
+   }
+  },
+  {
+   "url": "https://sourcepoint.theguardian.com/index.html?hasCsp=true&message_id=1482251&consentUUID=null&consent_origin=https%3A%2F%2Fsourcepoint.theguardian.com%2Fconsent%2Ftcfv2&preload_message=true&version=v1",
+   "title": "Notice Message App",
+   "fields": []
+  }
+ ]
+}

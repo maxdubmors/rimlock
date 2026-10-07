@@ -1,0 +1,73 @@
+{
+ "name": "npm-login",
+ "url": "https://www.npmjs.com/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:55:50.153Z",
+ "finalUrl": "https://www.npmjs.com/login",
+ "frames": [
+  {
+   "url": "https://www.npmjs.com/login",
+   "title": "npm | Sign In",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "username",
+     "htmlId": "login_username",
+     "autocomplete": null,
+     "placeholder": "",
+     "aria": null,
+     "label": "Username",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "login_password",
+     "autocomplete": null,
+     "placeholder": "",
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.799999997019768,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17.699999999254942,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

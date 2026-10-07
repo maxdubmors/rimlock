@@ -1,0 +1,73 @@
+{
+ "name": "fixture-formless-spa",
+ "url": "http://localhost:8123/formless-spa.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:04.855Z",
+ "finalUrl": "http://localhost:8123/formless-spa.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/formless-spa.html",
+   "title": "Acme",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": true,
+     "gt": "username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": true,
+     "gt": "current-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.600000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 20.900000002235174,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

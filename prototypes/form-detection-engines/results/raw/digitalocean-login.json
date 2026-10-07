@@ -1,0 +1,73 @@
+{
+ "name": "digitalocean-login",
+ "url": "https://cloud.digitalocean.com/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:55:22.240Z",
+ "finalUrl": "https://cloud.digitalocean.com/login",
+ "frames": [
+  {
+   "url": "https://cloud.digitalocean.com/login",
+   "title": "Log in to your account | DigitalOcean",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "email",
+     "htmlId": "email",
+     "autocomplete": "none",
+     "placeholder": "Enter your email address",
+     "aria": null,
+     "label": "email *",
+     "maxlength": null,
+     "form": "#",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "none",
+     "placeholder": "Enter your password",
+     "aria": null,
+     "label": "password *",
+     "maxlength": null,
+     "form": "#",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 7.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 20.300000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+{
+ "name": "openstreetmap-login",
+ "url": "https://www.openstreetmap.org/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T20:02:10.472Z",
+ "finalUrl": "https://www.openstreetmap.org/login?cookie_test=true",
+ "frames": [
+  {
+   "url": "https://www.openstreetmap.org/login?cookie_test=true",
+   "title": "OpenStreetMap",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "username",
+     "htmlId": "username",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email Address or Username",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "on",
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.399999998509884,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 20.099999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,120 @@
+{
+ "name": "openstreetmap-signup",
+ "url": "https://www.openstreetmap.org/user/new",
+ "kind": "signup",
+ "capturedAt": "2026-10-07T20:02:42.294Z",
+ "finalUrl": "https://www.openstreetmap.org/user/new?cookie_test=true",
+ "frames": [
+  {
+   "url": "https://www.openstreetmap.org/user/new?cookie_test=true",
+   "title": "Sign Up | OpenStreetMap",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "user[email]",
+     "htmlId": "user_email",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/user",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": "user[display_name]",
+     "htmlId": "user_display_name",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Display Name",
+     "maxlength": null,
+     "form": "/user",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "password",
+     "name": "user[pass_crypt]",
+     "htmlId": "user_pass_crypt",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/user",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "password",
+     "name": "user[pass_crypt_confirmation]",
+     "htmlId": "user_pass_crypt_confirmation",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Confirm Password",
+     "maxlength": null,
+     "form": "/user",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.599999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "username"
+     },
+     {
+      "id": "f0:2",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 23.200000002980232,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/zx1xw/0x4AAAAAACsSjCdlK-9Cu3FO/auto/fbE/new/normal?lang=auto",
+   "title": "Checking your Browser…",
+   "fields": []
+  }
+ ]
+}

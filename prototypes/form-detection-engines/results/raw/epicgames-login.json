@@ -1,0 +1,79 @@
+{
+ "name": "epicgames-login",
+ "url": "https://www.epicgames.com/id/login/email",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:55:15.735Z",
+ "finalUrl": "https://www.epicgames.com/id/login/email",
+ "frames": [
+  {
+   "url": "https://www.epicgames.com/id/login/email",
+   "title": "Sign in to Your Epic Games account | Epic Games",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "email",
+     "htmlId": "email",
+     "autocomplete": "username",
+     "placeholder": "Email address",
+     "aria": "Email address",
+     "label": "​",
+     "maxlength": "1000",
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": "Password",
+     "label": "Password",
+     "maxlength": "1000",
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.899999998509884,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 18.099999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://newassets.hcaptcha.com/captcha/v1/05219f0822161da4c4a6f3aed6bf6d6fae1ba8e1/static/hcaptcha.html#frame=challenge&id=0z9xzatqbgil&host=www.epicgames.com&sentry=true&reportapi=https%3A%2F%2Faccounts.hcaptcha.com&recaptchacompat=true&custom=false&hl=en&tplinks=on&andint=off&pstissuer=https%3A%2F%2Fpst-issuer.hcaptcha.com&sitekey=5928de2d-2800-4c58-be91-060e5a6aa117&theme=light&size=invisible&challenge-container=h_captcha_challenge_email_exists_prod&orientation=portrait&origin=https%3A%2F%2Fwww.epicgames.com&clientOptions=%7B%22sentry%22%3Atrue%2C%22reportapi%22%3A%22https%3A%2F%2Faccounts.hcaptcha.com%22%2C%22recaptchacompat%22%3A%22true%22%2C%22custom%22%3Afalse%2C%22hl%22%3A%22en-US%22%2C%22tplinks%22%3A%22on%22%2C%22andint%22%3A%22off%22%2C%22pat%22%3A%22on%22%2C%22pstissuer%22%3A%22https%3A%2F%2Fpst-issuer.hcaptcha.com%22%2C%22endpoint%22%3A%22https%3A%2F%2Fapi.hcaptcha.com%22%2C%22theme%22%3A%22light%22%2C%22size%22%3A%22normal%22%2C%22confirm-nav%22%3Afalse%7D",
+   "title": "hCaptcha",
+   "fields": []
+  },
+  {
+   "url": "https://newassets.hcaptcha.com/captcha/v1/05219f0822161da4c4a6f3aed6bf6d6fae1ba8e1/static/hcaptcha.html#frame=checkbox-invisible",
+   "title": "hCaptcha",
+   "fields": []
+  }
+ ]
+}

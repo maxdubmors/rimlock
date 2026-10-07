@@ -1,0 +1,73 @@
+{
+ "name": "gosuslugi-login",
+ "url": "https://esia.gosuslugi.ru/login/",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:56:43.090Z",
+ "finalUrl": "https://esia.gosuslugi.ru/login/",
+ "frames": [
+  {
+   "url": "https://esia.gosuslugi.ru/login/",
+   "title": "Портал государственных услуг Российской Федерации",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "Телефон / Эл. почта / СНИЛС",
+     "htmlId": "login",
+     "autocomplete": "on",
+     "placeholder": null,
+     "aria": "Введите номер телефона, СНИЛС или электронную почту в формате example@elpochta.ru",
+     "label": "Телефон / Эл. почта / СНИЛС",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": null,
+     "htmlId": "password",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": "Введите пароль",
+     "label": "",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.800000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19.699999999254942,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

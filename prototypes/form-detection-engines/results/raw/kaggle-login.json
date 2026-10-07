@@ -1,0 +1,79 @@
+{
+ "name": "kaggle-login",
+ "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+ "kind": "login",
+ "capturedAt": "2026-10-07T20:01:15.747Z",
+ "gotoWarning": "Navigation timeout of 30000 ms exceeded",
+ "finalUrl": "https://www.kaggle.com/account/login?phase=emailSignIn",
+ "frames": [
+  {
+   "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+   "title": "Login or Register | Kaggle",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "email",
+     "htmlId": ":r1:",
+     "autocomplete": "on",
+     "placeholder": "Enter your email address or username",
+     "aria": null,
+     "label": "EMAIL / USERNAME *",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": ":r2:",
+     "autocomplete": "current-password",
+     "placeholder": "Enter password",
+     "aria": null,
+     "label": "PASSWORD *",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 23.200000002980232,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcVUOAUAAAAAP8nMSGuW46uJC5Zf6-PCYKN5xxv&co=aHR0cHM6Ly93d3cua2FnZ2xlLmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=llb7i6goxxq5",
+   "title": "reCAPTCHA",
+   "fields": []
+  }
+ ]
+}

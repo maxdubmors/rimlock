@@ -1,0 +1,115 @@
+{
+ "name": "fixture-signup",
+ "url": "http://localhost:8123/signup.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:48:11.790Z",
+ "finalUrl": "http://localhost:8123/signup.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/signup.html",
+   "title": "Create your account",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "name",
+     "htmlId": "name_field",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Full name",
+     "maxlength": null,
+     "form": "/users",
+     "shadow": false,
+     "visible": true,
+     "gt": "none"
+    },
+    {
+     "id": "f0:1",
+     "type": "email",
+     "name": "email",
+     "htmlId": "email_field",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": "/users",
+     "shadow": false,
+     "visible": true,
+     "gt": "signup-username"
+    },
+    {
+     "id": "f0:2",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password_field",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/users",
+     "shadow": false,
+     "visible": true,
+     "gt": "new-password"
+    },
+    {
+     "id": "f0:3",
+     "type": "password",
+     "name": "password_confirmation",
+     "htmlId": "confirm_field",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Confirm password",
+     "maxlength": null,
+     "form": "/users",
+     "shadow": false,
+     "visible": true,
+     "gt": "new-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 7.099999997764826,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19.699999999254942,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     }
+    ]
+   }
+  }
+ ]
+}

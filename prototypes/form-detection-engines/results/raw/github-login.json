@@ -1,0 +1,118 @@
+{
+ "name": "github-login",
+ "url": "https://github.com/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:48:15.465Z",
+ "finalUrl": "https://github.com/login",
+ "frames": [
+  {
+   "url": "https://github.com/login",
+   "title": "Sign in to GitHub · GitHub",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "login",
+     "htmlId": "login_field",
+     "autocomplete": "username",
+     "placeholder": null,
+     "aria": null,
+     "label": "Username or email address",
+     "maxlength": null,
+     "form": "/session",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/session",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "required_field_1197",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password Forgot password?",
+     "maxlength": null,
+     "form": "/session",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "text",
+     "name": "required_field_2e57",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "or Continue with Google Continue with Apple",
+     "maxlength": null,
+     "form": "/session",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:4",
+     "type": "text",
+     "name": "required_field_6456",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "En",
+     "maxlength": null,
+     "form": "/session",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.199999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19.699999999254942,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

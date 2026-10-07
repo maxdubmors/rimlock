@@ -1,0 +1,73 @@
+{
+ "name": "mastodon-login",
+ "url": "https://mastodon.social/auth/sign_in",
+ "kind": "login",
+ "capturedAt": "2026-10-07T20:02:20.570Z",
+ "finalUrl": "https://mastodon.social/auth/sign_in",
+ "frames": [
+  {
+   "url": "https://mastodon.social/auth/sign_in",
+   "title": "Log in - Mastodon",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "user[email]",
+     "htmlId": "user_email",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": "E-mail address",
+     "label": "E-mail address *",
+     "maxlength": null,
+     "form": "/auth/sign_in",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "user[password]",
+     "htmlId": "user_password",
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": "Password",
+     "label": "Password *",
+     "maxlength": null,
+     "form": "/auth/sign_in",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.600000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 16.600000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

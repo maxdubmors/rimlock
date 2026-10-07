@@ -1,0 +1,134 @@
+{
+ "name": "codeberg-signup",
+ "url": "https://codeberg.org/user/sign_up",
+ "kind": "signup",
+ "capturedAt": "2026-10-07T20:02:37.066Z",
+ "finalUrl": "https://codeberg.org/user/sign_up",
+ "frames": [
+  {
+   "url": "https://codeberg.org/user/sign_up",
+   "title": "Register - Codeberg.org",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "user_name",
+     "htmlId": "user_name",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Username",
+     "maxlength": null,
+     "form": "/user/sign_up",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "email",
+     "name": "email",
+     "htmlId": "email",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email address",
+     "maxlength": null,
+     "form": "/user/sign_up",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "new-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/user/sign_up",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "password",
+     "name": "retype",
+     "htmlId": "retype",
+     "autocomplete": "new-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Confirm password",
+     "maxlength": null,
+     "form": "/user/sign_up",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:4",
+     "type": "text",
+     "name": "img-captcha-response",
+     "htmlId": "captcha",
+     "autocomplete": "off",
+     "placeholder": null,
+     "aria": null,
+     "label": "CAPTCHA: Please enter the following number or word into the captcha field: This ",
+     "maxlength": null,
+     "form": "/user/sign_up",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 21.099999997764826,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "signup-username"
+     },
+     {
+      "id": "f0:2",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:3",
+      "label": "new-password"
+     },
+     {
+      "id": "f0:0",
+      "label": "signup-username"
+     }
+    ]
+   }
+  }
+ ]
+}

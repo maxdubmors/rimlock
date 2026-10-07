@@ -1,0 +1,64 @@
+{
+ "name": "fixture-nested-shadow",
+ "url": "http://localhost:8123/nested-shadow.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:42.632Z",
+ "finalUrl": "http://localhost:8123/nested-shadow.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/nested-shadow.html",
+   "title": "Portal login",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "email",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Email",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": true,
+     "gt": "username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": true,
+     "gt": "current-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.700000002980232,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 0.8000000007450581,
+    "fields": []
+   }
+  }
+ ]
+}

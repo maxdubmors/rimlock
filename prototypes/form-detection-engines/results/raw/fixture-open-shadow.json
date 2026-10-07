@@ -1,0 +1,64 @@
+{
+ "name": "fixture-open-shadow",
+ "url": "http://localhost:8123/open-shadow.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:49.954Z",
+ "finalUrl": "http://localhost:8123/open-shadow.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/open-shadow.html",
+   "title": "Login",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "user",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Username",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": true,
+     "visible": true,
+     "gt": "username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "pass",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": true,
+     "visible": true,
+     "gt": "current-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 7.5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 0.8000000007450581,
+    "fields": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+{
+ "name": "codeberg-login",
+ "url": "https://codeberg.org/user/login",
+ "kind": "login",
+ "capturedAt": "2026-10-07T20:01:55.119Z",
+ "finalUrl": "https://codeberg.org/user/login",
+ "frames": [
+  {
+   "url": "https://codeberg.org/user/login",
+   "title": "Sign in - Codeberg.org",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "user_name",
+     "htmlId": "user_name",
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Username or email address",
+     "maxlength": null,
+     "form": "/user/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": "/user/login",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.800000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   }
+  }
+ ]
+}

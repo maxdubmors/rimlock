@@ -1,0 +1,108 @@
+{
+ "name": "reddit-login",
+ "url": "https://www.reddit.com/login/",
+ "kind": "login",
+ "capturedAt": "2026-10-07T19:48:31.079Z",
+ "finalUrl": "https://www.reddit.com/login/?rdt=61308",
+ "frames": [
+  {
+   "url": "https://www.reddit.com/login/?rdt=61308",
+   "title": "Welcome to Reddit",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "username",
+     "htmlId": null,
+     "autocomplete": "username webauthn",
+     "placeholder": null,
+     "aria": null,
+     "label": "* *",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": null,
+     "autocomplete": "current-password",
+     "placeholder": null,
+     "aria": null,
+     "label": "* *",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "tel",
+     "name": "appOtp",
+     "htmlId": null,
+     "autocomplete": "one-time-code",
+     "placeholder": null,
+     "aria": null,
+     "label": "",
+     "maxlength": "6",
+     "form": null,
+     "shadow": true,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "text",
+     "name": "backupOtp",
+     "htmlId": null,
+     "autocomplete": "one-time-code",
+     "placeholder": null,
+     "aria": null,
+     "label": "",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.700000002980232,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:2",
+      "label": "otp"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 0.8000000007450581,
+    "fields": []
+   }
+  },
+  {
+   "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function%20()%20%7B%20%5Bnative%20code%5D%20%7D&is_fedcm_supported=true&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_513436_209926&cas=el7pPD3SiG7E2dxgr2%2FmigRrrBIyPaiKm%2F3QlcL6aho&hl=en-US",
+   "title": "Sign In - Google Accounts",
+   "fields": []
+  },
+  {
+   "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=lg7gzzbrd0gi",
+   "title": "reCAPTCHA",
+   "fields": []
+  }
+ ]
+}

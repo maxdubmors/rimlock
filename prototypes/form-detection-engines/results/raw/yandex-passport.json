@@ -1,0 +1,45 @@
+{
+ "name": "yandex-passport",
+ "url": "https://passport.yandex.ru/auth",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:56:20.014Z",
+ "finalUrl": "https://passport.yandex.ru/pwl-yandex/auth/add",
+ "frames": [
+  {
+   "url": "https://passport.yandex.ru/pwl-yandex/auth/add",
+   "title": "Log in",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "tel",
+     "name": null,
+     "htmlId": "react-aria-«Rmab»",
+     "autocomplete": "off",
+     "placeholder": null,
+     "aria": null,
+     "label": "+7 (000) 000-00-00",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "name": "atlassian-login",
+ "url": "https://id.atlassian.com/login",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:52:42.863Z",
+ "finalUrl": "https://id.atlassian.com/login",
+ "frames": [
+  {
+   "url": "https://id.atlassian.com/login",
+   "title": "Log in to continue - Log in with Atlassian account",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "username",
+     "htmlId": "username-_r0_",
+     "autocomplete": "username",
+     "placeholder": "Enter your email",
+     "aria": null,
+     "label": "Email* Email*",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "password",
+     "htmlId": "password",
+     "autocomplete": "current-password",
+     "placeholder": "Enter password",
+     "aria": null,
+     "label": "",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.600000001490116,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     },
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 14.300000000745058,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=zhqdv8489zd",
+   "title": "reCAPTCHA",
+   "fields": []
+  }
+ ]
+}

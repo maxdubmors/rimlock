@@ -1,0 +1,40 @@
+{
+ "name": "lichess-signup",
+ "url": "https://lichess.org/signup",
+ "kind": "signup",
+ "capturedAt": "2026-10-07T20:02:54.627Z",
+ "finalUrl": "https://lichess.org/signup",
+ "frames": [
+  {
+   "url": "https://lichess.org/signup",
+   "title": "Public proxy • lichess.org",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": "Search",
+     "aria": "Search",
+     "label": "SIGN IN REGISTER",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.625,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 1.175000000745058,
+    "fields": []
+   }
+  }
+ ]
+}

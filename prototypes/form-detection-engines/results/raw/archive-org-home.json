@@ -1,0 +1,100 @@
+{
+ "name": "archive-org-home",
+ "url": "https://archive.org/",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T20:03:51.828Z",
+ "finalUrl": "https://archive.org/",
+ "frames": [
+  {
+   "url": "https://archive.org/",
+   "title": "Internet Archive: Digital Library of Free & Borrowable Texts, Movies, Music & Wayback Machine",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "url",
+     "htmlId": "url",
+     "autocomplete": null,
+     "placeholder": "Enter URL or keywords",
+     "aria": null,
+     "label": "Search the Wayback Machine",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": true,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:1",
+     "type": "text",
+     "name": "url_preload",
+     "htmlId": "url_preload",
+     "autocomplete": null,
+     "placeholder": "https://",
+     "aria": null,
+     "label": "Enter a URL to save",
+     "maxlength": null,
+     "form": "//web.archive.org/save",
+     "shadow": true,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": null,
+     "htmlId": "text-input",
+     "autocomplete": null,
+     "placeholder": "Search",
+     "aria": null,
+     "label": "Search the Archive. Filters and Advanced Search available below.",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": false,
+     "gt": null
+    },
+    {
+     "id": "f0:3",
+     "type": "text",
+     "name": "url",
+     "htmlId": "url",
+     "autocomplete": null,
+     "placeholder": "Enter URL or keywords",
+     "aria": null,
+     "label": "Search the Wayback Machine",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": true,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f0:4",
+     "type": "text",
+     "name": null,
+     "htmlId": "text-input",
+     "autocomplete": null,
+     "placeholder": "Search",
+     "aria": null,
+     "label": "Search the Archive. Filters and Advanced Search available below.",
+     "maxlength": null,
+     "form": null,
+     "shadow": true,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.900000002235174,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 0.5999999977648258,
+    "fields": []
+   }
+  }
+ ]
+}

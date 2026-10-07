@@ -1,0 +1,106 @@
+{
+ "name": "apple-login",
+ "url": "https://account.apple.com/sign-in",
+ "kind": "login",
+ "note": "form in a cross-origin iframe (idmsa.apple.com)",
+ "capturedAt": "2026-10-07T20:00:02.201Z",
+ "finalUrl": "https://account.apple.com/sign-in",
+ "frames": [
+  {
+   "url": "https://account.apple.com/sign-in",
+   "title": "Apple Account: Sign-in and Manage",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": null,
+     "htmlId": null,
+     "autocomplete": "off",
+     "placeholder": "Search apple.com",
+     "aria": "Search apple.com",
+     "label": "",
+     "maxlength": null,
+     "form": "https://www.apple.com/us/search",
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 3.800000000745058,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 3.100000001490116,
+    "fields": []
+   }
+  },
+  {
+   "url": "https://apps.apple.com/includes/commerce/server-error",
+   "title": "",
+   "fields": []
+  },
+  {
+   "url": "https://idmsa.apple.com/appleauth/auth/authorize/signin?frame_id=auth-gd80vqkn-wh1i-gtte-ft3i-ixcnxitx&skVersion=7&iframeId=auth-gd80vqkn-wh1i-gtte-ft3i-ixcnxitx&client_id=af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3&redirect_uri=https://account.apple.com&response_type=code&response_mode=web_message&state=auth-gd80vqkn-wh1i-gtte-ft3i-ixcnxitx&authVersion=8.0.2",
+   "title": "",
+   "fields": [
+    {
+     "id": "f2:0",
+     "type": "text",
+     "name": null,
+     "htmlId": "account_name_text_field",
+     "autocomplete": "username webauthn",
+     "placeholder": null,
+     "aria": null,
+     "label": "Email or Phone Number",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    },
+    {
+     "id": "f2:1",
+     "type": "password",
+     "name": null,
+     "htmlId": "password_text_field",
+     "autocomplete": "off",
+     "placeholder": null,
+     "aria": null,
+     "label": "Password",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.100000001490116,
+    "fields": [
+     {
+      "id": "f2:0",
+      "label": "username"
+     },
+     {
+      "id": "f2:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 16.300000000745058,
+    "fields": [
+     {
+      "id": "f2:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

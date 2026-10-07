@@ -1,0 +1,50 @@
+{
+ "name": "fixture-multistep-1",
+ "url": "http://localhost:8123/multistep-1.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:27.971Z",
+ "finalUrl": "http://localhost:8123/multistep-1.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/multistep-1.html",
+   "title": "Sign in",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": "identifier",
+     "htmlId": "email_field",
+     "autocomplete": "username",
+     "placeholder": null,
+     "aria": null,
+     "label": "Email or phone",
+     "maxlength": null,
+     "form": "/login/identifier",
+     "shadow": false,
+     "visible": true,
+     "gt": "username"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 15.400000002235174,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "name": "python-newsletter",
+ "url": "https://www.python.org/",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T19:58:22.632Z",
+ "finalUrl": "https://www.python.org/",
+ "frames": [
+  {
+   "url": "https://www.python.org/",
+   "title": "Welcome to Python.org",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "search",
+     "name": "q",
+     "htmlId": "id-search-field",
+     "autocomplete": null,
+     "placeholder": "Search",
+     "aria": null,
+     "label": "Search This Site",
+     "maxlength": null,
+     "form": "/search/",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 2.800000000745058,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 17.899999998509884,
+    "fields": []
+   }
+  }
+ ]
+}

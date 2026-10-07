@@ -1,0 +1,100 @@
+{
+ "name": "fixture-negatives",
+ "url": "http://localhost:8123/negatives.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:47:38.970Z",
+ "finalUrl": "http://localhost:8123/negatives.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/negatives.html",
+   "title": "Acme News",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "q",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": "Search news",
+     "aria": null,
+     "label": "Acme News Subscribe to our newsletter Subscribe Name Comment Post Your email Pho",
+     "maxlength": null,
+     "form": "/search",
+     "shadow": false,
+     "visible": true,
+     "gt": "none"
+    },
+    {
+     "id": "f0:1",
+     "type": "email",
+     "name": "email",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": "you@example.com",
+     "aria": null,
+     "label": "Subscribe to our newsletter",
+     "maxlength": null,
+     "form": "/newsletter",
+     "shadow": false,
+     "visible": true,
+     "gt": "none"
+    },
+    {
+     "id": "f0:2",
+     "type": "text",
+     "name": "author",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Name",
+     "maxlength": null,
+     "form": "/comment",
+     "shadow": false,
+     "visible": true,
+     "gt": "none"
+    },
+    {
+     "id": "f0:3",
+     "type": "email",
+     "name": "contact_email",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Your email",
+     "maxlength": null,
+     "form": "/contact",
+     "shadow": false,
+     "visible": true,
+     "gt": "none"
+    },
+    {
+     "id": "f0:4",
+     "type": "tel",
+     "name": "phone",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Phone",
+     "maxlength": null,
+     "form": "/contact",
+     "shadow": false,
+     "visible": true,
+     "gt": "none"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 5.100000001490116,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 21.300000000745058,
+    "fields": []
+   }
+  }
+ ]
+}

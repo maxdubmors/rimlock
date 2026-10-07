@@ -1,0 +1,69 @@
+{
+ "name": "fixture-pin-login",
+ "url": "http://localhost:8123/pin-login.html",
+ "kind": "fixture",
+ "capturedAt": "2026-10-07T19:48:04.447Z",
+ "finalUrl": "http://localhost:8123/pin-login.html",
+ "frames": [
+  {
+   "url": "http://localhost:8123/pin-login.html",
+   "title": "Online banking",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "customerNumber",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "Customer number",
+     "maxlength": null,
+     "form": "/logon",
+     "shadow": false,
+     "visible": true,
+     "gt": "username"
+    },
+    {
+     "id": "f0:1",
+     "type": "password",
+     "name": "pin",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": null,
+     "aria": null,
+     "label": "PIN",
+     "maxlength": "5",
+     "form": "/logon",
+     "shadow": false,
+     "visible": true,
+     "gt": "current-password"
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.5,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 19.800000000745058,
+    "fields": [
+     {
+      "id": "f0:1",
+      "label": "current-password"
+     },
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  }
+ ]
+}

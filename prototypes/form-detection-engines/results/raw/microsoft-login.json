@@ -1,0 +1,60 @@
+{
+ "name": "microsoft-login",
+ "url": "https://login.live.com/",
+ "kind": "multistep",
+ "capturedAt": "2026-10-07T19:50:37.467Z",
+ "finalUrl": "https://login.live.com/",
+ "frames": [
+  {
+   "url": "https://login.live.com/",
+   "title": "Sign in",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "email",
+     "name": null,
+     "htmlId": "usernameEntry",
+     "autocomplete": "username webauthn",
+     "placeholder": "",
+     "aria": null,
+     "label": "Email or phone number",
+     "maxlength": null,
+     "form": "(form)",
+     "shadow": false,
+     "visible": true,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 4.5,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 13.400000002235174,
+    "fields": [
+     {
+      "id": "f0:0",
+      "label": "username"
+     }
+    ]
+   }
+  },
+  {
+   "url": "https://fpt.live.com/?session_id=7fd82ed107ca445b9a14c19df91638cf&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+   "title": "",
+   "fields": []
+  },
+  {
+   "url": "https://df.cfp.microsoft.com/Clear.HTML?ctx=Ls1.0&wl=False&session_id=7fd82ed107ca445b9a14c19df91638cf&id=3e06c70c-d201-758f-b9e7-c830a71b4d77&w=8DF24AC43B6B545&tkt=&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d",
+   "title": "",
+   "fields": []
+  }
+ ]
+}

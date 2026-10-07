@@ -1,0 +1,324 @@
+[
+ {
+  "name": "github-login",
+  "kind": "login",
+  "url": "https://github.com/login"
+ },
+ {
+  "name": "stackoverflow-login",
+  "kind": "login",
+  "url": "https://stackoverflow.com/users/login"
+ },
+ {
+  "name": "reddit-login",
+  "kind": "login",
+  "url": "https://www.reddit.com/login/"
+ },
+ {
+  "name": "x-login",
+  "kind": "multistep",
+  "url": "https://x.com/i/flow/login"
+ },
+ {
+  "name": "amazon-login",
+  "kind": "multistep",
+  "url": "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0"
+ },
+ {
+  "name": "microsoft-login",
+  "kind": "multistep",
+  "url": "https://login.live.com/"
+ },
+ {
+  "name": "microsoft-login-step2",
+  "kind": "multistep",
+  "url": "https://login.live.com/",
+  "steps": [
+   {
+    "type": "input[type=email]",
+    "text": "test@outlook.com"
+   },
+   {
+    "press": "Enter",
+    "wait": 5000
+   }
+  ],
+  "note": "step 2 after a known-existing address; no password is entered"
+ },
+ {
+  "name": "yahoo-login",
+  "kind": "multistep",
+  "url": "https://login.yahoo.com/"
+ },
+ {
+  "name": "google-login",
+  "kind": "multistep",
+  "url": "https://accounts.google.com/signin"
+ },
+ {
+  "name": "apple-login",
+  "kind": "login",
+  "url": "https://account.apple.com/sign-in",
+  "note": "form in a cross-origin iframe (idmsa.apple.com)",
+  "wait": 8000
+ },
+ {
+  "name": "dropbox-login",
+  "kind": "multistep",
+  "url": "https://www.dropbox.com/login"
+ },
+ {
+  "name": "netflix-login",
+  "kind": "login",
+  "url": "https://www.netflix.com/login"
+ },
+ {
+  "name": "spotify-login",
+  "kind": "login",
+  "url": "https://accounts.spotify.com/en/login",
+  "wait": 8000
+ },
+ {
+  "name": "twitch-login",
+  "kind": "login",
+  "url": "https://www.twitch.tv/login"
+ },
+ {
+  "name": "slack-signin",
+  "kind": "multistep",
+  "url": "https://slack.com/signin"
+ },
+ {
+  "name": "notion-login",
+  "kind": "multistep",
+  "url": "https://www.notion.so/login"
+ },
+ {
+  "name": "atlassian-login",
+  "kind": "multistep",
+  "url": "https://id.atlassian.com/login"
+ },
+ {
+  "name": "zoom-signin",
+  "kind": "multistep",
+  "url": "https://zoom.us/signin"
+ },
+ {
+  "name": "wikipedia-login",
+  "kind": "login",
+  "url": "https://en.wikipedia.org/w/index.php?title=Special:UserLogin"
+ },
+ {
+  "name": "pinterest-login",
+  "kind": "login",
+  "url": "https://www.pinterest.com/login/"
+ },
+ {
+  "name": "booking-signin",
+  "kind": "multistep",
+  "url": "https://account.booking.com/sign-in"
+ },
+ {
+  "name": "airbnb-login",
+  "kind": "login",
+  "url": "https://www.airbnb.com/login"
+ },
+ {
+  "name": "steam-login",
+  "kind": "login",
+  "url": "https://store.steampowered.com/login/"
+ },
+ {
+  "name": "epicgames-login",
+  "kind": "login",
+  "url": "https://www.epicgames.com/id/login/email"
+ },
+ {
+  "name": "digitalocean-login",
+  "kind": "login",
+  "url": "https://cloud.digitalocean.com/login"
+ },
+ {
+  "name": "heroku-login",
+  "kind": "login",
+  "url": "https://id.heroku.com/login"
+ },
+ {
+  "name": "cloudflare-login",
+  "kind": "login",
+  "url": "https://dash.cloudflare.com/login"
+ },
+ {
+  "name": "npm-login",
+  "kind": "login",
+  "url": "https://www.npmjs.com/login"
+ },
+ {
+  "name": "dockerhub-login",
+  "kind": "multistep",
+  "url": "https://login.docker.com/u/login/"
+ },
+ {
+  "name": "figma-login",
+  "kind": "login",
+  "url": "https://www.figma.com/login"
+ },
+ {
+  "name": "trello-login",
+  "kind": "multistep",
+  "url": "https://trello.com/login"
+ },
+ {
+  "name": "hackernews-login",
+  "kind": "login",
+  "url": "https://news.ycombinator.com/login",
+  "note": "login and create-account forms on one page"
+ },
+ {
+  "name": "yandex-passport",
+  "kind": "multistep",
+  "url": "https://passport.yandex.ru/auth"
+ },
+ {
+  "name": "vk-login",
+  "kind": "login",
+  "url": "https://vk.com/login"
+ },
+ {
+  "name": "mailru-login",
+  "kind": "multistep",
+  "url": "https://account.mail.ru/login"
+ },
+ {
+  "name": "gosuslugi-login",
+  "kind": "login",
+  "url": "https://esia.gosuslugi.ru/login/"
+ },
+ {
+  "name": "reddit-register",
+  "kind": "signup",
+  "url": "https://www.reddit.com/register/"
+ },
+ {
+  "name": "wikipedia-signup",
+  "kind": "signup",
+  "url": "https://en.wikipedia.org/w/index.php?title=Special:CreateAccount"
+ },
+ {
+  "name": "github-reset",
+  "kind": "negative",
+  "url": "https://github.com/password_reset"
+ },
+ {
+  "name": "wikipedia-home",
+  "kind": "negative",
+  "url": "https://en.wikipedia.org/wiki/Main_Page"
+ },
+ {
+  "name": "mdn-home",
+  "kind": "negative",
+  "url": "https://developer.mozilla.org/en-US/"
+ },
+ {
+  "name": "duckduckgo-home",
+  "kind": "negative",
+  "url": "https://duckduckgo.com/"
+ },
+ {
+  "name": "python-newsletter",
+  "kind": "negative",
+  "url": "https://www.python.org/"
+ },
+ {
+  "name": "theguardian-home",
+  "kind": "negative",
+  "url": "https://www.theguardian.com/international"
+ },
+ {
+  "name": "bitbucket-login",
+  "kind": "multistep",
+  "url": "https://bitbucket.org/account/signin/"
+ },
+ {
+  "name": "tumblr-login",
+  "kind": "login",
+  "url": "https://www.tumblr.com/login"
+ },
+ {
+  "name": "kaggle-login",
+  "kind": "login",
+  "url": "https://www.kaggle.com/account/login?phase=emailSignIn"
+ },
+ {
+  "name": "codeberg-login",
+  "kind": "login",
+  "url": "https://codeberg.org/user/login"
+ },
+ {
+  "name": "archive-org-login",
+  "kind": "login",
+  "url": "https://archive.org/account/login",
+  "wait": 6000
+ },
+ {
+  "name": "openstreetmap-login",
+  "kind": "login",
+  "url": "https://www.openstreetmap.org/login"
+ },
+ {
+  "name": "mastodon-login",
+  "kind": "login",
+  "url": "https://mastodon.social/auth/sign_in"
+ },
+ {
+  "name": "lichess-login",
+  "kind": "login",
+  "url": "https://lichess.org/login"
+ },
+ {
+  "name": "codeberg-signup",
+  "kind": "signup",
+  "url": "https://codeberg.org/user/sign_up"
+ },
+ {
+  "name": "openstreetmap-signup",
+  "kind": "signup",
+  "url": "https://www.openstreetmap.org/user/new"
+ },
+ {
+  "name": "lichess-signup",
+  "kind": "signup",
+  "url": "https://lichess.org/signup"
+ },
+ {
+  "name": "dropbox-register",
+  "kind": "signup",
+  "url": "https://www.dropbox.com/register"
+ },
+ {
+  "name": "hackernews-home",
+  "kind": "negative",
+  "url": "https://news.ycombinator.com/"
+ },
+ {
+  "name": "lenta-home",
+  "kind": "negative",
+  "url": "https://lenta.ru/"
+ },
+ {
+  "name": "openstreetmap-home",
+  "kind": "negative",
+  "url": "https://www.openstreetmap.org/"
+ },
+ {
+  "name": "archive-org-home",
+  "kind": "negative",
+  "url": "https://archive.org/",
+  "wait": 6000
+ },
+ {
+  "name": "github-search",
+  "kind": "negative",
+  "url": "https://github.com/search"
+ }
+]

@@ -1,0 +1,46 @@
+{
+ "name": "lenta-home",
+ "url": "https://lenta.ru/",
+ "kind": "negative",
+ "capturedAt": "2026-10-07T20:03:13.126Z",
+ "gotoWarning": "Navigation timeout of 30000 ms exceeded",
+ "finalUrl": "https://lenta.ru/",
+ "frames": [
+  {
+   "url": "https://lenta.ru/",
+   "title": "Lenta.ru - Новости России и мира сегодня",
+   "fields": [
+    {
+     "id": "f0:0",
+     "type": "text",
+     "name": "query",
+     "htmlId": null,
+     "autocomplete": null,
+     "placeholder": "поиск...",
+     "aria": null,
+     "label": "Главное Россия Мир Бывший СССР Экономика Силовые структуры Наука и техника Авто",
+     "maxlength": null,
+     "form": null,
+     "shadow": false,
+     "visible": false,
+     "gt": null
+    }
+   ],
+   "bitwarden": {
+    "engine": "bitwarden",
+    "ms": 6.100000001490116,
+    "fields": []
+   },
+   "proton": {
+    "engine": "proton",
+    "ms": 4.699999999254942,
+    "fields": []
+   }
+  },
+  {
+   "url": "https://profile.ad-tech.ru/sandbox?img=Oi3J5M6Hy8qYWyxWFthEFYf9aQ37msT2-IMzmwMub4H65SzMq62JEpoEpu*HkVXpnVyWFTpg9ktLSPp7Tlf*-oNR--EEvmau7t85QPGQQkeib5d7W1KOyOlkH19QOqHzj2Dwnm70*PfLSf57NBYlUwIAAAC63LwKAAAAAA&img=r2czwT7d7nLOsQzHEQv60D2zohRcQywfnRWDBS320aLX*XRhFWg0Hk0SdU9UBNcCCTNjNM5mWRwXW5TmV7b1DlrFzSMa9LNrMsGik*ttOomJ1zZLfpGc2ZRz5ootwZOGWcq94q6qbSGnWZ4Rzn68vgIAAAC63LwKAAAAAA&img=91R2wRO3oEyzeaa1sXctM3OOFODr9iWyVsR7U8RW*9kLxTWk*xYVlgwTA00RgZMOxKSnRXKlHkAXyZaK8bECWAbv8SFdLRKLsWE4nAncT7PsTbq52c0DB3eRrMfcbgBf6Cfjk77HSQzVdN8zUOIoPkPUgYb5Q6w3ipmZli9mmugM0NfCQApp93uLUSumWmmqINdpKBheKWj2QVqZPomJsgIAAAC63LwKAAAAAA&img=GOBJ2X2qm1ln7D7KmcyzyZa-4jAL9j0iXDg2TPLzrFMcsrxALQkjmQwvZcn-g1eywpSz8-goxWXIiqIt3fUwxCBm6OfiGsbNleG8pEtFaH2zHIhrcyzjt2qw7aKilrL81B9xSQc8Yh27teGZWQde2gIAAAC63LwKAAAAAA&img=fJnRR0A*HIL67C8APctEnmCuH9gHwXL5nx78BXK8N79XGWpmaIB0g7YKDqWhGW7RQjAGFDo9V3KOKS*QJCLPGKX0rT3HG0FmPZBGFG7cViDlPHVUC*S1v3OKNitsAv7mv09t17Zc6zH77PwUXOjg3bKAOnJz8-tLp536WERTOdcCAAAAuty8CgAAAAA&img=bXjBWB*YLQMJcqelwgPWMcKBzMZyldx0VIqwwuldil-f2-fnTMlvls7BEKzBc-tGUsGdyJ8FfBTsMq*W1FCFntd2IrEEBD-VbiIacpGpgQYMAItRVC6GOUreV42ZRMlHMb7qhwY4fhp4PLuMhGwFEQIAAAC63LwKAAAAAA&img=UDSOARwvUE7lbbvwqoBY6vO2d-KGBOD8I1OiVnx0CpugmcMG-KLcZNVStVR9LDNO-v16Wvip1nnsOYKyLQ*gQV7f-ZwFdFXTLvbqD5lMHpgGei4ozm1z0ZTzIXrn463hSOoa6MCjc7uM9CHmvxyYFQIAAAC63LwKAAAAAA&img=ny-Br6hOkOarZXP3SLCNYNqdY1kFJ8IONo7LsxL-R8KvplN9e55gkGdY03Zossn3KDsYHWhr4y7RGwMKyaQPjZDxTr1-GXM3ha3jiHfU0qQAi28fR8G*G7-Rf0EyT0XOmgVSv8KsHFmsljUbaaONeaqtWzuwwEW3vVk7bat-24FKRHZ*RPk8uYVaqgOvuRLq9zCOBTh9OG5cWUlIYsZP5BH1AZU-ShT2vmCQ4Dt2DnxnPUL8P1p-yYrDCjcqYWrAE7MOTPDmpkY6YFjrPccqQQYCo*m3PUL8l4MMvmGaxd4-V9h-FxTEvySnj4ne5RKYM-7rtTG6Ttd5RGD8GeFmfWTlFQmyg3Zq*gnpAQEHUKWCdAO6dRoZ7HC5xKOuyhroAgAAALrcvAoAAAAA&img=aFb294E9zb2GKJJHc13W2vRnsqpBNQ31PCFlMivouU1s3xcpetWP1XE-mmBm9Cm0ZKD3EotIeLAzQIwkwY*H1gIAAAC63LwKAAAAAA&img=5fRXsXxvdiWkcDqMF7mMOSuj7Mcio9qcTdf54JmWp0OTKwnxf8OuOgEBa0E2P4r3tVgu10vadJzOd*t6Lvcj8gIAAAC63LwKAAAAAA&img=RCEQHzWy5UaG2KbnEV19k4Gccj7vlNIpf9ZJGx8xxUG9inbUGKmDm0eAk8XD4B22obJ0CIrkFvgfSPFC6Ld93FOjup0tkvVA5WXIrhnD*rvUOLl*k60b9WRIYQqR3gdwAPcGPTwAzjajAn-rXrH45zubm4TQOw*V89ODqKDmGUsCAAAAuty8CgAAAAA&img=WhQrIGyJUSOQ7zFHgsu-mOVMUUt3k15O0omx9C*txkl-NKJvcQwNtrql1Rk2PTWcvwgjJechsHBjH7TGDMxMu7Rv1vmXX-9pX5cNosbClnsCAAAAuty8CgAAAAA&img=FMLsA2oxsSZTJDpIqDvZUVPK6jSjVqJAY0NrHlFFx8eGpTV7MSNYAFrbe7t3mrkcTc*N4xVVS2dgUYrg0mlAdjVKampIJsJRggfN7aAV7igFxYddKrpfHxaYyirQNnSrnVo0F*OALlHqD8OV4KbfKqTY4zKDdovXkpy82c16-Ec13fKj69WUTOozk0xyLwYTBDWXkdqRXvdZvxHTKuPo8nivzOUOAPJQqvDwvFkcGhcCAAAAuty8CgAAAAA&img=aWFMLW1B6rrhN0BXl8L7ST9WP1vNRqYIsPgn0cNHdfWR4kBSyQtgOYx-IipI-eUhad4hBtNopDEbX0RoBG8trSMTwtvkPTLwG0YTJHEEQEjBoUKOjMRzR-6Xlv4pSLmn7bZhc8exwBDv7dmxNc8KKYCQ6b7EhBMajkQGIL-Myz65geuYgtwmgPjR6uTt7XqtM0C*0hMkKigXb00s*QQIJb12moCZJHux1SKqCHd2FjLzk5K8WNJR3Yvmh1fT6E6HmHSb4L68OrUtn*cRSggzuC0FJMe7MbOJ01uE0UPRFOQCAAAAuty8CgAAAAA&img=v4IoX0g4S1TbbU3pnVXeSlfG-*vx1OKTpk-XiMs8jeS-lZrl0tSdiVjA-i3lOUt04KVJHYCSYOdXrZJEIPsom4qMKxCVXwEFVp3oeojSV3x9Ku06pSVmZzP50xz*c-xQ*fG82OdbT7QpVvdz0Ji4pgIAAAC63LwKAAAAAA&img=Jh5IanZsWtaChmnLCkgHEbqSLpAcO4zIF*5V2YLi6GGxH1PaDQrGBBvntkPFEZybaEzvIMnIfubjqJItqLcKmwIAAAC63LwKAAAAAA&img=sQtDUlMgjzjn8axvpBChTIsxoKww7sxseY5n*f3wS2S00wvxGQ0wOhd16pNlYfoyqPjvEzZDirXeNtartXRnSJs4ubhWRftj45raICTvMoo9qOBK7FzFO6Pt2hXMn3c1AgAAALrcvAoAAAAA&img=rAu75bc*WdYmgM9XTroxxGYGaMfHJN*tgSybsCDm0svwH9JaQvwR0kqIfCJJZinnCH1dGq6mCFwdJJfRe5soZSvoc5tCwTBEOehPE8mLOQNS8QtKMIBFRY9CPK0XwrBr*fcF6f26Al9yxr76nXr*zN7w2*vQ*a3yD*Jb-9AuFscCAAAAuty8CgAAAAA&img=FAMAY6yZFTPA1IdRiUDjtL4oyWXcAQ5z1QFS92BMoywYLwB--KWKg0yYJS9qgQoukCCZ3kedInyGoMT*jifBBRqGIouGyqtouUb5O-0E8--X*RAch7qUHKnlHPwHN4Axe6ELwtDcGnBC5cyRsABPvQIAAAC63LwKAAAAAA&img=4nIkRFFt4lSMc1ooPkBmM24k7hjr-5XwbLQHlvHl7BLZ5S-kgULNKV5cVdCQBwQbolygJ9PH9YnfElnj1uHHHbl05fSp7hb8T0j3TrhYXlZlTq4E6CQpyHuautb524LLJ9EERhz6E13iwmtfxGBznKqF8wu8kAPP3l*4yoUwTCoAqQrPToJ76-ys7H-Kfyt5AgAAALrcvAoAAAAA&img=FUe7PgMb3lO2g-CLLvY7FnfzG3wIaisnEx5zrJhlvHMv8BhoS*cFOFZaXv0QVZ2ByQ7hR4NymkHovS-*C4LKg53OxTJAfVG7g8cid9vIpHx-LCvUlV7FCUPhor8lOx7WQ0LuuZwd0I*wb5Jks-hcwfhlSFoCMtkJPKyMbW1sePICAAAAuty8CgAAAAA&img=tj4S3iv1tD2onfaXpneOiHFSHiFG17Vg3LuI0nw3DSruI-nQSeacj1Baelw6IjnmAZFIcdo-Lkw0lILoqoZYHownZZNKr8JQt6aJG7EZ89JNz55VJVKLewLQzoNAv1p2ihHsgba13Mzt0SIqcjm*LAIAAAC63LwKAAAAAA&img=v7vq92bKo6UcYHjNuaRqZdIBiT5dxsb*4*uxWhDCJa9NMPfqYxdIIJcyBMI9So3T0FNF-zmFKo5rX*Kj5jCBMd77yQwlYSAWPLcYoV9vC6MCAAAAuty8CgAAAAA&img=pPXMiOoGJQGFVc5zT9ahwQsYVw3HgX4YA9TDvUMTihHMCIcTVk6IVpG4cl7J0e3BRBL9tPZce0eTB4*YBKpX*vG*ggjjDKxO11jnT22tVuFJWOq38opvOgsoWFVBN6ukguaTSFrzDXaQERskUT3MsynWF-ybfVz7eCeGtItztmgCAAAAuty8CgAAAAA&img=3WzcHu9y6TagaP-tnsQT*Z7ZdWErfOwlCU*u5yogz4ul2VI6r3ujHt4Q2eaTi468-7j8qaWL7bETEg4uOcXRaPrm8m2uzjOsbT2cuvRw-hV3OkoiPm3WclkhIaWMFyOVGVoc5fEpg2RozfhDTEHSPgIAAAC63LwKAAAAAA",
+   "title": "",
+   "fields": []
+  }
+ ]
+}
