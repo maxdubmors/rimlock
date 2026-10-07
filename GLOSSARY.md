@@ -49,3 +49,7 @@ _Avoid_: Add-on, plugin, client
 **Companion**:
 The optional desktop application that extends the Extension with capabilities a browser cannot provide.
 _Avoid_: Desktop app, native host, helper
+
+**Core**:
+The part of rimlock that owns an Unlocked Database: it opens, edits, merges and saves it, and applies KeePass interop rules. Shared by the Extension and the Companion.
+_Avoid_: Engine, backend, SDK
