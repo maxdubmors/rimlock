@@ -219,36 +219,36 @@ const reg = h => h.split('.').slice(-2).join('.');
 
 // ---------------------------------------------------------------- variants
 const VARIANTS = {
-  A: { name: 'Popup · search-first', notes: `
-    <p><b>Premise:</b> one surface, the toolbar popup (~380×600). Push/pop navigation like a phone app.
-    What lands first is <i>matches for this site</i> + search; Groups are secondary (Browse tab).
-    All editing, the Recycle Bin and the generator live in the popup too.</p>
-    <p><b>Inline menu:</b> drops down automatically when a login field gets focus.</p>
-    <p><b>Save prompt:</b> a card injected into the page near the toolbar (a popup cannot open itself everywhere).</p>
-    <h4>Trade-offs</h4><ul>
-    <li>+ One UI to build; popups behave the same in Chrome, Firefox and Safari.</li>
-    <li>− A popup closes on any click outside it: a half-typed edit is lost; copying between page and popup is fiddly.</li>
-    <li>− Small canvas for history, notes and custom fields.</li></ul>` },
-  B: { name: 'Side panel · tree explorer', notes: `
-    <p><b>Premise:</b> a persistent panel docked beside the page (Chrome <code>sidePanel</code>, Firefox <code>sidebar_action</code>).
-    KeePassXC-like Group tree with Entries as leaves; selecting an Entry splits the panel with its detail; edit happens in place.
-    Generator is a drawer under the header.</p>
-    <p><b>Inline menu:</b> only an icon inside the field; the menu opens on click, never by itself.</p>
-    <p><b>Save prompt:</b> a banner at the top of the panel; badge on the toolbar icon if the panel is closed.</p>
-    <h4>Trade-offs</h4><ul>
-    <li>+ Survives page interaction: copy fields while filling multi-step forms, edit without losing work.</li>
-    <li>+ Least intrusive inline UI (fewer clickjacking surfaces).</li>
-    <li>− Eats page width. Firefox's sidebar is shared with bookmarks/history. Safari has no side panel, so a popup fallback is needed anyway.</li></ul>` },
-  C: { name: 'Quick popup + full-tab manager', notes: `
-    <p><b>Premise:</b> two surfaces with separate jobs. The popup is <i>use-only</i>: fill, copy, TOTP, quick generate, search.
-    Everything organisational (Groups, editing, history, Recycle Bin, advanced/CustomData, full generator) lives in a
-    full extension tab with KeePassXC-like three columns.</p>
-    <p><b>Inline menu:</b> auto-opens on focus and can search the whole Database from the page.</p>
-    <p><b>Save prompt:</b> a bar across the top of the page.</p>
-    <h4>Trade-offs</h4><ul>
-    <li>+ Each surface stays simple; the manager has room for history, CustomData and bulk actions.</li>
-    <li>+ The manager tab is a normal extension page: works identically on every browser, Safari included.</li>
-    <li>− Two UIs to build; editing means leaving the page you are on.</li></ul>` },
+  A: { name: 'Popup · сначала поиск', notes: `
+    <p><b>Идея:</b> одна поверхность, popup с панели инструментов (~380×600). Навигация экранами вперёд/назад, как в мобильном приложении.
+    Первым видно <i>Entries для текущего сайта</i> и поиск; Group вторичны (вкладка Browse).
+    Редактирование, Recycle Bin и генератор тоже живут в popup.</p>
+    <p><b>Inline menu:</b> выпадает само, когда поле логина получает фокус.</p>
+    <p><b>Предложение сохранить:</b> карточка, встроенная в страницу у панели инструментов (popup не везде умеет открыться сам).</p>
+    <h4>Плюсы и минусы</h4><ul>
+    <li>+ Один интерфейс; popup ведёт себя одинаково в Chrome, Firefox и Safari.</li>
+    <li>− Popup закрывается от любого клика мимо: недописанная правка теряется, копировать между страницей и popup неудобно.</li>
+    <li>− Мало места для истории, заметок и дополнительных полей.</li></ul>` },
+  B: { name: 'Side panel · дерево', notes: `
+    <p><b>Идея:</b> постоянная панель сбоку от страницы (Chrome <code>sidePanel</code>, Firefox <code>sidebar_action</code>).
+    Дерево Group как в KeePassXC, Entries в нём как листья; выбранная Entry открывается в нижней половине панели, правка там же.
+    Генератор выезжает под шапкой.</p>
+    <p><b>Inline menu:</b> только иконка внутри поля; меню открывается по клику и никогда само.</p>
+    <p><b>Предложение сохранить:</b> баннер вверху панели; если панель закрыта, бейдж на иконке расширения.</p>
+    <h4>Плюсы и минусы</h4><ul>
+    <li>+ Не закрывается при работе со страницей: можно копировать поля в многошаговых формах и редактировать, не теряя правок.</li>
+    <li>+ Самый ненавязчивый inline UI (меньше поверхности для clickjacking).</li>
+    <li>− Съедает ширину страницы. В Firefox сайдбар общий с закладками и историей. В Safari side panel нет, так что запасной popup всё равно нужен.</li></ul>` },
+  C: { name: 'Быстрый popup + менеджер во вкладке', notes: `
+    <p><b>Идея:</b> две поверхности с разными задачами. Popup <i>только для использования</i>: заполнить, скопировать, TOTP, быстро сгенерировать, найти.
+    Всё организационное (Group, редактирование, история, Recycle Bin, Advanced/CustomData, полный генератор) живёт
+    в отдельной вкладке расширения с тремя колонками, как в KeePassXC.</p>
+    <p><b>Inline menu:</b> открывается само при фокусе и умеет искать по всей Database прямо со страницы.</p>
+    <p><b>Предложение сохранить:</b> полоса поперёк верха страницы.</p>
+    <h4>Плюсы и минусы</h4><ul>
+    <li>+ Каждая поверхность остаётся простой; в менеджере есть место для истории, CustomData и массовых действий.</li>
+    <li>+ Вкладка-менеджер — обычная страница расширения: работает одинаково во всех браузерах, включая Safari.</li>
+    <li>− Два интерфейса; чтобы что-то отредактировать, надо уйти со страницы.</li></ul>` },
 };
 const SITES = {
   'github.com': { url: 'https://github.com/login', name: 'GitHub', tab: 'Sign in to GitHub · GitHub', title: 'Sign in to GitHub', logo: '🐙', brand: '#2da44e', user: 'Username or email address', btn: 'Sign in' },
@@ -679,16 +679,16 @@ function notesColumn() {
   const snapshot = { variant: v, site: state.site, locked: state.locked, surfaceOpen: v === 'B' ? state.b.panelOpen : state.surfaceOpen,
     inlineMenu: state.inline, savePrompt: state.prompt && state.prompt.kind, draft: state.draft ? (state.draft.id || 'new') : null,
     entries: db.entries.length, inRecycleBin: groupEntries('g-bin').length, [v.toLowerCase()]: vs };
-  return `<aside class="notes"><span class="proto">PROTOTYPE · throwaway</span>
+  return `<aside class="notes"><span class="proto">ПРОТОТИП · на выброс</span>
     <h3>${v} — ${VARIANTS[v].name}</h3>${VARIANTS[v].notes}
-    <h4>Things to try</h4><ul>
-      <li>Unlock (any password).</li>
-      <li>Focus the Username / Password field on the page.</li>
-      <li>Switch site in the address bar: news.ycombinator.com has no Entries.</li>
-      <li>Type new credentials and submit → save prompt. Use <code>alex-dev</code> + another password on GitHub → update prompt.</li>
-      <li>Open an Entry → Edit → Save → History. Move to Recycle Bin, then restore.</li>
-      <li>Generator: characters vs passphrase.</li></ul>
-    <h4>State</h4><pre>${esc(JSON.stringify(snapshot, null, 1))}</pre></aside>`;
+    <h4>Что попробовать</h4><ul>
+      <li>Разблокировать (подойдёт любой пароль).</li>
+      <li>Поставить фокус в поле Username / Password на странице.</li>
+      <li>Сменить сайт в адресной строке: для news.ycombinator.com Entries нет.</li>
+      <li>Ввести новые учётные данные и отправить форму → предложение сохранить. <code>alex-dev</code> с другим паролем на GitHub → предложение обновить.</li>
+      <li>Открыть Entry → Edit → Save → History. Переместить в Recycle Bin и восстановить.</li>
+      <li>Генератор: символы или слова (passphrase).</li></ul>
+    <h4>Состояние</h4><pre>${esc(JSON.stringify(snapshot, null, 1))}</pre></aside>`;
 }
 function view() {
   const v = state.variant;
