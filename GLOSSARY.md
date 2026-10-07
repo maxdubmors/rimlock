@@ -57,3 +57,13 @@ _Avoid_: Desktop app, native host, helper
 **Core**:
 The part of rimlock that owns an Unlocked Database: it opens, edits, merges and saves it, and applies KeePass interop rules. Shared by the Extension and the Companion.
 _Avoid_: Engine, backend, SDK
+
+### Filling
+
+**Inline menu**:
+The rimlock menu shown under a login field on a web page, offering the Entries that match the site.
+_Avoid_: Dropdown, overlay, autofill popup
+
+**Save prompt**:
+The offer to save a new Entry, or update an existing one, after the user submits a login form.
+_Avoid_: Save dialog, doorhanger, notification
