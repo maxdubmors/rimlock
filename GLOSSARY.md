@@ -22,6 +22,14 @@ _Avoid_: Folder, collection
 Where a Database is read from and written back to: a local file or a WebDAV location.
 _Avoid_: Backend, provider, storage
 
+**Local copy**:
+The encrypted copy of a Database that the Extension keeps for every Source. The Extension edits it, then writes it to the Source.
+_Avoid_: Cache, offline cache, mirror
+
+**Pending changes**:
+Changes in the Local copy that have not yet been written to the Source.
+_Avoid_: Unsaved changes, dirty state
+
 ### Access
 
 **Master password**:
