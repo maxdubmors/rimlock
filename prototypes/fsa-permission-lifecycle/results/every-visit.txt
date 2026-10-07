@@ -1,0 +1,12 @@
+## 0: grant in the popup, then quit with no tab ever closed
+0.1 popup: request with gesture                                  {"read":"granted","readwrite":"granted","requested":"granted"}  (14 ms)
+## A: answer the tab's restore prompt with 'Allow on every visit'
+A.1 tab: request answered                                        {"read":"granted","readwrite":"granted","requested":"granted"}  (2030 ms)
+A.2 sw (tab closed, no holder): query                            {"read":"granted","readwrite":"granted"}  (2 ms)
+## B: after restart, nothing opened
+B.1 sw: query                                                    {"read":"granted","readwrite":"granted"}  (7 ms)
+B.2 sw: read                                                     {"size":45,"lastModified":1791395046793,"head":"…"}  (2 ms)
+B.3 sw: write                                                    "closed"  (2 ms)
+B.4 sw: request (no gesture)                                     {"requested":"granted","read":"granted","readwrite":"granted"}  (1 ms)
+B.5 sw: query                                                    {"read":"granted","readwrite":"granted"}  (1 ms)
+B.6 popup on load: query                                         {"read":"granted","readwrite":"granted"}  (6 ms)

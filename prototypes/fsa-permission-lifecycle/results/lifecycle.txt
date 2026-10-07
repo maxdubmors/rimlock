@@ -1,0 +1,43 @@
+
+## E0 setup: adopt a handle in the popup (fresh profile)
+   Chrome/155.0.8059.39, extension ceohobjldehpmfhbjipicfbjnhiniplo
+E0.1 popup: adopt handle by drop                                 {"name":"lifecycle.txt","read":"granted","readwrite":"prompt"}  (activation=true, 1 ms)
+
+## E1 after restart; popup grant with no other holder
+E1.1 sw right after startup: query                               {"read":"prompt","readwrite":"prompt"}  (activation=null, 4 ms)
+E1.2 sw: read                                                    "NotAllowedError: Failed to execute 'getFile' on 'FileSystemFileHandle': The request is not allowed by the user agent or the platform in the current context."  (activation=null, 1 ms)
+E1.3 popup on load: query                                        {"read":"prompt","readwrite":"prompt"}  (activation=false, 5 ms)
+E1.4 popup: request without gesture                              "SecurityError: Failed to execute 'requestPermission' on 'FileSystemHandle': User activation is required to request permissions."  (activation=false, 2 ms)
+E1.5 popup: request with gesture (click)                         {"read":"granted","readwrite":"granted","requested":"granted"}  (activation=true, 9 ms)
+E1.6 sw (popup open): query                                      {"read":"granted","readwrite":"granted"}  (activation=null, 1 ms)
+E1.7 sw (popup closed, nothing else held a handle): query        {"read":"prompt","readwrite":"prompt"}  (activation=null, 2 ms)
+E1.8 sw: read                                                    "NotAllowedError: Failed to execute 'getFile' on 'FileSystemFileHandle': The request is not allowed by the user agent or the platform in the current context."  (activation=null, 1 ms)
+E1.9 sw: request (no frame, no gesture)                          {"requested":"prompt","read":"prompt","readwrite":"prompt"}  (activation=null, 1 ms)
+
+## E2 service worker holds a handle
+E2.1 popup: request with gesture                                 {"read":"granted","readwrite":"granted","requested":"granted"}  (activation=true, 11 ms)
+E2.2 sw: hold handle                                             {"read":"granted","readwrite":"granted"}  (activation=null, 2 ms)
+E2.3 sw (popup closed): query                                    {"read":"granted","readwrite":"granted"}  (activation=null, 2 ms)
+E2.4 sw: write                                                   "closed"  (activation=null, 3 ms)
+E2.5 sw (handle released + GC): query                            {"read":"prompt","readwrite":"prompt"}  (activation=null, 2 ms)
+
+## E3 offscreen document holds a handle
+E3.1 offscreen: hold handle (before any grant)                   {"read":"prompt","readwrite":"prompt"}  (activation=false, 2 ms)
+E3.2 popup: request with gesture                                 {"read":"granted","readwrite":"granted","requested":"granted"}  (activation=true, 16 ms)
+E3.3 sw (popup closed, sw GC'd, offscreen holds): query          {"read":"granted","readwrite":"granted"}  (activation=null, 2 ms)
+E3.4 sw: write                                                   "closed"  (activation=null, 2 ms)
+E3.5 sw (offscreen closed): query                                {"read":"prompt","readwrite":"prompt"}  (activation=null, 1 ms)
+E3.6 offscreen (new): request                                    "SecurityError: Failed to execute 'requestPermission' on 'FileSystemHandle': User activation is required to request permissions."  (activation=false, 1 ms)
+
+## E4 extension tab
+E4.1 tab: request without gesture                                "SecurityError: Failed to execute 'requestPermission' on 'FileSystemHandle': User activation is required to request permissions."  (activation=false, 2 ms)
+   screenshot: <prototype>/fixtures/e4-tab-prompt.png
+E4.2 tab: request with gesture (click)                           "still pending after 8000 ms"  (activation=true, 8001 ms)
+
+## E5 tab holds a handle; grant made in the popup
+E5.1 tab: hold handle                                            {"read":"prompt","readwrite":"prompt"}  (activation=false, 2 ms)
+E5.2 popup: request with gesture                                 {"read":"granted","readwrite":"granted","requested":"granted"}  (activation=true, 16 ms)
+E5.3 tab (popup closed): query                                   {"read":"granted","readwrite":"granted"}  (activation=false, 1 ms)
+E5.4 sw (tab closed): query                                      {"read":"prompt","readwrite":"prompt"}  (activation=null, 2 ms)
+
+# done

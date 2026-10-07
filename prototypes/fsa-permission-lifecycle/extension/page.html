@@ -1,0 +1,40 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>FSA probe</title>
+<style>
+  body { font: 13px system-ui, sans-serif; width: 560px; margin: 8px; }
+  button { margin: 2px; }
+  pre { font-size: 11px; white-space: pre-wrap; max-height: 360px; overflow: auto; background: #f4f4f4; padding: 4px; }
+</style>
+<h3 id="ctx"></h3>
+<div id="drop" style="border:2px dashed #888;padding:12px;margin-bottom:6px">drop a file here</div>
+<div>
+  Here:
+  <button data-op="pick">pick</button>
+  <button data-op="pickAndRequest">pick + request</button>
+  <button data-op="query">query</button>
+  <button data-op="request">request</button>
+  <button data-op="read">read</button>
+  <button data-op="write">write</button>
+</div>
+<div>
+  Service worker:
+  <button data-target="sw" data-op="query">query</button>
+  <button data-target="sw" data-op="request">request</button>
+  <button data-target="sw" data-op="read">read</button>
+  <button data-target="sw" data-op="write">write</button>
+</div>
+<div>
+  Offscreen:
+  <button data-target="offscreen-via-sw" data-op="query">query</button>
+  <button data-target="offscreen-via-sw" data-op="request">request</button>
+  <button data-target="offscreen-via-sw" data-op="read">read</button>
+  <button data-target="offscreen-via-sw" data-op="write">write</button>
+</div>
+<div>
+  <button id="tab">open as tab</button>
+  <button id="refresh">refresh log</button>
+  <button id="clear">clear log</button>
+</div>
+<pre id="log"></pre>
+<script type="module" src="page.js"></script>

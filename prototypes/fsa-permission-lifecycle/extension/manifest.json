@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "FSA permission lifecycle probe",
+  "version": "0.0.2",
+  "description": "Throwaway probe for File System Access permissions in extension contexts (rimlock #16).",
+  "action": { "default_popup": "page.html?ctx=popup" },
+  "background": { "service_worker": "sw.js", "type": "module" },
+  "permissions": ["offscreen", "storage"]
+}

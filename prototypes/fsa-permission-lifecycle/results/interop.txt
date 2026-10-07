@@ -1,0 +1,32 @@
+## I1 service worker rewrites the .kdbx with its own bytes
+popup: adopt interop.kdbx                                {"name":"interop.kdbx","read":"granted","readwrite":"prompt"}  (2 ms)
+popup: request with gesture                              {"read":"granted","readwrite":"granted","requested":"granted"}  (8 ms)
+   inotify (setup): none
+   before: inode=31406 mode=640 size=2110 symlink=false
+I1.1 sw: rewrite                                         {"bytes":2110,"writeMs":631}  (632 ms)
+   after:  inode=31453 mode=640 size=2110 symlink=false; dir: interop.kdbx, synced; keepassxc-cli ls: seed-entry
+   inotify (I1): CREATE interop.kdbx.crswap | MODIFY interop.kdbx.crswap | CLOSE_WRITE,CLOSE interop.kdbx.crswap | MOVED_FROM interop.kdbx.crswap | MOVED_TO interop.kdbx | ATTRIB interop.kdbx
+## I2 KeePassXC saves (temp + rename) while the extension holds the handle
+I2.1 sw: snapshot File                                   {"size":2110,"lastModified":1791395090579}  (2 ms)
+   inotify (keepassxc-cli add): ATTRIB #31457 | MODIFY #31457 | CREATE interop.kdbx.BvrXdz | CLOSE_WRITE,CLOSE #31457 | MOVED_FROM interop.kdbx.BvrXdz | MOVED_TO interop.kdbx
+I2.2 sw: read stale snapshot                             "NotReadableError: The requested file could not be read, typically due to permission problems that have occurred after a reference to a file was acquired."  (1 ms)
+I2.3 sw: read through the handle                         {"size":1822,"lastModified":1791395091584,"head":"…"o�\u0002��v\u001an\u0005 \u0000O��\u0001\u0007�^�U"}  (2 ms)
+   after:  inode=31457 mode=640 size=1822 symlink=false
+## I3 KeePassXC saves while the extension's writable is open
+I3.1 sw: open writable, write current bytes              "open"  (2 ms)
+   dir while open: interop.kdbx, interop.kdbx.crswap, synced
+   keepassxc-cli ls after its save: seed-entry,external-1,external-2
+I3.2 sw: close writable                                  "closed"  (229 ms)
+   keepassxc-cli ls after close(): seed-entry,external-1
+   inotify (I3): CREATE interop.kdbx.crswap | MODIFY interop.kdbx.crswap | CLOSE_WRITE,CLOSE interop.kdbx.crswap | ATTRIB #31469 | MODIFY #31469 | CREATE interop.kdbx.rHOzlc | CLOSE_WRITE,CLOSE #31469 | MOVED_FROM interop.kdbx.rHOzlc | MOVED_TO interop.kdbx | MOVED_FROM interop.kdbx.crswap | MOVED_TO interop.kdbx | ATTRIB interop.kdbx
+## I4 context dies with a writable open
+I4.1 offscreen: open writable                            "open"  (2 ms)
+   dir while open: interop.kdbx, interop.kdbx.crswap, synced
+   dir after offscreen closed: interop.kdbx, synced
+   inotify (I4): CREATE interop.kdbx.crswap | MODIFY interop.kdbx.crswap | CLOSE_WRITE,CLOSE interop.kdbx.crswap | DELETE interop.kdbx.crswap
+## I5 the adopted path is a symlink
+popup: adopt link.kdbx                                   {"name":"link.kdbx","read":"granted","readwrite":"prompt"}  (1 ms)
+popup: request with gesture                              {"read":"granted","readwrite":"granted","requested":"granted"}  (7 ms)
+   before: link inode=31407 mode=777 size=167 symlink=true -> <prototype>/fixtures/interop/interop.kdbx
+I5.1 sw: rewrite through the symlink handle              "NotFoundError: A requested file or directory could not be found at the time an operation was processed."  (3 ms)
+   after:  link inode=31407 mode=777 size=167 symlink=true; target inode=31468 mode=640 size=1822 symlink=false; synced/: link.kdbx
