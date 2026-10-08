@@ -60,6 +60,10 @@ _Avoid_: Open, logged in, session
 Locking an Unlocked Database without the user asking, when a configured condition is met (inactivity, OS screen lock, browser closing, Extension update).
 _Avoid_: Timeout, session expiry
 
+**Quick unlock**:
+Returning a Database to Unlocked after an Auto-lock, within the same browser session, by a hardware-backed check (fingerprint, device PIN, security key) instead of the Composite key.
+_Avoid_: PIN unlock, biometric unlock, soft lock
+
 ### Components
 
 **Extension**:
