@@ -1,0 +1,86 @@
+{
+ "name": "cloudflare-login",
+ "url": "https://dash.cloudflare.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:05:13.382Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://dash.cloudflare.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Password",
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 18,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/yavyt/0x4AAAAAADlYAGQxVeGSor-h/light/fbE/new/flexible?lang=auto",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://dash.cloudflare.com/login",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/i1arg/0x4AAAAAAADnPIDROrmt1Wwj/light/fbE/new/normal?lang=auto",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://dash.cloudflare.com/login",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/em8z9/0x4AAAAAAADnPIDROrmt1Wwj/light/fbE/new/normal?lang=auto",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

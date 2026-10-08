@@ -1,0 +1,153 @@
+{
+ "name": "dockerhub-login",
+ "url": "https://login.docker.com/u/login/",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:05:44.252Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://login.docker.com/u/login/identifier?state=hKFo2SBLazB6RkppOVNQMU9yRms5ZVRhM3dlSktneENGR2Z4OaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIG9SSjBFUnhJS1drdE5MWUItdUJwRG9Nbkh1c3FSZUVxo2NpZNkgbHZlOUdHbDhKdFNVcm5lUTFFVnVDMGxiakhkaTluYjk",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 16.90000000037253,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://login.docker.com/u/login/identifier?state=hKFo2SBUQmFXN0RWekxYSk0xam9lLUF0aUVxWGZCZENsYjl6NqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFBrWUhfMnJTU21CcUFZb0pOZUFjRC1iX2dXUTRocU1ao2NpZNkgbHZlOUdHbDhKdFNVcm5lUTFFVnVDMGxiakhkaTluYjk",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 19.199999999254942,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 18.799999998882413,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://login.docker.com/u/login/identifier?state=hKFo2SBCd3k2V1pYOXM0WDJCakkxMFZuQno5NkhQcnpRYWlzWqFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIHd0aFZoWTgzVUhZeHBuU2NpZDZxa1FBWWJoNkFlLVUto2NpZNkgbHZlOUdHbDhKdFNVcm5lUTFFVnVDMGxiakhkaTluYjk",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 17.700000001117587,
+     "walkMs": 0.10000000149011612,
+     "classifyMs": 17.59999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

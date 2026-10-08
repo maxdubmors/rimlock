@@ -1,0 +1,154 @@
+{
+ "name": "fixture-shadow-closed-nested",
+ "url": "http://localhost:8123/shadow-closed-nested.html",
+ "kind": "fixture",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:40:32.760Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-closed-nested.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "closed",
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "closed",
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0.6000000014901161,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-closed-nested.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "closed",
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "closed",
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 28.90000000037253,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 28.59999999962747,
+     "roots": 3,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in label noop:0.50 → null",
+      "f0:1 password:1.00 in label login:1.00 → current-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-closed-nested.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "closed",
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "closed",
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 21.700000001117587,
+     "walkMs": 0.10000000149011612,
+     "classifyMs": 21.59999999962747,
+     "roots": 3,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in label noop:0.50 group:login → username",
+      "f0:1 password:1.00 in label login:1.00 group:login → current-password"
+     ]
+    }
+   }
+  ]
+ }
+}

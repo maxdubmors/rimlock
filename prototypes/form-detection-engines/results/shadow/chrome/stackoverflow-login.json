@@ -1,0 +1,133 @@
+{
+ "name": "stackoverflow-login",
+ "url": "https://stackoverflow.com/users/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:54:25.437Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://stackoverflow.com/users/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "signup-modal-email",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "/users/signup?ssrc=undefined&returnurl=https%3A%2F%2Fstackoverflow.com%2Fusers%2Flogin",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "signup-modal-password",
+      "autocomplete": "new-password",
+      "placeholder": "8+ characters (at least 1 letter & 1 number)",
+      "aria": null,
+      "form": "/users/signup?ssrc=undefined&returnurl=https%3A%2F%2Fstackoverflow.com%2Fusers%2Flogin",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search…",
+      "aria": "Search",
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "search",
+      "name": null,
+      "htmlId": "filterInput",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": "tags",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/users/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/users/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 22.699999999254942,
+     "fields": [
+      {
+       "id": "f0:4",
+       "label": "username"
+      },
+      {
+       "id": "f0:5",
+       "label": "current-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://stackoverflow.com/users/login",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/hkn6k/0x4AAAAAAADnPIDROrmt1Wwj/light/fbE/new/normal?lang=auto",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://stackoverflow.com/users/login",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/7o8jo/0x4AAAAAAADnPIDROrmt1Wwj/light/fbE/new/normal?lang=auto",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

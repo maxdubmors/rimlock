@@ -1,0 +1,167 @@
+{
+ "name": "figma-login",
+ "url": "https://www.figma.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:05:59.917Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.figma.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "current-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 15.599999999627471,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.figma.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "current-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 23.700000001117587,
+     "walkMs": 1.700000001117587,
+     "classifyMs": 22,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.figma.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "current-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20.300000000745058,
+     "walkMs": 1.699999999254942,
+     "classifyMs": 18.600000001490116,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ]
+ }
+}

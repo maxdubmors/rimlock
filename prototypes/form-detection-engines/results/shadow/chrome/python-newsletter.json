@@ -1,0 +1,95 @@
+{
+ "name": "python-newsletter",
+ "url": "https://www.python.org/",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:09:10.699Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.python.org/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": "id-search-field",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search/",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 14.5,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.python.org/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": "id-search-field",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search/",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 21.199999999254942,
+     "walkMs": 4.5,
+     "classifyMs": 16.699999999254942,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.python.org/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": "id-search-field",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search/",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 19.699999999254942,
+     "walkMs": 4.699999999254942,
+     "classifyMs": 15,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

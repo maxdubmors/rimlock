@@ -1,0 +1,212 @@
+{
+ "name": "pinterest-login",
+ "url": "https://www.pinterest.com/login/",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:02:08.475Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.pinterest.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": null,
+      "htmlId": "email",
+      "autocomplete": "email",
+      "placeholder": "Email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 20.5,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://ct.pinterest.com/ct.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?size=large&shape=rectangular&text=continue_with&theme=outline&width=390px&logo_alignment=left&click_listener=()%3D%3E%7BI%26%26I()%2CT%26%26T()%2C(0%2CN.XB)(%7Bevent%3A%22start%22%2Cprovider%3A%22google%22%7D)%7D&is_fedcm_supported=true&client_id=694505692171-31closf3bcmlt59aeulg2j81ej68j6hk.apps.googleusercontent.com&iframe_id=gsi_532678_453585&cas=XtEEphy%2BHlz%2BVshyy1wdfsmoBuCXmwnB6DIIMTnxhvM&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Ldx7ZkUAAAAAF3SZ05DRL2Kdh911tCa3qFP0-0r&co=aHR0cHM6Ly93d3cucGludGVyZXN0LmNvbTo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=i4o7haenn98",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.pinterest.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": null,
+      "htmlId": "email",
+      "autocomplete": "email",
+      "placeholder": "Email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.300000000745058,
+     "walkMs": 1,
+     "classifyMs": 17.300000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://ct.pinterest.com/ct.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?size=large&shape=rectangular&text=continue_with&theme=outline&width=390px&logo_alignment=left&click_listener=()%3D%3E%7BI%26%26I()%2CT%26%26T()%2C(0%2CN.XB)(%7Bevent%3A%22start%22%2Cprovider%3A%22google%22%7D)%7D&is_fedcm_supported=true&client_id=694505692171-31closf3bcmlt59aeulg2j81ej68j6hk.apps.googleusercontent.com&iframe_id=gsi_538912_718777&cas=y4YJvqMXABCVD%2FJy%2Bt%2BPnPwz0F28N6L24yIWzvoMTsg&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Ldx7ZkUAAAAAF3SZ05DRL2Kdh911tCa3qFP0-0r&co=aHR0cHM6Ly93d3cucGludGVyZXN0LmNvbTo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=hzn2twhthodg",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.pinterest.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": null,
+      "htmlId": "email",
+      "autocomplete": "email",
+      "placeholder": "Email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 16.800000000745058,
+     "walkMs": 1,
+     "classifyMs": 15.800000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://ct.pinterest.com/ct.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?size=large&shape=rectangular&text=continue_with&theme=outline&width=390px&logo_alignment=left&click_listener=()%3D%3E%7BI%26%26I()%2CT%26%26T()%2C(0%2CN.XB)(%7Bevent%3A%22start%22%2Cprovider%3A%22google%22%7D)%7D&is_fedcm_supported=true&client_id=694505692171-31closf3bcmlt59aeulg2j81ej68j6hk.apps.googleusercontent.com&iframe_id=gsi_544313_984063&cas=HOwxOX53LNKMCkJdm0tV10Y7u7HU2aWIBf2LQtPCy%2B4&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Ldx7ZkUAAAAAF3SZ05DRL2Kdh911tCa3qFP0-0r&co=aHR0cHM6Ly93d3cucGludGVyZXN0LmNvbTo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=f5mgj6l6q0kp",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

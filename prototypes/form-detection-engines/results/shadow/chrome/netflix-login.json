@@ -1,0 +1,207 @@
+{
+ "name": "netflix-login",
+ "url": "https://www.netflix.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:59:23.585Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.netflix.com/de-en/login?serverState=BgjUv%2BvcAxLgAen1eASneCSMduE%2BajfRLJCQxn6hL7oP8mD1wCxDy6sIhkkaIG3ypxItUVOcXVkLzBZi66a9FMRnTVRNKILb6vVJGNSZktqoqD4NCfdCDiZhY%2FSPfqndVB1WdogRONs99gH%2ByVmCC%2B6Md%2FqPoWI02whP1tKkw8R9jrOleOvvHY%2B%2BbLuqaZY5zKSWGlG%2BOOVZ1sWjj%2Bl02q2Xy%2FCCO2OLKW%2FLRetCiL3aV%2Bu198qN0x16yrHt%2FwKWKVjAK196WYYmRa7s2CGw3qm%2FxLnRMil%2FtoaIPp11GWir3YI3GPhHwOUdGAYiDgoMD6KxqHCKwmKQUu9%2B",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "userLoginId",
+      "htmlId": ":R5akql6l9allbaldalkm:",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": ":R59lal6l9allbaldalkm:",
+      "autocomplete": "password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "vendor-search-handler",
+      "htmlId": "vendor-search-handler",
+      "autocomplete": null,
+      "placeholder": "Search…",
+      "aria": "Cookie list search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 16,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf8hrcUAAAAAIpQAFW2VFjtiYnThOjZOA5xvLyR&co=aHR0cHM6Ly93d3cubmV0ZmxpeC5jb206NDQz&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=vbxkdqdliqby",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.netflix.com/de-en/login?serverState=BgjUv%2BvcAxLgAX2Ltda%2Bb4gi0NQc2gvVKo7VYX33QlMVLyP3E0145Mb%2Fb9FHp5Srv3Nu2cbXvRExhAAw52hlt4MFTcyZOi4IG8KtPmII16lU18q1KUi0qAeoSDcnVr1JUJvWeBOEujoLDYfiGqkN1AsU0b8fN98Llvizcun3H76Mzxhi8Y6rh6H3B1ZMZpqF748wfPiVU%2B13rUxTcJkQryeOmunaoKBhatD3d9AOSE%2FQ6AmMnqbsLU3yhz4NhYSwYptNd6XJUMrA4zUMy7zMnguz8G3BjdNGPN628CXhuyETml7Vuw%2BjR5haGAYiDgoMH0fy440QrhHRTwKQ",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "userLoginId",
+      "htmlId": ":R5akql6l9allbaldalkm:",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": ":R59lal6l9allbaldalkm:",
+      "autocomplete": "password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "vendor-search-handler",
+      "htmlId": "vendor-search-handler",
+      "autocomplete": null,
+      "placeholder": "Search…",
+      "aria": "Cookie list search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.09999999962747,
+     "walkMs": 0.8999999985098839,
+     "classifyMs": 17.200000001117587,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf8hrcUAAAAAIpQAFW2VFjtiYnThOjZOA5xvLyR&co=aHR0cHM6Ly93d3cubmV0ZmxpeC5jb206NDQz&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=ce4mftd9dhz3",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.netflix.com/de-en/login?serverState=BgjUv%2BvcAxLgAclS1cnqM6QejBDRHNne%2F4DknSui9882FWylS4oMzmaxpaant4zBh2JI%2FqLxSE4Ou10bEY5n2YRuwDlRnaywJdyo4rL5RJ%2BBadfRgfZs3SEoyI4SJbBYJqbyVKd1qEuBsYd4pnK5rUbgBOfGuKo6PVEJ%2Ba50D2suGFqawqkdILBOfADkt0%2BjYcvFJYAUqmRx32DYstOfj1dFuNKqrWQQCHMF6OpDcA7D140VAgOE3PanLvtpsjSGJXZHbFmEtAXF4e26A0CrUULP5KlX6ubpQDIOADleap1YFwlTeRP2XMxLGAYiDgoM5z9FeGlMfV1JX2Xj",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "userLoginId",
+      "htmlId": ":R5akql6l9allbaldalkm:",
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": ":R59lal6l9allbaldalkm:",
+      "autocomplete": "password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "vendor-search-handler",
+      "htmlId": "vendor-search-handler",
+      "autocomplete": null,
+      "placeholder": "Search…",
+      "aria": "Cookie list search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 18.300000000745058,
+     "walkMs": 0.8000000007450581,
+     "classifyMs": 17.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf8hrcUAAAAAIpQAFW2VFjtiYnThOjZOA5xvLyR&co=aHR0cHM6Ly93d3cubmV0ZmxpeC5jb206NDQz&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=pfxb0tud6zv8",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

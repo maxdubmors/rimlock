@@ -1,0 +1,167 @@
+{
+ "name": "twitch-login",
+ "url": "https://www.twitch.tv/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:00:15.486Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.twitch.tv/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "login-username",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": "Enter your username",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password-input",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Enter your password",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 28.899999998509884,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.twitch.tv/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "login-username",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": "Enter your username",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password-input",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Enter your password",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 25.40000000037253,
+     "walkMs": 1.300000000745058,
+     "classifyMs": 24.09999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.twitch.tv/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "login-username",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": "Enter your username",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password-input",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Enter your password",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20.40000000037253,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 20,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,168 @@
+{
+ "name": "atlassian-login",
+ "url": "https://id.atlassian.com/login",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:01:10.499Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://id.atlassian.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username-_r0_",
+      "autocomplete": "username",
+      "placeholder": "Enter your email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 15.899999998509884,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=6q9u8oage8ml",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://id.atlassian.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username-_r0_",
+      "autocomplete": "username",
+      "placeholder": "Enter your email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 15.199999999254942,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 14.899999998509884,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=9i3a4qy44vps",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://id.atlassian.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username-_r0_",
+      "autocomplete": "username",
+      "placeholder": "Enter your email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 16,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 15.699999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=uxj23amagers",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

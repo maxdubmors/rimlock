@@ -1,0 +1,134 @@
+{
+ "name": "wikipedia-home",
+ "url": "https://en.wikipedia.org/wiki/Main_Page",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:08:30.072Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://en.wikipedia.org/wiki/Main_Page",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/w/index.php",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 17.09999999962747,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://en.wikipedia.org/wiki/Main_Page",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/w/index.php",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 24,
+     "walkMs": 4.5,
+     "classifyMs": 19.5,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://en.wikipedia.org/wiki/Main_Page",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/w/index.php",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 21,
+     "walkMs": 4.200000001117587,
+     "classifyMs": 16.799999998882413,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

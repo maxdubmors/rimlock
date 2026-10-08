@@ -1,0 +1,167 @@
+{
+ "name": "codeberg-login",
+ "url": "https://codeberg.org/user/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:10:33.758Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://codeberg.org/user/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user_name",
+      "htmlId": "user_name",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 21.300000000745058,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://codeberg.org/user/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user_name",
+      "htmlId": "user_name",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.90000000037253,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 18.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://codeberg.org/user/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user_name",
+      "htmlId": "user_name",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20,
+     "walkMs": 0.5,
+     "classifyMs": 19.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,236 @@
+{
+ "name": "tumblr-login",
+ "url": "https://www.tumblr.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:09:56.485Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.tumblr.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": "email",
+      "placeholder": "Email",
+      "aria": "email",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": "Password",
+      "aria": "password",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Tumblr",
+      "aria": "Search",
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 24.200000001117587,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6LeYrbYqAAAAAF9Hyb1luPFtcSylK688Hk22La0B&co=aHR0cHM6Ly93d3cudHVtYmxyLmNvbTo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=94ecipgmetc",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://blackbox-api.wp.com/v1/dist/5eeee358/if.html",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.tumblr.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": "email",
+      "placeholder": "Email",
+      "aria": "email",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": "Password",
+      "aria": "password",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Tumblr",
+      "aria": "Search",
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 22.40000000037253,
+     "walkMs": 1.1000000014901161,
+     "classifyMs": 21.299999998882413,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://blackbox-api.wp.com/v1/dist/5eeee358/if.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6LeYrbYqAAAAAF9Hyb1luPFtcSylK688Hk22La0B&co=aHR0cHM6Ly93d3cudHVtYmxyLmNvbTo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=xpmao5q365c0",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.tumblr.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": "email",
+      "placeholder": "Email",
+      "aria": "email",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": "Password",
+      "aria": "password",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Tumblr",
+      "aria": "Search",
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 23.59999999962747,
+     "walkMs": 1.099999999627471,
+     "classifyMs": 22.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://blackbox-api.wp.com/v1/dist/5eeee358/if.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6LeYrbYqAAAAAF9Hyb1luPFtcSylK688Hk22La0B&co=aHR0cHM6Ly93d3cudHVtYmxyLmNvbTo0NDM.&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=o6qxnmwlwduc",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

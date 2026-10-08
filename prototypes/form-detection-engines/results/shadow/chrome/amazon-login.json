@@ -1,0 +1,153 @@
+{
+ "name": "amazon-login",
+ "url": "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:56:37.357Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.amazon.com/ax/claim?arb=9be95731-0884-4c4f-aca7-66c63e532de8",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "ap_email_login",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": "Enter mobile number or email",
+      "form": "/ax/claim?policy_handle=Retail-Checkout&openid.mode=checkid_setup&openid.assoc_handle=usflex&arb=a57e5e8c-8c84-4e46-9fdb-f511b8602273&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "auth-credential-autofill-hint",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/ax/claim?policy_handle=Retail-Checkout&openid.mode=checkid_setup&openid.assoc_handle=usflex&arb=a57e5e8c-8c84-4e46-9fdb-f511b8602273&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 16.799999998882413,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "ap_email_login",
+      "autocomplete": "webauthn",
+      "placeholder": null,
+      "aria": "Enter mobile number or email",
+      "form": "/ax/claim?arb=1002cb74-cda3-4603-9263-9d077bad3025&openid.assoc_handle=usflex&openid.mode=checkid_setup&policy_handle=Retail-Checkout&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "auth-credential-autofill-hint",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/ax/claim?arb=1002cb74-cda3-4603-9263-9d077bad3025&openid.assoc_handle=usflex&openid.mode=checkid_setup&policy_handle=Retail-Checkout&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 20.09999999962747,
+     "walkMs": 0.7999999988824129,
+     "classifyMs": 19.300000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "ap_email_login",
+      "autocomplete": "webauthn",
+      "placeholder": null,
+      "aria": "Enter mobile number or email",
+      "form": "/ax/claim?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&policy_handle=Retail-Checkout&openid.mode=checkid_setup&openid.assoc_handle=usflex&arb=6a2028d8-b880-4b5f-a63e-ff29212d059b",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "auth-credential-autofill-hint",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/ax/claim?openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&policy_handle=Retail-Checkout&openid.mode=checkid_setup&openid.assoc_handle=usflex&arb=6a2028d8-b880-4b5f-a63e-ff29212d059b",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 23.59999999962747,
+     "walkMs": 0.7999999988824129,
+     "classifyMs": 22.800000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

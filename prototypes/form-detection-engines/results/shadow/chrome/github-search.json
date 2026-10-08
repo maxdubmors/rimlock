@@ -1,0 +1,95 @@
+{
+ "name": "github-search",
+ "url": "https://github.com/search",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:14:31.453Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://github.com/search",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "Search GitHub",
+      "aria": "Search GitHub",
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 15.900000000372529,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://github.com/search",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "Search GitHub",
+      "aria": "Search GitHub",
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 17.59999999962747,
+     "walkMs": 1.199999999254942,
+     "classifyMs": 16.40000000037253,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://github.com/search",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "Search GitHub",
+      "aria": "Search GitHub",
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 17.5,
+     "walkMs": 1.099999999627471,
+     "classifyMs": 16.40000000037253,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

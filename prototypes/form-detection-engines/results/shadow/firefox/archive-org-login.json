@@ -1,0 +1,290 @@
+{
+ "name": "archive-org-login",
+ "url": "https://archive.org/account/login",
+ "kind": "login",
+ "browser": "firefox/157.0.1",
+ "capturedAt": "2026-10-08T17:53:20.248Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://archive.org/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "url_preload",
+      "htmlId": "url_preload",
+      "autocomplete": null,
+      "placeholder": "https://",
+      "aria": null,
+      "form": "//web.archive.org/save",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "email",
+      "name": "username",
+      "htmlId": "email-input",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password-input",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 1,
+     "fields": []
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?theme=outline&text=signin_with&size=large&logo_alignment=left&shape=rectangular&width=250&is_fedcm_supported=false&client_id=41383750805-slra1gn7ge0bcc8ihpqnkk7hf0fo7dem.apps.googleusercontent.com&iframe_id=gsi_6355_975422&cas=mcr7iIIdysQSmjhxlKiQCBVKMKrz0L5liKpN%2BDgaiGo",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://archive.org/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "url_preload",
+      "htmlId": "url_preload",
+      "autocomplete": null,
+      "placeholder": "https://",
+      "aria": null,
+      "form": "//web.archive.org/save",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "email",
+      "name": "username",
+      "htmlId": "email-input",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password-input",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 17,
+     "walkMs": 1,
+     "classifyMs": 16,
+     "roots": 5,
+     "fields": [
+      {
+       "id": "f0:3",
+       "label": "username"
+      },
+      {
+       "id": "f0:4",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:3 email:1.00 in form login:1.00 → username",
+      "f0:4 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?theme=outline&text=signin_with&size=large&logo_alignment=left&shape=rectangular&width=250&is_fedcm_supported=false&client_id=41383750805-slra1gn7ge0bcc8ihpqnkk7hf0fo7dem.apps.googleusercontent.com&iframe_id=gsi_10373_435513&cas=R8ijkLzivhj6mZ2%2Bz%2B0VdA73zRRVqQZMPEZOOsaaZ6o",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://archive.org/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "url_preload",
+      "htmlId": "url_preload",
+      "autocomplete": null,
+      "placeholder": "https://",
+      "aria": null,
+      "form": "//web.archive.org/save",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "email",
+      "name": "username",
+      "htmlId": "email-input",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password-input",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 18,
+     "walkMs": 1,
+     "classifyMs": 17,
+     "roots": 5,
+     "fields": [
+      {
+       "id": "f0:3",
+       "label": "username"
+      },
+      {
+       "id": "f0:4",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:3 email:1.00 in form login:1.00 → username",
+      "f0:4 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?theme=outline&text=signin_with&size=large&logo_alignment=left&shape=rectangular&width=250&is_fedcm_supported=false&client_id=41383750805-slra1gn7ge0bcc8ihpqnkk7hf0fo7dem.apps.googleusercontent.com&iframe_id=gsi_17768_420447&cas=s4VB1w2lgWt8maa2WWxpGvorBFBGFth6%2FWg6WphP778",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "name": "mdn-home",
+ "url": "https://developer.mozilla.org/en-US/",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:08:44.709Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://developer.mozilla.org/en-US/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": "/en-US/search",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0.5,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://developer.mozilla.org/en-US/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": "/en-US/search",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 3.699999999254942,
+     "walkMs": 1.599999999627471,
+     "classifyMs": 2.099999999627471,
+     "roots": 3,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://developer.mozilla.org/en-US/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": "/en-US/search",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 3.299999998882413,
+     "walkMs": 1.299999998882413,
+     "classifyMs": 2,
+     "roots": 3,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

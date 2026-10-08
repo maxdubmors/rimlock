@@ -1,0 +1,158 @@
+{
+ "name": "fixture-open-shadow",
+ "url": "http://localhost:8123/open-shadow.html",
+ "kind": "fixture",
+ "browser": "firefox/157.0.1",
+ "capturedAt": "2026-10-08T17:50:12.741Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/open-shadow.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pass",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/open-shadow.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pass",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 14,
+     "walkMs": 0,
+     "classifyMs": 14,
+     "roots": 2,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/open-shadow.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pass",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 12,
+     "walkMs": 0,
+     "classifyMs": 12,
+     "roots": 2,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

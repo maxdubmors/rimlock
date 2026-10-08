@@ -1,0 +1,260 @@
+{
+ "name": "lichess-login",
+ "url": "https://lichess.org/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:11:40.631Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://lichess.org/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "username",
+      "htmlId": "form3-username",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password",
+      "htmlId": "form3-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "token",
+      "htmlId": "form3-token",
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 23.380000000819564,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "username"
+      },
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/unw9d/0x4AAAAAAC_aOMpwtdCnD5y5/auto/fbE/new/normal?lang=en-us",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://lichess.org/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "username",
+      "htmlId": "form3-username",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password",
+      "htmlId": "form3-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "token",
+      "htmlId": "form3-token",
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 5.600000001490116,
+     "walkMs": 0.4950000010430813,
+     "classifyMs": 5.105000000447035,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "username"
+      },
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:1 email:1.00 in form login:1.00 → username",
+      "f0:2 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/evzjl/0x4AAAAAAC_aOMpwtdCnD5y5/auto/fbE/new/normal?lang=en-us",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://lichess.org/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "username",
+      "htmlId": "form3-username",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password",
+      "htmlId": "form3-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "token",
+      "htmlId": "form3-token",
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 6.094999998807907,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 5.694999998435378,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "username"
+      },
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:1 email:1.00 in form login:1.00 → username",
+      "f0:2 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/hhz3v/0x4AAAAAAC_aOMpwtdCnD5y5/auto/fbE/new/normal?lang=en-us",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

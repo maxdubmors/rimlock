@@ -1,0 +1,207 @@
+{
+ "name": "zoom-signin",
+ "url": "https://zoom.us/signin",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:01:32.022Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://zoom.us/signin#/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "account",
+      "htmlId": "email",
+      "autocomplete": "off",
+      "placeholder": "",
+      "aria": "Enter email, Zoom Mail or phone number",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "vendor-search-handler",
+      "htmlId": "vendor-search-handler",
+      "autocomplete": null,
+      "placeholder": "Search...",
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 26.09999999962747,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf2C54aAAAAAOOpnJT1sg39rowHN362Zj2QSyls&co=aHR0cHM6Ly96b29tLnVzOjQ0Mw..&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&theme=light&size=invisible&anchor-ms=20000&execute-ms=30000&cb=q3ksis1zt468",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://zoom.us/signin#/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "account",
+      "htmlId": "email",
+      "autocomplete": "off",
+      "placeholder": "",
+      "aria": "Enter email, Zoom Mail or phone number",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "vendor-search-handler",
+      "htmlId": "vendor-search-handler",
+      "autocomplete": null,
+      "placeholder": "Search...",
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.09999999962747,
+     "walkMs": 1.099999999627471,
+     "classifyMs": 17,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf2C54aAAAAAOOpnJT1sg39rowHN362Zj2QSyls&co=aHR0cHM6Ly96b29tLnVzOjQ0Mw..&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&theme=light&size=invisible&anchor-ms=20000&execute-ms=30000&cb=d4eob9rfvgqz",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://zoom.us/signin#/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "account",
+      "htmlId": "email",
+      "autocomplete": "off",
+      "placeholder": "",
+      "aria": "Enter email, Zoom Mail or phone number",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "vendor-search-handler",
+      "htmlId": "vendor-search-handler",
+      "autocomplete": null,
+      "placeholder": "Search...",
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 17.90000000037253,
+     "walkMs": 0.900000000372529,
+     "classifyMs": 17,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6Lf2C54aAAAAAOOpnJT1sg39rowHN362Zj2QSyls&co=aHR0cHM6Ly96b29tLnVzOjQ0Mw..&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&theme=light&size=invisible&anchor-ms=20000&execute-ms=30000&cb=sez7uy7r4kfd",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

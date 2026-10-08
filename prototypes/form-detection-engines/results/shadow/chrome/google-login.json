@@ -1,0 +1,222 @@
+{
+ "name": "google-login",
+ "url": "https://accounts.google.com/signin",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:58:13.749Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://accounts.google.com/v3/signin/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S1161180955:1791482294151979",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "identifier",
+      "htmlId": "identifierId",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": "Email or phone",
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "hiddenPassword",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "ca",
+      "htmlId": "ca",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Type the text you hear or see",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 23.90000000037253,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.youtube.com/accounts/CheckConnection?pmpo=https%3A%2F%2Faccounts.google.com&v=1408239297&timestamp=1791482296819",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/_/bscframe",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://accounts.google.com/v3/signin/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-1406569264:1791482302089294",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "identifier",
+      "htmlId": "identifierId",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": "Email or phone",
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "hiddenPassword",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "ca",
+      "htmlId": "ca",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Type the text you hear or see",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 22.600000001490116,
+     "walkMs": 1.200000001117587,
+     "classifyMs": 21.40000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 username:1.00 in main login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.youtube.com/accounts/CheckConnection?pmpo=https%3A%2F%2Faccounts.google.com&v=-2053618438&timestamp=1791482303054",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/_/bscframe",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://accounts.google.com/v3/signin/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-1423612356:1791482307854155",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "identifier",
+      "htmlId": "identifierId",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": "Email or phone",
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "hiddenPassword",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "ca",
+      "htmlId": "ca",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Type the text you hear or see",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 28.5,
+     "walkMs": 3.099999999627471,
+     "classifyMs": 25.40000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 username:1.00 in main login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.youtube.com/accounts/CheckConnection?pmpo=https%3A%2F%2Faccounts.google.com&v=1195817619&timestamp=1791482308566",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/_/bscframe",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

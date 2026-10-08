@@ -1,0 +1,284 @@
+{
+ "name": "github-login",
+ "url": "https://github.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:54:12.040Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://github.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "login",
+      "htmlId": "login_field",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "required_field_21f1",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "required_field_8ec9",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "required_field_056d",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 22.199999999254942,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://github.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "login",
+      "htmlId": "login_field",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "required_field_2867",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "required_field_65ea",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "required_field_9aba",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 19.90000000037253,
+     "walkMs": 0.6999999992549419,
+     "classifyMs": 19.200000001117587,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://github.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "login",
+      "htmlId": "login_field",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "required_field_5a3d",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "required_field_d7eb",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "required_field_379e",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20.300000000745058,
+     "walkMs": 0.7000000011175871,
+     "classifyMs": 19.59999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ]
+ }
+}

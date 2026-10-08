@@ -1,0 +1,274 @@
+{
+ "name": "reddit-register",
+ "url": "https://www.reddit.com/register/",
+ "kind": "signup",
+ "browser": "firefox/157.0.1",
+ "capturedAt": "2026-10-08T17:53:06.404Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.reddit.com/register/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "code",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "username",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0,
+     "fields": []
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function()%20%7B%0A%20%20%20%20%5Bnative%20code%5D%0A%7D&is_fedcm_supported=false&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_987689_403659&cas=6a4DkhrLbRv167%2BPCScHfQODHqN%2BVmjE4%2F4%2FuRa2RVA&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&size=invisible&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=k2gbjr5ycfgw",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&theme=light&size=normal&sa=v1%2Fweb%2Fregister_email_verify_initialize&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=cfcqhet007p5",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&theme=light&size=normal&sa=v1%2Fweb%2Fregister_email&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=5lnptivcdkt",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.reddit.com/register/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "code",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "username",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 10,
+     "walkMs": 1,
+     "classifyMs": 9,
+     "roots": 5,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function()%20%7B%0A%20%20%20%20%5Bnative%20code%5D%0A%7D&is_fedcm_supported=false&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_991918_122704&cas=6tqmYcQFJMNgJJIBgjLFDjj%2FUwup%2BWVaUZRSjv836bE&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&size=invisible&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=f78gntshbk83",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&theme=light&size=normal&sa=v1%2Fweb%2Fregister_email&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=35ulayr9vde4",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&theme=light&size=normal&sa=v1%2Fweb%2Fregister_email_verify_initialize&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=nyhd43thcxcy",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.reddit.com/register/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": "email",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "code",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "username",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 14,
+     "walkMs": 2,
+     "classifyMs": 12,
+     "roots": 5,
+     "fields": [],
+     "raw": [
+      "f0:0 email:1.00 in label noop:0.50 → null"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function()%20%7B%0A%20%20%20%20%5Bnative%20code%5D%0A%7D&is_fedcm_supported=false&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_996907_305708&cas=Q9EA9bWvfaw9LbRIEG8Tp5M%2Bj9fovSI55PfHr%2FXMFJc&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&size=invisible&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=5pjztg2ptt96",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&theme=light&size=normal&sa=v1%2Fweb%2Fregister_email&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=tnpinhtspl0k",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMzwgr6KUGswGxeS&theme=light&size=normal&sa=v1%2Fweb%2Fregister_email_verify_initialize&anchor-ms=20000&execute-ms=30000&ovv=CAB5am5W&cb=p68ab54u5jh9",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

@@ -1,0 +1,323 @@
+{
+ "name": "steam-login",
+ "url": "https://store.steampowered.com/login/",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:04:05.256Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://store.steampowered.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "term",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search the store",
+      "aria": null,
+      "form": "https://store.steampowered.com/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": null,
+      "htmlId": "«r4»",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": null,
+      "htmlId": "«r5»",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": null,
+      "htmlId": "authcode",
+      "autocomplete": null,
+      "placeholder": "enter your code here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": null,
+      "htmlId": "friendlyname",
+      "autocomplete": null,
+      "placeholder": "enter a friendly name here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "text",
+      "name": null,
+      "htmlId": "twofactorcode_entry",
+      "autocomplete": "off",
+      "placeholder": "enter your code here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 19.40000000037253,
+     "fields": [
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://store.steampowered.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "term",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search the store",
+      "aria": null,
+      "form": "https://store.steampowered.com/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": null,
+      "htmlId": "«r4»",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": null,
+      "htmlId": "«r5»",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": null,
+      "htmlId": "authcode",
+      "autocomplete": null,
+      "placeholder": "enter your code here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": null,
+      "htmlId": "friendlyname",
+      "autocomplete": null,
+      "placeholder": "enter a friendly name here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "text",
+      "name": null,
+      "htmlId": "twofactorcode_entry",
+      "autocomplete": "off",
+      "placeholder": "enter your code here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 23.09999999962747,
+     "walkMs": 1.299999998882413,
+     "classifyMs": 21.800000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:2 password:1.00 in form login:1.00 → current-password",
+      "f0:1 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://store.steampowered.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "term",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search the store",
+      "aria": null,
+      "form": "https://store.steampowered.com/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": null,
+      "htmlId": "«r4»",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": null,
+      "htmlId": "«r5»",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": null,
+      "htmlId": "authcode",
+      "autocomplete": null,
+      "placeholder": "enter your code here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": null,
+      "htmlId": "friendlyname",
+      "autocomplete": null,
+      "placeholder": "enter a friendly name here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "text",
+      "name": null,
+      "htmlId": "twofactorcode_entry",
+      "autocomplete": "off",
+      "placeholder": "enter your code here",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20.300000000745058,
+     "walkMs": 1,
+     "classifyMs": 19.300000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:2 password:1.00 in form login:1.00 → current-password",
+      "f0:1 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

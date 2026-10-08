@@ -1,0 +1,95 @@
+{
+ "name": "duckduckgo-home",
+ "url": "https://duckduckgo.com/",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:08:57.138Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://duckduckgo.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 1.599999999627471,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://duckduckgo.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 3.700000001117587,
+     "walkMs": 2.099999999627471,
+     "classifyMs": 1.6000000014901161,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://duckduckgo.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 3.699999999254942,
+     "walkMs": 2.099999999627471,
+     "classifyMs": 1.599999999627471,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

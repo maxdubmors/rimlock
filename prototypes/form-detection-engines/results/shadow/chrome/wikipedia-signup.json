@@ -1,0 +1,351 @@
+{
+ "name": "wikipedia-signup",
+ "url": "https://en.wikipedia.org/w/index.php?title=Special:CreateAccount",
+ "kind": "signup",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:08:01.443Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://auth.wikimedia.org/enwiki/wiki/Special:CreateAccount?useformat=desktop&usesul3=1&centralauthLoginToken=4e7ff49104c6f6107f46440947a1b471",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "wpName",
+      "htmlId": "wpName2",
+      "autocomplete": "username",
+      "placeholder": "Enter your username",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=4e7ff49104c6f6107f46440947a1b471&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "wpPassword",
+      "htmlId": "wpPassword2",
+      "autocomplete": "new-password",
+      "placeholder": "Enter a password",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=4e7ff49104c6f6107f46440947a1b471&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "retype",
+      "htmlId": "wpRetype",
+      "autocomplete": "new-password",
+      "placeholder": "Enter password again",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=4e7ff49104c6f6107f46440947a1b471&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "email",
+      "name": "email",
+      "htmlId": "wpEmail",
+      "autocomplete": "email",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=4e7ff49104c6f6107f46440947a1b471&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 21.299999998882413,
+     "fields": [
+      {
+       "id": "f0:4",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "signup-username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://auth.wikimedia.org/enwiki/wiki/Special:CreateAccount?useformat=desktop&usesul3=1&centralauthLoginToken=74e50b70c6d7b8624993e703f36d27cd",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "wpName",
+      "htmlId": "wpName2",
+      "autocomplete": "username",
+      "placeholder": "Enter your username",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=74e50b70c6d7b8624993e703f36d27cd&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "wpPassword",
+      "htmlId": "wpPassword2",
+      "autocomplete": "new-password",
+      "placeholder": "Enter a password",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=74e50b70c6d7b8624993e703f36d27cd&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "retype",
+      "htmlId": "wpRetype",
+      "autocomplete": "new-password",
+      "placeholder": "Enter password again",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=74e50b70c6d7b8624993e703f36d27cd&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "email",
+      "name": "email",
+      "htmlId": "wpEmail",
+      "autocomplete": "email",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=74e50b70c6d7b8624993e703f36d27cd&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 23.09999999962747,
+     "walkMs": 1,
+     "classifyMs": 22.09999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:4",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:4 email:1.00 in form register:1.00 → signup-username",
+      "f0:2 new-password:1.00 in form register:1.00 → new-password",
+      "f0:3 new-password:1.00 in form register:1.00 → new-password",
+      "f0:1 username:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://auth.wikimedia.org/enwiki/wiki/Special:CreateAccount?useformat=desktop&usesul3=1&centralauthLoginToken=7fbf71ceba9b626f72d832b95f5845b7",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "wpName",
+      "htmlId": "wpName2",
+      "autocomplete": "username",
+      "placeholder": "Enter your username",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=7fbf71ceba9b626f72d832b95f5845b7&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "wpPassword",
+      "htmlId": "wpPassword2",
+      "autocomplete": "new-password",
+      "placeholder": "Enter a password",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=7fbf71ceba9b626f72d832b95f5845b7&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "retype",
+      "htmlId": "wpRetype",
+      "autocomplete": "new-password",
+      "placeholder": "Enter password again",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=7fbf71ceba9b626f72d832b95f5845b7&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "email",
+      "name": "email",
+      "htmlId": "wpEmail",
+      "autocomplete": "email",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:CreateAccount&centralauthLoginToken=7fbf71ceba9b626f72d832b95f5845b7&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 23.40000000037253,
+     "walkMs": 0.900000000372529,
+     "classifyMs": 22.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:4",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:4 email:1.00 in form register:1.00 → signup-username",
+      "f0:2 new-password:1.00 in form register:1.00 → new-password",
+      "f0:3 new-password:1.00 in form register:1.00 → new-password",
+      "f0:1 username:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   }
+  ]
+ }
+}

@@ -4,3 +4,5 @@ vendor/
 dist/
 snapshots/
 results/screens/
+.firefox/
+ext/content.js

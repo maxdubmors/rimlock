@@ -1,0 +1,129 @@
+{
+ "name": "spotify-login",
+ "url": "https://accounts.spotify.com/en/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:59:43.566Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://accounts.spotify.com/en/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "username",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 16.09999999962747,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfCVLAUAAAAALFwwRnnCJ12DalriUGbj8FW_J39&co=aHR0cHM6Ly9hY2NvdW50cy5zcG90aWZ5LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=bg8ntl33tlva",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://accounts.spotify.com/en/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "username",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 16.800000000745058,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 16.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfCVLAUAAAAALFwwRnnCJ12DalriUGbj8FW_J39&co=aHR0cHM6Ly9hY2NvdW50cy5zcG90aWZ5LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=facxafpcoqt",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://accounts.spotify.com/en/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "username",
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 17.5,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 17.199999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfCVLAUAAAAALFwwRnnCJ12DalriUGbj8FW_J39&co=aHR0cHM6Ly9hY2NvdW50cy5zcG90aWZ5LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=1334qogif460",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

@@ -1,0 +1,213 @@
+{
+ "name": "booking-signin",
+ "url": "https://account.booking.com/sign-in",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:02:28.967Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://account.booking.com/sign-in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "password",
+      "name": "password",
+      "htmlId": "hidden-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": "username",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 15.800000000745058,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.booking.com/cookiebanner.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://asanalytics.booking.com/I5qIjjNgrVZtHnnV?afa6791cd2176210=O8Zuce85ODRET2pjQJpPskuk_0o9oKCuryFUu0_g5H7vOb08KLzUFSlslFZwBuvHJDajze8uCb82Te5vFSnYVbU7JxSeN72dH1-QORXbwNq3Ac0GtOF7sokheB1WOXwS_yz7OYDBXAI0l4a18wBfLSH4dGZkm3G1tCJo3RPr_0hkKjWdlimtbFIwCtpmQL5KFqdGt7Ctjf7MS-Bi1Zk",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://h.online-metrix.net/m3eKqxVZFeRNypTP?d08922e18d588ec7=RQs308iNhAnGj_hgcDzQXlc1cIDXuKPSWtL752se0xJuc4JcJwFs4QsWv3kzgodb82ySJ8WOcsDX9lZ97DoFOUSH2LIdcHt82kmaqWpS_MYioW_OtqaRhG3k-SVmKNxF2t-maglrAhO2dJjzbGR160RTBSHg2evKdrNqQ8WjWm_wFSTNBumQVBPlpBvSkHrolBY807slaD7X-sYDzcxS",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://asanalytics.booking.com/kLqva9-aAPuVZnJg?e1ea86510ca45302=cPQurpj3KmiN1v2V6OqZxVFejBGhAtFOaPfWaEI8u8wdSOtOKlR1SFw-MpWY7_pBGhkCmgkP1DpNBojQvtjlpa3b6Tkdav_KWbWJagBqlgtb_cmWna5vettPGYuZT0bXgc78M6T0AZWjSkIoXgT75y-Z6zCdClt7pvb60_LwOxJC2BytMsQ4qour9m-XrYmibDeIYYDM8ab9DblgDH3t",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://account.booking.com/sign-in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "password",
+      "name": "password",
+      "htmlId": "hidden-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": "username webauthn",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 16,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 15.599999999627471,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.booking.com/cookiebanner.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://asanalytics.booking.com/8raQ35aCy7FbC-lB?654df38aa8ab3c96=7q7zn3jYrqgmIKyimWQFWg3W4Ce1dn1QM3-dL-z_6X-jH_ziDtVFzaAQ2310axEac4eKRtE39-ume0LAx3N53DVuHSmFFhQU0vnA_9fDhIUTRHSxLRAu4RHTWTQPMyeLSkpbTWAa0qXzWmkbkcww_NoiYHzVFtDBBXsqopnJTDumRGmEGeam7PXZzH1HWt5w5vUpEbyqF5hy_ND7Nj4",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://h.online-metrix.net/c3dNMtXAblGxShuz?64211355eb55ac8d=IKBJAFdN7I51e_Aqr5HyKetBqlq7SRbfY2WYK6pnIuxxAQ_SfltAs0SAuVG-ws2cBGTtpt9ZSC3VeYKiUauhWXnS5M1VHeXf3aCfzeeTxPqw_nOPYCE6YqynaLRjzTVeNljsVwSijL5Na1xlXc8LhwIquR2LrCTwHpEw-J6XcEMfRf10_eefSmOFPG2NRDwMRwAek-GJxVu6mq9kr30J",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://asanalytics.booking.com/UTUzR04aPDG1iD5Z?f2f0c9e88206922a=-ZoSK2D3Cvu7qgaHeh6oTl2uJewyR7WLVwHbkEcZh7GSIzuYlko3_lC4uTB4ZOQNrwM5NmnYIMx2wSSmmbJNgd0Y8fkhlABEyjeGbSHPvXVOJebmtjUAu7j93-ybMveMQURkm8tbpprwlXkxjf2mEvM9HIRMg0cJY8x5NlmXoCfLoFB3vL5R8ZhFZHWXiv_95rQEzwuXHJcg2rYDUkFA",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://account.booking.com/sign-in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "password",
+      "name": "password",
+      "htmlId": "hidden-password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": "username webauthn",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20.299999998882413,
+     "walkMs": 1.099999999627471,
+     "classifyMs": 19.199999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.booking.com/cookiebanner.html",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://asanalytics.booking.com/2ZPf8Qbr44IJvkUm?f142998bb5d48b07=eofT6jrMwrye-GQwosiW6sv4dBMme3LsS6zU9Zy1VTeRWMg7E9oZ8WJGsPfMHhyrQ36RxzUFIpSfckuBePm9vgp4ElRlmMpfRy-2R1BmoxX1UZgcZlyGm62BtessB694-_UTZ9kH5QnyVh1bgSRgnS0A5yf_qPbmIOo1jGRMQK4jJUJL4MQcVqiYlYdtgHWIz7ivgi7X3Ix7_SeQpVU",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://h.online-metrix.net/6eWvdZMN5ZYn9C_J?74ff280260a0c68d=o3CAEXR2K4AJgokSHVV2WLMQDdqtbBPrqArvdk_B8-wtQvGJVk3JaBNCDrrjiiWqcSZLMUToJG4378cNdjfBryeQ9TVSK4zxH-0_YCLO0ylfMR00MShXjJWibaedyA28RtYxJ8GkDz_AM435riIydKdY7nxsaOTYt7gjsmvDoe4SBnYWirog6LrD7sCCAKUZe3D1mTFwqPobn8EeYw67",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://asanalytics.booking.com/n6miZ9pkdLlWbmAq?745fe96a5dac4393=2RNDrLyY4Vyo2P3azKwlSKeIwk0fqJ_T2iPw7GmJHWjZDfD6bk4hOwnvDEr67VlRQhT0tmFHjvEw_y1WDTwofEsIXq8_YVAJzYM9Cv6xx5nkvFOk8MsK5idw3CdI_W174-w-L_Gv1wdWTG8UGKyn2PWyG9jgXR1jXE5-gO1X9TpHczS4uijnoyrVrHaOuNk6wPPXOhBhTspb5HiO_WJ6",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

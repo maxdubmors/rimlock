@@ -1,0 +1,167 @@
+{
+ "name": "npm-login",
+ "url": "https://www.npmjs.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:05:31.741Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.npmjs.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "login_username",
+      "autocomplete": null,
+      "placeholder": "",
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "login_password",
+      "autocomplete": null,
+      "placeholder": "",
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 21.90000000037253,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.npmjs.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "login_username",
+      "autocomplete": null,
+      "placeholder": "",
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "login_password",
+      "autocomplete": null,
+      "placeholder": "",
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 19,
+     "walkMs": 0.5,
+     "classifyMs": 18.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.npmjs.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "login_username",
+      "autocomplete": null,
+      "placeholder": "",
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "login_password",
+      "autocomplete": null,
+      "placeholder": "",
+      "aria": null,
+      "form": "/login",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 18.799999998882413,
+     "walkMs": 0.19999999925494194,
+     "classifyMs": 18.59999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

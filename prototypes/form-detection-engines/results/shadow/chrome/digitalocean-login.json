@@ -1,0 +1,167 @@
+{
+ "name": "digitalocean-login",
+ "url": "https://cloud.digitalocean.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:04:41.172Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://cloud.digitalocean.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "none",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "#",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "none",
+      "placeholder": "Enter your password",
+      "aria": null,
+      "form": "#",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 18.5,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://cloud.digitalocean.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "none",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "#",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "none",
+      "placeholder": "Enter your password",
+      "aria": null,
+      "form": "#",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 24.199999999254942,
+     "walkMs": 2.5,
+     "classifyMs": 21.699999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://cloud.digitalocean.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": "none",
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "#",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "none",
+      "placeholder": "Enter your password",
+      "aria": null,
+      "form": "#",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 22.09999999962747,
+     "walkMs": 1.200000001117587,
+     "classifyMs": 20.899999998509884,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ]
+ }
+}

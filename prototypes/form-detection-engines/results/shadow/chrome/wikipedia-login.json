@@ -1,0 +1,245 @@
+{
+ "name": "wikipedia-login",
+ "url": "https://en.wikipedia.org/w/index.php?title=Special:UserLogin",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:01:53.753Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://auth.wikimedia.org/enwiki/wiki/Special:UserLogin?useformat=desktop&usesul3=1&returntoquery=%3F&centralauthLoginToken=63371397724422349441b29f8732c4ea",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "wpName",
+      "htmlId": "wpName1",
+      "autocomplete": "username webauthn",
+      "placeholder": "Enter your username",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:UserLogin&returntoquery=%3F&centralauthLoginToken=63371397724422349441b29f8732c4ea&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "wpPassword",
+      "htmlId": "wpPassword1",
+      "autocomplete": "current-password",
+      "placeholder": "Enter your password",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:UserLogin&returntoquery=%3F&centralauthLoginToken=63371397724422349441b29f8732c4ea&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 22.09999999962747,
+     "fields": [
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://auth.wikimedia.org/enwiki/wiki/Special:UserLogin?useformat=desktop&usesul3=1&returntoquery=%3F&centralauthLoginToken=22ef1b04696ab679c51c7c27729362b8",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "wpName",
+      "htmlId": "wpName1",
+      "autocomplete": "username webauthn",
+      "placeholder": "Enter your username",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:UserLogin&returntoquery=%3F&centralauthLoginToken=22ef1b04696ab679c51c7c27729362b8&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "wpPassword",
+      "htmlId": "wpPassword1",
+      "autocomplete": "current-password",
+      "placeholder": "Enter your password",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:UserLogin&returntoquery=%3F&centralauthLoginToken=22ef1b04696ab679c51c7c27729362b8&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 27.90000000037253,
+     "walkMs": 1,
+     "classifyMs": 26.90000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:2 password:1.00 in form login:1.00 → current-password",
+      "f0:1 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://auth.wikimedia.org/enwiki/wiki/Special:UserLogin?useformat=desktop&usesul3=1&returntoquery=%3F&centralauthLoginToken=250b66b41558b117feae257e3d0a7cd1",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "search",
+      "htmlId": "searchInput",
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": "Search Wikipedia",
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "wpName",
+      "htmlId": "wpName1",
+      "autocomplete": "username webauthn",
+      "placeholder": "Enter your username",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:UserLogin&returntoquery=%3F&centralauthLoginToken=250b66b41558b117feae257e3d0a7cd1&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "wpPassword",
+      "htmlId": "wpPassword1",
+      "autocomplete": "current-password",
+      "placeholder": "Enter your password",
+      "aria": null,
+      "form": "/enwiki/w/index.php?title=Special:UserLogin&returntoquery=%3F&centralauthLoginToken=250b66b41558b117feae257e3d0a7cd1&usesul3=1&useformat=desktop",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "search",
+      "name": "search",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search Wikipedia",
+      "aria": null,
+      "form": "/enwiki/w/index.php",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 24.299999998882413,
+     "walkMs": 0.8999999985098839,
+     "classifyMs": 23.40000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:2",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:1",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:2 password:1.00 in form login:1.00 → current-password",
+      "f0:1 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

@@ -24,3 +24,18 @@ npx tsc -p .   # strict type-check of both wrappers: the Bitwarden type closure
 ```
 
 Caveat: the engines run in the page's main world through CDP, not in a content script's isolated world. Same DOM, but `chrome.dom.openOrClosedShadowRoot` is unavailable, so closed shadow roots are out of scope here.
+
+## Shadow-root check
+
+Evidence for [Verify Proton classification across shadow roots](https://github.com/maxdubmors/rimlock/issues/24). Findings: [`docs/research/proton-shadow-roots.md`](../../docs/research/proton-shadow-roots.md).
+
+- `engines/proton-walk.ts`: Proton fed every root (`protonWalk`), and the same plus rimlock's lone-field cluster flag and cross-root grouping (`protonGroup`). Public package exports only; nothing patched.
+- `ext/`: a throwaway MV3 extension whose content script (isolated world) stamps fields, opens closed roots and runs one variant per page load on request (`rl-run` / `rl-result` CustomEvents).
+- `make-shadow-fixtures.mjs`: writes `corpus/fixtures/shadow-*.html` and `corpus/fixtures-shadow.txt`.
+- `run-ext.mjs <chrome|firefox> <fixtures|shadow-live|live>`: loads `ext/` into Chrome for Testing or Firefox and writes `results/shadow/<browser>/`. `score-shadow.mjs <browser> <fixtures|live>` writes `results/shadow/scores-*.md`. `trace.mjs <fixture|url>`: per-root trace of why a field got no type.
+
+```sh
+npx -p @puppeteer/browsers browsers install firefox@stable --path $PWD/.firefox
+node make-shadow-fixtures.mjs && node build-ext.mjs
+node run-ext.mjs chrome fixtures && node score-shadow.mjs chrome fixtures
+```

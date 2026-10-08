@@ -1,0 +1,208 @@
+{
+ "name": "fixture-shadow-control-signup-light",
+ "url": "http://localhost:8123/shadow-control-signup-light.html",
+ "kind": "fixture",
+ "browser": "firefox/157.0.1",
+ "capturedAt": "2026-10-08T17:52:18.142Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-control-signup-light.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "new-password"
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password2",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "new-password"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 13,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-control-signup-light.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "new-password"
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password2",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "new-password"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 10,
+     "walkMs": 0,
+     "classifyMs": 10,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form password-change:1.00 → null",
+      "f0:1 new-password:1.00 in form password-change:1.00 → new-password",
+      "f0:2 new-password:1.00 in form password-change:1.00 → new-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-control-signup-light.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "new-password"
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password2",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/join",
+      "shadow": false,
+      "visible": true,
+      "gt": "new-password"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 13,
+     "walkMs": 1,
+     "classifyMs": 12,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form password-change:1.00 → null",
+      "f0:1 new-password:1.00 in form password-change:1.00 → new-password",
+      "f0:2 new-password:1.00 in form password-change:1.00 → new-password"
+     ]
+    }
+   }
+  ]
+ }
+}

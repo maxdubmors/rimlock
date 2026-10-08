@@ -1,0 +1,167 @@
+{
+ "name": "fixture-shadow-slotted",
+ "url": "http://localhost:8123/shadow-slotted.html",
+ "kind": "fixture",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:41:58.218Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-slotted.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pass",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 26.5,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-slotted.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pass",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 25.399999998509884,
+     "walkMs": 0.3999999985098839,
+     "classifyMs": 25,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-slotted.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": "username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pass",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/session",
+      "shadow": false,
+      "visible": true,
+      "gt": "current-password"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 19.800000000745058,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 19.40000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

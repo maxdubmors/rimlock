@@ -1,0 +1,114 @@
+{
+ "name": "mailru-login",
+ "url": "https://account.mail.ru/login",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:07:20.450Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://id.vk.ru/auth?action=eyJuYW1lIjoibWFpbF9hdXRoIiwicGFyYW1zIjp7Im1haWxfYXV0aF90eXBlIjoiYXV0aF9sb2dpbl9wYWdlIn19&app_id=7539952&app_settings=eyJzZXJ2aWNlX2dyb3VwcyI6eyJvaWQiOiJUMVZXNE5oTU0ydHRDNjZaQ1ZmNSJ9fQ%3D%3D&code_challenge=rZ98iZMkkT_MoG6-xJhfUhtRfhxxpJl-O7In612uaPs&code_challenge_method=S256&lang_id=3&redirect_state=AG_aFrbdHrA7IoH94ShOsJPu03&redirect_uri=https%3A%2F%2Fauth.mail.ru%2Finbox&response_type=silent_token&scheme=light",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "email",
+      "autocomplete": "off",
+      "placeholder": "Email account name",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 19.399999998509884,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://id.vk.ru/auth?action=eyJuYW1lIjoibWFpbF9hdXRoIiwicGFyYW1zIjp7Im1haWxfYXV0aF90eXBlIjoiYXV0aF9sb2dpbl9wYWdlIn19&app_id=7539952&app_settings=eyJzZXJ2aWNlX2dyb3VwcyI6eyJvaWQiOiJUMVZXNE5oTU0ydHRDNjZaQ1ZmNSJ9fQ%3D%3D&code_challenge=FrnBDyeBwaJ2Ujxxfu5NwXsi76szrul2t0Z0cSr4Adw&code_challenge_method=S256&lang_id=3&redirect_state=AG_H3Ag9Oz1c2Sl0DFSbhyt600&redirect_uri=https%3A%2F%2Fauth.mail.ru%2Finbox&response_type=silent_token&scheme=light",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "email",
+      "autocomplete": "off",
+      "placeholder": "Email account name",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 16.5,
+     "walkMs": 0.2999999988824129,
+     "classifyMs": 16.200000001117587,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://id.vk.ru/auth?action=eyJuYW1lIjoibWFpbF9hdXRoIiwicGFyYW1zIjp7Im1haWxfYXV0aF90eXBlIjoiYXV0aF9sb2dpbl9wYWdlIn19&app_id=7539952&app_settings=eyJzZXJ2aWNlX2dyb3VwcyI6eyJvaWQiOiJUMVZXNE5oTU0ydHRDNjZaQ1ZmNSJ9fQ%3D%3D&code_challenge=6QZlXuXpQ21ZaK8k5q0OsrO26fD43NOHSgyl_9LYv9E&code_challenge_method=S256&lang_id=3&redirect_state=AG_arvJKnTA7fK3Qpdj9rgFA01&redirect_uri=https%3A%2F%2Fauth.mail.ru%2Finbox&response_type=silent_token&scheme=light",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "email",
+      "autocomplete": "off",
+      "placeholder": "Email account name",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 17.299999998882413,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 16.899999998509884,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

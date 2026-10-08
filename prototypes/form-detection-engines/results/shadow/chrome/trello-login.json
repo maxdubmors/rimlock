@@ -1,0 +1,168 @@
+{
+ "name": "trello-login",
+ "url": "https://trello.com/login",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:06:16.159Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://id.atlassian.com/login?application=trello&continue=https%3A%2F%2Ftrello.com%2Fauth%2Fatlassian%2Fcallback%3FreturnUrl%3D%26aaOnboarding%3D%26updateEmail%3D%26traceId%3D%26ssoVerified%3D%26createMember%3D%26jiraInviteLink%3D",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username-_r0_",
+      "autocomplete": "username",
+      "placeholder": "Enter your email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 15.599999999627471,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=tlq5vzz2hu2r",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://id.atlassian.com/login?application=trello&continue=https%3A%2F%2Ftrello.com%2Fauth%2Fatlassian%2Fcallback%3FreturnUrl%3D%26aaOnboarding%3D%26updateEmail%3D%26traceId%3D%26ssoVerified%3D%26createMember%3D%26jiraInviteLink%3D",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username-_r0_",
+      "autocomplete": "username",
+      "placeholder": "Enter your email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 16.699999999254942,
+     "walkMs": 0.6999999992549419,
+     "classifyMs": 16,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=ocdz5mb0jxfg",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://id.atlassian.com/login?application=trello&continue=https%3A%2F%2Ftrello.com%2Fauth%2Fatlassian%2Fcallback%3FreturnUrl%3D%26aaOnboarding%3D%26updateEmail%3D%26traceId%3D%26ssoVerified%3D%26createMember%3D%26jiraInviteLink%3D",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "username",
+      "htmlId": "username-_r0_",
+      "autocomplete": "username",
+      "placeholder": "Enter your email",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 16.09999999962747,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 15.699999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.recaptcha.net/recaptcha/enterprise/anchor?ar=1&k=6Le9VxMnAAAAALKRlj8jmKwUYmFTZWcF0y4o9QeD&co=aHR0cHM6Ly9pZC5hdGxhc3NpYW4uY29tOjQ0Mw..&hl=en&v=nY0xPItgwtlvjEjk2TqdwOQz&size=invisible&anchor-ms=20000&execute-ms=30000&cb=w6t2gq183n3c",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

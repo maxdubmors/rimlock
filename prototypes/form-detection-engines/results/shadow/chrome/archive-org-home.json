@@ -1,0 +1,251 @@
+{
+ "name": "archive-org-home",
+ "url": "https://archive.org/",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:14:05.816Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://archive.org/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "url_preload",
+      "htmlId": "url_preload",
+      "autocomplete": null,
+      "placeholder": "https://",
+      "aria": null,
+      "form": "//web.archive.org/save",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0.5,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://archive.org/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "url_preload",
+      "htmlId": "url_preload",
+      "autocomplete": null,
+      "placeholder": "https://",
+      "aria": null,
+      "form": "//web.archive.org/save",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 29.100000001490116,
+     "walkMs": 2.5,
+     "classifyMs": 26.600000001490116,
+     "roots": 6,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://archive.org/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "url_preload",
+      "htmlId": "url_preload",
+      "autocomplete": null,
+      "placeholder": "https://",
+      "aria": null,
+      "form": "//web.archive.org/save",
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "url",
+      "htmlId": "url",
+      "autocomplete": null,
+      "placeholder": "Enter URL or keywords",
+      "aria": null,
+      "form": "(form)",
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": null,
+      "htmlId": "text-input",
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 28.600000001490116,
+     "walkMs": 2.5,
+     "classifyMs": 26.100000001490116,
+     "roots": 6,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

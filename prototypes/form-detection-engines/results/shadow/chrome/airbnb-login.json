@@ -1,0 +1,90 @@
+{
+ "name": "airbnb-login",
+ "url": "https://www.airbnb.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:02:50.664Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.airbnb.com/login",
+    "error": "no reply from content script"
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.airbnb.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "phone-or-email",
+      "autocomplete": "tel-national",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 19.299999998882413,
+     "walkMs": 1.199999999254942,
+     "classifyMs": 18.09999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.airbnb.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "phone-or-email",
+      "autocomplete": "tel-national",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 19.90000000037253,
+     "walkMs": 1.199999999254942,
+     "classifyMs": 18.700000001117587,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ },
+ "gotoWarning": "Navigation timeout of 30000 ms exceeded"
+}

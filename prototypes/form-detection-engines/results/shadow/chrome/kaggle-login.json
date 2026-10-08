@@ -1,0 +1,182 @@
+{
+ "name": "kaggle-login",
+ "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:10:16.030Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": ":r1:",
+      "autocomplete": "on",
+      "placeholder": "Enter your email address or username",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": ":r2:",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 22.699999999254942,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcVUOAUAAAAAP8nMSGuW46uJC5Zf6-PCYKN5xxv&co=aHR0cHM6Ly93d3cua2FnZ2xlLmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=bl63tjxw3aou",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": ":r1:",
+      "autocomplete": "on",
+      "placeholder": "Enter your email address or username",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": ":r2:",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.800000000745058,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 18.40000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcVUOAUAAAAAP8nMSGuW46uJC5Zf6-PCYKN5xxv&co=aHR0cHM6Ly93d3cua2FnZ2xlLmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=sm6nu62mgnc8",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": ":r1:",
+      "autocomplete": "on",
+      "placeholder": "Enter your email address or username",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": ":r2:",
+      "autocomplete": "current-password",
+      "placeholder": "Enter password",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 29.40000000037253,
+     "walkMs": 0.6999999992549419,
+     "classifyMs": 28.700000001117587,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LcVUOAUAAAAAP8nMSGuW46uJC5Zf6-PCYKN5xxv&co=aHR0cHM6Ly93d3cua2FnZ2xlLmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=z7bb2wapiz7z",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

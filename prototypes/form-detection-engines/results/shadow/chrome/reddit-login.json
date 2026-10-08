@@ -1,0 +1,255 @@
+{
+ "name": "reddit-login",
+ "url": "https://www.reddit.com/login/",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:54:39.837Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.reddit.com/login/?rdt=46663",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": null,
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "tel",
+      "name": "appOtp",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "backupOtp",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0.6999999992549419,
+     "fields": []
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=kcestm44gdsw",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function%20()%20%7B%20%5Bnative%20code%5D%20%7D&is_fedcm_supported=true&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_84142_344100&cas=%2Bngw9GcCAiSQsxBtgow5LWl%2BV6IGLtpa12sEZtoDv08&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.reddit.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": null,
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "tel",
+      "name": "appOtp",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "backupOtp",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 11.099999999627471,
+     "walkMs": 0.8999999985098839,
+     "classifyMs": 10.200000001117587,
+     "roots": 5,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=bscd4yydooa",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function%20()%20%7B%20%5Bnative%20code%5D%20%7D&is_fedcm_supported=true&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_113782_129600&cas=dhMqkScJlqT2IcaUsF75mH1ZCeDJL6swCDew9qamSA8&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.reddit.com/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": null,
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "tel",
+      "name": "appOtp",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "backupOtp",
+      "htmlId": null,
+      "autocomplete": "one-time-code",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 21.5,
+     "walkMs": 0.8000000007450581,
+     "classifyMs": 20.699999999254942,
+     "roots": 5,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 username:1.00 in label noop:0.50 group:login → username",
+      "f0:1 password:1.00 in label login:1.00 group:login → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfirrMoAAAAAHZOipvza4kpp_VtTwLNuXVwURNQ&co=aHR0cHM6Ly93d3cucmVkZGl0LmNvbTo0NDM.&hl=en&v=guXhH0v-XMxlzmbTwqkaT4i5&size=invisible&anchor-ms=20000&execute-ms=30000&cb=vd7nwxf4yx9a",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?logo_alignment=left&size=large&shape=pill&text=continue_with&theme=outline&type=standard&width=368&click_listener=function%20()%20%7B%20%5Bnative%20code%5D%20%7D&is_fedcm_supported=true&client_id=705819728788-b2c1kcs7tst3b7ghv7at0hkqmtc68ckl.apps.googleusercontent.com&iframe_id=gsi_145980_471778&cas=zSg%2Fco6cf0yarDQBGRZd5rYSeTrZ3bt%2F1LmElr2En%2F8&hl=en-US",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ },
+ "gotoWarning": "Navigation timeout of 30000 ms exceeded"
+}

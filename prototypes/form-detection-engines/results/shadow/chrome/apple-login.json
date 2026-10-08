@@ -1,0 +1,248 @@
+{
+ "name": "apple-login",
+ "url": "https://account.apple.com/sign-in",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:58:33.274Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://account.apple.com/sign-in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search apple.com",
+      "aria": "Search apple.com",
+      "form": "https://www.apple.com/us/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 1.900000000372529,
+     "fields": []
+    }
+   },
+   {
+    "url": "https://apps.apple.com/includes/commerce/server-error",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://idmsa.apple.com/appleauth/auth/authorize/signin?frame_id=auth-qr9bozgg-n3db-ai2o-lfz7-n2d5u74n&skVersion=7&iframeId=auth-qr9bozgg-n3db-ai2o-lfz7-n2d5u74n&client_id=af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3&redirect_uri=https://account.apple.com&response_type=code&response_mode=web_message&state=auth-qr9bozgg-n3db-ai2o-lfz7-n2d5u74n&authVersion=8.0.2",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f2:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "account_name_text_field",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f2:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password_text_field",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 19.40000000037253,
+     "fields": [
+      {
+       "id": "f2:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://account.apple.com/sign-in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search apple.com",
+      "aria": "Search apple.com",
+      "form": "https://www.apple.com/us/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 3.900000000372529,
+     "walkMs": 1.700000001117587,
+     "classifyMs": 2.199999999254942,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://apps.apple.com/includes/commerce/server-error",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://idmsa.apple.com/appleauth/auth/authorize/signin?frame_id=auth-4bcd4cpl-fzno-2hzn-7v86-v1pztdxa&skVersion=7&iframeId=auth-4bcd4cpl-fzno-2hzn-7v86-v1pztdxa&client_id=af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3&redirect_uri=https://account.apple.com&response_type=code&response_mode=web_message&state=auth-4bcd4cpl-fzno-2hzn-7v86-v1pztdxa&authVersion=8.0.2",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f2:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "account_name_text_field",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f2:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password_text_field",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 16.40000000037253,
+     "walkMs": 0.09999999962747097,
+     "classifyMs": 16.300000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f2:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f2:0 email:1.00 in div login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://account.apple.com/sign-in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search apple.com",
+      "aria": "Search apple.com",
+      "form": "https://www.apple.com/us/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 4.199999999254942,
+     "walkMs": 1.5,
+     "classifyMs": 2.699999999254942,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://apps.apple.com/includes/commerce/server-error",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://idmsa.apple.com/appleauth/auth/authorize/signin?frame_id=auth-ypl2nauo-31ko-l27u-6cvp-6bg8tym9&skVersion=7&iframeId=auth-ypl2nauo-31ko-l27u-6cvp-6bg8tym9&client_id=af1139274f266b22b68c2a3e7ad932cb3c0bbe854e13a79af78dcc73136882c3&redirect_uri=https://account.apple.com&response_type=code&response_mode=web_message&state=auth-ypl2nauo-31ko-l27u-6cvp-6bg8tym9&authVersion=8.0.2",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f2:0",
+      "type": "text",
+      "name": null,
+      "htmlId": "account_name_text_field",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f2:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password_text_field",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 27.899999998509884,
+     "walkMs": 0.599999999627471,
+     "classifyMs": 27.299999998882413,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f2:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f2:0 email:1.00 in div login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

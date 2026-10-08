@@ -1,0 +1,134 @@
+{
+ "name": "microsoft-login",
+ "url": "https://login.live.com/",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:56:52.373Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://login.live.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": null,
+      "htmlId": "usernameEntry",
+      "autocomplete": "username webauthn",
+      "placeholder": "",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 14.099999999627471,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://fpt.live.com/?session_id=4f702e390e0944e2ab1f65572b7dbd53&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://df.cfp.microsoft.com/Clear.HTML?ctx=Ls1.0&wl=False&session_id=4f702e390e0944e2ab1f65572b7dbd53&id=458d5e65-0a8c-2332-1326-0134cf9dcabf&w=8DF25658AEEF23C&tkt=&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://login.live.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": null,
+      "htmlId": "usernameEntry",
+      "autocomplete": "username webauthn",
+      "placeholder": "",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18,
+     "walkMs": 0.40000000037252903,
+     "classifyMs": 17.59999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://fpt.live.com/?session_id=5376e58907b74b73af5bd7c36d3f4da5&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://login.live.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": null,
+      "htmlId": "usernameEntry",
+      "autocomplete": "username webauthn",
+      "placeholder": "",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 15,
+     "walkMs": 0.19999999925494194,
+     "classifyMs": 14.800000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://fpt.live.com/?session_id=8f5d6400710f4f2880ed929d1d5a2b18&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

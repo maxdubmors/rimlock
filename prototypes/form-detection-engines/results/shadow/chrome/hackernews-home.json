@@ -1,0 +1,95 @@
+{
+ "name": "hackernews-home",
+ "url": "https://news.ycombinator.com/",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:12:54.608Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://news.ycombinator.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "//hn.algolia.com/",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 20.200000001117587,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://news.ycombinator.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "//hn.algolia.com/",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.09999999962747,
+     "walkMs": 1.599999999627471,
+     "classifyMs": 16.5,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://news.ycombinator.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "//hn.algolia.com/",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 23.5,
+     "walkMs": 4.100000001490116,
+     "classifyMs": 19.399999998509884,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

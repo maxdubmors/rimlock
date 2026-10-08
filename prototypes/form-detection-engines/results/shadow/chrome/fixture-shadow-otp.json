@@ -1,0 +1,109 @@
+{
+ "name": "fixture-shadow-otp",
+ "url": "http://localhost:8123/shadow-otp.html",
+ "kind": "fixture",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:40:11.407Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-otp.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "otp",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/2fa",
+      "shadow": "open",
+      "visible": true,
+      "gt": "otp"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0.599999999627471,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-otp.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "otp",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/2fa",
+      "shadow": "open",
+      "visible": true,
+      "gt": "otp"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 20.40000000037253,
+     "walkMs": 0.2000000011175871,
+     "classifyMs": 20.199999999254942,
+     "roots": 2,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "otp"
+      }
+     ],
+     "raw": [
+      "f0:0 otp:1.00 in form noop:0.50 → otp"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-otp.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "otp",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/2fa",
+      "shadow": "open",
+      "visible": true,
+      "gt": "otp"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 20.800000000745058,
+     "walkMs": 0.10000000149011612,
+     "classifyMs": 20.699999999254942,
+     "roots": 2,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "otp"
+      }
+     ],
+     "raw": [
+      "f0:0 otp:1.00 in form noop:0.50 → otp"
+     ]
+    }
+   }
+  ]
+ }
+}

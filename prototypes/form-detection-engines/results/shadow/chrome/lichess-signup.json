@@ -1,0 +1,95 @@
+{
+ "name": "lichess-signup",
+ "url": "https://lichess.org/signup",
+ "kind": "signup",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:12:20.113Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://lichess.org/signup",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 1.2100000008940697,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://lichess.org/signup",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 0.5749999992549419,
+     "walkMs": 0.34999999962747097,
+     "classifyMs": 0.22499999962747097,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://lichess.org/signup",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": "Search",
+      "aria": "Search",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 1.1699999999254942,
+     "walkMs": 0.8800000008195639,
+     "classifyMs": 0.28999999910593033,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

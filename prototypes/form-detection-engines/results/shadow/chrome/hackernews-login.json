@@ -1,0 +1,273 @@
+{
+ "name": "hackernews-login",
+ "url": "https://news.ycombinator.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:06:37.109Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://news.ycombinator.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "acct",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pw",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "acct",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "pw",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 28,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:2",
+       "label": "signup-username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://news.ycombinator.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "acct",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pw",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "acct",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "pw",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 19.5,
+     "walkMs": 0.09999999962747097,
+     "classifyMs": 19.40000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:2",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:3 new-password:1.00 in form register:1.00 → new-password",
+      "f0:0 username:1.00 in form login:1.00 → username",
+      "f0:2 username:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://news.ycombinator.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "acct",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "pw",
+      "htmlId": null,
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "acct",
+      "htmlId": null,
+      "autocomplete": "username",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "pw",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 19.799999998882413,
+     "walkMs": 0.19999999925494194,
+     "classifyMs": 19.59999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:2",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:3 new-password:1.00 in form register:1.00 → new-password",
+      "f0:0 username:1.00 in form login:1.00 → username",
+      "f0:2 username:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   }
+  ]
+ }
+}

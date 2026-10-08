@@ -1,0 +1,203 @@
+{
+ "name": "dropbox-login",
+ "url": "https://www.dropbox.com/login",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:59:04.261Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.dropbox.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "susi_email",
+      "htmlId": "susi_email6833165598967731",
+      "autocomplete": "username webauthn",
+      "placeholder": "name@company.com",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "autofill-password",
+      "htmlId": "credential-autofill-hint",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 14.900000000372529,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://marketing.dropbox.com/login?referrer=",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://www.dropbox.com/ccpa_iframe?hide_gdpr=false&should_disable_banner=false&gpc=false&origin=https%253A%252F%252Fwww.dropbox.com&uri_for_logging=dropbox.com%2Flogin&should_show_floating_button=false&should_auto_open_options=undefined&width=1280&locale_override=en&default_non_ccpa=true",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://dropboxcaptcha.com/",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?text=continue_with&width=368&logo_alignment=left&click_listener=()%3D%3E%7Bthis.hasPendingAuthFlow%26%26this.getLogger().logLoginCancel(%22google_one_tap%22)%2Cthis.hasPendingAuthFlow%3D!0%2Cthis.getLogger().logLoginStart(%22google_one_tap%22)%7D&is_fedcm_supported=true&client_id=801668726815.apps.googleusercontent.com&iframe_id=gsi_348783_349162&cas=%2BK7nlPu4cdfWSaRLR%2F1dSws7xEZWdmhwLXVpZmUjUno&hl=en",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.dropbox.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "susi_email",
+      "htmlId": "susi_email14769496476639998",
+      "autocomplete": "username webauthn",
+      "placeholder": "name@company.com",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "autofill-password",
+      "htmlId": "credential-autofill-hint",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 5.900000000372529,
+     "walkMs": 1.299999998882413,
+     "classifyMs": 4.600000001490116,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.dropbox.com/ccpa_iframe?hide_gdpr=false&should_disable_banner=false&gpc=false&origin=https%253A%252F%252Fwww.dropbox.com&uri_for_logging=dropbox.com%2Flogin&should_show_floating_button=false&should_auto_open_options=undefined&width=1280&locale_override=en&local_cookie_expired_ts=1807207148988&parent_domain_consent_cookie=%257B%2522consentType%2522%253A1%252C%2522consentDate%2522%253A%25222026-10-08T17%253A59%253A08.988Z%2522%252C%2522expireDate%2522%253A%25222027-04-08T17%253A59%253A08.988Z%2522%252C%2522consentMonths%2522%253A6%252C%2522categories%2522%253A%257B%2522strictly%2520necessary%2522%253Atrue%252C%2522general%2520marketing%2520and%2520advertising%2522%253Afalse%252C%2522analytics%2522%253Afalse%252C%2522performance%2520and%2520functionality%2522%253Afalse%252C%2522social%2520media%2520advertising%2522%253Afalse%257D%252C%2522userInteracted%2522%253Afalse%252C%2522numDots%2522%253A1%257D&default_non_ccpa=true",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://dropboxcaptcha.com/",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?text=continue_with&width=368&logo_alignment=left&click_listener=()%3D%3E%7Bthis.hasPendingAuthFlow%26%26this.getLogger().logLoginCancel(%22google_one_tap%22)%2Cthis.hasPendingAuthFlow%3D!0%2Cthis.getLogger().logLoginStart(%22google_one_tap%22)%7D&is_fedcm_supported=true&client_id=801668726815.apps.googleusercontent.com&iframe_id=gsi_353799_165365&cas=KoV591jsFVGgJu391hh%2FIO2JnGQVSPS%2Fs3mTr%2BCSTXs&hl=en",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.dropbox.com/login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "susi_email",
+      "htmlId": "susi_email1243096790063537",
+      "autocomplete": "username webauthn",
+      "placeholder": "name@company.com",
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "autofill-password",
+      "htmlId": "credential-autofill-hint",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 4.699999999254942,
+     "walkMs": 0.7999999988824129,
+     "classifyMs": 3.900000000372529,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://www.dropbox.com/ccpa_iframe?hide_gdpr=false&should_disable_banner=false&gpc=false&origin=https%253A%252F%252Fwww.dropbox.com&uri_for_logging=dropbox.com%2Flogin&should_show_floating_button=false&should_auto_open_options=undefined&width=1280&locale_override=en&local_cookie_expired_ts=1807207153950&parent_domain_consent_cookie=%257B%2522consentType%2522%253A1%252C%2522consentDate%2522%253A%25222026-10-08T17%253A59%253A13.950Z%2522%252C%2522expireDate%2522%253A%25222027-04-08T17%253A59%253A13.950Z%2522%252C%2522consentMonths%2522%253A6%252C%2522categories%2522%253A%257B%2522strictly%2520necessary%2522%253Atrue%252C%2522general%2520marketing%2520and%2520advertising%2522%253Afalse%252C%2522analytics%2522%253Afalse%252C%2522performance%2520and%2520functionality%2522%253Afalse%252C%2522social%2520media%2520advertising%2522%253Afalse%257D%252C%2522userInteracted%2522%253Afalse%252C%2522numDots%2522%253A1%257D&default_non_ccpa=true",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?text=continue_with&width=368&logo_alignment=left&click_listener=()%3D%3E%7Bthis.hasPendingAuthFlow%26%26this.getLogger().logLoginCancel(%22google_one_tap%22)%2Cthis.hasPendingAuthFlow%3D!0%2Cthis.getLogger().logLoginStart(%22google_one_tap%22)%7D&is_fedcm_supported=true&client_id=801668726815.apps.googleusercontent.com&iframe_id=gsi_359046_204141&cas=aBVMjW4dk54RaGVBcLlwheLwNBH%2B4DiXG4GVGIO7bzk&hl=en",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://dropboxcaptcha.com/",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

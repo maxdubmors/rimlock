@@ -1,0 +1,109 @@
+{
+ "name": "fixture-shadow-otp",
+ "url": "http://localhost:8123/shadow-otp.html",
+ "kind": "fixture",
+ "browser": "firefox/157.0.1",
+ "capturedAt": "2026-10-08T17:50:51.359Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-otp.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "otp",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/2fa",
+      "shadow": "open",
+      "visible": true,
+      "gt": "otp"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-otp.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "otp",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/2fa",
+      "shadow": "open",
+      "visible": true,
+      "gt": "otp"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 14,
+     "walkMs": 0,
+     "classifyMs": 14,
+     "roots": 2,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "otp"
+      }
+     ],
+     "raw": [
+      "f0:0 otp:1.00 in form noop:0.50 → otp"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-otp.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "otp",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/2fa",
+      "shadow": "open",
+      "visible": true,
+      "gt": "otp"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 15,
+     "walkMs": 0,
+     "classifyMs": 15,
+     "roots": 2,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "otp"
+      }
+     ],
+     "raw": [
+      "f0:0 otp:1.00 in form noop:0.50 → otp"
+     ]
+    }
+   }
+  ]
+ }
+}

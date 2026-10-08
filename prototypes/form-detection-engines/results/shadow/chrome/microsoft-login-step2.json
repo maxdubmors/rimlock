@@ -1,0 +1,133 @@
+{
+ "name": "microsoft-login-step2",
+ "url": "https://login.live.com/",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:57:09.532Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://login.live.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "password",
+      "name": "passwd",
+      "htmlId": "passwordEntry",
+      "autocomplete": "current-password",
+      "placeholder": "",
+      "aria": null,
+      "form": "https://login.live.com/ppsecure/post.srf?contextid=813DFA623EFA1D85&opid=995FF08F8447B11B&bk=1791482229&uaid=85ab833c179d414994210caa275c95a2&pid=0",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 19.799999998882413,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://fpt.live.com/?session_id=85ab833c179d414994210caa275c95a2&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://login.live.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "password",
+      "name": "passwd",
+      "htmlId": "passwordEntry",
+      "autocomplete": "current-password",
+      "placeholder": "",
+      "aria": null,
+      "form": "https://login.live.com/ppsecure/post.srf?contextid=BF9C8E8078CC8422&opid=EA0668AE2EB2371D&bk=1791482241&uaid=020df4f77ba444689d73da82e66e84cc&pid=0",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 23,
+     "walkMs": 0.7000000011175871,
+     "classifyMs": 22.299999998882413,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 password:1.00 in form login:1.00 → current-password",
+      "null username-hidden:1.00 in form login:1.00 → null",
+      "null username-hidden:1.00 in form login:1.00 → null"
+     ]
+    }
+   },
+   {
+    "url": "https://fpt.live.com/?session_id=020df4f77ba444689d73da82e66e84cc&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://login.live.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "password",
+      "name": "passwd",
+      "htmlId": "passwordEntry",
+      "autocomplete": "current-password",
+      "placeholder": "",
+      "aria": null,
+      "form": "https://login.live.com/ppsecure/post.srf?contextid=CAD5C829B066F83D&opid=6CD256AA7E4BFB4D&bk=1791482253&uaid=fad23c7a252b4635860c37e1b2b5c059&pid=0",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 19.40000000037253,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 19.09999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 password:1.00 in form login:1.00 → current-password",
+      "null username-hidden:1.00 in form login:1.00 → null",
+      "null username-hidden:1.00 in form login:1.00 → null"
+     ]
+    }
+   },
+   {
+    "url": "https://fpt.live.com/?session_id=fad23c7a252b4635860c37e1b2b5c059&CustomerId=33e01921-4d64-4f8c-a055-5bdaffd5e33d&PageId=SI",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

@@ -7,12 +7,12 @@ import { FieldType, FormType, fieldTypes, formTypes } from "@protontech/autofill
 
 import type { Detection, Label } from "./types";
 
-const ruleset = createRulesetRegistry({ randomForest: randomForestModelProvider }).make("randomForest");
+export const ruleset = createRulesetRegistry({ randomForest: randomForestModelProvider }).make("randomForest");
 const TIE = 0.01;
 
-type Pred<T> = { el: HTMLElement; type: T; score: number };
+export type Pred<T> = { el: HTMLElement; type: T; score: number };
 
-function predict<T extends string>(bound: any, base: string, types: readonly T[], best: (a: Pred<T>, b: Pred<T>) => Pred<T>) {
+export function predict<T extends string>(bound: any, base: string, types: readonly T[], best: (a: Pred<T>, b: Pred<T>) => Pred<T>) {
   bound.get(base);
   const out = new Map<HTMLElement, Pred<T>>();
   for (const type of types) {
@@ -25,9 +25,9 @@ function predict<T extends string>(bound: any, base: string, types: readonly T[]
   return [...out.values()];
 }
 
-const higher = <T>(a: Pred<T>, b: Pred<T>) => (a.score > b.score ? a : b);
+export const higher = <T>(a: Pred<T>, b: Pred<T>) => (a.score > b.score ? a : b);
 // Proton's selectBestForm: prefer login on any tie, password-change over register on a close tie.
-const bestForm = (a: Pred<FormType>, b: Pred<FormType>) => {
+export const bestForm = (a: Pred<FormType>, b: Pred<FormType>) => {
   const c = [a, b];
   const pw = c.find((x) => x.type === FormType.PASSWORD_CHANGE);
   const login = c.find((x) => x.type === FormType.LOGIN);
@@ -40,7 +40,7 @@ const bestForm = (a: Pred<FormType>, b: Pred<FormType>) => {
 // dropdown action a (form type, field type) pair gets. Alias suggestions
 // (email in register/noop forms) have no rimlock equivalent except on signup.
 // Dangling fields (no predicted form) are tracked by Proton as a NOOP form.
-function toLabel(field: FieldType, form: FormType): Label | null {
+export function toLabel(field: FieldType, form: FormType): Label | null {
   if (field === FieldType.OTP) return "otp";
   const isUser = field === FieldType.USERNAME || field === FieldType.EMAIL;
   switch (form) {

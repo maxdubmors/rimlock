@@ -1,0 +1,138 @@
+{
+ "name": "fixture-shadow-negatives",
+ "url": "http://localhost:8123/shadow-negatives.html",
+ "kind": "fixture",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:42:08.919Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-negatives.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": "open",
+      "visible": true,
+      "gt": "none"
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "you@example.com",
+      "aria": null,
+      "form": "/subscribe",
+      "shadow": "closed",
+      "visible": true,
+      "gt": "none"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 0.5,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-negatives.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": "open",
+      "visible": true,
+      "gt": "none"
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "you@example.com",
+      "aria": null,
+      "form": "/subscribe",
+      "shadow": "closed",
+      "visible": true,
+      "gt": "none"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 25.09999999962747,
+     "walkMs": 0.3999999985098839,
+     "classifyMs": 24.700000001117587,
+     "roots": 3,
+     "fields": [],
+     "raw": [
+      "f0:1 email:1.00 in form noop:0.50 → null"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-negatives.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": "q",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": "open",
+      "visible": true,
+      "gt": "none"
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": "you@example.com",
+      "aria": null,
+      "form": "/subscribe",
+      "shadow": "closed",
+      "visible": true,
+      "gt": "none"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 18.899999998509884,
+     "walkMs": 0.09999999962747097,
+     "classifyMs": 18.799999998882413,
+     "roots": 3,
+     "fields": [],
+     "raw": [
+      "f0:1 email:1.00 in form noop:0.50 → null"
+     ]
+    }
+   }
+  ]
+ }
+}

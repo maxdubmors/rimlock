@@ -1,0 +1,182 @@
+{
+ "name": "x-login",
+ "url": "https://x.com/i/flow/login",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:56:17.573Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://x.com/i/jf/onboarding/web?mode=login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username_or_email",
+      "htmlId": "jf-input-username_or_email",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 19.59999999962747,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?theme=outline&size=large&shape=pill&logo_alignment=center&text=continue_with&type=standard&is_fedcm_supported=true&client_id=49625052041-kgt0hghf445lmcmhijv46b715m2mpbct.apps.googleusercontent.com&iframe_id=gsi_183958_839734&cas=oXL49ScXrn6rHIRtR9pDBbgt707%2FO5KJW606Q9Thb14&hl=en",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://x.com/i/jf/onboarding/web?mode=login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username_or_email",
+      "htmlId": "jf-input-username_or_email",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 7.899999998509884,
+     "walkMs": 1.699999999254942,
+     "classifyMs": 6.199999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?theme=outline&size=large&shape=pill&logo_alignment=center&text=continue_with&type=standard&is_fedcm_supported=true&client_id=49625052041-kgt0hghf445lmcmhijv46b715m2mpbct.apps.googleusercontent.com&iframe_id=gsi_186963_68163&cas=PLK%2BuxLveBE3NroL2a1G5O0F3O1dTQu8xyXXCW%2Fp%2B8A&hl=en",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://x.com/i/jf/onboarding/web?mode=login",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username_or_email",
+      "htmlId": "jf-input-username_or_email",
+      "autocomplete": "username webauthn",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 9.5,
+     "walkMs": 1.700000001117587,
+     "classifyMs": 7.799999998882413,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   },
+   {
+    "url": "https://accounts.google.com/gsi/button?theme=outline&size=large&shape=pill&logo_alignment=center&text=continue_with&type=standard&is_fedcm_supported=true&client_id=49625052041-kgt0hghf445lmcmhijv46b715m2mpbct.apps.googleusercontent.com&iframe_id=gsi_192820_311504&cas=lQcKzA5DqgV4IeaaI5jEuWFSbur6yUekxmFnZiCuvdU&hl=en",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

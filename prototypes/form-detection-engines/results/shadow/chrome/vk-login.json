@@ -1,0 +1,110 @@
+{
+ "name": "vk-login",
+ "url": "https://vk.com/login",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:07:00.777Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://vk.ru/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": null,
+      "htmlId": "search-:r0:",
+      "autocomplete": "off",
+      "placeholder": "Search VK",
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 13.900000000372529,
+     "fields": []
+    }
+   },
+   {
+    "url": "https://id.vk.ru/qr_auth?scheme=bright_light&app_id=7913379&origin=https%3A%2F%2Fvk.ru",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://vk.ru/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": null,
+      "htmlId": "search-:r0:",
+      "autocomplete": "off",
+      "placeholder": "Search VK",
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 13.5,
+     "walkMs": 0.599999999627471,
+     "classifyMs": 12.900000000372529,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://id.vk.ru/qr_auth?scheme=bright_light&app_id=7913379&origin=https%3A%2F%2Fvk.ru",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://vk.ru/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "search",
+      "name": null,
+      "htmlId": "search-:r0:",
+      "autocomplete": "off",
+      "placeholder": "Search VK",
+      "aria": null,
+      "form": null,
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 15.299999998882413,
+     "walkMs": 0.5,
+     "classifyMs": 14.799999998882413,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://id.vk.ru/qr_auth?scheme=bright_light&app_id=7913379&origin=https%3A%2F%2Fvk.ru",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

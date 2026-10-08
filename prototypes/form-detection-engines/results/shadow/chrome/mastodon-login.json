@@ -1,0 +1,167 @@
+{
+ "name": "mastodon-login",
+ "url": "https://mastodon.social/auth/sign_in",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:11:28.050Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://mastodon.social/auth/sign_in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "user[email]",
+      "htmlId": "user_email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": "E-mail address",
+      "form": "/auth/sign_in",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "user[password]",
+      "htmlId": "user_password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Password",
+      "form": "/auth/sign_in",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 20.59999999962747,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://mastodon.social/auth/sign_in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "user[email]",
+      "htmlId": "user_email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": "E-mail address",
+      "form": "/auth/sign_in",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "user[password]",
+      "htmlId": "user_password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Password",
+      "form": "/auth/sign_in",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 18.699999999254942,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 18.399999998509884,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://mastodon.social/auth/sign_in",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "user[email]",
+      "htmlId": "user_email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": "E-mail address",
+      "form": "/auth/sign_in",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "user[password]",
+      "htmlId": "user_password",
+      "autocomplete": "current-password",
+      "placeholder": null,
+      "aria": "Password",
+      "form": "/auth/sign_in",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 18.200000001117587,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 17.90000000037253,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      },
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username",
+      "f0:1 password:1.00 in form login:1.00 → current-password"
+     ]
+    }
+   }
+  ]
+ }
+}

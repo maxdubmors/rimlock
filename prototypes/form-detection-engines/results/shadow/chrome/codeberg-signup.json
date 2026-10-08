@@ -1,0 +1,312 @@
+{
+ "name": "codeberg-signup",
+ "url": "https://codeberg.org/user/sign_up",
+ "kind": "signup",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:11:55.731Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://codeberg.org/user/sign_up",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user_name",
+      "htmlId": "user_name",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "retype",
+      "htmlId": "retype",
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "img-captcha-response",
+      "htmlId": "captcha",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 25,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://codeberg.org/user/sign_up",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user_name",
+      "htmlId": "user_name",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "retype",
+      "htmlId": "retype",
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "img-captcha-response",
+      "htmlId": "captcha",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 21.09999999962747,
+     "walkMs": 0.5,
+     "classifyMs": 20.59999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:1 email:1.00 in form register:1.00 → signup-username",
+      "f0:2 new-password:1.00 in form register:1.00 → new-password",
+      "f0:3 new-password:1.00 in form register:1.00 → new-password",
+      "f0:0 username:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://codeberg.org/user/sign_up",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "user_name",
+      "htmlId": "user_name",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "email",
+      "name": "email",
+      "htmlId": "email",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "password",
+      "name": "password",
+      "htmlId": "password",
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "password",
+      "name": "retype",
+      "htmlId": "retype",
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "img-captcha-response",
+      "htmlId": "captcha",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "/user/sign_up",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 21.800000000745058,
+     "walkMs": 0.5,
+     "classifyMs": 21.300000000745058,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:2",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:3",
+       "label": "new-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      }
+     ],
+     "raw": [
+      "f0:1 email:1.00 in form register:1.00 → signup-username",
+      "f0:2 new-password:1.00 in form register:1.00 → new-password",
+      "f0:3 new-password:1.00 in form register:1.00 → new-password",
+      "f0:0 username:1.00 in form register:1.00 → signup-username"
+     ]
+    }
+   }
+  ]
+ }
+}

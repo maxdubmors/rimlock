@@ -1,0 +1,126 @@
+{
+ "name": "gosuslugi-login",
+ "url": "https://esia.gosuslugi.ru/login/",
+ "kind": "login",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:07:32.630Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://esia.gosuslugi.ru/login/",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://esia.gosuslugi.ru/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "Телефон / Эл. почта / СНИЛС",
+      "htmlId": "login",
+      "autocomplete": "on",
+      "placeholder": null,
+      "aria": "Введите номер телефона, СНИЛС или электронную почту в формате example@elpochta.ru",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": "Введите пароль",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 20.200000001117587,
+     "walkMs": 0.7000000011175871,
+     "classifyMs": 19.5,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://esia.gosuslugi.ru/login/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "Телефон / Эл. почта / СНИЛС",
+      "htmlId": "login",
+      "autocomplete": "on",
+      "placeholder": null,
+      "aria": "Введите номер телефона, СНИЛС или электронную почту в формате example@elpochta.ru",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": null,
+      "htmlId": "password",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": "Введите пароль",
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 18.59999999962747,
+     "walkMs": 0.2000000011175871,
+     "classifyMs": 18.399999998509884,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "current-password"
+      },
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:1 password:1.00 in form login:1.00 → current-password",
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

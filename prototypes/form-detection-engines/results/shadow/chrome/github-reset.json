@@ -1,0 +1,271 @@
+{
+ "name": "github-reset",
+ "url": "https://github.com/password_reset",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:08:15.326Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://github.com/password_reset",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "email",
+      "htmlId": "email_field",
+      "autocomplete": null,
+      "placeholder": "Enter your email address",
+      "aria": null,
+      "form": "/password_reset",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "octocaptcha-token",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/password_reset",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "required_field_f2e9",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "/password_reset",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 18.699999999254942,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://octocaptcha.com/datadome?origin_page=github_password_reset",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://github.com/password_reset",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAiiz94QRwTuUAX7Ftig%3D%3D&hash=2CF892E038EE5D8217D27787467ED2&cid=5yqVIRDtfLKUYCBWaF2Zm_YFApznBuhJkehUF0H2Bc7KoDREDPs1w9u8QJbYolRs1CjSsNhnqYF0mHlup4xYQyukR~ng5_vB50pU7UjHKht5fkUafZy6ketc6rbNol4N&t=fe&referer=https%3A%2F%2Fgithub.com%2Fpassword_reset&s=62028&e=dbd4b2634d4faf76bcd696e82f94c0a264f3f8ce8379ce7a1df2b56033eb5ffa3111efbe1a0238f1c9a555e2bf829e99&dm=cd",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f1:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 1 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:1",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 2 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:2",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 3 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:3",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 4 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:4",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 5 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:5",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 6 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 1.799999998882413,
+     "walkMs": 0.2999999988824129,
+     "classifyMs": 1.5,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://github.com/password_reset",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://geo.captcha-delivery.com/captcha/?initialCid=AHrlqAAAAAMAiiz94QRwTuUAX7Ftig%3D%3D&hash=2CF892E038EE5D8217D27787467ED2&cid=yho9YHI8rpLzl84Wye_BC5DvksvxAMW3nQulGFKdrf4Zp6IsN5u~kVrjkSVa6DpUriIujlBvDfM_QIlYFG3S12XHniRefVreVjrjFNxXhqBbpgn8WUqbQvnl18rn5k9y&t=fe&referer=https%3A%2F%2Fgithub.com%2Fpassword_reset&s=62028&e=50dfc9ec445f0752e0f1de7ed4380923921034f3f7fe334fdaf29f3b2f0d1ca9c7b0b8c7898b9f76578c210652839825&dm=cd",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f1:0",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 1 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:1",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 2 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:2",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 3 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:3",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 4 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:4",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 5 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f1:5",
+      "type": "text",
+      "name": null,
+      "htmlId": null,
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": "Input 6 out of 6",
+      "form": null,
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 1.900000000372529,
+     "walkMs": 0.2999999988824129,
+     "classifyMs": 1.6000000014901161,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "name": "yahoo-login",
+ "url": "https://login.yahoo.com/",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T17:57:45.582Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://login.yahoo.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 20,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   },
+   {
+    "url": "https://gpt.mail.yahoo.net/sandbox?client=login&version=0.1&limited=1&headerBidder=1&haq=1&benji=1#config=%7B%22positions%22%3A%5B%7B%22adUnitPath%22%3A%22%2F22888152279%2Fus%2Fylogin%2Fmain%2Fdt%2Fus_ylogin_main_dt_full_screen%22%2C%22adLocation%22%3A%22full_screen%22%2C%22size%22%3A%5B%5B1440%2C1024%5D%2C%5B%22fluid%22%5D%5D%2C%22div%22%3A%22gpt-passback%22%7D%5D%2C%22pageUrl%22%3A%22https%3A%2F%2Flogin.yahoo.com%22%2C%22headerBidder%22%3Atrue%2C%22yahooPrebid%22%3Atrue%2C%22geoCountryCode%22%3A%22GB%22%2C%22npa%22%3Afalse%2C%22limited%22%3Atrue%2C%22userSegments%22%3Atrue%2C%22targetingConfig%22%3A%7B%22lang%22%3A%22en-US%22%2C%22spaceId%22%3A%22794200018%22%2C%22adLocation%22%3A%22full_screen%22%2C%22age%22%3A%220%22%2C%22gender%22%3A%220%22%2C%22colo%22%3A%22europe-west1%22%2C%22lu%22%3A%220%22%2C%22site%22%3A%22login%22%2C%22device%22%3A%22desktop%22%2C%22region%22%3A%22gb%22%2C%22pageOrigin%22%3A%22https%3A%2F%2Flogin.yahoo.com%22%2C%22AXIds%22%3A%22%22%2C%22tblaId%22%3A%22%22%2C%22gaMeasurementId%22%3A%22G-P9C3W3ESF1%22%2C%22gaBktWs%22%3A%2213746565%22%2C%22gaBktIds%22%3A%22938326%22%7D%2C%22headerBidderConfig%22%3A%7B%22host%22%3A%22login.yahoo.com%22%2C%22pblob%22%3A%22lu%3A0%7C%7C794200018%7C%7C%22%2C%22buckets%22%3A%5B%22mbr-gcp-login%22%2C%22mbr-gcp-recovery%22%2C%22mbr-emergency-recovery-code-redesign%22%2C%22mbr-login-backfill-ads-yahoo%22%2C%22mbr-ar-cc-gate%22%2C%22mbr-skip-comet%22%2C%22mbr-secure-account%22%2C%22mbr-sa-cpw%22%2C%22mbr-sa-cc%22%2C%22mbr-gcp-manage-account%22%2C%22mbr-sa-passkey%22%2C%22mbr-gcp-oauth-control%22%2C%22mbr-sa-tsv%22%2C%22mbr-sa-signin%22%5D%2C%22limited%22%3Atrue%2C%22cobrand%22%3A%22%22%2C%22lang%22%3A%22en-US%22%2C%22site%22%3A%22yahoo_login%22%2C%22region%22%3A%22gb%22%2C%22adLocation%22%3A%22full_screen%22%7D%7D",
+    "world": "isolated",
+    "fields": []
+   },
+   {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://login.yahoo.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 17.09999999962747,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 16.799999998882413,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://gpt.mail.yahoo.net/sandbox?client=login&version=0.1&limited=1&headerBidder=1&haq=1&benji=1#config=%7B%22positions%22%3A%5B%7B%22adUnitPath%22%3A%22%2F22888152279%2Fus%2Fylogin%2Fmain%2Fdt%2Fus_ylogin_main_dt_full_screen%22%2C%22adLocation%22%3A%22full_screen%22%2C%22size%22%3A%5B%5B1440%2C1024%5D%2C%5B%22fluid%22%5D%5D%2C%22div%22%3A%22gpt-passback%22%7D%5D%2C%22pageUrl%22%3A%22https%3A%2F%2Flogin.yahoo.com%22%2C%22headerBidder%22%3Atrue%2C%22yahooPrebid%22%3Atrue%2C%22geoCountryCode%22%3A%22GB%22%2C%22npa%22%3Afalse%2C%22limited%22%3Atrue%2C%22userSegments%22%3Atrue%2C%22targetingConfig%22%3A%7B%22lang%22%3A%22en-US%22%2C%22spaceId%22%3A%22794200018%22%2C%22adLocation%22%3A%22full_screen%22%2C%22age%22%3A%220%22%2C%22gender%22%3A%220%22%2C%22colo%22%3A%22europe-west1%22%2C%22lu%22%3A%220%22%2C%22site%22%3A%22login%22%2C%22device%22%3A%22desktop%22%2C%22region%22%3A%22gb%22%2C%22pageOrigin%22%3A%22https%3A%2F%2Flogin.yahoo.com%22%2C%22AXIds%22%3A%22%22%2C%22tblaId%22%3A%22%22%2C%22gaMeasurementId%22%3A%22G-P9C3W3ESF1%22%2C%22gaBktWs%22%3A%2213746565%22%2C%22gaBktIds%22%3A%22938326%22%7D%2C%22headerBidderConfig%22%3A%7B%22host%22%3A%22login.yahoo.com%22%2C%22pblob%22%3A%22lu%3A0%7C%7C794200018%7C%7C%22%2C%22buckets%22%3A%5B%22mbr-gcp-login%22%2C%22mbr-gcp-recovery%22%2C%22mbr-emergency-recovery-code-redesign%22%2C%22mbr-login-backfill-ads-yahoo%22%2C%22mbr-ar-cc-gate%22%2C%22mbr-skip-comet%22%2C%22mbr-secure-account%22%2C%22mbr-sa-cpw%22%2C%22mbr-sa-cc%22%2C%22mbr-gcp-manage-account%22%2C%22mbr-sa-passkey%22%2C%22mbr-gcp-oauth-control%22%2C%22mbr-sa-tsv%22%2C%22mbr-sa-signin%22%5D%2C%22limited%22%3Atrue%2C%22cobrand%22%3A%22%22%2C%22lang%22%3A%22en-US%22%2C%22site%22%3A%22yahoo_login%22%2C%22region%22%3A%22gb%22%2C%22adLocation%22%3A%22full_screen%22%7D%7D",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://login.yahoo.com/",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "username",
+      "htmlId": "username",
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 16.5,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 16.199999999254942,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in form login:1.00 → username"
+     ]
+    }
+   },
+   {
+    "url": "https://gpt.mail.yahoo.net/sandbox?client=login&version=0.1&limited=1&headerBidder=1&haq=1&benji=1#config=%7B%22positions%22%3A%5B%7B%22adUnitPath%22%3A%22%2F22888152279%2Fus%2Fylogin%2Fmain%2Fdt%2Fus_ylogin_main_dt_full_screen%22%2C%22adLocation%22%3A%22full_screen%22%2C%22size%22%3A%5B%5B1440%2C1024%5D%2C%5B%22fluid%22%5D%5D%2C%22div%22%3A%22gpt-passback%22%7D%5D%2C%22pageUrl%22%3A%22https%3A%2F%2Flogin.yahoo.com%22%2C%22headerBidder%22%3Atrue%2C%22yahooPrebid%22%3Atrue%2C%22geoCountryCode%22%3A%22GB%22%2C%22npa%22%3Afalse%2C%22limited%22%3Atrue%2C%22userSegments%22%3Atrue%2C%22targetingConfig%22%3A%7B%22lang%22%3A%22en-US%22%2C%22spaceId%22%3A%22794200018%22%2C%22adLocation%22%3A%22full_screen%22%2C%22age%22%3A%220%22%2C%22gender%22%3A%220%22%2C%22colo%22%3A%22europe-west1%22%2C%22lu%22%3A%220%22%2C%22site%22%3A%22login%22%2C%22device%22%3A%22desktop%22%2C%22region%22%3A%22gb%22%2C%22pageOrigin%22%3A%22https%3A%2F%2Flogin.yahoo.com%22%2C%22AXIds%22%3A%22%22%2C%22tblaId%22%3A%22%22%2C%22gaMeasurementId%22%3A%22G-P9C3W3ESF1%22%2C%22gaBktWs%22%3A%2213746565%22%2C%22gaBktIds%22%3A%22938326%22%7D%2C%22headerBidderConfig%22%3A%7B%22host%22%3A%22login.yahoo.com%22%2C%22pblob%22%3A%22lu%3A0%7C%7C794200018%7C%7C%22%2C%22buckets%22%3A%5B%22mbr-gcp-login%22%2C%22mbr-gcp-recovery%22%2C%22mbr-emergency-recovery-code-redesign%22%2C%22mbr-login-backfill-ads-yahoo%22%2C%22mbr-ar-cc-gate%22%2C%22mbr-skip-comet%22%2C%22mbr-secure-account%22%2C%22mbr-sa-cpw%22%2C%22mbr-sa-cc%22%2C%22mbr-gcp-manage-account%22%2C%22mbr-sa-passkey%22%2C%22mbr-gcp-oauth-control%22%2C%22mbr-sa-tsv%22%2C%22mbr-sa-signin%22%5D%2C%22limited%22%3Atrue%2C%22cobrand%22%3A%22%22%2C%22lang%22%3A%22en-US%22%2C%22site%22%3A%22yahoo_login%22%2C%22region%22%3A%22gb%22%2C%22adLocation%22%3A%22full_screen%22%7D%7D",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "name": "yandex-passport",
+ "url": "https://passport.yandex.ru/auth",
+ "kind": "multistep",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:06:49.279Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://passport.yandex.ru/pwl-yandex/auth/add",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "tel",
+      "name": null,
+      "htmlId": "react-aria-«Rmab»",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 16.800000000745058,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ]
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://passport.yandex.ru/pwl-yandex/auth/add",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "tel",
+      "name": null,
+      "htmlId": "react-aria-«Rmab»",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 16.90000000037253,
+     "walkMs": 0.2999999988824129,
+     "classifyMs": 16.600000001490116,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://passport.yandex.ru/pwl-yandex/auth/add",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "tel",
+      "name": null,
+      "htmlId": "react-aria-«Rmab»",
+      "autocomplete": "off",
+      "placeholder": null,
+      "aria": null,
+      "form": "(form)",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 21.40000000037253,
+     "walkMs": 0.30000000074505806,
+     "classifyMs": 21.09999999962747,
+     "roots": 1,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "username"
+      }
+     ],
+     "raw": [
+      "f0:0 username:1.00 in form login:1.00 → username"
+     ]
+    }
+   }
+  ]
+ }
+}

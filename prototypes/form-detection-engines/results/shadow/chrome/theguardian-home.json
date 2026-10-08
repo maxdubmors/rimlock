@@ -1,0 +1,149 @@
+{
+ "name": "theguardian-home",
+ "url": "https://www.theguardian.com/international",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:09:22.034Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.theguardian.com/international",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "q",
+      "htmlId": "gu-search-mobile",
+      "autocomplete": null,
+      "placeholder": "Search the Guardian",
+      "aria": null,
+      "form": "https://www.google.co.uk/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "q",
+      "htmlId": "gu-search-desktop",
+      "autocomplete": null,
+      "placeholder": "Search the Guardian",
+      "aria": null,
+      "form": "https://www.google.co.uk/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 3.400000000372529,
+     "fields": []
+    }
+   },
+   {
+    "url": "https://sourcepoint.theguardian.com/index.html?hasCsp=true&message_id=1482251&consentUUID=null&consent_origin=https%3A%2F%2Fsourcepoint.theguardian.com%2Fconsent%2Ftcfv2&preload_message=true&version=v1",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.theguardian.com/international",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "q",
+      "htmlId": "gu-search-mobile",
+      "autocomplete": null,
+      "placeholder": "Search the Guardian",
+      "aria": null,
+      "form": "https://www.google.co.uk/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "q",
+      "htmlId": "gu-search-desktop",
+      "autocomplete": null,
+      "placeholder": "Search the Guardian",
+      "aria": null,
+      "form": "https://www.google.co.uk/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 12.099999999627471,
+     "walkMs": 8.599999999627471,
+     "classifyMs": 3.5,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://sourcepoint.theguardian.com/index.html?hasCsp=true&message_id=1482251&consentUUID=c8cc74a6-6a99-4c0e-8fcd-087d506cee3d&consent_origin=https%3A%2F%2Fsourcepoint.theguardian.com%2Fconsent%2Ftcfv2&preload_message=true&concatenatedUUID=c8cc74a6-6a99-4c0e-8fcd-087d506cee3d~~~&version=v1",
+    "world": "isolated",
+    "fields": []
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.theguardian.com/international",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "q",
+      "htmlId": "gu-search-mobile",
+      "autocomplete": null,
+      "placeholder": "Search the Guardian",
+      "aria": null,
+      "form": "https://www.google.co.uk/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "q",
+      "htmlId": "gu-search-desktop",
+      "autocomplete": null,
+      "placeholder": "Search the Guardian",
+      "aria": null,
+      "form": "https://www.google.co.uk/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 14.5,
+     "walkMs": 10.899999998509884,
+     "classifyMs": 3.600000001490116,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   },
+   {
+    "url": "https://sourcepoint.theguardian.com/index.html?hasCsp=true&message_id=1482251&consentUUID=c8cc74a6-6a99-4c0e-8fcd-087d506cee3d&consent_origin=https%3A%2F%2Fsourcepoint.theguardian.com%2Fconsent%2Ftcfv2&preload_message=true&concatenatedUUID=c8cc74a6-6a99-4c0e-8fcd-087d506cee3d~~~&version=v1",
+    "world": "isolated",
+    "fields": []
+   }
+  ]
+ }
+}

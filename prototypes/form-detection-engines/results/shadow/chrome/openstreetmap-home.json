@@ -1,0 +1,290 @@
+{
+ "name": "openstreetmap-home",
+ "url": "https://www.openstreetmap.org/",
+ "kind": "negative",
+ "browser": "Chrome/155.0.8059.39",
+ "capturedAt": "2026-10-08T18:13:53.016Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "https://www.openstreetmap.org/#map=6/51.33/10.45",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "query",
+      "htmlId": "query",
+      "autocomplete": "on",
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "route_from",
+      "htmlId": "route_from",
+      "autocomplete": "on",
+      "placeholder": "From",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "route_to",
+      "htmlId": "route_to",
+      "autocomplete": "on",
+      "placeholder": "To",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "query",
+      "htmlId": "query",
+      "autocomplete": "on",
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "route_from",
+      "htmlId": "route_from",
+      "autocomplete": "on",
+      "placeholder": "From",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "text",
+      "name": "route_to",
+      "htmlId": "route_to",
+      "autocomplete": "on",
+      "placeholder": "To",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 20.09999999962747,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "https://www.openstreetmap.org/#map=6/51.33/10.45",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "query",
+      "htmlId": "query",
+      "autocomplete": "on",
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "route_from",
+      "htmlId": "route_from",
+      "autocomplete": "on",
+      "placeholder": "From",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "route_to",
+      "htmlId": "route_to",
+      "autocomplete": "on",
+      "placeholder": "To",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "query",
+      "htmlId": "query",
+      "autocomplete": "on",
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "route_from",
+      "htmlId": "route_from",
+      "autocomplete": "on",
+      "placeholder": "From",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "text",
+      "name": "route_to",
+      "htmlId": "route_to",
+      "autocomplete": "on",
+      "placeholder": "To",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 9.300000000745058,
+     "walkMs": 2,
+     "classifyMs": 7.300000000745058,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "https://www.openstreetmap.org/#map=6/51.33/10.45",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "text",
+      "name": "query",
+      "htmlId": "query",
+      "autocomplete": "on",
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:1",
+      "type": "text",
+      "name": "route_from",
+      "htmlId": "route_from",
+      "autocomplete": "on",
+      "placeholder": "From",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:2",
+      "type": "text",
+      "name": "route_to",
+      "htmlId": "route_to",
+      "autocomplete": "on",
+      "placeholder": "To",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:3",
+      "type": "text",
+      "name": "query",
+      "htmlId": "query",
+      "autocomplete": "on",
+      "placeholder": "Search",
+      "aria": null,
+      "form": "/search",
+      "shadow": false,
+      "visible": true,
+      "gt": null
+     },
+     {
+      "id": "f0:4",
+      "type": "text",
+      "name": "route_from",
+      "htmlId": "route_from",
+      "autocomplete": "on",
+      "placeholder": "From",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     },
+     {
+      "id": "f0:5",
+      "type": "text",
+      "name": "route_to",
+      "htmlId": "route_to",
+      "autocomplete": "on",
+      "placeholder": "To",
+      "aria": null,
+      "form": "/directions",
+      "shadow": false,
+      "visible": false,
+      "gt": null
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 5,
+     "walkMs": 0.599999999627471,
+     "classifyMs": 4.400000000372529,
+     "roots": 1,
+     "fields": [],
+     "raw": []
+    }
+   }
+  ]
+ }
+}

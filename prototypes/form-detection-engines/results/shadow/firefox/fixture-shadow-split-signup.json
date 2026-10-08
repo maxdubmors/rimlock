@@ -1,0 +1,153 @@
+{
+ "name": "fixture-shadow-split-signup",
+ "url": "http://localhost:8123/shadow-split-signup.html",
+ "kind": "fixture",
+ "browser": "firefox/157.0.1",
+ "capturedAt": "2026-10-08T17:52:08.514Z",
+ "runs": {
+  "proton": [
+   {
+    "url": "http://localhost:8123/shadow-split-signup.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": "new-password"
+     }
+    ],
+    "proton": {
+     "engine": "proton",
+     "ms": 1,
+     "fields": []
+    }
+   }
+  ],
+  "protonWalk": [
+   {
+    "url": "http://localhost:8123/shadow-split-signup.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": "new-password"
+     }
+    ],
+    "protonWalk": {
+     "engine": "proton",
+     "ms": 13,
+     "walkMs": 0,
+     "classifyMs": 13,
+     "roots": 3,
+     "fields": [
+      {
+       "id": "f0:1",
+       "label": "new-password"
+      }
+     ],
+     "raw": [
+      "f0:1 new-password:1.00 in label password-change:1.00 → new-password"
+     ]
+    }
+   }
+  ],
+  "protonGroup": [
+   {
+    "url": "http://localhost:8123/shadow-split-signup.html",
+    "world": "isolated",
+    "fields": [
+     {
+      "id": "f0:0",
+      "type": "email",
+      "name": "email",
+      "htmlId": null,
+      "autocomplete": null,
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": "signup-username"
+     },
+     {
+      "id": "f0:1",
+      "type": "password",
+      "name": "password",
+      "htmlId": null,
+      "autocomplete": "new-password",
+      "placeholder": null,
+      "aria": null,
+      "form": null,
+      "shadow": "open",
+      "visible": true,
+      "gt": "new-password"
+     }
+    ],
+    "protonGroup": {
+     "engine": "proton",
+     "ms": 14,
+     "walkMs": 0,
+     "classifyMs": 14,
+     "roots": 3,
+     "fields": [
+      {
+       "id": "f0:0",
+       "label": "signup-username"
+      },
+      {
+       "id": "f0:1",
+       "label": "new-password"
+      }
+     ],
+     "raw": [
+      "f0:0 email:1.00 in label noop:0.50 group:register → signup-username",
+      "f0:1 new-password:1.00 in label password-change:1.00 group:register → new-password"
+     ]
+    }
+   }
+  ]
+ }
+}
