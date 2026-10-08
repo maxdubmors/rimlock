@@ -16,5 +16,5 @@ Firefox has no File System Access, so there a local file is an imported copy. Th
 
 - Unlock never depends on the file. If the grant is refused or the file is gone, the Extension unlocks from the Local copy and offers "Locate file…".
 - Before every write the Extension compares `lastModified` and `size`. If the file changed, it merges first, which waits for an unlock if the Database is Locked. A write that races another app's save within the same fraction of a second can still lose that save. The help pages document this; the UI does not warn.
-- The offscreen document needs a reason that Chrome Web Store review accepts. This is part of the permissions strategy.
+- The offscreen document needs a reason that Chrome Web Store review accepts. No reason covers holding a file handle, so it is created with `[BLOBS, CLIPBOARD]` and shared with clipboard clearing (ADR-0013).
 - Decision detail: [Decide local-file Source behaviour per browser](https://github.com/maxdubmors/rimlock/issues/13).
