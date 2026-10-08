@@ -14,7 +14,7 @@ The boundary follows meaning, not convenience. The Core holds the decrypted Data
 ## Consequences
 
 - keepass-rs types never cross the WASM boundary. The Core exposes a narrow command/query API. TS types are generated from Rust with `tsify` (`ts-rs` as fallback), and errors are a typed enum that arrives in TS as a discriminated union. Calls are async from TS.
-- What crosses the boundary: `EntrySummary` (UUID, title, username, URLs, tags, Group path, icon, flags, has-TOTP, and `MatchingInfo`, which normalises `URL`/`KP2A_URL*`/`URL_n`/Kee/KeePassXC CustomData/AutoType opt-outs) crosses freely. Secrets (password, protected strings, TOTP seed, notes) cross only on an explicit per-use command and arrive in TS wrapped in a non-printable, non-serialisable `Secret`. In Rust they live in `zeroize` types. No full TS-side model of the Database exists.
+- What crosses the boundary: `EntrySummary` (UUID, title, username, URLs, tags, Group path, icon, flags, has-TOTP, and `MatchingInfo`, which normalises `URL`/`KP2A_URL*`/`URL_n`/Kee/KeePassXC CustomData/AutoType opt-outs) crosses freely. Secrets (password, protected strings, TOTP seed, notes) cross only on an explicit per-use command and arrive in TS wrapped in a `Secret` that is never printed or serialised by accident; only the messaging codec encodes it (ADR-0014, [`docs/spec/core-api.md`](../spec/core-api.md)). In Rust they live in `zeroize` types. No full TS-side model of the Database exists.
 - The keepass-rs fixes the MVP needs:
   - open Groups with unknown children (dropping them) and non-contiguous `<String>` (quick-xml `overlapped-lists`);
   - a KDF hook so AES-KDF runs in WebCrypto;
