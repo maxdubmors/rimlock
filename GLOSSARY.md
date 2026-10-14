@@ -83,7 +83,7 @@ The browser part of rimlock, shipped for Chrome and Firefox.
 _Avoid_: Add-on, plugin, client
 
 **Companion**:
-The optional desktop application that extends the Extension with capabilities a browser cannot provide, such as hardware-key responses and Source access. It never holds the Extension's Unlocked Database.
+The optional desktop application, built separately for each operating system, that extends the Extension with capabilities a browser cannot provide, such as hardware-key responses and Source access. It never holds the Extension's Unlocked Database.
 _Avoid_: Desktop app, native host, helper
 
 **Core**:
