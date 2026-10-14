@@ -1,0 +1,21 @@
+[workspace]
+resolver = "3"
+members = ["crates/rimlock-core", "crates/rimlock-core-wasm"]
+
+[workspace.package]
+edition = "2024"
+license = "GPL-3.0-only"
+publish = false
+
+[workspace.dependencies]
+# Stand-in for the rimlock fork: upstream keepass-rs at a pinned commit, pulled by git
+# so the build exercises $CARGO_HOME/git/checkouts paths like the real fork will.
+keepass = { git = "https://github.com/sseemayer/keepass-rs", rev = "28c078cfc8246357c81108fec72f1395448d3bbd", features = ["save_kdbx4", "_merge", "totp"] }
+wasm-bindgen = "=0.2.129"
+serde = { version = "1", features = ["derive"] }
+tsify = { version = "0.5.8", default-features = false, features = ["js"] }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
