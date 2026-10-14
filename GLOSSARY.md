@@ -18,6 +18,14 @@ _Avoid_: Item, login, credential
 A folder-like container of Entries and other Groups inside a Database.
 _Avoid_: Folder, collection
 
+**Recycle Bin**:
+The Group that holds deleted Entries and Groups until they are restored or deleted permanently, as KeePass defines it.
+_Avoid_: Trash, bin, deleted items
+
+**History**:
+The earlier versions of an Entry, kept inside the Entry. Saving an edit adds one.
+_Avoid_: Revisions, versions log, snapshots
+
 **Source**:
 Where a Database is read from and written back to: a local file or a WebDAV location.
 _Avoid_: Backend, provider, storage
@@ -29,6 +37,10 @@ _Avoid_: Cache, offline cache, mirror
 **Pending changes**:
 Changes in the Local copy that have not yet been written to the Source.
 _Avoid_: Unsaved changes, dirty state
+
+**Draft**:
+An edit of an Entry, or a new Entry, that the user has started but not yet saved. It survives the popup closing and is discarded on Lock.
+_Avoid_: Unsaved changes, working copy
 
 **Merge**:
 Combining two versions of the same Database into one, object by object: the newer version of each Entry or Group wins, the older one is kept in its history, and deletions on either side are honoured.

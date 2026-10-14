@@ -2,7 +2,7 @@
 
 The contract between the Core (Rust, compiled to WASM) and the TypeScript side of the Extension, plus the contract every Source adapter implements. Agents implement both sides against this file; the `tsify`-generated types must match it. Signatures are written in TypeScript notation as TS sees them.
 
-Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
+Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
 
 ## 1. Shape
 
@@ -79,8 +79,9 @@ entries(): EntrySummary[];                           // all of them, no secrets
 groups(): GroupNode;                                 // the tree from the root, Recycle Bin included
 search(query: string): Uuid[];                       // ranked; over every field incl. notes and protected ones
 entry(uuid: Uuid): CoreResult<EntryView>;
+history(uuid: Uuid): CoreResult<HistoryVersion[]>;  // oldest first; index = position in this list
 historyEntry(uuid: Uuid, index: number): CoreResult<EntryView>;
-reveal(uuid: Uuid, fieldKey: string, mode: 'raw' | 'resolved'): CoreResult<Secret>;
+reveal(uuid: Uuid, fieldKey: string, mode: 'raw' | 'resolved', historyIndex?: number): CoreResult<Secret>;
 fill(uuid: Uuid, fields: ('username' | 'password' | 'totp')[])
   : CoreResult<{ username?: Secret; password?: Secret; totp?: Secret }>;
 totp(uuid: Uuid): CoreResult<{ code: Secret; period: number; validUntil: Timestamp }>;
@@ -136,7 +137,8 @@ type EntryView = {
   notes: SecretField;
   url?: { url: string; sourceKey: string };
   additionalUrls: { url: string; sourceKey: string }[];   // the editor shows one list without keys
-  customFields: ({ key: string; protected: false; value: string } | { key: string; protected: true; hasValue: boolean })[];
+  customFields: (                                         // excludes keys rimlock interprets (URL, TOTP and Kee keys)
+               { key: string; protected: false; value: string } | { key: string; protected: true; hasValue: boolean })[];
   tags: string[];
   icon: Icon;
   expires?: Timestamp;
@@ -146,9 +148,16 @@ type EntryView = {
   matching: MatchingInfo;
 };
 type SecretField = { hasValue: boolean };   // value only through reveal()
+
+type HistoryVersion = {
+  index: number;
+  modified: Timestamp;
+  changed: string[];                // field keys that differ from the next version (or the current one); secret fields included, values never
+};
 type TotpKind = 'otp' | 'TimeOtp' | 'TrayTotp' | 'NotesUri';
 ```
 
+- `history` lists the versions with the names of the fields each one changed, so the History list needs no secrets. `reveal` with `historyIndex` reads a field of that version ("what was my old password?").
 - `reveal(…, 'raw')` serves the editor; `'resolved'` serves copy and display. `fill` always resolves. Resolution follows the placeholder allow-list (ADR-0010).
 - `search` never says which field matched.
 - `passwordEquals` compares in constant time and returns the UUIDs whose password equals the given one (Save prompt: "identical password → no prompt", "Update the Entry whose password equals current").
@@ -198,8 +207,9 @@ type EntryEdit =
   | { kind: 'SetBrowserHidden'; hidden: boolean };           // writes or removes BrowserHideEntry only
 ```
 
+- `SetCustomField` / `RenameCustomField` to a standard key (`Title`, `UserName`, `Password`, `URL`, `Notes`), a key rimlock interprets (`KP2A_URL*`, `URL_n`, `URL-*`, `URL <n>`, `otp`, `TimeOtp-*`, `TOTP Seed`, `TOTP Settings`, `KPRPC JSON`) or an existing key fails with `InvalidChange { reason: 'ReservedKey' | 'DuplicateKey' }`.
 - Edits are logical; the Core maps them to the keys, encodings and `Protected` flags already in the file (ADR-0010).
-- `ifUnchangedSince` carries `times.modified` of the `EntryView` the draft was opened from. If the Entry changed since (typically through a Merge), the change fails with `EntryChanged`, and the UI offers "Overwrite" (resend without the condition) or "Discard my edits".
+- `ifUnchangedSince` carries `times.modified` of the `EntryView` the draft was opened from. If the Entry changed since (typically through a Merge), the change fails with `EntryChanged`, and the UI offers "Overwrite" (resend without the condition; the other version stays in history), "Discard my edits" or "Show their version". If a Merge deleted or recycled the Entry, the UI offers "Save as new Entry" (`CreateEntry`) or "Discard".
 - `RecycleEntries` / `RecycleGroup` with `RecycleBinEnabled=false` fail with `InvalidChange { reason: 'RecycleBinDisabled' }`; the UI asks for confirmation and sends `DeleteEntries` / `DeleteGroup`. The Core never turns a recycle into a delete by itself. The Recycle Bin is created lazily, KeePass-style.
 - Saves reuse the KDF seed and draw a fresh master seed (ADR-0005), so `Commit.cachedKey` is absent for ordinary edits.
 - Not in the MVP: changing the Composite key, the KDF or other Database settings (do it in KeePassXC). The API leaves room for a `ChangeCompositeKey` change.
