@@ -41,7 +41,7 @@ Core track (keepass-rs fork + rimlock-core) runs alongside; each fix lands by th
   4. The Puppeteer harness: build the release bundle, load it into Chrome for Testing and Firefox, and run one smoke test: WASM loads in the background, unlock, background killed, rebuild timed, canary check.
   5. The synthetic and shadow-DOM autofill fixtures with their runner, ported from the prototype branches. The runner targets the `FormDetector` interface; the prototype's walk and grouping, ported as they are, are its first implementation and M2's starting point.
   6. The interop corpus directory with its `manifest` and the first KeePassXC files.
-  7. `docker-compose` for the WebDAV matrix.
+  7. `docker-compose` for the WebDAV matrix, with the throwaway test CA script and the Caddy TLS proxy in front of every server ([`engineering.md`](engineering.md) § Tests).
 - **Release build:** `scripts/build-release.sh`, `scripts/rustc-wrapper.sh`, the digest-pinned Dockerfile, `BUILDING.md`.
 - **CI:** the pull-request jobs and the path-filtered jobs, including the cross-architecture `SHA256SUMS` job ([`engineering.md`](engineering.md) § CI). The release workflow waits for M5.
 - **AMO dry run:** an unlisted `0.0.N` built by the release script.
