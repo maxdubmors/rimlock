@@ -3,15 +3,20 @@
 Six milestones from an empty repository to `0.1.0` in the Chrome Web Store and on AMO. Each milestone ends in something that runs, and each has exit criteria that must be shown, not claimed.
 
 ```
-M0 Foundation and checks
- └─ M1 Read-only vault
+M0 Foundation and checks ──────────┐
+ │                                 ▼
+ │   Core track (rimlock-core + keepass-rs fork), from day one of M0:
+ │     Merge parity suite → Merge decision (end of M0) → Merge, save, 4.1, …
+ │                                 │
+ └─ M1 Read-only vault ◄───────────┘  TS work starts on FakeCore after M0;
+     │                                M1 exits only when the Core track is ready
      └─ M2 Autofill ............ first usable build (not published)
          └─ M3 Writing
              └─ M4 Save prompt
                  └─ M5 Release 0.1.0
-
-Core track (keepass-rs fork + rimlock-core) runs alongside; each fix lands by the milestone that needs it.
 ```
+
+**The Core track is the critical path to M1's exit.** Six of its seven fixes, the full Merge among them, are needed by M1, so it starts on day one of M0 as its own stream of issues, not after M0. The TypeScript side of M1 does not wait for it: it is built against `FakeCore` and its contract suite. What waits is M1's exit (the Merge properties, the real-WASM E2E scenarios, a real pull over WebDAV).
 
 **Why this order.** M0 tests the assumptions everything rests on (the 200 ms wake-up rebuild, WASM in a Firefox event page, the Chrome file handle, the AMO reproducible build) before any feature depends on them. M1 and M2 give a build that reads the owner's real Database and fills logins but **never writes to a Source**, so it can be used daily with no risk to the file. Writing (M3) comes once that build has proved useful, because writes carry the interop risk. The Save prompt (M4) needs writing. M5 finishes what only matters for a public release.
 
@@ -34,6 +39,7 @@ Core track (keepass-rs fork + rimlock-core) runs alongside; each fix lands by th
 - **The full manifest** of [`manifest-and-permissions.md`](manifest-and-permissions.md) from the start, with the fixed Firefox `gecko.id` and the Chrome development `key`; browser floors computed from the API list.
 - **`pnpm check`**: the ESLint config with boundary and storage rules, Prettier, `svelte-check`, rustfmt, clippy with the workspace lints.
 - **Core, minimal:** `readHeader`, `unlock`, `open` with the `CachedKey`. Fork fix: open from a cached transformed key.
+- **The Core track starts** (§ The Core track): the Merge parity suite, then the Merge decision.
 - **Test skeleton** ([`engineering.md`](engineering.md) § Tests), in this order:
   1. Vitest + `WxtVitest` + `fakeBrowser`; `pnpm test` also runs `cargo test`.
   2. The `CoreClient` and `SourceAdapter` interfaces with `FakeCore`, `FakeSource` and their (small) contract suites against both sides.
@@ -56,6 +62,7 @@ Core track (keepass-rs fork + rimlock-core) runs alongside; each fix lands by th
 - `SHA256SUMS` identical on x86_64 and arm64.
 - AMO accepted the unlisted `0.0.N`, built from the source package by following `BUILDING.md`.
 - No empty **Result** cell in `verification.md`. Every failed check has either its Plan B applied in the spec or a linked `needs-triage` issue.
+- The Merge decision is made and recorded (§ The Core track).
 
 ## M1: Read-only vault
 
@@ -74,6 +81,7 @@ Core track (keepass-rs fork + rimlock-core) runs alongside; each fix lands by th
 **Exit criteria**
 
 - E2E scenarios 1 (install → add → unlock), 2 (rebuild after the background is killed), 3 (search → Copy → clipboard cleared) and 7 (Auto-lock) green in both browsers.
+- **The Core track is ready for M1:** every fix the table below marks "M1" has landed in the fork or in `rimlock-core`, and the Merge parity suite is green.
 - The Merge `proptest` properties and the golden corpus round trips green; the WebDAV adapter contract suite green against the whole Docker matrix.
 - Sync pulls a change made in KeePassXC into the Local copy over WebDAV, with no write to the server (checked in the server log).
 - Manual: a Chrome local-file Database survives a browser restart (one gesture restores access); `FileSystemObserver` sees a save from KeePassXC.
@@ -156,7 +164,15 @@ Core track (keepass-rs fork + rimlock-core) runs alongside; each fix lands by th
 
 ## The Core track
 
-The keepass-rs fork and `rimlock-core` advance alongside the milestones. Every fork fix is its own upstream pull request; the fork carries what has not merged yet.
+Starts on day one of M0, as its own stream of issues. Every fork fix is its own upstream pull request; the fork carries what has not merged yet.
+
+**Merge comes first, tests before code.** Merge is the hardest part and the one Database integrity depends on most, and it is being worked on upstream right now (open keepass-rs pull requests on Meta and `DeletedObjects`, attachments, same-second edits, and a three-way merge). So:
+
+1. Write the **Merge parity suite** in `rimlock-core` first: golden cases taken from KeePassXC's own merge tests, plus the `proptest` properties (idempotence, rollback safety, nothing lost). It is rimlock's definition of correct Merge, whoever implements it.
+2. **Merge decision, at the end of M0:** run the suite against upstream's merge with the open upstream merge pull requests applied in the fork.
+   - It passes, or the gaps are small fixes: keep Merge in keepass-rs and send the fixes upstream.
+   - It does not: rimlock writes its own Merge in `rimlock-core` over keepass-rs's model, and the fork shrinks to parsing, KDF and saving. This amends [ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)'s Consequences, which left both routes open.
+   - Record the outcome and its evidence on the M0 tracking issue.
 
 | Fix | Needed by |
 |---|---|
@@ -169,6 +185,13 @@ The keepass-rs fork and `rimlock-core` advance alongside the milestones. Every f
 | Open Groups with unknown children; non-contiguous `<String>` | M1 |
 | A challenge-response hook: not built, but the API leaves room | — |
 
+**Fork upkeep.**
+
+- One commit per fix, matching one upstream pull request, so the fork is always "upstream + a list of pending pull requests".
+- Rebase on upstream once a month and before every release, in its own pull request, merged only with `test:interop` green (Renovate leaves the fork alone, [`engineering.md`](engineering.md)).
+- keepass-rs types never cross the seam (ADR-0003), so even a long-lived fork, or a switch to another library, stays inside `rimlock-core`.
+- A fix that waits upstream for longer than a release cycle is fine; the fork carries it. Revisit the strategy only if a monthly rebase starts to cost more than a day.
+
 ## After 0.1.0
 
-Everything in the map's "Out of scope" list stays out until it is planned as its own effort. The first candidates the spec already leaves room for: the Companion (YubiKey, Firefox live files, self-signed WebDAV), Quick unlock, a beta channel, settings sync.
+Everything in the map's "Out of scope" list stays out until it is planned as its own effort. The first candidates the spec already leaves room for: the Companion (YubiKey, Firefox live files, self-signed WebDAV), Quick unlock, an S3-compatible Source, a beta channel, settings sync.

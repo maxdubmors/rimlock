@@ -114,4 +114,14 @@ Firefox has no File System Access, so a local file is an imported copy.
 
 **Removing** a WebDAV Database with Pending changes asks first, as for every Source ([`databases-and-unlock.md`](databases-and-unlock.md) § Removing a Database).
 
+## Room for more Sources
+
+A new kind of Source is a new `SourceAdapter` plus a choice on the add screen; Sync, Merge, the Local copy and the status line stay as they are. An adapter qualifies when it has:
+
+- a **strong version token** for `stat` (an ETag or equivalent), so changes are never missed;
+- a **write that cannot leave a torn file** for other clients (atomic replace, or temp + rename), guarded by the version token, ideally with a server-enforced condition;
+- **`https` only**, reached from the background, and covered by the required host permissions, because the required set never grows ([ADR-0013](../adr/0013-permissions-frozen-required-set.md)).
+
+An **S3-compatible Source** (post-MVP) fits without changing any decision: `stat` = `HEAD` (ETag), `read` = `GET`, `write` = `PUT` with `If-Match` (an object `PUT` is atomic, so no temp + `MOVE`); SigV4 signing needs only WebCrypto's HMAC-SHA256; endpoints are `https` hosts already covered by `http(s)://*/*`, and background fetches with host access are not subject to CORS. Its access keys would live in `storage.local` under ADR-0002's reasoning, with help text recommending a key scoped to one bucket. Adding it means extending **Source** in the glossary.
+
 Decision detail: [Decide local-file Source behaviour per browser](https://github.com/maxdubmors/rimlock/issues/13), [Decide WebDAV Source behaviour: offline cache, conflict detection, merge](https://github.com/maxdubmors/rimlock/issues/14), [Verify Chrome File System Access permission lifecycle in extension contexts](https://github.com/maxdubmors/rimlock/issues/16), [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26).
