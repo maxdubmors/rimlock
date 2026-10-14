@@ -21,8 +21,8 @@ How to record a result: write what was observed, the browser and OS versions, an
 
 | ID | Check | Expected | Decides | Plan B | Result |
 |---|---|---|---|---|---|
-| V6 | `showOpenFilePicker()` from the popup returns a handle (Linux, macOS, Windows) | The popup stays open and gets the handle | [`sources.md`](sources.md) | The tab flow becomes the only path for picking a Chrome file. | |
-| V7 | Any file dialog (`<input type=file>`, `showOpenFilePicker`) opened from the Chrome popup closes it, on Linux and macOS (Firefox: known yes) | Recorded per OS | Whether a Key file can ever be picked in the Chrome popup ([`databases-and-unlock.md`](databases-and-unlock.md)) | Keep **Unlock in a tab…** for every Database that needs a Key file and has none remembered (already the default). | |
+| V6 | Dropped: adding a Database and **Locate file…** always run in a tab, so the picker never runs in the popup. | — | — | — | not needed |
+| V7 | A file dialog (`<input type=file>`) opened from the Chrome popup closes it, on Linux and macOS (Firefox: known yes) | Recorded per OS | Whether a Key file can ever be picked in the Chrome popup ([`databases-and-unlock.md`](databases-and-unlock.md)) | Keep **Unlock in a tab…** for every Database that needs a Key file and has none remembered (already the default). | |
 | V8 | The offscreen document holds a `FileSystemFileHandle` passed from the popup; after the popup closes and the service worker idles out, the background can still write the file through it until the browser closes | Grant alive; write succeeds | [ADR-0007](../adr/0007-local-file-source-per-browser.md) | Write only while an extension page is open (ADR-0007's fallback). | |
 | V9 | `FileSystemObserver` in the offscreen document reports a save by KeePassXC (atomic rename) | A change event | [`sources.md`](sources.md) | Detect only on popup open and before every write (already done too). | |
 

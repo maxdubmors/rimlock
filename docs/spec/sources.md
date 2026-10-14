@@ -53,12 +53,12 @@ Step 4 matters: storing a Merge commit raises the revision, so without it every 
 
 ## Chrome: local file (File System Access)
 
-- **Pick:** `showOpenFilePicker()` straight from the popup. If it fails or the popup closes, the same flow opens in a tab. Whether the real picker works in the popup is [`verification.md`](verification.md) V6.
-- **Write access:** the unlock gesture (the Unlock click or Enter) calls `requestPermission({mode: "readwrite"})` and passes the handle to the **offscreen document**. The offscreen document keeps the grant until the browser closes and holds only the handle, never the Database. Handles are also stored in IndexedDB so they survive a restart; access after a restart needs one gesture in the popup.
+- **Pick:** `showOpenFilePicker()` in the add-a-Database tab. Adding always happens in a tab ([`databases-and-unlock.md`](databases-and-unlock.md)), so the picker never runs in the popup.
+- **Write access:** the unlock gesture (the Unlock click or Enter) calls `requestPermission({mode: "readwrite"})` and passes the handle to the **offscreen document**. The offscreen document keeps the grant until the browser closes and holds only the handle, never the Database. The `FileSystemFileHandle` is stored in IndexedDB next to the Local copy, keyed by Database (it is structured-cloneable, not JSON, so it cannot live in `storage.local`). It survives a restart; access after a restart needs one gesture in the popup.
 - **The offscreen document** is shared with clipboard clearing: one document, created on first need with reasons `[BLOBS, CLIPBOARD]`, never closed ([`manifest-and-permissions.md`](manifest-and-permissions.md)).
 - **Fallback without a grant:** Pending changes wait for the next gesture in the popup, which shows "Changes not yet written to file".
 - **"Allow on every visit"** (Chrome's restore prompt in a tab after a restart) is accepted when the user picks it, but rimlock does not steer anyone to it.
-- **Unlock never depends on the file.** If the grant is refused, or the file was moved, deleted or is on an unmounted drive (`NotFoundError`), the Database unlocks from the Local copy and the popup shows "File not reachable — working from the local copy" with **Locate file…** (a new picker, then a Merge).
+- **Unlock never depends on the file.** If the grant is refused, or the file was moved, deleted or is on an unmounted drive (`NotFoundError`), the Database unlocks from the Local copy and the popup shows "File not reachable — working from the local copy" with **Locate file…**, which opens a tab with a new picker, then merges the chosen file.
 - **File changed while Locked:** at unlock the KDF runs on the **file** and the UI opens on it. If the Local copy also has Pending changes, a second KDF runs in the background, then Merge and write. If the file did not change, unlock uses the Local copy as usual.
 - **Concurrent writers:** before every write, compare `lastModified` and `size` with the last known version; if they changed, read, merge, then write. External changes are noticed through `FileSystemObserver` (in the offscreen document), when the popup opens, and before every write. There is never an overwrite without a Merge. A save by another app that lands during our 0.2–0.7 s write can still be lost (Chrome's `.crswap` rename is last-writer-wins). The help pages say so; the UI does not warn.
 - **Symlinks:** a freshly picked handle that fails its first read with `NotFoundError` gets "This file is a link; pick the target file instead".
@@ -112,6 +112,6 @@ Firefox has no File System Access, so a local file is an imported copy.
 - Transient errors (network, 5xx, 507, timeout) retry silently with backoff. The status keeps the last successful Sync time and the count of unsynced changes; details on click.
 - The toolbar badge shows `!` only for errors that need action. No system notifications.
 
-**Removing** a WebDAV Database with Pending changes warns first: **Sync first** / **Download a copy** / **Remove anyway** ([`databases-and-unlock.md`](databases-and-unlock.md)).
+**Removing** a WebDAV Database with Pending changes asks first, as for every Source ([`databases-and-unlock.md`](databases-and-unlock.md) § Removing a Database) ([`databases-and-unlock.md`](databases-and-unlock.md)).
 
 Decision detail: [Decide local-file Source behaviour per browser](https://github.com/maxdubmors/rimlock/issues/13), [Decide WebDAV Source behaviour: offline cache, conflict detection, merge](https://github.com/maxdubmors/rimlock/issues/14), [Verify Chrome File System Access permission lifecycle in extension contexts](https://github.com/maxdubmors/rimlock/issues/16), [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26).

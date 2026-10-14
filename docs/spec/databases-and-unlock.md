@@ -21,7 +21,7 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
 ## Adding a Database = the first unlock
 
 1. Pick the Source:
-   - **Chrome local file:** `showOpenFilePicker()` ([`sources.md`](sources.md)).
+   - **Chrome local file:** `showOpenFilePicker()` in this tab ([`sources.md`](sources.md)).
    - **Firefox local file:** import with `<input type=file>` ([`sources.md`](sources.md)).
    - **WebDAV:** server URL, login, password. The user pastes a file URL or a folder URL. For a folder, one `PROPFIND` lists its `.kdbx` files to pick from; there is no tree browsing. `http://` is refused ([`security.md`](security.md)).
 2. Enter the Composite key: Master password and, optionally, a Key file, plus the "Remember Key file on this device" checkbox (off by default).
@@ -40,7 +40,16 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
 
 ## Removing a Database
 
-Settings → Databases → the Database → **Remove**. It deletes the Local copy, the `CachedKey`, the remembered Key file, the Source config (WebDAV credentials included) and the Database's Settings. With Pending changes, it first offers **Download a copy** (an `<a download>` of the Local copy, no `downloads` permission). Removing a WebDAV Database does not call `permissions.remove`. There is no "change Source": remove the Database and add it again.
+Settings → Databases → the Database → **Remove**. It deletes the Local copy, the `CachedKey`, the remembered Key file, the Source config (WebDAV credentials and the Chrome file handle included) and the Database's Settings.
+
+With Pending changes, it asks first:
+
+- **Sync first** (WebDAV and Chrome file only): runs Sync, then removes once nothing is pending;
+- **Download a copy**: an `<a download>` of the Local copy (no `downloads` permission), then removes;
+- **Remove anyway**, confirmed;
+- **Cancel**.
+
+Until M3 there is no write step in Sync, so **Sync first** is not offered before then ([`plan.md`](plan.md)). Removing a WebDAV Database does not call `permissions.remove`. There is no "change Source": remove the Database and add it again.
 
 ## Key file remembering
 

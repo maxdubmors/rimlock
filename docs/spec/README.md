@@ -76,7 +76,7 @@ Also at the root: [`PRIVACY.md`](../../PRIVACY.md) (the privacy policy both stor
                                  └──────────────┘  └──────────────────────────┘
  storage.session: CachedKey, deadlines, Draft, pending saves (trusted memory)
  storage.local:   Settings, Database registry, WebDAV credentials, remembered Key file
- IndexedDB:       Local copy per Database (encrypted .kdbx bytes)
+ IndexedDB:       Local copy per Database (encrypted .kdbx bytes), Chrome file handles
 ```
 
 - **The background alone owns the Core** and the Unlocked Database. It dies after ~30 s idle and rebuilds the Database on every wake-up from the Local copy and the `CachedKey` in `storage.session`, without running the KDF ([ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md)).

@@ -20,7 +20,7 @@ Text for the Chrome Web Store and AMO listings and for their review forms. Befor
 > • Save new logins and update changed passwords right after you submit a form.
 > • Generate strong passwords and passphrases.
 > • Edit entries and groups, use the Recycle Bin, browse entry history, and fill one-time codes (TOTP).
-> • Copy values; rimlock clears them from the clipboard after 30 seconds.
+> • Copy values. rimlock can clear them from the clipboard again after a delay you choose (30 seconds by default); it asks for clipboard permission the first time you copy.
 >
 > Changes made elsewhere are merged, never overwritten, using the same rules as KeePassXC. rimlock writes only what you changed and keeps everything else in the file exactly as other apps left it.
 >

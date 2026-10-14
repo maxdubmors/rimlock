@@ -22,7 +22,7 @@ Settings are the user's choices about how the Extension behaves. They stay on th
 
 | Per-Database (deleted with the Database) |
 |---|
-| Source config: Chrome file handle, or WebDAV URL + credentials |
+| Source config: WebDAV URL + credentials (`storage.local`); the Chrome file handle lives in IndexedDB next to the Local copy, because it is not JSON-serialisable ([`sources.md`](sources.md)) |
 | Remembered Key file (the processed 32-byte component) |
 | Last Group used by the Save prompt and New Entry |
 
