@@ -112,6 +112,6 @@ Firefox has no File System Access, so a local file is an imported copy.
 - Transient errors (network, 5xx, 507, timeout) retry silently with backoff. The status keeps the last successful Sync time and the count of unsynced changes; details on click.
 - The toolbar badge shows `!` only for errors that need action. No system notifications.
 
-**Removing** a WebDAV Database with Pending changes asks first, as for every Source ([`databases-and-unlock.md`](databases-and-unlock.md) § Removing a Database) ([`databases-and-unlock.md`](databases-and-unlock.md)).
+**Removing** a WebDAV Database with Pending changes asks first, as for every Source ([`databases-and-unlock.md`](databases-and-unlock.md) § Removing a Database).
 
 Decision detail: [Decide local-file Source behaviour per browser](https://github.com/maxdubmors/rimlock/issues/13), [Decide WebDAV Source behaviour: offline cache, conflict detection, merge](https://github.com/maxdubmors/rimlock/issues/14), [Verify Chrome File System Access permission lifecycle in extension contexts](https://github.com/maxdubmors/rimlock/issues/16), [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26).

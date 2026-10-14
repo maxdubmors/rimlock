@@ -15,8 +15,7 @@ How to record a result: write what was observed, the browser and OS versions, an
 | V2 | The `.wasm` loads and runs in the Chrome service worker, the Firefox event page and extension pages (popup, tab, offscreen) from the release bundle, under the manifest CSP | Loads everywhere with only `'wasm-unsafe-eval'` | [ADR-0003](../adr/0003-core-over-keepass-rs-fork.md), [ADR-0004](../adr/0004-mv3-on-every-browser.md) | **Needs a decision.** | |
 | V3 | AMO accepts an unlisted `0.0.N` built by `build-release.sh`, and its reviewer build from the source package following `BUILDING.md` reproduces the `SHA256SUMS` | Accepted, identical hashes | [ADR-0018](../adr/0018-releases-built-by-ci-uploaded-by-hand.md), [`engineering.md`](engineering.md) | Fix the container and `BUILDING.md`; never a reason to change the Core (ADR-0003). | |
 | V4 | Toolchain: WXT builds with `typescript` aliased to TS 6; `svelte-check` and typescript-eslint run on it; `no-misused-promises` flags `onclick={asyncFn}` in `.svelte`; the resolved-path boundary plugin catches a re-export | All work | [`engineering.md`](engineering.md) | Boundary rules fall back to `no-restricted-imports`; a Svelte rule gap is recorded in `apps/extension/AGENTS.md`. | |
-| V24 | Puppeteer `acceptInsecureCerts: true` lets the Extension's background `fetch` reach a WebDAV server whose certificate comes from the throwaway test CA, in Chrome (CDP) and Firefox (BiDi) | Reaches it in both | [`engineering.md`](engineering.md) § Tests | Import the test CA into the test browser profile: Firefox's profile certificate DB; Chrome `--ignore-certificate-errors-spki-list` with the server certificate's SPKI hash. | |
-| V5 | Puppeteer harness mechanisms: stop the Chrome service worker over CDP; force the Firefox event page idle (`extensions.background.idle.timeout`); serve fixtures under several host names (`--host-resolver-rules` in Chrome, the Firefox equivalent); install fake clocks in page contexts before load | All work in both browsers | [ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md) | The scenario that cannot be expressed moves to the manual checklist. | |
+| V5 | Test harness mechanisms: stop the Chrome service worker over CDP; force the Firefox event page idle (`extensions.background.idle.timeout`); serve fixtures and the WebDAV test servers under several host names (`--host-resolver-rules` in Chrome, the Firefox equivalent; in the Node suite, a custom `lookup` on the global undici dispatcher); install fake clocks in page contexts before load | All work in both browsers and in Node | [ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md) | Browsers: the scenario that cannot be expressed moves to the manual checklist. Node: run `test:webdav` in a container on the Docker network, where the names resolve natively. | |
 
 ## Local file (Chrome) and file dialogs
 
@@ -55,6 +54,12 @@ How to record a result: write what was observed, the browser and OS versions, an
 | V21 | Firefox `accesskey` (Alt+Shift+letter on Windows/Linux) vs extension commands Alt+Shift+K and Alt+Shift+U | The command wins on ordinary pages | [`generator-and-copy.md`](generator-and-copy.md) | Pick other defaults. **Needs a decision.** | |
 | V22 | Which Chrome milestone shipped the Ctrl+Shift+L accelerator | Recorded (informational, for the shortcuts help page) | nothing | — | |
 | V23 | `action.openPopup()` from the Inline-menu iframe's click handler in current Firefox, and the case where the promise resolves with no popup (the popup reports "ready", else the tab fallback) | Popup opens; the fallback works | [`autofill.md`](autofill.md) | The tab fallback for every in-page unlock in Firefox. | |
+
+## Test infrastructure
+
+| ID | Check | Expected | Decides | Plan B | Result |
+|---|---|---|---|---|---|
+| V24 | Puppeteer `acceptInsecureCerts: true` lets the Extension's background `fetch` reach a WebDAV server whose certificate comes from the throwaway test CA, in Chrome (CDP) and Firefox (BiDi) | Reaches it in both | [`engineering.md`](engineering.md) § Tests | Import the test CA into the test browser profile: Firefox's profile certificate DB; Chrome `--ignore-certificate-errors-spki-list` with the server certificate's SPKI hash. | |
 
 ## Out of the MVP
 
