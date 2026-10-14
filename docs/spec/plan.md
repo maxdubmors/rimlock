@@ -171,7 +171,7 @@ Starts on day one of M0, as its own stream of issues. Every fork fix is its own 
 1. Write the **Merge parity suite** in `rimlock-core` first: golden cases taken from KeePassXC's own merge tests, plus the `proptest` properties (idempotence, rollback safety, nothing lost). It is rimlock's definition of correct Merge, whoever implements it.
 2. **Merge decision, at the end of M0:** run the suite against upstream's merge with the open upstream merge pull requests applied in the fork.
    - It passes, or the gaps are small fixes: keep Merge in keepass-rs and send the fixes upstream.
-   - It does not: rimlock writes its own Merge in `rimlock-core` over keepass-rs's model, and the fork shrinks to parsing, KDF and saving. This amends [ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)'s Consequences, which left both routes open.
+   - It does not: rimlock writes its own Merge in `rimlock-core` over keepass-rs's model, and the fork shrinks to parsing, KDF and saving. This settles the choice that [ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)'s Consequences left open ("complete merge … or an own merge in the Core"); the ADR itself does not change.
    - Record the outcome and its evidence on the M0 tracking issue.
 
 | Fix | Needed by |
