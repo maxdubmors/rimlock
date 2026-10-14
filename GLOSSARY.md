@@ -54,7 +54,7 @@ _Avoid_: Upload, push, refresh
 
 **Master password**:
 The password the user types to open a Database.
-_Avoid_: Passphrase, PIN
+_Avoid_: Database password, PIN
 
 **Key file**:
 A file whose contents form part of the key to a Database, held separately from it.
@@ -100,6 +100,10 @@ _Avoid_: Suggestion, hit, candidate
 Putting an Entry's username, password or TOTP code into the fields of a web page. A Fill happens only when the user asks for it, never on page load.
 _Avoid_: Auto-fill, inject, auto-type
 
+**Copy**:
+Putting a value from an Entry on the system clipboard when the user asks for it. rimlock takes it off the clipboard again after a while, or when the Database is Locked, unless the user has copied something else since.
+_Avoid_: Clipboard fill, copy to clipboard
+
 **Inline menu**:
 The rimlock menu shown under a login field on a web page, offering the Entries that match the site.
 _Avoid_: Dropdown, overlay, autofill popup
@@ -107,3 +111,23 @@ _Avoid_: Dropdown, overlay, autofill popup
 **Save prompt**:
 The offer to save a new Entry, or update an existing one, after the user submits a login form.
 _Avoid_: Save dialog, doorhanger, notification
+
+**Never-save site**:
+A site on which the user has asked never to see the Save prompt again.
+_Avoid_: Excluded site, blacklist, exception
+
+### Generating
+
+**Password generator**:
+The Extension's tool that creates a random password or Passphrase for a site. It needs no Unlocked Database and never reads from or writes to one by itself.
+_Avoid_: Password suggestion, random password tool
+
+**Passphrase**:
+A generated password made of random words joined by a separator, easier to type by hand than one made of random characters. Never the Master password.
+_Avoid_: Diceware password, word password
+
+### Configuring
+
+**Settings**:
+The user's choices about how the Extension behaves, some for the whole Extension and some for one Database. They stay on the device where they were made and are never written into a Database.
+_Avoid_: Preferences, options, config
