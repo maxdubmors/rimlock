@@ -1,2 +1,4 @@
 extensionName: rimlock
 extensionDescription: Fill and manage passwords from your own KeePass database.
+commandFill: Fill the login on this page
+commandLock: Lock rimlock

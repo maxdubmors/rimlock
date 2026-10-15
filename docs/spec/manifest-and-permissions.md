@@ -13,15 +13,46 @@ Principle: [ADR-0013](../adr/0013-permissions-frozen-required-set.md). The requi
 | `optional_host_permissions` | none |
 | `commands` | `_execute_action`, `fill`, `lock` ([`generator-and-copy.md`](generator-and-copy.md)) |
 | `content_scripts` | `matches` = the host pattern, `all_frames: true`; no `match_about_blank` or `match_origin_as_fallback` |
-| `web_accessible_resources` | only the iframe HTML of the Inline menu and the Save prompt (no scripts, no WASM), for the host pattern, `use_dynamic_url: true` in Chrome; URLs always through `runtime.getURL()` |
-| `content_security_policy.extension_pages` | the default plus `'wasm-unsafe-eval'`; never `unsafe-eval` |
+| `web_accessible_resources` | only the iframe HTML of the Inline menu and the Save prompt (no scripts, no WASM), for the host pattern, `use_dynamic_url: true` in Chrome; URLs always through `runtime.getURL()`. Today that is `inline-menu.html`; the Save prompt page joins it when it exists |
+| `content_security_policy.extension_pages` | the default plus `'wasm-unsafe-eval'`: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`; never `unsafe-eval` |
 | `options_ui` | `options.html`, `open_in_tab: true` |
 | `background` | Chrome: service worker; Firefox: event page (non-persistent) |
-| Firefox `browser_specific_settings.gecko` | a fixed `id` ([ADR-0011](../adr/0011-companion-is-a-capability-provider.md)); `strict_min_version` = the current supported Firefox ESR; `data_collection_permissions: ["none"]` |
-| Chrome `key` | development builds only, so the unpacked Extension ID is fixed |
-| Chrome `minimum_chrome_version` | the highest floor among the APIs used (`offscreen`, `storage.*.setAccessLevel`, `action.openPopup`, `FileSystemObserver`, `idle`, …), computed in M0 and recorded with the build |
+| Firefox `browser_specific_settings.gecko` | `id: "rimlock@maxdubmors.github.io"` ([ADR-0011](../adr/0011-companion-is-a-capability-provider.md)); `strict_min_version: "153.0"`, the current supported Firefox ESR; `data_collection_permissions: {"required": ["none"]}` |
+| Chrome `key` | development builds only (`mode === 'development'`), so the unpacked Extension ID is fixed; see [Extension IDs](#extension-ids) |
+| Chrome `minimum_chrome_version` | `133`, the highest floor among the APIs used; see [Browser floors](#browser-floors) |
+
+The manifest is written in `apps/extension/wxt.config.ts`. `apps/extension/tests/manifest/` builds it for both browsers inside `pnpm test` and checks it against this table, including the frozen required set and the **Never declared** list below.
 
 **Never declared:** `tabs`, `webRequest`, `webNavigation`, `background`, `notifications`, `contextMenus`, `externally_connectable`, and, in the MVP, `nativeMessaging` (it comes later as optional).
+
+## Extension IDs
+
+Both IDs are permanent: Companion host manifests name them (ADR-0011), and AMO binds the Firefox ID to the listing at the first upload (the M0 dry run).
+
+| Browser | ID | Where it comes from |
+|---|---|---|
+| Firefox | `rimlock@maxdubmors.github.io` | `gecko.id`, in every build. An email-shaped ID in a namespace the owner controls; AMO only requires it to be unique. |
+| Chrome, development (unpacked) | `ffppbikcbglhghalfcnhhblchapiblgc` | The public key in `wxt.config.ts`, added to development builds only. The private half was discarded when the key was made: Chrome derives an unpacked ID from the public key alone, and nothing packs a development CRX. |
+| Chrome, store | assigned by the Chrome Web Store | Release builds carry no `key`. The CRX signing key of [ADR-0018](../adr/0018-releases-built-by-ci-uploaded-by-hand.md) is a different, offline key. |
+
+## Browser floors
+
+`minimum_chrome_version` is the highest Chrome version among the APIs and manifest features the spec relies on. Sources: the Chrome extension API reference and MDN browser-compat-data, checked 2026-10-15. A feature that raises the floor updates this table and the test.
+
+| API or feature | Used for | Chrome |
+|---|---|---|
+| `FileSystemObserver` | noticing saves by other apps ([`sources.md`](sources.md)) | **133** |
+| `web_accessible_resources[].use_dynamic_url` | the Inline menu and Save prompt iframes (before 130 the key was accepted but had no effect) | 130 |
+| `action.openPopup()` | "Click to unlock", the Fill shortcut when Locked (118–126: policy-installed extensions only) | 127 |
+| `popover` (top layer) | the Inline menu and Save prompt ([`autofill.md`](autofill.md)) | 114 |
+| `offscreen` with reasons `BLOBS`, `CLIPBOARD` | the file handle and clipboard clearing | 109 |
+| `'wasm-unsafe-eval'` in the extension CSP | the Core | ~103 (not in the API reference; arrived with Chrome 102–103) |
+| `storage.session`, `storage.*.setAccessLevel` | the `CachedKey`; `TRUSTED_CONTEXTS` ([`settings.md`](settings.md)) | 102 |
+| `action`, `scripting`, `commands._execute_action`, `dom.openOrClosedShadowRoot`, MV3 `web_accessible_resources` | | 88 |
+| `showOpenFilePicker`, `FileSystemHandle.isSameEntry` | the Chrome local file | 86 |
+| `idle`, `alarms`, `windows.getAll({windowTypes})`, `permissions.*` | Auto-lock, re-injection | older |
+
+Firefox has no computed floor: `strict_min_version` is the current ESR, and every API the spec uses in Firefox is older than it (the newest are `data_collection_permissions`, 140, and `commands.openShortcutSettings()`, 137). Firefox 115 ESR, still supported until April 2027, is not supported by rimlock.
 
 ## Optional permissions
 
