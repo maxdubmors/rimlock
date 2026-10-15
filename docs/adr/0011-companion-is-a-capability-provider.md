@@ -13,7 +13,8 @@ The Companion adds only what a browser cannot do: key components (the YubiKey ch
 
 ## Consequences
 
-- The Composite key is a list of components in the Core from day one, including a challenge-response component computed from the KDF seed. Unlock and Merge run in two phases: the Core returns the challenge, TypeScript asks a key-component provider, and the response goes back to the Core. A software HMAC serves as the reference provider in Core tests.
+- The Composite key is a list of components in the Core from day one, including a challenge-response component computed from the KDF seed (KDBX 4.x). Unlock and Merge run in two phases: the Core returns the challenge, TypeScript asks a key-component provider, and the response goes back to the Core. A software HMAC serves as the reference provider in Core tests.
+- Challenge-response in KDBX 3.1 is not supported: there KeePassXC challenges the master seed, which changes on every save, and hashes the response in after the KDF. See [#80](https://github.com/maxdubmors/rimlock/issues/80).
 - Source access sits behind an adapter with a version token (`lastModified`/`size` or ETag), a conditional write and an optional watch. Merge-before-write (ADR-0007, ADR-0008) runs above it. Messages from the Companion are capped at 1 MB, so the protocol chunks Database bytes.
 - The first message is a handshake carrying the protocol version and the Companion's capabilities. Using the Companion is opt-in on both sides: `nativeMessaging` is an optional permission in the Extension, and the Companion lets the user allow each browser.
 - The MVP ships fixed Extension IDs (an explicit `gecko.id`, a Chrome key for development builds) so that host manifests can name them. It does not declare `nativeMessaging`.

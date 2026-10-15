@@ -39,7 +39,8 @@ export interface HeaderInfo {
     formatVersion: FormatVersion;
     kdf: KdfParameters;
     /**
-     * The KDF seed: what a challenge-response provider answers.
+     * The KDF seed (in KDBX 3.1, the transform seed): what a challenge-response provider
+     * answers for KDBX 4.x. Challenge-response is not supported for KDBX 3.1 (#80).
      */
     challenge: Uint8Array;
 }

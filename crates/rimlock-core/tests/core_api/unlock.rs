@@ -110,6 +110,19 @@ fn any_challenge_response_component_is_a_wrong_key() {
     assert_eq!(unlock_error(&bytes, &components), CoreError::WrongKey);
 }
 
+/// Challenge-response is never supported for KDBX 3.1, even once a provider exists for KDBX 4.x:
+/// KeePassXC challenges the master seed there and hashes the response in after the KDF (#80).
+#[test]
+fn a_challenge_response_component_on_a_3_1_file_is_a_wrong_key() {
+    let (bytes, mut components) = database("scenario-3.1.kdbx");
+    assert!(unlock(&bytes, &components).is_ok());
+    components.push(KeyComponent::ChallengeResponse(SecretBytes::from(vec![
+        7;
+        20
+    ])));
+    assert_eq!(unlock_error(&bytes, &components), CoreError::WrongKey);
+}
+
 #[test]
 fn a_file_the_header_rejects_fails_the_same_way() {
     let (_, components) = database("scenario.kdbx");

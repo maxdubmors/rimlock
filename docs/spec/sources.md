@@ -49,7 +49,7 @@ Step 4 matters: storing a Merge commit raises the revision, so without it every 
 - Locked: the new key fails on the Local copy but opens the remote. Without Pending changes, the remote is adopted. With Pending changes, rimlock asks once for the old key so it can merge them, or offers an explicit, confirmed **Discard local changes**.
 - After such a Merge, the key and the encryption settings come from the remote.
 
-**Challenge-response Databases** are not supported in the MVP (`WrongKey`). The Core's `ChallengeResponseRequired` path exists for the Companion later ([ADR-0011](../adr/0011-companion-is-a-capability-provider.md)).
+**Challenge-response Databases** are not supported in the MVP (`WrongKey`). The Core's `ChallengeResponseRequired` path exists for the Companion later, for KDBX 4.x only ([ADR-0011](../adr/0011-companion-is-a-capability-provider.md)). In KDBX 3.1 KeePassXC challenges the master seed and hashes the response in after the KDF, so challenge-response there stays unsupported after the Companion too ([#80](https://github.com/maxdubmors/rimlock/issues/80)).
 
 ## Chrome: local file (File System Access)
 
