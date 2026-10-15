@@ -13,7 +13,7 @@
     "dev": "scripts/build-core.sh dev-wasm && pnpm --filter @rimlock/extension dev",
     "check": "pnpm check:ts && pnpm check:rust",
     "check:ts": "pnpm --filter @rimlock/extension check",
-    "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings",
+    "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings && cargo clippy --locked --target wasm32-unknown-unknown --workspace -- -D warnings",
     "check:core-bindings": "scripts/check-core-bindings.sh",
     "test": "pnpm build:core && pnpm test:ts && pnpm test:rust",
     "test:ts": "pnpm --filter @rimlock/extension test",
