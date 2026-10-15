@@ -403,7 +403,7 @@ dependencies = [
 [[package]]
 name = "keepass"
 version = "0.0.0-placeholder-version"
-source = "git+https://github.com/maxdubmors/keepass-rs?rev=9e836d6f8ac8fdced671ea43c696609f07272c8e#9e836d6f8ac8fdced671ea43c696609f07272c8e"
+source = "git+https://github.com/maxdubmors/keepass-rs?rev=a501853ee2932199016bdc2a5f662f5de72176df#a501853ee2932199016bdc2a5f662f5de72176df"
 dependencies = [
  "aes",
  "base64 0.23.1",

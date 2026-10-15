@@ -70,7 +70,7 @@ M0 Foundation and checks ──────────┐
 
 **Scope**
 
-- **Core:** `merge` (complete KeePassXC semantics, including `RemoteKeyChanged`), the read API (`EntrySummary` with `MatchingInfo`, search, `reveal`, `totp`), verify-on-commit, KDBX 4.1 writes for Merge commits. Fork fixes: complete Merge (attachments, custom icons, Meta, no panic on differing root Groups), save reusing the KDF seed, 4.1 output with the 3.1 → 4.1 round trip, the AES-KDF hook into WebCrypto, the v2 Key file hash check, opening Groups with unknown children and non-contiguous `<String>`.
+- **Core:** `merge` (complete KeePassXC semantics, including `RemoteKeyChanged`), the read API (`EntrySummary` with `MatchingInfo`, search, `reveal`, `totp`), verify-on-commit, KDBX 4.1 writes for Merge commits, AES-KDF in WebCrypto behind the Core's `Kdf`. Fork fixes: complete Merge (attachments, custom icons, Meta, no panic on differing root Groups), save reusing the KDF seed, 4.1 output with the 3.1 → 4.1 round trip, the v2 Key file hash check, opening Groups with unknown children and non-contiguous `<String>`.
 - **Background:** the message router and `protocol/` with the `Secret` codec, `CoreClient`, the Database registry, Lock with reasons, Auto-lock T1–T3 and the other triggers, the wake-up rebuild ([`databases-and-unlock.md`](databases-and-unlock.md)).
 - **Sources:** the WebDAV adapter (all of `stat`/`read`/`write`, so its contract suite covers writes) and the Chrome local-file adapter (picker, grant at unlock, the offscreen document holding the handle, `FileSystemObserver`); the Firefox import and **Re-import…**; Sync **without the write step** ([`sources.md`](sources.md)). In M1 the Local copy only ever changes by Merge.
 - **UI:** the welcome tab, adding a Database (both Sources, the three error kinds, duplicates), unlock in the popup and in a tab, Key file remembering, the Database list and switching, Home search, Browse, the Recycle Bin (view only), the Entry view with the live TOTP code, the status line.
@@ -171,7 +171,7 @@ Starts on day one of M0, as its own stream of issues. Every fork fix is its own 
 1. Write the **Merge parity suite** in `rimlock-core` first: golden cases taken from KeePassXC's own merge tests, plus the `proptest` properties (idempotence, rollback safety, nothing lost). It is rimlock's definition of correct Merge, whoever implements it.
 2. **Merge decision, at the end of M0:** run the suite against upstream's merge with the open upstream merge pull requests applied in the fork.
    - It passes, or the gaps are small fixes: keep Merge in keepass-rs and send the fixes upstream.
-   - It does not: rimlock writes its own Merge in `rimlock-core` over keepass-rs's model, and the fork shrinks to parsing, KDF and saving. This settles the choice that [ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)'s Consequences left open ("complete merge … or an own merge in the Core"); the ADR itself does not change.
+   - It does not: rimlock writes its own Merge in `rimlock-core` over keepass-rs's model, and the fork shrinks to parsing and saving (the Core runs the KDF since M0). This settles the choice that [ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)'s Consequences left open ("complete merge … or an own merge in the Core"); the ADR itself does not change.
    - Record the outcome and its evidence on the M0 tracking issue.
 
 | Fix | Needed by |
@@ -180,7 +180,6 @@ Starts on day one of M0, as its own stream of issues. Every fork fix is its own 
 | Save without re-running the KDF (reuse the KDF seed, fresh master seed) | M1 |
 | Complete Merge: attachments, custom icons, Meta; an error instead of a panic on differing root Groups | M1 |
 | Never write above 4.1; verified 3.1 → 4.1 round trip | M1 |
-| A KDF hook so AES-KDF runs in WebCrypto | M1 |
 | v2 Key file hash check | M1 |
 | Open Groups with unknown children; non-contiguous `<String>` | M1 |
 | A challenge-response hook: not built, but the API leaves room | — |

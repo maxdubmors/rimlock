@@ -8,6 +8,7 @@ use keepass::{
     },
 };
 use uuid::Uuid;
+use zeroize::Zeroizing;
 
 use crate::{
     cached_key::CachedKey,
@@ -79,9 +80,11 @@ impl Core {
     /// in the caller.
     pub fn unlock(&self, bytes: &[u8], components: &[KeyComponent]) -> Result<Unlocked, CoreError> {
         let header = read_header(bytes)?;
-        let composite_key = database_key(components)?
-            .composite_key()
-            .map_err(|_| CoreError::Internal)?;
+        let composite_key = Zeroizing::new(
+            database_key(components)?
+                .composite_key()
+                .map_err(|_| CoreError::Internal)?,
+        );
         let transformed_key = self
             .kdf
             .transform(&composite_key, &header.kdf, &header.challenge)?;

@@ -166,8 +166,9 @@ fn a_cached_key_of_another_format_is_stale() {
     );
 }
 
+/// Never panics. A flip in the hashed Composite key still opens: only a merge (M1) reads it.
 #[test]
-fn damaged_cached_key_bytes_fail_cleanly() {
+fn damaged_cached_key_bytes_never_panic() {
     for file in ["scenario.kdbx", "scenario-3.1.kdbx"] {
         let (bytes, cached_key) = unlocked(file);
         let cached = cached_key.expose();

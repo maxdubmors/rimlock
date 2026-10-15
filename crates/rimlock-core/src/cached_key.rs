@@ -74,35 +74,30 @@ impl From<Vec<u8>> for CachedKey {
 /// The KDF, its parameters and its seed, as bytes: equal exactly when the KDF would give the same
 /// transformed key for the same Composite key.
 fn kdf_binding(header: &HeaderInfo) -> Vec<u8> {
-    let mut bytes = Vec::new();
-    match header.kdf {
+    let argon2 = |kind: u8, iterations: u64, memory_bytes: u64, parallelism: u32, version: u32| {
+        [
+            &[kind][..],
+            &iterations.to_le_bytes(),
+            &memory_bytes.to_le_bytes(),
+            &parallelism.to_le_bytes(),
+            &version.to_le_bytes(),
+        ]
+        .concat()
+    };
+    let kdf = match header.kdf {
         KdfParameters::Argon2d {
             iterations,
             memory_bytes,
             parallelism,
             version,
-        }
-        | KdfParameters::Argon2id {
+        } => argon2(1, iterations, memory_bytes, parallelism, version),
+        KdfParameters::Argon2id {
             iterations,
             memory_bytes,
             parallelism,
             version,
-        } => {
-            bytes.push(if matches!(header.kdf, KdfParameters::Argon2d { .. }) {
-                1
-            } else {
-                2
-            });
-            bytes.extend(iterations.to_le_bytes());
-            bytes.extend(memory_bytes.to_le_bytes());
-            bytes.extend(parallelism.to_le_bytes());
-            bytes.extend(version.to_le_bytes());
-        }
-        KdfParameters::AesKdf { rounds } => {
-            bytes.push(3);
-            bytes.extend(rounds.to_le_bytes());
-        }
-    }
-    bytes.extend(&header.challenge);
-    bytes
+        } => argon2(2, iterations, memory_bytes, parallelism, version),
+        KdfParameters::AesKdf { rounds } => [&[3][..], &rounds.to_le_bytes()].concat(),
+    };
+    [kdf, header.challenge.clone()].concat()
 }

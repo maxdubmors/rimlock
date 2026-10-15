@@ -11,8 +11,8 @@ publish.workspace = true
 # The Core runs the KDF itself (src/kdf.rs), so a test can inject one; keepass-rs takes the result.
 [dependencies]
 aes = "0.9.3"
-# The rimlock fork (crates/AGENTS.md § keepass-rs fork), pinned at tag rimlock-2026-10-15.2.
-keepass = { git = "https://github.com/maxdubmors/keepass-rs", rev = "9e836d6f8ac8fdced671ea43c696609f07272c8e" }
+# The rimlock fork (crates/AGENTS.md § keepass-rs fork), pinned at tag rimlock-2026-10-15.3.
+keepass = { git = "https://github.com/maxdubmors/keepass-rs", rev = "a501853ee2932199016bdc2a5f662f5de72176df" }
 rust-argon2 = "3.0.0"
 sha2 = "0.11.0"
 uuid = "1.18.1"
