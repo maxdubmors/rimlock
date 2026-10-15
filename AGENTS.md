@@ -41,7 +41,7 @@ One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to
 
 - Work on a `task/<issue>-<slug>` branch; `main` takes pull requests only.
 - `pnpm check && pnpm test` green before every pull request.
-- A pull request must pass every job of `.github/workflows/pull-request.yml`: `pnpm check`, `pnpm test`, Core bindings up to date (`pnpm check:core-bindings`), `pnpm test:e2e` in Chrome and Firefox, and the bundle report (`pnpm build:report`). A new workflow job lands with its line here.
+- A pull request must pass every job of `.github/workflows/pull-request.yml`.
 - Every behaviour change comes with a test; a bug fix starts with a failing test.
 - Test through a module's public interface (the folders of `engineering.md` § TypeScript modules), not its internals.
 - Core tests use no real time or randomness.
