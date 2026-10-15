@@ -7,13 +7,12 @@ Local rules for the WXT app. The module folders and their roles are `docs/spec/e
 - WXT auto-imports are off: import `browser` from `wxt/browser`, `defineBackground` and friends from `wxt/utils/…`, and `i18n` from `#i18n`.
 - UI strings live in `locales/en.yml` and are read through `i18n.t(…)`.
 
-## Boundaries and storage (`eslint.config.ts`)
+## Boundaries and storage
 
-- **Content side** (`src/autofill/`, the `content` and `inline-menu` entrypoints) imports only content-side code and the modules shared with content. That keeps out `background/`, `sources/`, `core-bindings/`, `settings/`, `ui/` and the other entrypoints.
-- **Shared with content** (`src/protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`) imports only each other. `import-x/no-restricted-paths` checks one import at a time, so this is what stops a re-export from carrying `background/` into the content bundle. A shared module that needs anything else is a design question: raise it, never add an exception.
-- **Background**: only `background/` and the `background` entrypoint import `background/`. Everything else, `ui/` and the offscreen document included, talks to it through `protocol/` messages.
-- Content-side and shared code never touches storage: any `.storage` property (destructuring included), the `storage` global, `wxt/utils/storage` and `@wxt-dev/storage` are errors there.
-- The boundary rules count type-only imports too.
+The rules are `docs/spec/engineering.md` § TypeScript modules; `eslint.config.ts` enforces them. What the rules alone do not tell you:
+
+- They are allowlists, because `import-x/no-restricted-paths` checks one import at a time and any unlisted path would let a re-export through. A module shared with content that needs anything outside the list is a design question: raise it, never add an exception.
+- Type-only imports count too.
 - Known gap: a property name computed at run time (`browser[key]`) escapes the storage rule.
 
 ## Svelte
