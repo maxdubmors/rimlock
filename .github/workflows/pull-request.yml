@@ -1,0 +1,92 @@
+# The checks every pull request must pass (docs/spec/engineering.md § CI), with the commands
+# agents run locally (AGENTS.md § Commands). Rules for every workflow here: GitHub-hosted runners,
+# every action pinned by commit SHA, contents: read unless a job widens it, no
+# pull_request_target and no secrets in any pull-request job.
+name: Pull request
+
+on:
+  pull_request:
+  # A pull request restores caches only from its base branch, so main saves them.
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # A newer push supersedes a pull request's run; every run on main finishes.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    name: pnpm check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm check
+
+  test:
+    name: pnpm test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm test
+
+  core-bindings:
+    name: Core bindings up to date
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+        with:
+          install: 'false'
+      - run: pnpm check:core-bindings
+
+  e2e:
+    name: pnpm test:e2e (Chrome and Firefox)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      # The pinned builds live in tests/e2e/browsers.ts.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/puppeteer/
+          key: puppeteer-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('apps/extension/tests/e2e/browsers.ts') }}
+      # Ubuntu 24.04 lets AppArmor deny unprivileged user namespaces, which Chrome's sandbox
+      # needs; the Chrome for Testing build carries no AppArmor profile of its own.
+      - name: Allow Chrome's sandbox
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+      - run: pnpm test:e2e
+
+  bundle-report:
+    name: Bundle report
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      - run: pnpm build:report
+      # Per browser: the built manifest.json and the modules of the content bundle.
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: bundle-report
+          path: apps/extension/.output/bundle-report/
+          if-no-files-found: error

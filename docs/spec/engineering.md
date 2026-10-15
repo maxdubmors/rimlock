@@ -65,7 +65,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 - Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`. Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on. `pnpm build:core` builds `release`, the Core of the store bundle; `pnpm dev` builds `dev-wasm`.
 - Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin. The background is an ES module (`type: "module"` in both browsers): WXT builds a classic background as a Vite library, and Vite inlines every asset of a library as base64, which would put the whole Core into `background.js`. The manifest CSP needs `'wasm-unsafe-eval'`.
 - No Rust watcher: after Rust edits, run `pnpm build:core`; WXT reloads the new glue.
-- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails on a diff, for CI to call on every pull request.
+- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails on a diff; CI runs it on every pull request.
 
 ## Pinning and reproducibility
 
@@ -149,7 +149,8 @@ The rules every agent follows live in the root [`AGENTS.md`](../../AGENTS.md) §
 - **Every pull request (required):** `pnpm check`, `pnpm test`, the regenerated `core-bindings/*.d.ts` equal to the committed ones, `pnpm test:e2e` in Chrome and Firefox.
 - **Path-filtered (required when they run):** `test:webdav` (`sources/`, the WebDAV suite or compose file); `test:interop` (`crates/`); the cross-architecture job (`crates/`, `Cargo.lock`, `rust-toolchain.toml`, `scripts/`, the Dockerfile, `pnpm-lock.yaml`), which runs `build-release.sh` natively on x86_64 and arm64 and fails if the `SHA256SUMS` differ.
 - **Nightly on `main`:** all of the above unfiltered, plus `cargo-fuzz`. A fuzz failure opens an issue and never blocks a merge.
-- CI publishes the built `manifest.json` and the module list of the `content` bundle as artifacts, so a pull request that changes them is visible.
+- CI publishes the built `manifest.json` and the module list of the `content` bundle as artifacts, so a pull request that changes them is visible: `pnpm build:report` writes both for each browser into `apps/extension/.output/bundle-report/`, and the job uploads that folder as the `bundle-report` artifact.
+- The pull-request jobs live in `.github/workflows/pull-request.yml` and set up their tools through `.github/actions/setup`. The workflow also runs on every push to `main`, so pull requests can restore the caches it saves.
 - `main`: pull requests only, required checks green, squash merge, linear history, no force-push.
 
 ## Versions, changelog and releases
