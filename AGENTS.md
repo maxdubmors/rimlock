@@ -59,7 +59,7 @@ Work on the keepass-rs fork (a fork fix, carrying an upstream pull request, the 
 
 ### Issue tracker
 
-Issues are tracked in GitHub Issues (maxdubmors/rimlock) via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues are tracked in GitHub Issues (maxdubmors/rimlock) via the `gh` CLI. Before the first `gh` call, read `docs/agents/issue-tracker.md`: how to read a ticket, and why a milestone's tracking issue is skipped.
 
 ### Triage labels
 
