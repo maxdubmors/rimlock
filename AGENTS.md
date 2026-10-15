@@ -34,6 +34,7 @@ One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` or `car
 
 ## Rules
 
+- Work on a `task/<issue>-<slug>` branch; `main` takes pull requests only.
 - `pnpm check && pnpm test` green before every pull request.
 - Every behaviour change comes with a test; a bug fix starts with a failing test.
 - Test through a module's public interface (the folders of `engineering.md` § TypeScript modules), not its internals.
