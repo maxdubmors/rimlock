@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # pnpm check:core-bindings: regenerates the Core's bindings and fails if the committed *.d.ts
-# differ from them (docs/spec/engineering.md § WASM build). CI runs it on every pull request.
+# differ from them (docs/spec/engineering.md § WASM build), for CI to call on every pull request.
 set -euo pipefail
 
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)

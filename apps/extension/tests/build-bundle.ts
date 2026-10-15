@@ -20,8 +20,8 @@ const quietLogger: Logger = {
 };
 
 /**
- * Builds the Extension into `outDir` as `wxt build` does: in production mode, the bundle that
- * goes to the stores. Call one at a time: every WXT build regenerates the same `.wxt/` folder.
+ * Builds the Extension into `outDir` as `wxt build` does; `production` is the bundle that goes to
+ * the stores. Call one at a time: every WXT build regenerates the same `.wxt/` folder.
  */
 export async function buildBundle(
   browser: BrowserName,

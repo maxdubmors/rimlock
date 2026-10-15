@@ -68,7 +68,7 @@ open(localCopyBytes: Uint8Array, cachedKey: CachedKey)
 ```
 
 ```ts
-coreInfo(): CoreInfo;                                                      // never fails, holds no state
+coreInfo(): CoreInfo;                                                      // holds no state; throws only if the bindings are broken
 
 type CoreInfo = { version: string };   // the rimlock-core crate version
 ```

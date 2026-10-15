@@ -65,7 +65,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 - Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`. Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on. `pnpm build:core` builds `release`, the Core of the store bundle; `pnpm dev` builds `dev-wasm`.
 - Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin. The background is an ES module (`type: "module"` in both browsers): WXT builds a classic background as a Vite library, and Vite inlines every asset of a library as base64, which would put the whole Core into `background.js`. The manifest CSP needs `'wasm-unsafe-eval'`.
 - No Rust watcher: after Rust edits, run `pnpm build:core`; WXT reloads the new glue.
-- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails on a diff; CI runs it.
+- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails on a diff, for CI to call on every pull request.
 
 ## Pinning and reproducibility
 
