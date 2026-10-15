@@ -64,7 +64,10 @@ export default defineConfig({
       ],
       // The MV3 default plus WebAssembly for the Core; never 'unsafe-eval'.
       content_security_policy: {
-        extension_pages: "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+        extension_pages:
+          process.env['PROBE_NO_WASM_CSP'] === '1'
+            ? "script-src 'self'; object-src 'self';"
+            : "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
       },
       ...(!isFirefox && {
         // The highest floor among the APIs used: FileSystemObserver (manifest-and-permissions.md).

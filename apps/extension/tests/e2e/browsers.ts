@@ -45,7 +45,9 @@ export async function launchWithExtension(
   return {
     async openPage(path) {
       const page = await browser.newPage();
-      await page.goto(`${origin}/${path}`);
+      console.error('goto', `${origin}/${path}`);
+      await page.goto(`${origin}/${path}`, { timeout: 10000 }).catch((e: unknown) => console.error('goto failed', String(e).split('\n')[0]));
+      console.error('at', page.url());
       return page;
     },
     close: () => browser.close(),
@@ -79,8 +81,11 @@ async function launchFirefox(
     executablePath,
     headless: true,
     enableExtensions: true,
+    args: ['--remote-allow-system-access'],
     extraPrefsFirefox: {
       'extensions.webextensions.uuids': JSON.stringify({ [geckoId]: uuid }),
+      // V2 probe: let action.openPopup() run without a user gesture.
+      'extensions.openPopupWithoutUserGesture.enabled': true,
     },
   });
   await browser.installExtension(bundleDir);

@@ -1,2 +1,3 @@
-// Stub: holds the Chrome file handle, the Observer and clipboard clearing (Chrome only).
-export {};
+import { loadCoreIn } from '../../probe/load-core';
+
+void loadCoreIn('offscreen');

@@ -1,5 +1,3 @@
-import { mount } from 'svelte';
+import { loadCoreIn } from '../../probe/load-core';
 
-import App from '../../ui/App.svelte';
-
-mount(App, { target: document.body });
+void loadCoreIn(location.search.includes('tab') ? 'tab' : 'popup');
