@@ -78,6 +78,23 @@ describe('content code and storage', () => {
   });
 });
 
+describe('WXT builds in tests', () => {
+  // Every build regenerates the same .wxt/ folder; only tests/manifest/ runs one file at a time.
+  it('rejects buildBundle outside tests/manifest/', async () => {
+    expect(await rulesBrokenIn('tests/core-api/builds.ts')).toContain('no-restricted-imports');
+  });
+
+  it('accepts buildBundle in tests/manifest/', async () => {
+    expect(await rulesBrokenIn('tests/manifest/builds.ts')).not.toContain('no-restricted-imports');
+  });
+
+  it('accepts a type from build-bundle anywhere', async () => {
+    expect(await rulesBrokenIn('tests/core-api/browser-type.ts')).not.toContain(
+      'no-restricted-imports',
+    );
+  });
+});
+
 describe('Svelte', () => {
   // typescript-eslint's no-misused-promises checks JSX attributes only, so a local rule does it.
   it('rejects a promise-returning event handler', async () => {

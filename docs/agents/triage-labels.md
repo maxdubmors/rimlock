@@ -12,4 +12,6 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 
 When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
 
+A `ready-for-agent` ticket comes with its test seams agreed: the public interface of each module it touches (root `AGENTS.md` § Rules), plus any seam the ticket names. A skill that asks to confirm seams with the user takes these and goes on; a seam outside them is a question for the ticket.
+
 Edit the right-hand column to match whatever vocabulary you actually use.
