@@ -9,15 +9,16 @@ import { build } from 'wxt';
 // The expected values are the table in docs/spec/manifest-and-permissions.md, written out by hand.
 
 type Manifest = Record<string, unknown>;
+type Browser = 'chrome' | 'firefox';
 
 const root = resolve(import.meta.dirname, '../..');
 let outDir: string;
-const built: Record<'chrome' | 'firefox' | 'chromeDev', Manifest> = {
+const built: Record<Browser | 'chromeDev', Manifest> = {
   chrome: {},
   firefox: {},
   chromeDev: {},
 };
-const messages: Record<'chrome' | 'firefox', Record<string, unknown>> = { chrome: {}, firefox: {} };
+const messages: Record<Browser, Record<string, unknown>> = { chrome: {}, firefox: {} };
 
 function sorted(list: unknown): unknown {
   return Array.isArray(list) ? list.toSorted() : list;
@@ -40,13 +41,16 @@ function extensionId(key: unknown): string {
     .replace(/[0-9a-f]/g, (digit) => String.fromCharCode('a'.charCodeAt(0) + parseInt(digit, 16)));
 }
 
-async function buildManifest(browser: 'chrome' | 'firefox', mode: string): Promise<Manifest> {
+async function buildExtension(
+  browser: Browser,
+  mode: 'production' | 'development',
+): Promise<{ manifest: Manifest; messages: Record<string, unknown> }> {
   const dir = join(outDir, `${browser}-${mode}`);
   await build({ root, browser, mode, outDir: dir, outDirTemplate: '.' });
-  if (mode === 'production') {
-    messages[browser] = await readJson(join(dir, '_locales/en/messages.json'));
-  }
-  return readJson(join(dir, 'manifest.json'));
+  return {
+    manifest: await readJson(join(dir, 'manifest.json')),
+    messages: await readJson(join(dir, '_locales/en/messages.json')),
+  };
 }
 
 async function readJson(path: string): Promise<Record<string, unknown>> {
@@ -56,9 +60,13 @@ async function readJson(path: string): Promise<Record<string, unknown>> {
 beforeAll(async () => {
   outDir = await mkdtemp(join(tmpdir(), 'rimlock-manifest-'));
   // One at a time: every WXT build regenerates the same `.wxt/` folder.
-  built.chrome = await buildManifest('chrome', 'production');
-  built.firefox = await buildManifest('firefox', 'production');
-  built.chromeDev = await buildManifest('chrome', 'development');
+  const chrome = await buildExtension('chrome', 'production');
+  const firefox = await buildExtension('firefox', 'production');
+  built.chrome = chrome.manifest;
+  built.firefox = firefox.manifest;
+  built.chromeDev = (await buildExtension('chrome', 'development')).manifest;
+  messages.chrome = chrome.messages;
+  messages.firefox = firefox.messages;
 }, 120_000);
 
 afterAll(async () => {
@@ -66,7 +74,7 @@ afterAll(async () => {
 });
 
 // ADR-0013: the frozen required set. An update that adds to it disables the Extension in Chrome.
-const frozenPermissions = [
+const frozenRequiredPermissions = [
   'storage',
   'unlimitedStorage',
   'idle',
@@ -80,7 +88,7 @@ describe('the permissions', () => {
   it('in Chrome are the frozen set plus offscreen, with clipboard and privacy optional', () => {
     expect(built.chrome['host_permissions']).toEqual(hostPattern);
     expect(sorted(built.chrome['permissions'])).toEqual(
-      sorted([...frozenPermissions, 'offscreen']),
+      sorted([...frozenRequiredPermissions, 'offscreen']),
     );
     expect(sorted(built.chrome['optional_permissions'])).toEqual(
       sorted(['clipboardRead', 'clipboardWrite', 'privacy']),
@@ -89,7 +97,7 @@ describe('the permissions', () => {
 
   it('in Firefox are the frozen set, with clipboard, privacy and downloads optional', () => {
     expect(built.firefox['host_permissions']).toEqual(hostPattern);
-    expect(sorted(built.firefox['permissions'])).toEqual(sorted(frozenPermissions));
+    expect(sorted(built.firefox['permissions'])).toEqual(sorted(frozenRequiredPermissions));
     expect(sorted(built.firefox['optional_permissions'])).toEqual(
       sorted(['clipboardRead', 'clipboardWrite', 'privacy', 'downloads']),
     );

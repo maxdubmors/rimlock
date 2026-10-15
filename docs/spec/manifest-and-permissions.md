@@ -52,7 +52,7 @@ Both IDs are permanent: Companion host manifests name them (ADR-0011), and AMO b
 | `showOpenFilePicker`, `FileSystemHandle.isSameEntry` | the Chrome local file | 86 |
 | `idle`, `alarms`, `windows.getAll({windowTypes})`, `permissions.*` | Auto-lock, re-injection | older |
 
-Firefox has no computed floor: `strict_min_version` is the current ESR, and every API the spec uses in Firefox is older than it (the newest are `data_collection_permissions`, 140, and `commands.openShortcutSettings()`, 137). Firefox 115 ESR, still supported until April 2027, is not supported by rimlock.
+Firefox has no computed floor: `strict_min_version` is the current ESR, and every API the spec uses in Firefox is older than it (the newest are `data_collection_permissions`, 140, and `commands.openShortcutSettings()`, 137).
 
 ## Optional permissions
 
