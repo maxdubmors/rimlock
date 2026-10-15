@@ -39,9 +39,17 @@ type KeyComponent =
   | { kind: 'KeyFile'; bytes: Uint8Array }
   | { kind: 'ChallengeResponse'; response: SecretBytes };   // e.g. YubiKey via the Companion
 
+type FormatVersion = '3.1' | '4.0' | '4.1';
+
+// The KDF and the parameters a settings screen shows.
+type KdfParameters =
+  | { kind: 'Argon2d'; iterations: number; memoryBytes: number; parallelism: number }
+  | { kind: 'Argon2id'; iterations: number; memoryBytes: number; parallelism: number }
+  | { kind: 'AesKdf'; rounds: number };
+
 type HeaderInfo = {
-  formatVersion: '3.1' | '4.0' | '4.1';
-  kdf: { kind: 'Argon2d' | 'Argon2id' | 'AesKdf'; /* parameters for display */ };
+  formatVersion: FormatVersion;
+  kdf: KdfParameters;
   challenge: Uint8Array;            // the KDF seed; what a challenge-response provider answers
 };
 
@@ -65,6 +73,8 @@ unlock(bytes: Uint8Array, components: KeyComponent[])
 
 open(localCopyBytes: Uint8Array, cachedKey: CachedKey)
   : Promise<CoreResult<UnlockedDatabase>>;                                 // never runs the KDF
+
+declare class UnlockedDatabase { free(): void }   // the handle: §§ 4–6 are its methods; free() drops the Database
 ```
 
 ```ts
@@ -76,6 +86,8 @@ type CoreInfo = { version: string };   // the rimlock-core crate version
 - `coreInfo` answers the background's `status` message, so a test can check which Core the store bundle runs.
 - **Two-phase unlock is stateless.** TS calls `readHeader` for the challenge, asks a key-component provider when the Database is configured as using a hardware key (the KDBX header carries no marker), then calls `unlock` with all components. Nothing is held between the two calls, so a long wait for a YubiKey touch survives a worker teardown.
 - In the MVP no provider exists, so a challenge-response Database fails with `WrongKey` (ADR-0011). Core tests use a software HMAC-SHA1 provider over `challenge` as the reference.
+- `unlock` reads the header as `readHeader` does first, so a file `readHeader` rejects fails `unlock` with the same error. No components, or a Key file that does not parse, is `WrongKey` too.
+- Until [#46](https://github.com/maxdubmors/rimlock/issues/46) adds the `CachedKey`, the bindings' `unlock` returns the `UnlockedDatabase` alone, and synchronously, like every binding (`CoreClient` makes the calls async).
 - `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks.
 
 ## 4. `UnlockedDatabase`: reads
@@ -102,7 +114,7 @@ type DatabaseInfo = {
   rootGroup: Uuid;
   recycleBinEnabled: boolean;
   recycleBin?: Uuid;
-  formatVersion: '3.1' | '4.0' | '4.1';   // as read; saves are always 4.1 (ADR-0010)
+  formatVersion: FormatVersion;      // as read; saves are always 4.1 (ADR-0010)
 };
 
 type EntrySummary = {
@@ -261,13 +273,15 @@ type CoreResult<T> = { ok: true; value: T } | { ok: false; error: CoreError | { 
 ```
 
 - Rust returns `Result<T, CoreError>`; wasm-bindgen throws the error; `CoreClient` catches it and returns a `CoreResult`. Callers use an exhaustive `switch`, not try/catch.
+- Reason codes: `UnsupportedFile` is `NotKdbx`, `Kdb` (KeePass 1), `FormatVersion`, `Cipher`, `Compression` or `Kdf`; `Corrupt` is `Truncated`, `Header`, `KdfParameters`, `HeaderHash`, `Payload` or `Xml`; `InvalidChange` is `ReservedKey`, `DuplicateKey` or `RecycleBinDisabled`. A KDBX 3.1 file has no header HMAC, so a damaged 3.1 payload can read as `WrongKey`.
+- The bindings throw a `CoreError` value for every failure; input that does not match the declared types (a bug in `CoreClient`) is `Internal`.
 - Error details carry only UUIDs, field keys and reason codes. The Rust secret types implement neither `Debug` nor `Display` with their content, so a secret cannot end up in an error or a log.
 - A panic aborts the WASM instance. `CoreClient` marks it dead (`CoreUnavailable`), and the background rebuilds it from the Local copy as on wake-up.
 
 ## 9. `CoreClient` rules (TS, background only)
 
 - One queue: calls on a handle never run concurrently.
-- Every `SecretBytes` is wrapped into a `Secret` on arrival; every `Secret` input is unwrapped only at the call.
+- Every `SecretBytes` is wrapped into a `Secret` on arrival; every `Secret` input is unwrapped only at the call, into its UTF-8 bytes, and wiped after it. The generated bindings therefore take `SecretBytes` wherever this file says `Secret` (`KeyComponent`'s `Password` is `{ kind: 'Password'; value: SecretBytes }`).
 - **The Local copy is the source of truth; the in-memory Database is its cache.** A `Commit` is stored atomically in IndexedDB before the result is reported as saved. If storing fails, the handle is dropped and rebuilt from the Local copy; the edit is lost and the user sees an error.
 - A new `cachedKey` in any result replaces the one in `storage.session` at once (this is also the single restore point of ADR-0012).
 
