@@ -6,6 +6,10 @@ The MVP spec starts at `docs/spec/README.md`: what is being built, the reading o
 - A pull request that contradicts an ADR in `docs/adr/` says so explicitly and links it; it never overrides an ADR silently.
 - A question the spec does not answer becomes an issue labelled `needs-triage`, not a decision inside a pull request.
 
+## keepass-rs fork
+
+Work on the keepass-rs fork (a fork fix, carrying an upstream pull request, the monthly rebuild, bumping its `rev`) follows `crates/AGENTS.md` § keepass-rs fork.
+
 ## Agent skills
 
 ### Issue tracker
