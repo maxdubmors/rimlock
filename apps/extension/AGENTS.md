@@ -15,6 +15,11 @@ The rules are `docs/spec/engineering.md` § TypeScript modules; `eslint.config.t
 - Type-only imports count too.
 - Known gap: a property name computed at run time (`browser[key]`) escapes the storage rule.
 
+## Manifest
+
+- `wxt.config.ts` holds the manifest; `tests/manifest/` builds both browsers and checks it against `docs/spec/manifest-and-permissions.md`.
+- A browser API or manifest key that is new to the code is looked up in that file's § Browser floors. One newer than the floor raises `minimum_chrome_version`, the table and the test in the same pull request.
+
 ## Svelte
 
 - `rimlock/no-async-event-handler` (`eslint-rules/`) rejects an `on…` handler on an HTML element whose function returns a promise: typescript-eslint's `no-misused-promises` checks JSX only (`docs/spec/verification.md` V4). Handle the promise: `onclick={() => void save().catch(report)}`. Component props are not checked.

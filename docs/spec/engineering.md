@@ -90,7 +90,7 @@ One command: formatting check, lint, type checks and clippy.
 **Runners**
 
 - Rust: `cargo test`. Unit tests inline; integration tests in `crates/rimlock-core/tests/`; the interop corpus in `crates/rimlock-core/tests/corpus/`.
-- TypeScript: Vitest + `WxtVitest` + `fakeBrowser` (`@webext-core/fake-browser`). Unit tests next to the code (`foo.test.ts`); the rest in `apps/extension/tests/{e2e,autofill,contract,webdav}/`.
+- TypeScript: Vitest + `WxtVitest` + `fakeBrowser` (`@webext-core/fake-browser`). Unit tests next to the code (`foo.test.ts`); the rest in `apps/extension/tests/{e2e,autofill,contract,webdav,manifest}/` (`manifest/` builds both browsers with WXT and checks the built `manifest.json`).
 - Svelte: Vitest + `@testing-library/svelte` on jsdom, only for components with logic (Draft, Entry editor, generator). No UI snapshot tests.
 - Browsers: Puppeteer (`puppeteer-core`) driving pinned Chrome for Testing and Firefox, headless, with Vitest as the runner. They load the **release bundle**: no test hooks, no test build flavour. Time moves through fake clocks installed in page contexts and the shortest values the Settings schema allows; what cannot be reached that way is tested one level down with injected clocks.
 
