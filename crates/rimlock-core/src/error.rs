@@ -29,6 +29,16 @@ pub enum CoreError {
     Internal,
 }
 
+/// `UnsupportedFile` for `reason`.
+pub(crate) fn unsupported(reason: UnsupportedReason) -> CoreError {
+    CoreError::UnsupportedFile { reason }
+}
+
+/// `Corrupt` for `reason`.
+pub(crate) fn corrupt(reason: CorruptReason) -> CoreError {
+    CoreError::Corrupt { reason }
+}
+
 /// Why a file is `UnsupportedFile`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum UnsupportedReason {

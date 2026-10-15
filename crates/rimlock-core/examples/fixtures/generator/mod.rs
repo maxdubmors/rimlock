@@ -149,26 +149,16 @@ const LOW_ARGON2ID: Kdf = Kdf::Argon2id {
 };
 const LOW_AES: Kdf = Kdf::Aes { rounds: 1000 };
 
-const PLANS: [Plan; 9] = [
-    plan(
-        "scenario",
-        Contents::Scenario,
-        Format::V4_1,
-        KEEPASSXC_DEFAULT,
-    ),
+const PLANS: [Plan; 8] = [
+    // The end-to-end scenarios unlock it many times, so it has a low KDF.
+    plan("scenario", Contents::Scenario, Format::V4_1, LOW_ARGON2D),
     plan(
         "reference",
         Contents::Reference,
         Format::V4_1,
         KEEPASSXC_DEFAULT,
     ),
-    // Low-KDF variants, for tests that unlock many times.
-    plan(
-        "scenario-4.1-argon2d",
-        Contents::Scenario,
-        Format::V4_1,
-        LOW_ARGON2D,
-    ),
+    // Variants for the formats, KDFs and keys a user's file may have.
     plan(
         "scenario-4.1-argon2id",
         Contents::Scenario,

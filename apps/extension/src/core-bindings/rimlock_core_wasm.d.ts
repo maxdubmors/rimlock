@@ -93,7 +93,8 @@ export function readHeader(bytes: Uint8Array): HeaderInfo;
  * # Errors
  *
  * Throws `WrongKey` (also for any `ChallengeResponse` component), `UnsupportedFile` or
- * `Corrupt`; `Internal` for components that do not match `KeyComponent`.
+ * `Corrupt`; `Internal` for components that do not match `KeyComponent`, or for a second
+ * password or Key file.
  */
 export function unlock(bytes: Uint8Array, components: KeyComponent[]): UnlockedDatabase;
 

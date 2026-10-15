@@ -1,7 +1,8 @@
 //! `wasm-bindgen` + `tsify` bindings of `rimlock-core` (`docs/spec/engineering.md` § WASM build).
 //!
-//! Thin by design: no logic lives here, only the mapping onto the Core's API. Every failure is
-//! thrown as a `CoreError` value; `CoreClient` catches it and returns a `CoreResult`.
+//! Thin by design: no logic lives here, only the mapping onto the Core's API. A Core call throws
+//! every failure as a `CoreError` value, which `CoreClient` catches and returns as a `CoreResult`;
+//! only a broken binding throws anything else.
 
 use rimlock_core::SecretBytes;
 use serde::{Deserialize, Serialize};
@@ -216,7 +217,14 @@ impl From<rimlock_core::CoreError> for CoreError {
     }
 }
 
-/// The JS value a failure throws: the `CoreError`, or a plain error if even that cannot be built.
+/// A Core result as JS: a value that does not convert is a bug in the bindings, thrown as `Internal`.
+fn to_js<T: Tsify + Serialize>(value: &T) -> Result<Ts<T>, JsValue> {
+    value
+        .into_ts()
+        .map_err(|_| thrown(rimlock_core::CoreError::Internal))
+}
+
+/// The JS value a failure throws: the `CoreError`, or, if a binding is broken, a plain error.
 fn thrown(error: rimlock_core::CoreError) -> JsValue {
     CoreError::from(error).into_ts().map_or_else(
         |_| JsError::new("CoreError serialisation failed").into(),
@@ -232,13 +240,11 @@ fn thrown(error: rimlock_core::CoreError) -> JsValue {
 #[wasm_bindgen(js_name = readHeader)]
 pub fn read_header(bytes: &[u8]) -> Result<Ts<HeaderInfo>, JsValue> {
     let header = rimlock_core::read_header(bytes).map_err(thrown)?;
-    HeaderInfo {
+    to_js(&HeaderInfo {
         format_version: header.format_version.into(),
         kdf: header.kdf.into(),
         challenge: header.challenge,
-    }
-    .into_ts()
-    .map_err(|_| thrown(rimlock_core::CoreError::Internal))
+    })
 }
 
 /// Decrypts a `.kdbx` with the given Composite key; runs the KDF.
@@ -246,7 +252,8 @@ pub fn read_header(bytes: &[u8]) -> Result<Ts<HeaderInfo>, JsValue> {
 /// # Errors
 ///
 /// Throws `WrongKey` (also for any `ChallengeResponse` component), `UnsupportedFile` or
-/// `Corrupt`; `Internal` for components that do not match `KeyComponent`.
+/// `Corrupt`; `Internal` for components that do not match `KeyComponent`, or for a second
+/// password or Key file.
 #[wasm_bindgen]
 pub fn unlock(
     bytes: &[u8],
@@ -274,14 +281,12 @@ impl UnlockedDatabase {
     /// Only if `DatabaseInfo` cannot be converted to a JS value, which would be a bug in the bindings.
     pub fn info(&self) -> Result<Ts<DatabaseInfo>, JsValue> {
         let info = self.0.info();
-        DatabaseInfo {
+        to_js(&DatabaseInfo {
             name: info.name,
             root_group: info.root_group.to_string(),
             recycle_bin_enabled: info.recycle_bin_enabled,
             recycle_bin: info.recycle_bin.map(|uuid| uuid.to_string()),
             format_version: info.format_version.into(),
-        }
-        .into_ts()
-        .map_err(|_| thrown(rimlock_core::CoreError::Internal))
+        })
     }
 }

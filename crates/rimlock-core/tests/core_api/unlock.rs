@@ -16,7 +16,7 @@ fn unlock_error(bytes: &[u8], components: &[KeyComponent]) -> CoreError {
 #[test]
 fn unlocks_every_format_with_the_master_password() {
     for (file, format_version) in [
-        ("scenario-4.1-argon2d.kdbx", FormatVersion::V4_1),
+        ("scenario.kdbx", FormatVersion::V4_1),
         ("scenario-4.1-argon2id.kdbx", FormatVersion::V4_1),
         ("scenario-4.0-argon2d.kdbx", FormatVersion::V4_0),
         ("scenario-4.0-aes-kdf.kdbx", FormatVersion::V4_0),
@@ -70,7 +70,7 @@ fn a_missing_key_file_is_a_wrong_key() {
 #[test]
 fn a_wrong_password_is_a_wrong_key() {
     for file in [
-        "scenario-4.1-argon2d.kdbx",
+        "scenario.kdbx",
         "scenario-4.0-aes-kdf.kdbx",
         "scenario-3.1.kdbx",
     ] {
@@ -95,14 +95,14 @@ fn another_databases_key_file_is_a_wrong_key() {
 
 #[test]
 fn no_components_are_a_wrong_key() {
-    let (bytes, _) = database("scenario-4.1-argon2d.kdbx");
+    let (bytes, _) = database("scenario.kdbx");
     assert_eq!(unlock_error(&bytes, &[]), CoreError::WrongKey);
 }
 
 /// ADR-0011: no key-component provider exists in the MVP.
 #[test]
 fn any_challenge_response_component_is_a_wrong_key() {
-    let (bytes, mut components) = database("scenario-4.1-argon2d.kdbx");
+    let (bytes, mut components) = database("scenario.kdbx");
     components.push(KeyComponent::ChallengeResponse(SecretBytes::from(vec![
         7;
         20
@@ -112,7 +112,7 @@ fn any_challenge_response_component_is_a_wrong_key() {
 
 #[test]
 fn a_file_the_header_rejects_fails_the_same_way() {
-    let (_, components) = database("scenario-4.1-argon2d.kdbx");
+    let (_, components) = database("scenario.kdbx");
     assert_eq!(
         unlock_error(b"definitely not a database", &components),
         CoreError::UnsupportedFile {
@@ -123,7 +123,7 @@ fn a_file_the_header_rejects_fails_the_same_way() {
 
 #[test]
 fn a_truncated_payload_is_corrupt() {
-    for file in ["scenario-4.1-argon2d.kdbx", "scenario-4.0-aes-kdf.kdbx"] {
+    for file in ["scenario.kdbx", "scenario-4.0-aes-kdf.kdbx"] {
         let (bytes, components) = database(file);
         let error = unlock_error(&bytes[..bytes.len() - 100], &components);
         assert!(
@@ -140,7 +140,7 @@ fn a_truncated_payload_is_corrupt() {
 
 #[test]
 fn a_changed_payload_byte_is_corrupt() {
-    let (mut bytes, components) = database("scenario-4.1-argon2d.kdbx");
+    let (mut bytes, components) = database("scenario.kdbx");
     let last = bytes.len() - 50;
     bytes[last] ^= 1;
     assert_eq!(
@@ -153,7 +153,7 @@ fn a_changed_payload_byte_is_corrupt() {
 
 #[test]
 fn a_changed_header_byte_fails_the_header_hash() {
-    let (mut bytes, components) = database("scenario-4.1-argon2d.kdbx");
+    let (mut bytes, components) = database("scenario.kdbx");
     // Inside the master seed (header field 4), which the header parser does not interpret.
     let seed = bytes
         .windows(5)
@@ -184,4 +184,44 @@ fn a_changed_3_1_block_is_corrupt() {
         unlock_error(&bytes, &components),
         CoreError::Corrupt { .. }
     ));
+}
+
+#[test]
+fn a_password_that_is_not_utf8_is_a_wrong_key() {
+    let (bytes, _) = database("scenario.kdbx");
+    let password = KeyComponent::Password(SecretBytes::from(vec![0xff, 0xfe, 0xfd]));
+    assert_eq!(unlock_error(&bytes, &[password]), CoreError::WrongKey);
+}
+
+/// Any bytes are a Key file to KeePass: what does not parse as XML or hex is hashed whole.
+#[test]
+fn a_key_file_that_does_not_parse_is_a_wrong_key() {
+    let (bytes, _) = database("scenario-key-file.kdbx");
+    let garbage = KeyComponent::KeyFile(SecretBytes::from(b"<KeyFile><Key>".to_vec()));
+    assert_eq!(unlock_error(&bytes, &[garbage]), CoreError::WrongKey);
+}
+
+/// A Composite key has at most one password and one Key file; more is a bug in the caller.
+#[test]
+fn a_second_password_or_key_file_is_internal() {
+    let (bytes, components) = database("scenario-password-key-file.kdbx");
+    for duplicate in [
+        password_component("again"),
+        KeyComponent::KeyFile(SecretBytes::from(vec![1; 32])),
+    ] {
+        let mut components: Vec<_> = components
+            .iter()
+            .map(|component| match component {
+                KeyComponent::Password(value) => {
+                    KeyComponent::Password(SecretBytes::from(value.expose().to_vec()))
+                }
+                KeyComponent::KeyFile(bytes) => {
+                    KeyComponent::KeyFile(SecretBytes::from(bytes.expose().to_vec()))
+                }
+                KeyComponent::ChallengeResponse(_) => unreachable!(),
+            })
+            .collect();
+        components.push(duplicate);
+        assert_eq!(unlock_error(&bytes, &components), CoreError::Internal);
+    }
 }

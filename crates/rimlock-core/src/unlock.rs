@@ -10,7 +10,7 @@ use keepass::{
 use uuid::Uuid;
 
 use crate::{
-    error::{CoreError, CorruptReason, UnsupportedReason},
+    error::{CoreError, CorruptReason, UnsupportedReason, corrupt, unsupported},
     header::{FormatVersion, read_header},
     secret::KeyComponent,
 };
@@ -55,7 +55,8 @@ impl UnlockedDatabase {
 ///
 /// What `read_header` returns for a file the Core cannot read; `WrongKey` when the components
 /// do not open it, when they are empty, and for any `ChallengeResponse` component, since no
-/// provider exists yet (ADR-0011); `Corrupt` for damage past the header.
+/// provider exists yet (ADR-0011); `Corrupt` for damage past the header; `Internal` for a
+/// second password or Key file, a bug in the caller.
 pub fn unlock(bytes: &[u8], components: &[KeyComponent]) -> Result<UnlockedDatabase, CoreError> {
     let header = read_header(bytes)?;
     let key = database_key(components)?;
@@ -97,7 +98,6 @@ fn database_key(components: &[KeyComponent]) -> Result<DatabaseKey, CoreError> {
 
 /// keepass-rs's reasons, reduced to codes; `read_header` has already caught most header damage.
 fn open_error(error: &DatabaseOpenError, format_version: FormatVersion) -> CoreError {
-    let corrupt = |reason| CoreError::Corrupt { reason };
     match error {
         DatabaseOpenError::Key(_) => CoreError::WrongKey,
         // KDBX 3.1 has no header HMAC: keepass-rs decrypts the whole payload before it compares
@@ -118,12 +118,8 @@ fn open_error(error: &DatabaseOpenError, format_version: FormatVersion) -> CoreE
             corrupt(CorruptReason::Payload)
         }
         DatabaseOpenError::UnexpectedEof => corrupt(CorruptReason::Truncated),
-        DatabaseOpenError::VersionParse(_) => CoreError::UnsupportedFile {
-            reason: UnsupportedReason::NotKdbx,
-        },
-        DatabaseOpenError::UnsupportedVersion => CoreError::UnsupportedFile {
-            reason: UnsupportedReason::FormatVersion,
-        },
+        DatabaseOpenError::VersionParse(_) => unsupported(UnsupportedReason::NotKdbx),
+        DatabaseOpenError::UnsupportedVersion => unsupported(UnsupportedReason::FormatVersion),
         DatabaseOpenError::Format(format) => match format {
             DatabaseFormatError::Kdbx4(Kdbx4OpenError::HeaderHashMismatch) => {
                 corrupt(CorruptReason::HeaderHash)
@@ -143,9 +139,7 @@ fn open_error(error: &DatabaseOpenError, format_version: FormatVersion) -> CoreE
             }
             DatabaseFormatError::Kdbx4(Kdbx4OpenError::Xml(_))
             | DatabaseFormatError::Kdbx3(Kdbx3OpenError::Xml(_)) => corrupt(CorruptReason::Xml),
-            DatabaseFormatError::Kdb(_) => CoreError::UnsupportedFile {
-                reason: UnsupportedReason::Kdb,
-            },
+            DatabaseFormatError::Kdb(_) => unsupported(UnsupportedReason::Kdb),
             _ => CoreError::Internal,
         },
         _ => CoreError::Internal,

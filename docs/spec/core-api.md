@@ -86,7 +86,7 @@ type CoreInfo = { version: string };   // the rimlock-core crate version
 - `coreInfo` answers the background's `status` message, so a test can check which Core the store bundle runs.
 - **Two-phase unlock is stateless.** TS calls `readHeader` for the challenge, asks a key-component provider when the Database is configured as using a hardware key (the KDBX header carries no marker), then calls `unlock` with all components. Nothing is held between the two calls, so a long wait for a YubiKey touch survives a worker teardown.
 - In the MVP no provider exists, so a challenge-response Database fails with `WrongKey` (ADR-0011). Core tests use a software HMAC-SHA1 provider over `challenge` as the reference.
-- `unlock` reads the header as `readHeader` does first, so a file `readHeader` rejects fails `unlock` with the same error. No components, or a Key file that does not parse, is `WrongKey` too.
+- `unlock` reads the header as `readHeader` does first, so a file `readHeader` rejects fails `unlock` with the same error. No components, a password that is not UTF-8, or a Key file that does not parse, is `WrongKey` too (KeePass hashes any bytes as a Key file). A second `Password` or `KeyFile` component is `Internal`, a bug in the caller.
 - Until [#46](https://github.com/maxdubmors/rimlock/issues/46) adds the `CachedKey`, the bindings' `unlock` returns the `UnlockedDatabase` alone, and synchronously, like every binding (`CoreClient` makes the calls async).
 - `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks.
 
@@ -274,7 +274,7 @@ type CoreResult<T> = { ok: true; value: T } | { ok: false; error: CoreError | { 
 
 - Rust returns `Result<T, CoreError>`; wasm-bindgen throws the error; `CoreClient` catches it and returns a `CoreResult`. Callers use an exhaustive `switch`, not try/catch.
 - Reason codes: `UnsupportedFile` is `NotKdbx`, `Kdb` (KeePass 1), `FormatVersion`, `Cipher`, `Compression` or `Kdf`; `Corrupt` is `Truncated`, `Header`, `KdfParameters`, `HeaderHash`, `Payload` or `Xml`; `InvalidChange` is `ReservedKey`, `DuplicateKey` or `RecycleBinDisabled`. A KDBX 3.1 file has no header HMAC, so a damaged 3.1 payload can read as `WrongKey`.
-- The bindings throw a `CoreError` value for every failure; input that does not match the declared types (a bug in `CoreClient`) is `Internal`.
+- `readHeader`, `unlock` and the handle's methods throw a `CoreError` value for every failure; input that does not match the declared types (a bug in `CoreClient`) is `Internal`. Only a broken binding throws anything else, as `coreInfo` does.
 - Error details carry only UUIDs, field keys and reason codes. The Rust secret types implement neither `Debug` nor `Display` with their content, so a secret cannot end up in an error or a log.
 - A panic aborts the WASM instance. `CoreClient` marks it dead (`CoreUnavailable`), and the background rebuilds it from the Local copy as on wake-up.
 

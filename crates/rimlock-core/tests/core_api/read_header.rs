@@ -38,7 +38,7 @@ const AES256_UUID: [u8; 16] = [
 
 #[test]
 fn reads_a_4_1_file_with_keepassxc_default_argon2d() {
-    let header = header_of("scenario.kdbx");
+    let header = header_of("reference.kdbx");
     assert_eq!(header.format_version, FormatVersion::V4_1);
     assert_eq!(
         header.kdf,
@@ -115,7 +115,7 @@ fn the_challenge_is_the_kdf_seed_from_the_header() {
 fn each_file_has_its_own_challenge() {
     assert_ne!(
         header_of("scenario.kdbx").challenge,
-        header_of("scenario-4.1-argon2d.kdbx").challenge
+        header_of("scenario-4.0-argon2d.kdbx").challenge
     );
 }
 

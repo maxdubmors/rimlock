@@ -26,7 +26,7 @@ fn files(dir: &std::path::Path) -> Vec<(String, Vec<u8>)> {
 fn the_same_seed_writes_the_same_bytes() {
     let again = generate("fixtures-same-seed", SEED);
     let expected = files(&shared().dir);
-    assert_eq!(expected.len(), 13, "9 Databases, 2 Key files, 2 lists");
+    assert_eq!(expected.len(), 12, "8 Databases, 2 Key files, 2 lists");
     assert!(
         files(&again.dir) == expected,
         "a second run with the same seed differs"

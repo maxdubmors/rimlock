@@ -3,7 +3,7 @@
 //! keepass-rs parses the header only on the way to decrypting, so the Core reads it itself.
 //! `unlock` reads it first too, so a file the Core cannot read fails the same way in both.
 
-use crate::error::{CoreError, CorruptReason, UnsupportedReason};
+use crate::error::{CoreError, CorruptReason, UnsupportedReason, corrupt, unsupported};
 
 /// The KDBX version of a file (`docs/spec/core-api.md` § 2).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -207,14 +207,6 @@ fn kdf_parameters(data: &[u8]) -> Result<(KdfParameters, Vec<u8>), CoreError> {
         return Err(unsupported(UnsupportedReason::Kdf));
     };
     Ok((kdf, seed))
-}
-
-fn unsupported(reason: UnsupportedReason) -> CoreError {
-    CoreError::UnsupportedFile { reason }
-}
-
-fn corrupt(reason: CorruptReason) -> CoreError {
-    CoreError::Corrupt { reason }
 }
 
 /// Little-endian reads that fail with `Corrupt { Truncated }` at the end of the bytes.

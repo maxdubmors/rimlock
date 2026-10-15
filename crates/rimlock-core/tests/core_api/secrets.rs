@@ -38,7 +38,7 @@ fn key_components_do_not_print_their_content() {
 
 #[test]
 fn a_wrong_key_error_does_not_carry_the_password() {
-    let (bytes, _) = database("scenario-4.1-argon2d.kdbx");
+    let (bytes, _) = database("scenario.kdbx");
     let password = KeyComponent::Password(SecretBytes::from(CANARY.as_bytes().to_vec()));
     let Err(error) = unlock(&bytes, &[password]) else {
         panic!("unlocked with the wrong password");
