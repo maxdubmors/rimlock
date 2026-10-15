@@ -149,6 +149,27 @@ export function createConfig(root: string): Linter.Config[] {
       files: ['*.config.ts', 'tests/**'],
       languageOptions: { globals: globals.node },
     },
+    {
+      // Every WXT build regenerates the same .wxt/ folder, and only tests/manifest/ runs its
+      // files one at a time (vitest.config.ts); the e2e global setup runs once, before the tests.
+      files: ['tests/**'],
+      ignores: ['tests/manifest/**', 'tests/e2e/global-setup.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                regex: '(^|/)build-bundle(\\.ts)?$',
+                importNames: ['buildBundle'],
+                message:
+                  'A test that runs a WXT build goes in tests/manifest/, which runs one file at a time.',
+              },
+            ],
+          },
+        ],
+      },
+    },
   );
 }
 
