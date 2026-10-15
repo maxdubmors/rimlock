@@ -26,11 +26,11 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | Command | Does |
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
-| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`. Fails on any finding. |
+| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment. Fails on any finding. |
 | `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. |
 | `pnpm test:e2e` | `build:core`, then Puppeteer runs the store bundle in pinned headless Chrome and Firefox (~700 MB downloaded on the first run). |
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
-| `pnpm check:core-bindings` | Fails if the committed `*.d.ts` are stale. |
+| `pnpm check:core-bindings` | Fails if the `*.d.ts` in the working tree are stale; fresh uncommitted ones pass. |
 | `pnpm build` | `build:core`, then the Extension for both browsers into `apps/extension/.output/`. |
 | `pnpm build:report` | `build:core`, then per browser the built `manifest.json` and the `content` bundle's module list into `apps/extension/.output/bundle-report/`, the files CI publishes. |
 | `pnpm dev` | WXT dev server for Chrome on a `dev-wasm` Core (Firefox: `pnpm --filter @rimlock/extension dev:firefox`). |

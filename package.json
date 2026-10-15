@@ -12,7 +12,7 @@
     "build:core": "scripts/build-core.sh",
     "build:report": "pnpm build:core && pnpm --filter @rimlock/extension build:report",
     "dev": "scripts/build-core.sh dev-wasm && pnpm --filter @rimlock/extension dev",
-    "check": "pnpm check:ts && pnpm check:rust",
+    "check": "pnpm check:ts && pnpm check:rust && scripts/check-issue-refs.sh",
     "check:ts": "pnpm --filter @rimlock/extension check",
     "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings && cargo clippy --locked --target wasm32-unknown-unknown --workspace -- -D warnings",
     "check:core-bindings": "scripts/check-core-bindings.sh",

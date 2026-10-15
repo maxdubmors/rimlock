@@ -65,7 +65,8 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 - Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`. Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on. `pnpm build:core` builds `release`, the Core of the store bundle; `pnpm dev` builds `dev-wasm`.
 - Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin. The background is an ES module (`type: "module"` in both browsers): WXT builds a classic background as a Vite library, and Vite inlines every asset of a library as base64, which would put the whole Core into `background.js`. The manifest CSP needs `'wasm-unsafe-eval'`.
 - No Rust watcher: after Rust edits, run `pnpm build:core`; WXT reloads the new glue.
-- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails on a diff; CI runs it on every pull request.
+- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails if the ones in the working tree change, so freshly built `*.d.ts` pass before they are committed; CI runs it on every pull request, where the working tree is the commit.
+- A field or variant the bindings document carries the Core's doc text for the same member, word for word; `crates/rimlock-core-wasm/tests/core_docs.rs` checks it, so the `.d.ts` cannot drift from the Core.
 
 ## Pinning and reproducibility
 
@@ -80,10 +81,11 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## Checks: `pnpm check`
 
-One command: formatting check, lint, type checks and clippy.
+One command: formatting check, lint, type checks, clippy and the comment check.
 
 - **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`. ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above + the local rule `rimlock/no-async-event-handler`, which does for Svelte event attributes what `no-misused-promises` does for JSX ([`verification.md`](verification.md) V4). Prettier + `prettier-plugin-svelte` formats. Not oxlint, not Biome, not a hybrid ([Compare TypeScript linters: ESLint, Biome and oxlint](https://github.com/maxdubmors/rimlock/issues/37)).
 - **Rust:** `rustfmt`; root `[workspace.lints]`: `clippy::all` + `clippy::pedantic` as `deny` with no global exceptions; from `restriction`: `unwrap_used`, `expect_used`, `panic`, `indexing_slicing`, `todo`, `unimplemented` (a panic kills the WASM instance), `dbg_macro`, `print_stdout`, `print_stderr`, `allow_attributes`, `allow_attributes_without_reason` (exceptions only as `#[expect(lint, reason = "…")]`). `clippy.toml` allows unwrap/expect/panic/indexing in tests. Run as `cargo clippy --all-targets -- -D warnings`, and again for `--target wasm32-unknown-unknown`, so code compiled only for the WASM build is linted too.
+- **Comments:** `scripts/check-issue-refs.sh` fails on a code comment (Rust, TypeScript, Svelte) that names a tracker issue (`#80`, `…/issues/80`). A comment cites the ADR or spec section that carries the rule, since an issue number goes stale once the issue closes. Docs under `docs/` link issues freely.
 
 ## Tests
 
