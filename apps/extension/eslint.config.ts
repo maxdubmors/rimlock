@@ -108,9 +108,17 @@ export function createConfig(root: string): Linter.Config[] {
                 'Content-side code imports this module, so it obeys the content-side boundary too.',
               ),
               {
-                target: ['src/ui'],
+                // Only background/ and its entrypoint import background/; every
+                // other context, ui/ included, reaches it through protocol/ messages.
+                target: [
+                  'src/*',
+                  'src/!(background|entrypoints)/**',
+                  'src/entrypoints/!(background)/**',
+                  'src/entrypoints/!(background).*',
+                ],
                 from: ['src/background'],
-                message: 'ui/ reaches the background only through protocol/.',
+                message:
+                  'Only background/ and the background entrypoint import background/; send a message through protocol/.',
               },
             ],
           },

@@ -9,7 +9,7 @@
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
     "postinstall": "wxt prepare",
-    "check": "prettier --check . && wxt prepare && tsc --noEmit && svelte-check --fail-on-warnings && eslint --max-warnings 0 .",
+    "check": "prettier --check . ../../package.json ../../pnpm-workspace.yaml && wxt prepare && tsc --noEmit && svelte-check --fail-on-warnings && eslint --max-warnings 0 .",
     "test": "vitest run"
   },
   "dependencies": {

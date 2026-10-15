@@ -35,8 +35,15 @@ describe('module boundaries', () => {
       'src/protocol/reexport-background.ts',
     ],
     ['ui/ importing background/ directly', 'src/ui/imports-background.ts'],
+    ['any other module re-exporting background/', 'src/sources/reexport-background.ts'],
   ])('reject %s', async (_, file) => {
     expect(await rulesBrokenIn(file)).toContain('import-x/no-restricted-paths');
+  });
+
+  it('let the background entrypoint import background/', async () => {
+    expect(await rulesBrokenIn('src/entrypoints/background.ts')).not.toContain(
+      'import-x/no-restricted-paths',
+    );
   });
 });
 

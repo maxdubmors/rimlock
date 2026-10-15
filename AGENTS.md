@@ -25,7 +25,7 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | Command | Does |
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
-| `pnpm check` | Prettier, `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy. Fails on any finding. |
+| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy. Fails on any finding. |
 | `pnpm test` | Vitest, then `cargo test`. No browsers, no Docker. |
 | `pnpm build` | Builds the Extension for Chrome and Firefox into `apps/extension/.output/`. |
 | `pnpm dev` | WXT dev server for Chrome (`pnpm --filter @rimlock/extension dev:firefox` for Firefox). |

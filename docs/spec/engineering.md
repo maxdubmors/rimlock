@@ -45,7 +45,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 - Folders, not packages. Boundaries are ESLint rules on **resolved** paths (`import-x/no-restricted-paths`, so re-exports cannot bypass them; `no-restricted-imports` is the fallback):
   - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`. The rule is an allowlist: content-side code imports only content-side code and `protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`, so neither `ui/` nor another entrypoint opens a path around it;
   - those shared modules import only each other: the plugin checks one import at a time, so this is what stops a re-export ([`verification.md`](verification.md) V4);
-  - `ui/` reaches the background only through `protocol/`.
+  - only `background/` itself and the `background` entrypoint import `background/`; every other context, `ui/` included, reaches the background through `protocol/` messages, so no chain of imports leads into it.
 - Content code, and the modules it may import, never touch `storage`: `no-restricted-properties` (any `.storage`, so `browser.storage`, destructuring and aliases of `browser`), `no-restricted-globals` (`storage`), `no-restricted-imports` (`wxt/utils/storage`, `@wxt-dev/storage`).
 - Every boundary and storage rule has a permanent lint fixture test (`apps/extension/tests/lint/`).
 - WXT auto-imports are off (`imports: false`); every import is explicit.

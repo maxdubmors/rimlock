@@ -11,10 +11,10 @@ Local rules for the WXT app. The module folders and their roles are `docs/spec/e
 
 - **Content side** (`src/autofill/`, the `content` and `inline-menu` entrypoints) imports only content-side code and the modules shared with content. That keeps out `background/`, `sources/`, `core-bindings/`, `settings/`, `ui/` and the other entrypoints.
 - **Shared with content** (`src/protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`) imports only each other. `import-x/no-restricted-paths` checks one import at a time, so this is what stops a re-export from carrying `background/` into the content bundle. A shared module that needs anything else is a design question: raise it, never add an exception.
-- `ui/` reaches the background only through `protocol/`.
+- **Background**: only `background/` and the `background` entrypoint import `background/`. Everything else, `ui/` and the offscreen document included, talks to it through `protocol/` messages.
 - Content-side and shared code never touches storage: any `.storage` property (destructuring included), the `storage` global, `wxt/utils/storage` and `@wxt-dev/storage` are errors there.
 - The boundary rules count type-only imports too.
-- Known gaps: a property name computed at run time (`browser[key]`) escapes the storage rule; `ui/` → `sources/` → `background/` is not checked, because the spec does not say what `sources/` may import.
+- Known gap: a property name computed at run time (`browser[key]`) escapes the storage rule.
 
 ## Svelte
 
