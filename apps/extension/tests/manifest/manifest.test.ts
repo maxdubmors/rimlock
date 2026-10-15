@@ -3,8 +3,8 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { build } from 'wxt';
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { build, type Logger } from 'wxt';
 
 // The expected values are the table in docs/spec/manifest-and-permissions.md, written out by hand.
 
@@ -41,12 +41,25 @@ function extensionId(key: unknown): string {
     .replace(/[0-9a-f]/g, (digit) => String.fromCharCode('a'.charCodeAt(0) + parseInt(digit, 16)));
 }
 
+// Only errors reach the test output; WXT's progress and expected warnings would bury the results.
+const ignore = (): void => undefined;
+const quietLogger: Logger = {
+  debug: ignore,
+  log: ignore,
+  info: ignore,
+  success: ignore,
+  warn: ignore,
+  error: console.error,
+  fatal: console.error,
+  level: 1,
+};
+
 async function buildExtension(
   browser: Browser,
   mode: 'production' | 'development',
 ): Promise<{ manifest: Manifest; messages: Record<string, unknown> }> {
   const dir = join(outDir, `${browser}-${mode}`);
-  await build({ root, browser, mode, outDir: dir, outDirTemplate: '.' });
+  await build({ root, browser, mode, outDir: dir, outDirTemplate: '.', logger: quietLogger });
   return {
     manifest: await readJson(join(dir, 'manifest.json')),
     messages: await readJson(join(dir, '_locales/en/messages.json')),
@@ -59,14 +72,20 @@ async function readJson(path: string): Promise<Record<string, unknown>> {
 
 beforeAll(async () => {
   outDir = await mkdtemp(join(tmpdir(), 'rimlock-manifest-'));
-  // One at a time: every WXT build regenerates the same `.wxt/` folder.
-  const chrome = await buildExtension('chrome', 'production');
-  const firefox = await buildExtension('firefox', 'production');
-  built.chrome = chrome.manifest;
-  built.firefox = firefox.manifest;
-  built.chromeDev = (await buildExtension('chrome', 'development')).manifest;
-  messages.chrome = chrome.messages;
-  messages.firefox = firefox.messages;
+  // WXT's build spinner writes to stdout directly, past the logger.
+  const spinner = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
+  try {
+    // One at a time: every WXT build regenerates the same `.wxt/` folder.
+    const chrome = await buildExtension('chrome', 'production');
+    const firefox = await buildExtension('firefox', 'production');
+    built.chrome = chrome.manifest;
+    built.firefox = firefox.manifest;
+    built.chromeDev = (await buildExtension('chrome', 'development')).manifest;
+    messages.chrome = chrome.messages;
+    messages.firefox = firefox.messages;
+  } finally {
+    spinner.mockRestore();
+  }
 }, 120_000);
 
 afterAll(async () => {
