@@ -139,18 +139,9 @@ A scenario that cannot be expressed in Puppeteer moves to the manual checklist; 
 
 **Secret leaks:** the test Databases contain unique canary markers (Master password, Entry passwords, TOTP seed). After every E2E scenario a shared `afterEach` dumps `storage.local`, IndexedDB (the encrypted Local copy is fine), `storage.session` (only the `CachedKey` may hold key material), messages to content scripts and console logs, and fails on any marker. A unit test checks that `Secret` gives a placeholder under `JSON.stringify`, `String()` and `console.log`.
 
-## Rules for agents (go into `AGENTS.md` in M0)
+## Rules for agents
 
-- `pnpm check && pnpm test` green before every pull request.
-- Every behaviour change comes with a test; a bug fix starts with a failing test.
-- Test through a module's public interface (the folders above), not its internals.
-- Core tests use no real time or randomness.
-- A new fake arrives only with its contract suite.
-- A failing or flaky test is never skipped without an issue.
-- No panics in Rust, no printing near secrets, no `{@html}` on Database content.
-- Every user-visible change adds a line to `CHANGELOG.md` under `Unreleased`.
-- A pull request that departs from the spec updates the spec; one that contradicts an ADR says so ([`README.md`](README.md)).
-- Agents never merge; the owner does.
+The rules every agent follows live in the root [`AGENTS.md`](../../AGENTS.md) § Start here and § Rules, and nowhere else: that file is loaded into every agent's context, so it is their single source.
 
 ## CI
 
