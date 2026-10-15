@@ -4,10 +4,9 @@ import { join, resolve } from 'node:path';
 
 import type { BuildOutput } from 'wxt';
 
-import { buildBundle, type BrowserName } from './build-bundle.ts';
+import { browsers, buildBundle } from '../build-bundle.ts';
 
-const repositoryRoot = resolve(import.meta.dirname, '../../..');
-const browsers: BrowserName[] = ['chrome', 'firefox'];
+const repositoryRoot = resolve(import.meta.dirname, '../../../..');
 
 /**
  * Builds the store bundle for both browsers and writes, per browser, its `manifest.json` and
@@ -51,9 +50,10 @@ function contentModules(output: BuildOutput): string[] {
     .toSorted();
 }
 
-// pnpm build:report: node tests/bundle-report.ts <report directory>
+// pnpm build:report: node tests/manifest/bundle-report.ts <report directory>
 if (import.meta.main) {
   const reportDir = process.argv[2];
-  if (reportDir === undefined) throw new Error('usage: node tests/bundle-report.ts <directory>');
+  if (reportDir === undefined)
+    throw new Error('usage: node tests/manifest/bundle-report.ts <directory>');
   await writeBundleReport(resolve(reportDir));
 }

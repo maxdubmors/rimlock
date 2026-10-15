@@ -18,7 +18,7 @@ The rules are `docs/spec/engineering.md` § TypeScript modules; `eslint.config.t
 ## Manifest
 
 - `wxt.config.ts` holds the manifest; `tests/manifest/` builds both browsers and checks it against `docs/spec/manifest-and-permissions.md`.
-- `tests/bundle-report.ts` (`pnpm build:report`) writes the built `manifest.json` and the `content` bundle's module list, which CI publishes as the `bundle-report` artifact.
+- `tests/manifest/bundle-report.ts` (`pnpm build:report`) writes the built `manifest.json` and the `content` bundle's module list, which CI publishes as the `bundle-report` artifact.
 - A browser API or manifest key that is new to the code is looked up in that file's § Browser floors. One newer than the floor raises `minimum_chrome_version`, the table and the test in the same pull request.
 
 ## Svelte

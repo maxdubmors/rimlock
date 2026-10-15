@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { build, type BuildOutput, type Logger } from 'wxt';
 
 export type BrowserName = 'chrome' | 'firefox';
+export const browsers: BrowserName[] = ['chrome', 'firefox'];
 
 const root = resolve(import.meta.dirname, '..');
 

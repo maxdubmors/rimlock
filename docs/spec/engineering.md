@@ -146,10 +146,10 @@ The rules every agent follows live in the root [`AGENTS.md`](../../AGENTS.md) §
 ## CI
 
 - GitHub Actions on GitHub-hosted runners (`ubuntu-24.04`, `ubuntu-24.04-arm`). Every action pinned by commit SHA; default `permissions: contents: read`, widened per job; no `pull_request_target`; no secrets in any pull-request job.
-- **Every pull request (required):** `pnpm check`, `pnpm test`, the regenerated `core-bindings/*.d.ts` equal to the committed ones, `pnpm test:e2e` in Chrome and Firefox.
+- **Every pull request (required):** `pnpm check`, `pnpm test`, the regenerated `core-bindings/*.d.ts` equal to the committed ones, `pnpm test:e2e` in Chrome and Firefox, and the bundle report below.
 - **Path-filtered (required when they run):** `test:webdav` (`sources/`, the WebDAV suite or compose file); `test:interop` (`crates/`); the cross-architecture job (`crates/`, `Cargo.lock`, `rust-toolchain.toml`, `scripts/`, the Dockerfile, `pnpm-lock.yaml`), which runs `build-release.sh` natively on x86_64 and arm64 and fails if the `SHA256SUMS` differ.
 - **Nightly on `main`:** all of the above unfiltered, plus `cargo-fuzz`. A fuzz failure opens an issue and never blocks a merge.
-- CI publishes the built `manifest.json` and the module list of the `content` bundle as artifacts, so a pull request that changes them is visible: `pnpm build:report` writes both for each browser into `apps/extension/.output/bundle-report/`, and the job uploads that folder as the `bundle-report` artifact.
+- CI publishes the built `manifest.json` and the module list of the `content` bundle as artifacts, so a pull request that changes them is visible: `pnpm build:report` writes both for each browser into `apps/extension/.output/bundle-report/`, and the bundle report job uploads that folder as the `bundle-report` artifact.
 - The pull-request jobs live in `.github/workflows/pull-request.yml` and set up their tools through `.github/actions/setup`. The workflow also runs on every push to `main`, so pull requests can restore the caches it saves.
 - `main`: pull requests only, required checks green, squash merge, linear history, no force-push.
 

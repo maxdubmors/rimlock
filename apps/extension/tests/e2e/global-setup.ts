@@ -4,7 +4,7 @@ import { join } from 'node:path';
 
 import type { TestProject } from 'vitest/node';
 
-import { buildBundle, type BrowserName } from '../build-bundle';
+import { browsers, buildBundle, type BrowserName } from '../build-bundle';
 import { installBrowser } from './browsers';
 
 declare module 'vitest' {
@@ -13,8 +13,6 @@ declare module 'vitest' {
     e2e: Record<BrowserName, { bundleDir: string; executablePath: string }>;
   }
 }
-
-const browsers: BrowserName[] = ['chrome', 'firefox'];
 
 /**
  * Builds the store bundle for both browsers, exactly as `pnpm build` does, with no test hooks and

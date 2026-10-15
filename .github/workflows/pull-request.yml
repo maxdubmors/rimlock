@@ -6,7 +6,7 @@ name: Pull request
 
 on:
   pull_request:
-  # A pull request restores caches only from its base branch, so main saves them.
+  # A pull request restores only its own caches and its base branch's, so main saves them too.
   push:
     branches: [main]
 

@@ -28,6 +28,8 @@ runs:
       run: rustup toolchain install
 
     # target/tools holds the wasm-bindgen CLI that scripts/build-core.sh installs on first use.
+    # A saved cache is never overwritten, so the key follows the Rust sources too: an edit to the
+    # Core saves a fresh target/ instead of rebuilding more on every later run.
     - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
       with:
         path: |
@@ -35,7 +37,7 @@ runs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           target/
-        key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ github.job }}-${{ hashFiles('rust-toolchain.toml', 'Cargo.lock') }}
+        key: cargo-${{ runner.os }}-${{ runner.arch }}-${{ github.job }}-${{ hashFiles('rust-toolchain.toml', 'Cargo.lock', 'Cargo.toml', 'crates/**') }}
         restore-keys: cargo-${{ runner.os }}-${{ runner.arch }}-${{ github.job }}-
 
     - name: Install dependencies
