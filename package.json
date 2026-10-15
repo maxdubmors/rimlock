@@ -10,6 +10,7 @@
   "scripts": {
     "build": "pnpm build:core && pnpm --filter @rimlock/extension build",
     "build:core": "scripts/build-core.sh",
+    "build:report": "pnpm build:core && pnpm --filter @rimlock/extension build:report",
     "dev": "scripts/build-core.sh dev-wasm && pnpm --filter @rimlock/extension dev",
     "check": "pnpm check:ts && pnpm check:rust",
     "check:ts": "pnpm --filter @rimlock/extension check",

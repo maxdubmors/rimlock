@@ -32,6 +32,7 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
 | `pnpm check:core-bindings` | Fails if the committed `*.d.ts` are stale. |
 | `pnpm build` | `build:core`, then the Extension for both browsers into `apps/extension/.output/`. |
+| `pnpm build:report` | `build:core`, then per browser the built `manifest.json` and the `content` bundle's module list into `apps/extension/.output/bundle-report/`, the files CI publishes. |
 | `pnpm dev` | WXT dev server for Chrome on a `dev-wasm` Core (Firefox: `pnpm --filter @rimlock/extension dev:firefox`). |
 
 One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to-end: add `--config vitest.e2e.config.ts`; both need `pnpm build:core` once in a fresh checkout) or `cargo test -p rimlock-core --test <name>`.
@@ -40,6 +41,7 @@ One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to
 
 - Work on a `task/<issue>-<slug>` branch; `main` takes pull requests only.
 - `pnpm check && pnpm test` green before every pull request.
+- A pull request must pass every job of `.github/workflows/pull-request.yml`.
 - Every behaviour change comes with a test; a bug fix starts with a failing test.
 - Test through a module's public interface (the folders of `engineering.md` § TypeScript modules), not its internals.
 - Core tests use no real time or randomness.

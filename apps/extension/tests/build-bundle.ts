@@ -1,8 +1,9 @@
 import { resolve } from 'node:path';
 
-import { build, type Logger } from 'wxt';
+import { build, type BuildOutput, type Logger } from 'wxt';
 
 export type BrowserName = 'chrome' | 'firefox';
+export const browsers: BrowserName[] = ['chrome', 'firefox'];
 
 const root = resolve(import.meta.dirname, '..');
 
@@ -20,19 +21,20 @@ const quietLogger: Logger = {
 };
 
 /**
- * Builds the Extension into `outDir` as `wxt build` does; `production` is the bundle that goes to
- * the stores. Call one at a time: every WXT build regenerates the same `.wxt/` folder.
+ * Builds the Extension into `outDir` as `wxt build` does and returns WXT's account of the build;
+ * `production` is the bundle that goes to the stores. Call one at a time: every WXT build
+ * regenerates the same `.wxt/` folder.
  */
 export async function buildBundle(
   browser: BrowserName,
   mode: 'production' | 'development',
   outDir: string,
-): Promise<void> {
+): Promise<BuildOutput> {
   // WXT's build spinner writes to stdout directly, past the logger.
   const write = process.stdout.write.bind(process.stdout);
   process.stdout.write = () => true;
   try {
-    await build({ root, browser, mode, outDir, outDirTemplate: '.', logger: quietLogger });
+    return await build({ root, browser, mode, outDir, outDirTemplate: '.', logger: quietLogger });
   } finally {
     process.stdout.write = write;
   }

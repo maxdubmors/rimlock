@@ -6,6 +6,7 @@
   "license": "GPL-3.0-only",
   "scripts": {
     "build": "wxt build && wxt build -b firefox",
+    "build:report": "node tests/manifest/bundle-report.ts .output/bundle-report",
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
     "postinstall": "wxt prepare",
