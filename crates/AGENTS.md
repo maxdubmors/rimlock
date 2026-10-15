@@ -2,6 +2,13 @@
 
 Local rules for the Rust crates.
 
+## Lints
+
+- Every lint lives in the root `[workspace.lints]`, and every crate inherits it with `[lints] workspace = true` and nothing else; `crates/rimlock-core/tests/workspace_lints.rs` fails otherwise.
+- An exception is a local `#[expect(lint, reason = "…")]` on the smallest item. `#[allow]` is itself denied.
+- `clippy.toml` lets tests unwrap, expect, panic and index, but clippy counts only `#[test]` functions and `#[cfg(test)]` items as tests. An integration test file therefore starts with `#![cfg(test)]`, so its helpers get the same relaxation.
+- Cargo commands take `--locked`; `Cargo.lock` changes only on purpose.
+
 ## keepass-rs fork
 
 `rimlock-core` depends on [`maxdubmors/keepass-rs`](https://github.com/maxdubmors/keepass-rs), pinned by `rev`. The fork is upstream plus one commit per pending upstream pull request ([`docs/spec/plan.md`](../docs/spec/plan.md) § Fork upkeep). Every commit rimlock pins stays fetchable forever: the AMO source package does not vendor Cargo dependencies, so a reviewer's build fetches the fork by `rev`. A `rimlock-YYYY-MM-DD` tag on the pinned commit is what keeps it reachable after a rebase.

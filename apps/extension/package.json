@@ -1,0 +1,38 @@
+{
+  "name": "@rimlock/extension",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "build": "wxt build && wxt build -b firefox",
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "postinstall": "wxt prepare",
+    "check": "prettier --check . && wxt prepare && tsc --noEmit && svelte-check --fail-on-warnings && eslint --max-warnings 0 .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@wxt-dev/i18n": "0.2.8",
+    "svelte": "5.57.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.4",
+    "@typescript-eslint/utils": "8.71.1",
+    "@wxt-dev/module-svelte": "2.0.5",
+    "eslint": "10.12.0",
+    "eslint-import-resolver-typescript": "4.4.5",
+    "eslint-plugin-import-x": "4.17.1",
+    "eslint-plugin-svelte": "3.23.0",
+    "globals": "17.13.0",
+    "prettier": "3.9.9",
+    "prettier-plugin-svelte": "4.1.1",
+    "svelte-check": "4.7.6",
+    "svelte-eslint-parser": "1.8.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vitest": "5.0.3",
+    "wxt": "0.21.4"
+  }
+}

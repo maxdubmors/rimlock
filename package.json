@@ -1,0 +1,20 @@
+{
+  "name": "rimlock",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "packageManager": "pnpm@12.10.1",
+  "engines": {
+    "node": "26.11.1",
+    "pnpm": "12.10.1"
+  },
+  "scripts": {
+    "build": "pnpm --filter @rimlock/extension build",
+    "dev": "pnpm --filter @rimlock/extension dev",
+    "check": "pnpm check:ts && pnpm check:rust",
+    "check:ts": "pnpm --filter @rimlock/extension check",
+    "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings",
+    "test": "pnpm test:ts && pnpm test:rust",
+    "test:ts": "pnpm --filter @rimlock/extension test",
+    "test:rust": "cargo test --locked"
+  }
+}

@@ -1,0 +1,14 @@
+rimlock
+Copyright (C) 2026 Maxim Dubrovsky and the rimlock contributors
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, version 3. It is distributed WITHOUT ANY WARRANTY; see the GNU
+General Public License in the LICENSE file for details.
+
+Third-party code and data
+-------------------------
+
+Vendored code (apps/extension/src/vendor/<name>/UPSTREAM.md) and bundled data
+are listed here with their copyright holders and licences. Nothing is bundled
+yet.

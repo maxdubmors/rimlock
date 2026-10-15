@@ -1,0 +1,13 @@
+packages:
+  - apps/extension
+
+# Exact versions only (engineering.md § Pinning and reproducibility).
+saveExact: true
+savePrefix: ''
+# A version must be a week old before pnpm resolves it (minutes).
+minimumReleaseAge: 10080
+engineStrict: true
+# Dependency build scripts run only when listed here as true.
+allowBuilds:
+  # Ships prebuilt binaries as optional dependencies; its script is a fallback.
+  unrs-resolver: false
