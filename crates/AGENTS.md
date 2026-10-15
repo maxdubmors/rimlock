@@ -16,6 +16,16 @@ Local rules for the Rust crates.
 
 The clone lives at `~/Projects/keepass-rs`: `origin` is the fork, `upstream` is `sseemayer/keepass-rs` (fetch only), local `master` tracks `upstream/master`, and `gh` defaults to the fork.
 
+### Known gaps
+
+What the pinned fork does not give the Core, so the Core works around it. A fork fix that closes a gap deletes its line in the same pull request.
+
+- The outer header is parsed only on the way to decrypting: `DatabaseVersion::parse` is public, the KDF seed and parameters are not. The Core reads the header itself.
+- `Database::save` draws the master seed, IV, KDF seed and inner-stream key from `getrandom` and writes KDBX 4.1 only, so its bytes are never reproducible. Test Databases come from the generator's own KDBX writer.
+- KDBX 3.1 decrypts the whole payload before it compares the stream start bytes, so a wrong key usually surfaces as `CryptographyError::InvalidPadding`, not `DatabaseKeyError::IncorrectKey`.
+- Every error enum is `#[non_exhaustive]` and reachable only through `keepass::error`: a `match` needs a wildcard arm.
+- Any bytes are a Key file: what parses as neither XML nor hex is hashed whole, and the v2 `Hash` attribute is not checked (the "v2 Key file hash check" fix of `docs/spec/plan.md`).
+
 ### Refs
 
 | Ref | Contents | Who changes it |

@@ -14,4 +14,6 @@ When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the 
 
 A `ready-for-agent` ticket comes with its test seams agreed: the public interface of each module it touches (root `AGENTS.md` § Rules), plus any seam the ticket names. A skill that asks to confirm seams with the user takes these and goes on; a seam outside them is a question for the ticket.
 
+Its acceptance criteria list what this ticket makes observable. A rule every ticket follows (no panics, `zeroize` secrets, injected clock and RNG) stays in `AGENTS.md` and the spec; copied into criteria, it reads as met even where the ticket has nothing it applies to.
+
 Edit the right-hand column to match whatever vocabulary you actually use.
