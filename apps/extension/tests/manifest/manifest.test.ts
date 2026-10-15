@@ -1,17 +1,15 @@
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
 
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
-import { build, type Logger } from 'wxt';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+
+import { buildBundle, type BrowserName as Browser } from '../build-bundle';
 
 // The expected values are the table in docs/spec/manifest-and-permissions.md, written out by hand.
 
 type Manifest = Record<string, unknown>;
-type Browser = 'chrome' | 'firefox';
-
-const root = resolve(import.meta.dirname, '../..');
 let outDir: string;
 const built: Record<Browser | 'chromeDev', Manifest> = {
   chrome: {},
@@ -19,6 +17,10 @@ const built: Record<Browser | 'chromeDev', Manifest> = {
   chromeDev: {},
 };
 const messages: Record<Browser, Record<string, unknown>> = { chrome: {}, firefox: {} };
+const bundles: Record<Browser, { files: string[]; background: string }> = {
+  chrome: { files: [], background: '' },
+  firefox: { files: [], background: '' },
+};
 
 function sorted(list: unknown): unknown {
   return Array.isArray(list) ? list.toSorted() : list;
@@ -41,28 +43,22 @@ function extensionId(key: unknown): string {
     .replace(/[0-9a-f]/g, (digit) => String.fromCharCode('a'.charCodeAt(0) + parseInt(digit, 16)));
 }
 
-// Only errors reach the test output; WXT's progress and expected warnings would bury the results.
-const ignore = (): void => undefined;
-const quietLogger: Logger = {
-  debug: ignore,
-  log: ignore,
-  info: ignore,
-  success: ignore,
-  warn: ignore,
-  error: console.error,
-  fatal: console.error,
-  level: 1,
-};
-
 async function buildExtension(
   browser: Browser,
   mode: 'production' | 'development',
-): Promise<{ manifest: Manifest; messages: Record<string, unknown> }> {
+): Promise<{
+  manifest: Manifest;
+  messages: Record<string, unknown>;
+  files: string[];
+  background: string;
+}> {
   const dir = join(outDir, `${browser}-${mode}`);
-  await build({ root, browser, mode, outDir: dir, outDirTemplate: '.', logger: quietLogger });
+  await buildBundle(browser, mode, dir);
   return {
     manifest: await readJson(join(dir, 'manifest.json')),
     messages: await readJson(join(dir, '_locales/en/messages.json')),
+    files: await readdir(dir, { recursive: true }),
+    background: await readFile(join(dir, 'background.js'), 'utf8'),
   };
 }
 
@@ -72,20 +68,15 @@ async function readJson(path: string): Promise<Record<string, unknown>> {
 
 beforeAll(async () => {
   outDir = await mkdtemp(join(tmpdir(), 'rimlock-manifest-'));
-  // WXT's build spinner writes to stdout directly, past the logger.
-  const spinner = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
-  try {
-    // One at a time: every WXT build regenerates the same `.wxt/` folder.
-    const chrome = await buildExtension('chrome', 'production');
-    const firefox = await buildExtension('firefox', 'production');
-    built.chrome = chrome.manifest;
-    built.firefox = firefox.manifest;
-    built.chromeDev = (await buildExtension('chrome', 'development')).manifest;
-    messages.chrome = chrome.messages;
-    messages.firefox = firefox.messages;
-  } finally {
-    spinner.mockRestore();
-  }
+  const chrome = await buildExtension('chrome', 'production');
+  const firefox = await buildExtension('firefox', 'production');
+  built.chrome = chrome.manifest;
+  built.firefox = firefox.manifest;
+  built.chromeDev = (await buildExtension('chrome', 'development')).manifest;
+  messages.chrome = chrome.messages;
+  messages.firefox = firefox.messages;
+  bundles.chrome = chrome;
+  bundles.firefox = firefox;
 }, 120_000);
 
 afterAll(async () => {
@@ -208,12 +199,18 @@ describe.each(['chrome', 'firefox'] as const)('the %s manifest', (name) => {
 });
 
 describe('the background', () => {
-  it('is a service worker in Chrome', () => {
-    expect(built.chrome['background']).toEqual({ service_worker: 'background.js' });
+  it('is a module service worker in Chrome', () => {
+    expect(built.chrome['background']).toEqual({ service_worker: 'background.js', type: 'module' });
   });
 
-  it('is a non-persistent event page in Firefox', () => {
-    expect(built.firefox['background']).toEqual({ scripts: ['background.js'] });
+  it('is a non-persistent module event page in Firefox', () => {
+    expect(built.firefox['background']).toEqual({ scripts: ['background.js'], type: 'module' });
+  });
+
+  // An inlined Core would be parsed from base64 on every wake-up and read as obfuscated code.
+  it.each(['chrome', 'firefox'] as const)('loads the Core from its own .wasm file (%s)', (name) => {
+    expect(bundles[name].files.filter((file) => file.endsWith('.wasm'))).toHaveLength(1);
+    expect(bundles[name].background).not.toContain('data:application/wasm');
   });
 });
 

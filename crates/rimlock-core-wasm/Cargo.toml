@@ -8,8 +8,14 @@ license.workspace = true
 repository.workspace = true
 publish.workspace = true
 
+[lib]
+crate-type = ["cdylib"]
+
 [dependencies]
 rimlock-core = { path = "../rimlock-core" }
+serde.workspace = true
+tsify.workspace = true
+wasm-bindgen.workspace = true
 
 [lints]
 workspace = true

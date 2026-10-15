@@ -16,7 +16,7 @@ Principle: [ADR-0013](../adr/0013-permissions-frozen-required-set.md). The requi
 | `web_accessible_resources` | only the iframe HTML of the Inline menu and the Save prompt (no scripts, no WASM), for the host pattern, `use_dynamic_url: true` in Chrome; URLs always through `runtime.getURL()`. Today that is `inline-menu.html`; the Save prompt page joins it when it exists |
 | `content_security_policy.extension_pages` | the default plus `'wasm-unsafe-eval'`: `script-src 'self' 'wasm-unsafe-eval'; object-src 'self';`; never `unsafe-eval` |
 | `options_ui` | `options.html`, `open_in_tab: true` |
-| `background` | Chrome: service worker; Firefox: event page (non-persistent) |
+| `background` | Chrome: service worker; Firefox: event page (non-persistent); `type: "module"` in both, so the Core's `.wasm` ships as its own file ([`engineering.md`](engineering.md) § WASM build) |
 | Firefox `browser_specific_settings.gecko` | `id: "rimlock@maxdubmors.github.io"` ([ADR-0011](../adr/0011-companion-is-a-capability-provider.md)); `strict_min_version: "153.0"`, the current supported Firefox ESR; `data_collection_permissions: {"required": ["none"]}` |
 | Chrome `key` | development builds only (`mode === 'development'`), so the unpacked Extension ID is fixed; see [Extension IDs](#extension-ids) |
 | Chrome `minimum_chrome_version` | `133`, the highest floor among the APIs used; see [Browser floors](#browser-floors) |
@@ -47,6 +47,7 @@ Both IDs are permanent: Companion host manifests name them (ADR-0011), and AMO b
 | `popover` (top layer) | the Inline menu and Save prompt ([`autofill.md`](autofill.md)) | 114 |
 | `offscreen` with reasons `BLOBS`, `CLIPBOARD` | the file handle and clipboard clearing | 109 |
 | `'wasm-unsafe-eval'` in the extension CSP | the Core | ~103 (not in the API reference; arrived with Chrome 102–103) |
+| `background.type: "module"` | the background as an ES module, which loads the Core's `.wasm` (Firefox: 112) | 92 |
 | `storage.session`, `storage.*.setAccessLevel` | the `CachedKey`; `TRUSTED_CONTEXTS` ([`settings.md`](settings.md)) | 102 |
 | `action`, `scripting`, `commands._execute_action`, `dom.openOrClosedShadowRoot`, MV3 `web_accessible_resources` | | 88 |
 | `showOpenFilePicker`, `FileSystemHandle.isSameEntry` | the Chrome local file | 86 |

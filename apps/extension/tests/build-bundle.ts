@@ -1,0 +1,39 @@
+import { resolve } from 'node:path';
+
+import { build, type Logger } from 'wxt';
+
+export type BrowserName = 'chrome' | 'firefox';
+
+const root = resolve(import.meta.dirname, '..');
+
+// Only errors reach the test output; WXT's progress and expected warnings would bury the results.
+const ignore = (): void => undefined;
+const quietLogger: Logger = {
+  debug: ignore,
+  log: ignore,
+  info: ignore,
+  success: ignore,
+  warn: ignore,
+  error: console.error,
+  fatal: console.error,
+  level: 1,
+};
+
+/**
+ * Builds the Extension into `outDir` as `wxt build` does: in production mode, the bundle that
+ * goes to the stores. Call one at a time: every WXT build regenerates the same `.wxt/` folder.
+ */
+export async function buildBundle(
+  browser: BrowserName,
+  mode: 'production' | 'development',
+  outDir: string,
+): Promise<void> {
+  // WXT's build spinner writes to stdout directly, past the logger.
+  const write = process.stdout.write.bind(process.stdout);
+  process.stdout.write = () => true;
+  try {
+    await build({ root, browser, mode, outDir, outDirTemplate: '.', logger: quietLogger });
+  } finally {
+    process.stdout.write = write;
+  }
+}

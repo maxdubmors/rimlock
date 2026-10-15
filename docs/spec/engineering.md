@@ -61,11 +61,11 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## WASM build
 
-- `cargo build --target wasm32-unknown-unknown -p rimlock-core-wasm`, then `wasm-bindgen --target web` into `apps/extension/src/core-bindings/`. The CLI version equals the pinned `wasm-bindgen = "=X"` crate version. No wasm-pack and no wasm-opt in the MVP.
-- Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`. Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on.
-- Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin. The manifest CSP needs `'wasm-unsafe-eval'`.
+- `pnpm build:core` (`scripts/build-core.sh`): `cargo build --target wasm32-unknown-unknown -p rimlock-core-wasm`, then `wasm-bindgen --target web` into `apps/extension/src/core-bindings/`. The CLI version equals the pinned `wasm-bindgen = "=X"` crate version: the script reads it from `Cargo.lock` and installs that CLI into `target/tools/` on first use. No wasm-pack and no wasm-opt in the MVP.
+- Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`. Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on. `pnpm build:core` builds `release`, the Core of the store bundle; `pnpm dev` builds `dev-wasm`.
+- Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin. The background is an ES module (`type: "module"` in both browsers): WXT builds a classic background as a Vite library, and Vite inlines every asset of a library as base64, which would put the whole Core into `background.js`. The manifest CSP needs `'wasm-unsafe-eval'`.
 - No Rust watcher: after Rust edits, run `pnpm build:core`; WXT reloads the new glue.
-- Only the generated `*.d.ts` are committed. CI regenerates them and fails on a diff.
+- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails on a diff; CI runs it.
 
 ## Pinning and reproducibility
 
@@ -92,7 +92,7 @@ One command: formatting check, lint, type checks and clippy.
 - Rust: `cargo test`. Unit tests inline; integration tests in `crates/rimlock-core/tests/`; the interop corpus in `crates/rimlock-core/tests/corpus/`.
 - TypeScript: Vitest + `WxtVitest` + `fakeBrowser` (`@webext-core/fake-browser`). Unit tests next to the code (`foo.test.ts`); the rest in `apps/extension/tests/{e2e,autofill,contract,webdav,manifest}/` (`manifest/` builds both browsers with WXT and checks the built `manifest.json`).
 - Svelte: Vitest + `@testing-library/svelte` on jsdom, only for components with logic (Draft, Entry editor, generator). No UI snapshot tests.
-- Browsers: Puppeteer (`puppeteer-core`) driving pinned Chrome for Testing and Firefox, headless, with Vitest as the runner. They load the **release bundle**: no test hooks, no test build flavour. Time moves through fake clocks installed in page contexts and the shortest values the Settings schema allows; what cannot be reached that way is tested one level down with injected clocks.
+- Browsers: Puppeteer (`puppeteer-core`) driving pinned Chrome for Testing and Firefox, headless, with Vitest as the runner (`vitest.e2e.config.ts`). The pins are the builds `puppeteer-core` itself is tested against (`tests/e2e/browsers.ts`), downloaded by `@puppeteer/browsers` into Puppeteer's cache. They load the **release bundle**: the harness builds it with `wxt build` in production mode before the run, with no test hooks and no test build flavour. Time moves through fake clocks installed in page contexts and the shortest values the Settings schema allows; what cannot be reached that way is tested one level down with injected clocks.
 
 **Fakes and contract suites**
 
