@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(gh pr merge*)",
+
+      "Bash(git push * rimlock)",
+      "Bash(git push * rimlock *)",
+      "Bash(git push * +rimlock)",
+      "Bash(git push * +rimlock *)",
+      "Bash(git push *:rimlock)",
+      "Bash(git push *:rimlock *)",
+      "Bash(git push *refs/heads/rimlock)",
+      "Bash(git push *refs/heads/rimlock *)",
+
+      "Bash(git push * master)",
+      "Bash(git push * master *)",
+      "Bash(git push * +master)",
+      "Bash(git push * +master *)",
+      "Bash(git push *:master)",
+      "Bash(git push *:master *)",
+      "Bash(git push *refs/heads/master)",
+      "Bash(git push *refs/heads/master *)",
+
+      "Bash(git push --mirror*)",
+      "Bash(git push * --mirror*)",
+      "Bash(git push --all*)",
+      "Bash(git push * --all*)",
+
+      "Bash(gh repo sync --force*)",
+      "Bash(gh repo sync * --force*)",
+      "Bash(gh api *rulesets*)",
+      "Bash(gh api *git/refs/heads/rimlock*)",
+      "Bash(gh api *git/refs/heads/master*)"
+    ]
+  }
+}
