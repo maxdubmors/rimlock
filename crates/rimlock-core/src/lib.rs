@@ -5,15 +5,19 @@
 
 #![forbid(unsafe_code)]
 
+mod cached_key;
 mod error;
 mod header;
+mod kdf;
 mod secret;
 mod unlock;
 
+pub use cached_key::CachedKey;
 pub use error::{CoreError, CorruptReason, InvalidChangeReason, UnsupportedReason};
 pub use header::{FormatVersion, HeaderInfo, KdfParameters, read_header};
+pub use kdf::{Kdf, RustKdf, TransformedKey};
 pub use secret::{KeyComponent, SecretBytes};
-pub use unlock::{DatabaseInfo, UnlockedDatabase, unlock};
+pub use unlock::{Core, DatabaseInfo, Unlocked, UnlockedDatabase};
 
 /// The Core's version: the `rimlock-core` crate version it was built from.
 #[must_use]

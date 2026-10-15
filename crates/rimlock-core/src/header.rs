@@ -13,18 +13,22 @@ pub enum FormatVersion {
     V4_1,
 }
 
-/// The KDF and the parameters a settings screen would show.
+/// The KDF and its parameters: what a settings screen would show, and the Argon2 version.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum KdfParameters {
     Argon2d {
         iterations: u64,
         memory_bytes: u64,
         parallelism: u32,
+        /// `0x10` or `0x13`; the bindings leave it out.
+        version: u32,
     },
     Argon2id {
         iterations: u64,
         memory_bytes: u64,
         parallelism: u32,
+        /// `0x10` or `0x13`; the bindings leave it out.
+        version: u32,
     },
     AesKdf {
         rounds: u64,
@@ -66,6 +70,9 @@ const KDF_AES_KDBX4: [u8; 16] =
     *b"\xc9\xd9\xf3\x9a\x62\x8a\x44\x60\xbf\x74\x0d\x08\xc1\x8a\x4f\xea";
 const KDF_AES_KDBX3: [u8; 16] =
     *b"\x7c\x02\xbb\x82\x79\xa7\x4a\xc0\x92\x7d\x11\x4a\x00\x64\x82\x38";
+
+const ARGON2_VERSION_10: u32 = 0x10;
+const ARGON2_VERSION_13: u32 = 0x13;
 
 const VARIANT_UINT32: u8 = 0x04;
 const VARIANT_UINT64: u8 = 0x05;
@@ -187,17 +194,23 @@ fn kdf_parameters(data: &[u8]) -> Result<(KdfParameters, Vec<u8>), CoreError> {
     let uuid = item(b"$UUID", VARIANT_BYTES)?;
     let kdf = if uuid == KDF_ARGON2D || uuid == KDF_ARGON2ID {
         let (iterations, memory_bytes, parallelism) = (uint64(b"I")?, uint64(b"M")?, uint32(b"P")?);
+        let version = uint32(b"V")?;
+        if ![ARGON2_VERSION_10, ARGON2_VERSION_13].contains(&version) {
+            return Err(malformed());
+        }
         if uuid == KDF_ARGON2D {
             KdfParameters::Argon2d {
                 iterations,
                 memory_bytes,
                 parallelism,
+                version,
             }
         } else {
             KdfParameters::Argon2id {
                 iterations,
                 memory_bytes,
                 parallelism,
+                version,
             }
         }
     } else if uuid == KDF_AES_KDBX4 || uuid == KDF_AES_KDBX3 {

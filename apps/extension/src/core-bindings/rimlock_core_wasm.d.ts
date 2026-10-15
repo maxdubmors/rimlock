@@ -80,6 +80,17 @@ export class UnlockedDatabase {
 export function coreInfo(): CoreInfo;
 
 /**
+ * Rebuilds the Unlocked Database from the Local copy and its `CachedKey`; never runs the KDF.
+ *
+ * # Errors
+ *
+ * Throws `CachedKeyStale` when the file's KDF seed or parameters differ from the cache's, as
+ * after another client saved it, or for a `CachedKey` of another format; `WrongKey` for one that
+ * does not open this file; otherwise what `unlock` throws for the file.
+ */
+export function open(localCopyBytes: Uint8Array, cachedKey: Uint8Array): UnlockedDatabase;
+
+/**
  * The KDBX version, the KDF and the challenge of a file, without a key.
  *
  * # Errors
@@ -89,7 +100,8 @@ export function coreInfo(): CoreInfo;
 export function readHeader(bytes: Uint8Array): HeaderInfo;
 
 /**
- * Decrypts a `.kdbx` with the given Composite key; runs the KDF.
+ * Decrypts a `.kdbx` with the given Composite key; runs the KDF. Returns the Database and its
+ * `CachedKey`, which `storage.session` keeps for `open`.
  *
  * # Errors
  *
@@ -97,7 +109,7 @@ export function readHeader(bytes: Uint8Array): HeaderInfo;
  * `Corrupt`; `Internal` for components that do not match `KeyComponent`, or for a second
  * password or Key file.
  */
-export function unlock(bytes: Uint8Array, components: KeyComponent[]): UnlockedDatabase;
+export function unlock(bytes: Uint8Array, components: KeyComponent[]): { db: UnlockedDatabase; cachedKey: Uint8Array };
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -105,6 +117,7 @@ export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_unlockeddatabase_free: (a: number, b: number) => void;
     readonly coreInfo: () => [number, number, number];
+    readonly open: (a: number, b: number, c: number, d: number) => [number, number, number];
     readonly readHeader: (a: number, b: number) => [number, number, number];
     readonly unlock: (a: number, b: number, c: number, d: number) => [number, number, number];
     readonly unlockeddatabase_info: (a: number) => [number, number, number];

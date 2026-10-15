@@ -1,10 +1,15 @@
 //! `unlock` and `UnlockedDatabase::info` (`docs/spec/core-api.md` § 3–4, § 8).
 
 use rimlock_core::{
-    CoreError, CorruptReason, FormatVersion, KeyComponent, SecretBytes, UnsupportedReason, unlock,
+    Core, CoreError, CorruptReason, FormatVersion, KeyComponent, SecretBytes, Unlocked,
+    UnsupportedReason,
 };
 
 use crate::fixtures::{database, password_component, shared};
+
+fn unlock(bytes: &[u8], components: &[KeyComponent]) -> Result<Unlocked, CoreError> {
+    Core::default().unlock(bytes, components)
+}
 
 fn unlock_error(bytes: &[u8], components: &[KeyComponent]) -> CoreError {
     match unlock(bytes, components) {
@@ -25,6 +30,7 @@ fn unlocks_every_format_with_the_master_password() {
         let (bytes, components) = database(file);
         let info = unlock(&bytes, &components)
             .unwrap_or_else(|error| panic!("{file}: {error:?}"))
+            .db
             .info();
         assert_eq!(info.name, "rimlock scenario", "{file}");
         assert_eq!(info.format_version, format_version, "{file}");
@@ -39,7 +45,7 @@ fn unlocks_every_format_with_the_master_password() {
 #[test]
 fn unlocks_the_reference_database_at_keepassxc_defaults() {
     let (bytes, components) = database("reference.kdbx");
-    let info = unlock(&bytes, &components).unwrap().info();
+    let info = unlock(&bytes, &components).unwrap().db.info();
     assert_eq!(info.name, "rimlock reference");
 }
 
@@ -48,7 +54,7 @@ fn unlocks_with_a_key_file_alone() {
     let (bytes, components) = database("scenario-key-file.kdbx");
     assert!(matches!(components.as_slice(), [KeyComponent::KeyFile(_)]));
     assert_eq!(
-        unlock(&bytes, &components).unwrap().info().name,
+        unlock(&bytes, &components).unwrap().db.info().name,
         "rimlock scenario"
     );
 }

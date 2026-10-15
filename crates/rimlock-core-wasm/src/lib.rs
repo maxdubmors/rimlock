@@ -4,7 +4,8 @@
 //! every failure as a `CoreError` value, which `CoreClient` catches and returns as a `CoreResult`;
 //! only a broken binding throws anything else.
 
-use rimlock_core::SecretBytes;
+use js_sys::{Object, Reflect, Uint8Array};
+use rimlock_core::{CachedKey, Core, SecretBytes};
 use serde::{Deserialize, Serialize};
 use tsify::{Ts, Tsify};
 use wasm_bindgen::prelude::*;
@@ -76,6 +77,7 @@ impl From<rimlock_core::KdfParameters> for KdfParameters {
                 iterations,
                 memory_bytes,
                 parallelism,
+                version: _,
             } => Self::Argon2d {
                 iterations,
                 memory_bytes,
@@ -85,6 +87,7 @@ impl From<rimlock_core::KdfParameters> for KdfParameters {
                 iterations,
                 memory_bytes,
                 parallelism,
+                version: _,
             } => Self::Argon2id {
                 iterations,
                 memory_bytes,
@@ -248,24 +251,50 @@ pub fn read_header(bytes: &[u8]) -> Result<Ts<HeaderInfo>, JsValue> {
     })
 }
 
-/// Decrypts a `.kdbx` with the given Composite key; runs the KDF.
+/// Decrypts a `.kdbx` with the given Composite key; runs the KDF. Returns the Database and its
+/// `CachedKey`, which `storage.session` keeps for `open`.
 ///
 /// # Errors
 ///
 /// Throws `WrongKey` (also for any `ChallengeResponse` component), `UnsupportedFile` or
 /// `Corrupt`; `Internal` for components that do not match `KeyComponent`, or for a second
 /// password or Key file.
-#[wasm_bindgen]
-pub fn unlock(
-    bytes: &[u8],
-    components: Vec<Ts<KeyComponent>>,
-) -> Result<UnlockedDatabase, JsValue> {
+#[wasm_bindgen(unchecked_return_type = "{ db: UnlockedDatabase; cachedKey: Uint8Array }")]
+pub fn unlock(bytes: &[u8], components: Vec<Ts<KeyComponent>>) -> Result<Object, JsValue> {
     let components = components
         .into_iter()
         .map(|component| component.to_rust().map(rimlock_core::KeyComponent::from))
         .collect::<Result<Vec<_>, _>>()
         .map_err(|_| thrown(rimlock_core::CoreError::Internal))?;
-    let database = rimlock_core::unlock(bytes, &components).map_err(thrown)?;
+    let unlocked = Core::default().unlock(bytes, &components).map_err(thrown)?;
+    let result = Object::new();
+    let set = |key: &str, value: &JsValue| {
+        Reflect::set(&result, &JsValue::from_str(key), value)
+            .map_err(|_| thrown(rimlock_core::CoreError::Internal))
+    };
+    set("db", &UnlockedDatabase(unlocked.db).into())?;
+    set(
+        "cachedKey",
+        &Uint8Array::from(unlocked.cached_key.expose()).into(),
+    )?;
+    Ok(result)
+}
+
+/// Rebuilds the Unlocked Database from the Local copy and its `CachedKey`; never runs the KDF.
+///
+/// # Errors
+///
+/// Throws `CachedKeyStale` when the file's KDF seed or parameters differ from the cache's, as
+/// after another client saved it, or for a `CachedKey` of another format; `WrongKey` for one that
+/// does not open this file; otherwise what `unlock` throws for the file.
+#[wasm_bindgen]
+pub fn open(
+    #[wasm_bindgen(js_name = localCopyBytes)] local_copy_bytes: &[u8],
+    #[wasm_bindgen(js_name = cachedKey)] cached_key: Vec<u8>,
+) -> Result<UnlockedDatabase, JsValue> {
+    let database = Core::default()
+        .open(local_copy_bytes, &CachedKey::from(cached_key))
+        .map_err(thrown)?;
     Ok(UnlockedDatabase(database))
 }
 

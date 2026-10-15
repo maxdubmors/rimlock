@@ -46,6 +46,7 @@ fn reads_a_4_1_file_with_keepassxc_default_argon2d() {
             iterations: 10,
             memory_bytes: 64 * 1024 * 1024,
             parallelism: 4,
+            version: 0x13,
         }
     );
 }
@@ -58,6 +59,7 @@ fn reads_argon2id() {
             iterations: 2,
             memory_bytes: 1024 * 1024,
             parallelism: 2,
+            version: 0x13,
         }
     );
 }
@@ -72,6 +74,7 @@ fn reads_a_4_0_file() {
             iterations: 2,
             memory_bytes: 1024 * 1024,
             parallelism: 2,
+            version: 0x13,
         }
     );
     assert_eq!(
@@ -193,6 +196,21 @@ fn a_file_cut_inside_the_header_is_truncated() {
 fn malformed_kdf_parameters_are_corrupt() {
     // The variant dictionary's version 1.0 becomes 2.0.
     let bytes = patched("scenario.kdbx", &[0x00, 0x01, 0x42], &[0x00, 0x02, 0x42]);
+    assert_eq!(
+        read_header(&bytes),
+        Err(corrupt(CorruptReason::KdfParameters))
+    );
+}
+
+/// Argon2 has versions 0x10 and 0x13 only; the version is part of what the `CachedKey` binds.
+#[test]
+fn an_unknown_argon2_version_is_corrupt() {
+    let version = [0x04, 1, 0, 0, 0, b'V', 4, 0, 0, 0];
+    let bytes = patched(
+        "scenario.kdbx",
+        &[&version[..], &[0x13, 0, 0, 0]].concat(),
+        &[&version[..], &[0x14, 0, 0, 0]].concat(),
+    );
     assert_eq!(
         read_header(&bytes),
         Err(corrupt(CorruptReason::KdfParameters))
