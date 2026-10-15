@@ -74,7 +74,7 @@ All data is handled on the user's device; the only transfer is the encrypted dat
 
 ## AMO
 
-**`data_collection_permissions`:** `["none"]` (in the manifest). Nothing reaches the developer or any third party.
+**`data_collection_permissions`:** `{"required": ["none"]}` (in the manifest). Nothing reaches the developer or any third party.
 
 **Notes to reviewer:**
 

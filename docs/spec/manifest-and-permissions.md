@@ -92,6 +92,6 @@ Covered by `host_permissions`. **Connect** still calls `permissions.request({ori
 The listing text, the per-permission justifications and the reviewer notes are in [`docs/store/listing.md`](../store/listing.md). The privacy policy is [`PRIVACY.md`](../../PRIVACY.md). In short:
 
 - Chrome Web Store single purpose: "Fill and manage passwords from the user's own KeePass database." Data usage: Authentication information and Website content, with the three certifications.
-- AMO: `data_collection_permissions: ["none"]` with a reviewer note on the only network traffic. If review disagrees, switching to a declared category is a manifest update.
+- AMO: `data_collection_permissions: {"required": ["none"]}` with a reviewer note on the only network traffic. If review disagrees, switching to a declared category is a manifest update.
 
 Decision detail: [Decide the permissions strategy](https://github.com/maxdubmors/rimlock/issues/25). Facts: [Toolchain and store policies](https://github.com/maxdubmors/rimlock/issues/8).
