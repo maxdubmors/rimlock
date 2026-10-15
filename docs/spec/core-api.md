@@ -50,7 +50,8 @@ type KdfParameters =
 type HeaderInfo = {
   formatVersion: FormatVersion;
   kdf: KdfParameters;
-  challenge: Uint8Array;            // the KDF seed (3.1: the transform seed); what a challenge-response provider answers, for KDBX 4.x only
+  challenge: Uint8Array;            // the KDF seed (3.1: the transform seed); what a challenge-response provider answers
+                                    // for KDBX 4.x; challenge-response is not supported for KDBX 3.1 (#80, § 3)
 };
 
 // Result of every mutation (ADR-0014).

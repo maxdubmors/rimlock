@@ -110,8 +110,8 @@ fn any_challenge_response_component_is_a_wrong_key() {
     assert_eq!(unlock_error(&bytes, &components), CoreError::WrongKey);
 }
 
-/// Challenge-response is never supported for KDBX 3.1, even once a provider exists for KDBX 4.x:
-/// KeePassXC challenges the master seed there and hashes the response in after the KDF (#80).
+/// ADR-0011: challenge-response is not supported for KDBX 3.1, where KeePassXC challenges the
+/// master seed and hashes the response in after the KDF. A 4.x provider must keep this failing.
 #[test]
 fn a_challenge_response_component_on_a_3_1_file_is_a_wrong_key() {
     let (bytes, mut components) = database("scenario-3.1.kdbx");

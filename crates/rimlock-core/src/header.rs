@@ -37,7 +37,7 @@ pub struct HeaderInfo {
     pub format_version: FormatVersion,
     pub kdf: KdfParameters,
     /// The KDF seed (in KDBX 3.1, the transform seed): what a challenge-response provider
-    /// answers for KDBX 4.x. Challenge-response is not supported for KDBX 3.1 (#80).
+    /// answers for KDBX 4.x. Challenge-response is not supported for KDBX 3.1 (ADR-0011).
     pub challenge: Vec<u8>,
 }
 

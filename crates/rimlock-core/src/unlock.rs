@@ -55,8 +55,9 @@ impl UnlockedDatabase {
 ///
 /// What `read_header` returns for a file the Core cannot read; `WrongKey` when the components
 /// do not open it, when they are empty, and for any `ChallengeResponse` component, since no
-/// provider exists yet (ADR-0011) and none ever will for KDBX 3.1 (#80); `Corrupt` for damage
-/// past the header; `Internal` for a second password or Key file, a bug in the caller.
+/// provider exists yet and challenge-response is not supported for KDBX 3.1 (ADR-0011);
+/// `Corrupt` for damage past the header; `Internal` for a second password or Key file, a bug in
+/// the caller.
 pub fn unlock(bytes: &[u8], components: &[KeyComponent]) -> Result<UnlockedDatabase, CoreError> {
     let header = read_header(bytes)?;
     let key = database_key(components)?;
