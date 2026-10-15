@@ -1,13 +1,25 @@
 import { browser } from 'wxt/browser';
 
+import type { CoreInfo } from '../core-bindings/rimlock_core_wasm.js';
 import { parseRequest, type Request, type ResponseTo } from '../protocol/messages';
 import { describeCore } from './core';
 
-async function answer(request: Request): Promise<ResponseTo<Request>> {
+/**
+ * The background's answer to one request. Never rejects: a sender that gets no answer would
+ * wait until the background dies.
+ */
+export async function answer(
+  request: Request,
+  describe: () => Promise<CoreInfo> = describeCore,
+): Promise<ResponseTo<Request>> {
   switch (request.kind) {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- one kind so far; reported as unused once a second arrives
     case 'status':
-      return { coreVersion: (await describeCore()).version };
+      try {
+        return { core: 'running', version: (await describe()).version };
+      } catch {
+        return { core: 'unavailable' };
+      }
   }
 }
 

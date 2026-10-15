@@ -45,11 +45,26 @@ export async function launchWithExtension(
   return {
     async openPage(path) {
       const page = await browser.newPage();
-      await page.goto(`${origin}/${path}`);
+      const url = `${origin}/${path}`;
+      if (name === 'chrome') await page.goto(url);
+      else await openInFirefox(page, url);
       return page;
     },
     close: () => browser.close(),
   };
+}
+
+/**
+ * Firefox loads an extension page but never reports the navigation to WebDriver BiDi as done,
+ * so `goto` would time out: wait for the page itself instead.
+ */
+async function openInFirefox(page: Page, url: string): Promise<void> {
+  void page.goto(url).catch(() => undefined);
+  await page.waitForFunction(
+    (expected) => location.href === expected && document.readyState === 'complete',
+    {},
+    url,
+  );
 }
 
 async function launchChrome(
@@ -79,6 +94,9 @@ async function launchFirefox(
     executablePath,
     headless: true,
     enableExtensions: true,
+    // WebDriver BiDi navigates only to http(s), file and blob URLs without it, so it could not
+    // open the Extension's pages. A flag of the test browser; the bundle stays as shipped.
+    args: ['--remote-allow-system-access'],
     extraPrefsFirefox: {
       'extensions.webextensions.uuids': JSON.stringify({ [geckoId]: uuid }),
     },

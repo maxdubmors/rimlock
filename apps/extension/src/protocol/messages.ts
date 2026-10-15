@@ -8,7 +8,10 @@ export type StatusRequest = { kind: 'status' };
 
 export type Request = StatusRequest;
 
-export type StatusResponse = { coreVersion: string };
+export type StatusResponse =
+  | { core: 'running'; version: string }
+  /** The Core could not be instantiated in this background (core-api.md § 8, `CoreUnavailable`). */
+  | { core: 'unavailable' };
 
 /** The background's answer to each kind of request. */
 export type ResponseTo<R extends Request> = {
