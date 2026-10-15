@@ -1,2 +1,5 @@
 .output/
 .wxt/
+# pnpm build:core writes the Core's glue and .wasm; only its *.d.ts are committed.
+src/core-bindings/*
+!src/core-bindings/*.d.ts

@@ -26,11 +26,14 @@ Run from the repository root. A ticket that adds a root script adds its line her
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
 | `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy. Fails on any finding. |
-| `pnpm test` | Vitest, then `cargo test`. No browsers, no Docker. |
-| `pnpm build` | Builds the Extension for Chrome and Firefox into `apps/extension/.output/`. |
-| `pnpm dev` | WXT dev server for Chrome (`pnpm --filter @rimlock/extension dev:firefox` for Firefox). |
+| `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. |
+| `pnpm test:e2e` | `build:core`, then Puppeteer drives the store bundle in pinned headless Chrome for Testing and Firefox (downloaded on the first run). |
+| `pnpm build:core` | Compiles the Core to WASM (release profile) and writes its glue and `.d.ts` into `apps/extension/src/core-bindings/`. Run it after every Rust edit; commit the changed `*.d.ts`. |
+| `pnpm check:core-bindings` | Runs `build:core` and fails if the committed `*.d.ts` differ from the generated ones. |
+| `pnpm build` | `build:core`, then the Extension for Chrome and Firefox into `apps/extension/.output/`. |
+| `pnpm dev` | `build:core` with the `dev-wasm` profile, then the WXT dev server for Chrome (`pnpm --filter @rimlock/extension dev:firefox` for Firefox, after `scripts/build-core.sh dev-wasm`). |
 
-One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` or `cargo test -p rimlock-core --test <name>`.
+One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to-end: add `--config vitest.e2e.config.ts`) or `cargo test -p rimlock-core --test <name>`. Bundling and the e2e tests need the Core's glue: run `pnpm build:core` first in a fresh checkout.
 
 ## Rules
 

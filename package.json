@@ -8,13 +8,16 @@
     "pnpm": "12.10.1"
   },
   "scripts": {
-    "build": "pnpm --filter @rimlock/extension build",
-    "dev": "pnpm --filter @rimlock/extension dev",
+    "build": "pnpm build:core && pnpm --filter @rimlock/extension build",
+    "build:core": "scripts/build-core.sh",
+    "dev": "scripts/build-core.sh dev-wasm && pnpm --filter @rimlock/extension dev",
     "check": "pnpm check:ts && pnpm check:rust",
     "check:ts": "pnpm --filter @rimlock/extension check",
     "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings",
-    "test": "pnpm test:ts && pnpm test:rust",
+    "check:core-bindings": "scripts/check-core-bindings.sh",
+    "test": "pnpm build:core && pnpm test:ts && pnpm test:rust",
     "test:ts": "pnpm --filter @rimlock/extension test",
-    "test:rust": "cargo test --locked"
+    "test:rust": "cargo test --locked",
+    "test:e2e": "pnpm build:core && pnpm --filter @rimlock/extension test:e2e"
   }
 }

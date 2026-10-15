@@ -6,7 +6,7 @@ Decided in [Define the Core API and the Source adapter contract](https://github.
 
 ## 1. Shape
 
-- The WASM bindings crate exports **free functions** without state (`readHeader`, `unlock`, `open`) and one **handle class**, `UnlockedDatabase`, that holds the keepass-rs model of one Unlocked Database. Each method has its own input and output types.
+- The WASM bindings crate exports **free functions** without state (`coreInfo`, `readHeader`, `unlock`, `open`) and one **handle class**, `UnlockedDatabase`, that holds the keepass-rs model of one Unlocked Database. Each method has its own input and output types.
 - keepass-rs types never cross the seam.
 - Only the background calls the Core, through a TS wrapper `CoreClient`. Popup, extension pages, content scripts and the Inline menu iframe never see Core types directly; they speak the background's own messaging protocol, which is a separate TS layer (it adds Auto-lock checks, Sync, pending saves).
 - All calls are async from TS. Argon2 runs synchronously inside WASM and blocks the worker for ~0.7 s during `unlock` and `merge`; the UI shows a spinner. AES-KDF runs in WebCrypto through the keepass-rs KDF hook.
@@ -67,6 +67,13 @@ open(localCopyBytes: Uint8Array, cachedKey: CachedKey)
   : Promise<CoreResult<UnlockedDatabase>>;                                 // never runs the KDF
 ```
 
+```ts
+coreInfo(): CoreInfo;                                                      // holds no state; throws only if the bindings are broken
+
+type CoreInfo = { version: string };   // the rimlock-core crate version
+```
+
+- `coreInfo` answers the background's `status` message, so a test can check which Core the store bundle runs.
 - **Two-phase unlock is stateless.** TS calls `readHeader` for the challenge, asks a key-component provider when the Database is configured as using a hardware key (the KDBX header carries no marker), then calls `unlock` with all components. Nothing is held between the two calls, so a long wait for a YubiKey touch survives a worker teardown.
 - In the MVP no provider exists, so a challenge-response Database fails with `WrongKey` (ADR-0011). Core tests use a software HMAC-SHA1 provider over `challenge` as the reference.
 - `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks.
