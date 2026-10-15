@@ -50,7 +50,8 @@ type KdfParameters =
 type HeaderInfo = {
   formatVersion: FormatVersion;
   kdf: KdfParameters;
-  challenge: Uint8Array;            // the KDF seed; what a challenge-response provider answers
+  challenge: Uint8Array;            // the KDF seed (3.1: the transform seed); what a challenge-response provider answers
+                                    // for KDBX 4.x; challenge-response is not supported for KDBX 3.1 (#80, § 3)
 };
 
 // Result of every mutation (ADR-0014).
@@ -86,6 +87,7 @@ type CoreInfo = { version: string };   // the rimlock-core crate version
 - `coreInfo` answers the background's `status` message, so a test can check which Core the store bundle runs.
 - **Two-phase unlock is stateless.** TS calls `readHeader` for the challenge, asks a key-component provider when the Database is configured as using a hardware key (the KDBX header carries no marker), then calls `unlock` with all components. Nothing is held between the two calls, so a long wait for a YubiKey touch survives a worker teardown.
 - In the MVP no provider exists, so a challenge-response Database fails with `WrongKey` (ADR-0011). Core tests use a software HMAC-SHA1 provider over `challenge` as the reference.
+- Challenge-response is not supported for KDBX 3.1, now or after the Companion: KeePassXC challenges the master seed there, not `challenge`, and hashes the response in after the KDF, so it would need a second key shape in the `CachedKey` ([#80](https://github.com/maxdubmors/rimlock/issues/80)). A `ChallengeResponse` component on a 3.1 file is `WrongKey`; the user converts the file to KDBX 4 in KeePassXC.
 - `unlock` reads the header as `readHeader` does first, so a file `readHeader` rejects fails `unlock` with the same error. No components, a password that is not UTF-8, or a Key file that does not parse, is `WrongKey` too (KeePass hashes any bytes as a Key file). A second `Password` or `KeyFile` component is `Internal`, a bug in the caller.
 - Until [#46](https://github.com/maxdubmors/rimlock/issues/46) adds the `CachedKey`, the bindings' `unlock` returns the `UnlockedDatabase` alone, and synchronously, like every binding (`CoreClient` makes the calls async).
 - `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks.
@@ -247,7 +249,7 @@ merge(remoteBytes: Uint8Array, opts?: { components?: KeyComponent[] }): Promise<
 - KeePassXC `Merger` semantics (ADR-0008). Used by WebDAV Sync, Chrome file Sync and Firefox Re-import….
 - Without `components` the Core opens the remote with its own hashed Composite key; a different KDF seed costs one KDF run.
 - If that key fails: `RemoteKeyChanged`. Sync stops pushing; the UI asks for the new key; TS calls `merge(remote, { components })`. The Local copy then takes the remote's key and encryption settings, and the result carries a new `cachedKey`.
-- If the Database has a challenge-response component and the remote's KDF seed differs: `ChallengeResponseRequired { challenge }`. TS asks the provider and retries with `components` including the response. Stateless, like unlock.
+- If the Database has a challenge-response component and the remote's KDF seed differs: `ChallengeResponseRequired { challenge }`. TS asks the provider and retries with `components` including the response. Stateless, like unlock. KDBX 4.x only: challenge-response is not supported for a KDBX 3.1 remote, whose challenge is the master seed ([#80](https://github.com/maxdubmors/rimlock/issues/80)).
 
 ## 7. Verify-on-commit
 
