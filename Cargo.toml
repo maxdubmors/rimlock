@@ -14,6 +14,7 @@ publish = false
 # The wasm-bindgen CLI must be exactly this version; scripts/build-core.sh reads it from Cargo.lock.
 wasm-bindgen = "=0.2.129"
 serde = { version = "1.0.229", features = ["derive"] }
+serde_bytes = "0.11.17"
 tsify = { version = "0.5.8", default-features = false, features = ["js"] }
 
 [workspace.lints.rust]
@@ -37,6 +38,10 @@ print_stderr = "deny"
 allow_attributes = "deny"
 allow_attributes_without_reason = "deny"
 
+
+# Argon2 at KeePassXC's defaults takes seconds unoptimised; the generator and Core tests run it.
+[profile.dev.package.rust-argon2]
+opt-level = 3
 
 # The store bundle's Core (engineering.md § WASM build).
 [profile.release]
