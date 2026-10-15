@@ -17,9 +17,10 @@ export const contentSide = [
 ];
 
 /**
- * Modules that content-side code may import. They obey the content-side rules
- * too: the boundary rule checks one import at a time, so a re-export through
- * one of them would otherwise carry `background/` into the content bundle.
+ * Modules that content-side code may import besides its own. They obey the
+ * content-side rules too: the boundary rule checks one import at a time, so a
+ * re-export through one of them would otherwise carry `background/` into the
+ * content bundle.
  */
 export const sharedWithContent = [
   'src/protocol',
@@ -29,22 +30,26 @@ export const sharedWithContent = [
   'src/vendor',
 ];
 
-/** What the content side never reaches, directly or through a shared module. */
-const offLimitsToContent = [
-  'src/background',
-  'src/sources',
-  'src/core-bindings',
-  'src/settings',
-  // ui/ may import settings/, so a path through it would bypass the rule above.
-  'src/ui',
-];
+/**
+ * Everything under `src/` outside `allowed` is off limits to `target`. An
+ * allowlist, so another entrypoint or a new folder cannot open a path to
+ * `background/`, `sources/`, `core-bindings/` or `settings/`.
+ */
+function onlyFrom(target: string[], allowed: string[], message: string) {
+  return {
+    target,
+    from: ['src'],
+    except: allowed.map((dir) => `./${dir.replace(/^src\//, '')}`),
+    message,
+  };
+}
 
 const storageMessage =
   'Content code never touches storage (engineering.md § TypeScript modules); ask the background through protocol/.';
 
 /** The whole rule set, rooted at `root` so the lint fixture tests can run it on a fixture tree. */
 export function createConfig(root: string): Linter.Config[] {
-  const under = (dirs: string[]) => dirs.map((dir) => `${dir}/**`);
+  const globsUnder = (dirs: string[]) => dirs.map((dir) => `${dir}/**`);
 
   return defineConfig(
     js.configs.recommended,
@@ -92,18 +97,16 @@ export function createConfig(root: string): Linter.Config[] {
           {
             basePath: root,
             zones: [
-              {
-                target: contentSide,
-                from: offLimitsToContent,
-                message:
-                  'Content-side code never imports this (engineering.md § TypeScript modules).',
-              },
-              {
-                target: sharedWithContent,
-                from: offLimitsToContent,
-                message:
-                  'Content-side code imports this module, so it obeys the content-side boundary too.',
-              },
+              onlyFrom(
+                contentSide,
+                [...contentSide, ...sharedWithContent],
+                'Content-side code imports only content-side code and protocol/, shared/, generator/, matching/, vendor/ (engineering.md § TypeScript modules).',
+              ),
+              onlyFrom(
+                sharedWithContent,
+                sharedWithContent,
+                'Content-side code imports this module, so it obeys the content-side boundary too.',
+              ),
               {
                 target: ['src/ui'],
                 from: ['src/background'],
@@ -115,7 +118,7 @@ export function createConfig(root: string): Linter.Config[] {
       },
     },
     {
-      files: under([...contentSide, ...sharedWithContent]),
+      files: globsUnder([...contentSide, ...sharedWithContent]),
       rules: {
         // Any `.storage`, so `const { storage } = browser` and aliases of `browser` are caught too.
         'no-restricted-properties': ['error', { property: 'storage', message: storageMessage }],

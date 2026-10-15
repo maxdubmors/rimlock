@@ -43,8 +43,8 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 ```
 
 - Folders, not packages. Boundaries are ESLint rules on **resolved** paths (`import-x/no-restricted-paths`, so re-exports cannot bypass them; `no-restricted-imports` is the fallback):
-  - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`, nor `ui/`, which may import `settings/`;
-  - the modules content-side code may import (`protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`) obey the same rule: the plugin checks one import at a time, so this is what stops a re-export ([`verification.md`](verification.md) V4);
+  - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`. The rule is an allowlist: content-side code imports only content-side code and `protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`, so neither `ui/` nor another entrypoint opens a path around it;
+  - those shared modules import only each other: the plugin checks one import at a time, so this is what stops a re-export ([`verification.md`](verification.md) V4);
   - `ui/` reaches the background only through `protocol/`.
 - Content code, and the modules it may import, never touch `storage`: `no-restricted-properties` (any `.storage`, so `browser.storage`, destructuring and aliases of `browser`), `no-restricted-globals` (`storage`), `no-restricted-imports` (`wxt/utils/storage`, `@wxt-dev/storage`).
 - Every boundary and storage rule has a permanent lint fixture test (`apps/extension/tests/lint/`).
@@ -55,7 +55,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## Rust crates
 
-- `rimlock-core`: `unsafe_code = "forbid"`. Secrets in `zeroize` types that implement neither `Debug` nor `Display` with their content. Clock and RNG are injected.
+- `rimlock-core`: `unsafe_code = "forbid"` (`#![forbid(unsafe_code)]`; the workspace denies it, so the bindings can `#[expect]` what `wasm-bindgen` generates). Secrets in `zeroize` types that implement neither `Debug` nor `Display` with their content. Clock and RNG are injected.
 - `rimlock-core-wasm`: wasm-bindgen + `tsify` (use `tsify::Ts<T>`, not the deprecated `into_wasm_abi`/`from_wasm_abi`). As strict as the generated code allows.
 - The Core API is [`core-api.md`](core-api.md); the committed `.d.ts` must match it.
 

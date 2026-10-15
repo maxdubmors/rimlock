@@ -28,12 +28,11 @@ fn table<'a>(toml: &'a str, name: &str) -> Vec<&'a str> {
 
 fn workspace_members() -> Vec<String> {
     let manifest = read(&workspace_root().join("Cargo.toml"));
-    let members = table(&manifest, "workspace")
-        .into_iter()
-        .find_map(|line| line.strip_prefix("members = "))
-        .expect("the root Cargo.toml lists its members on one line");
+    let (_, after) = manifest
+        .split_once("members = [")
+        .expect("the root Cargo.toml lists its members");
+    let (members, _) = after.split_once(']').expect("the members list is closed");
     members
-        .trim_matches(['[', ']'])
         .split(',')
         .map(|m| m.trim().trim_matches('"').to_owned())
         .filter(|m| !m.is_empty())
@@ -59,7 +58,7 @@ fn every_workspace_crate_inherits_the_workspace_lints() {
 fn the_workspace_denies_pedantic_clippy_and_the_panic_lints() {
     let manifest = read(&workspace_root().join("Cargo.toml"));
     let rust = table(&manifest, "workspace.lints.rust");
-    assert!(rust.contains(&r#"unsafe_code = "forbid""#));
+    assert!(rust.contains(&r#"unsafe_code = "deny""#));
 
     let clippy = table(&manifest, "workspace.lints.clippy");
     for group in ["all", "pedantic"] {
@@ -92,4 +91,10 @@ fn the_workspace_denies_pedantic_clippy_and_the_panic_lints() {
             .all(|line| !line.contains("allow") || line.starts_with("allow_attributes")),
         "no global exceptions: use #[expect(lint, reason = \"…\")]"
     );
+}
+
+#[test]
+fn the_core_forbids_unsafe_code() {
+    let lib = read(&workspace_root().join("crates/rimlock-core/src/lib.rs"));
+    assert!(lib.lines().any(|line| line == "#![forbid(unsafe_code)]"));
 }

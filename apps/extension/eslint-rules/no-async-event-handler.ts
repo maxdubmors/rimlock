@@ -27,12 +27,7 @@ export const noAsyncEventHandler = ESLintUtils.RuleCreator.withoutDocs({
       if (attribute.parent.parent.kind !== 'html') return;
       if (!/^on[a-z]/.test(attribute.key.name)) return;
 
-      const handler =
-        attribute.type === 'SvelteShorthandAttribute'
-          ? attribute.value
-          : attribute.value.length === 1 && attribute.value[0]?.type === 'SvelteMustacheTag'
-            ? attribute.value[0].expression
-            : undefined;
+      const handler = handlerOf(attribute);
       if (handler === undefined) return;
 
       // svelte-eslint-parser hands typescript-eslint the same nodes under its own ESTree types.
@@ -46,12 +41,21 @@ export const noAsyncEventHandler = ESLintUtils.RuleCreator.withoutDocs({
   },
 });
 
+/** The expression of `onclick={handler}` or `{onclick}`; nothing for a quoted or mixed value. */
+function handlerOf(
+  attribute: AST.SvelteAttribute | AST.SvelteShorthandAttribute,
+): AST.SvelteMustacheTagText['expression'] | undefined {
+  if (attribute.type === 'SvelteShorthandAttribute') return attribute.value;
+  const [only, ...rest] = attribute.value;
+  return only?.type === 'SvelteMustacheTag' && rest.length === 0 ? only.expression : undefined;
+}
+
 function returnsThenable(checker: ts.TypeChecker, type: ts.Type): boolean {
   return unionParts(type).some((part) =>
     part
       .getCallSignatures()
       .some((signature) =>
-        unionParts(signature.getReturnType()).some((r) => isThenable(checker, r)),
+        unionParts(signature.getReturnType()).some((returned) => isThenable(checker, returned)),
       ),
   );
 }

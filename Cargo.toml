@@ -11,7 +11,8 @@ repository = "https://github.com/maxdubmors/rimlock"
 publish = false
 
 [workspace.lints.rust]
-unsafe_code = "forbid"
+# rimlock-core raises this to forbid; the wasm bindings may need a local #[expect].
+unsafe_code = "deny"
 
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }
@@ -30,16 +31,3 @@ print_stderr = "deny"
 allow_attributes = "deny"
 allow_attributes_without_reason = "deny"
 
-[profile.release]
-opt-level = 3
-lto = "fat"
-codegen-units = 1
-
-# Optimised (Argon2 in debug is unusably slow) with debug assertions on.
-[profile.dev-wasm]
-inherits = "release"
-debug-assertions = true
-overflow-checks = true
-lto = false
-codegen-units = 16
-incremental = true

@@ -6,6 +6,7 @@ Local rules for the Rust crates.
 
 - Every lint lives in the root `[workspace.lints]`, and every crate inherits it with `[lints] workspace = true` and nothing else; `crates/rimlock-core/tests/workspace_lints.rs` fails otherwise.
 - An exception is a local `#[expect(lint, reason = "…")]` on the smallest item. `#[allow]` is itself denied.
+- `unsafe_code` is `deny` for the workspace and `#![forbid(unsafe_code)]` in `rimlock-core`, so only the wasm bindings can take an `#[expect]` for what `wasm-bindgen` generates.
 - `clippy.toml` lets tests unwrap, expect, panic and index, but clippy counts only `#[test]` functions and `#[cfg(test)]` items as tests. An integration test file therefore starts with `#![cfg(test)]`, so its helpers get the same relaxation.
 - Cargo commands take `--locked`; `Cargo.lock` changes only on purpose.
 

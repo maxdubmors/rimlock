@@ -22,16 +22,21 @@ async function rulesBrokenIn(file: string): Promise<(string | null)[]> {
 }
 
 describe('module boundaries', () => {
-  it('reject a content-side import of background/ through a re-export', async () => {
-    expect(await rulesBrokenIn('src/protocol/reexport-background.ts')).toContain(
-      'import-x/no-restricted-paths',
-    );
-  });
-
-  it('reject ui/ importing background/ directly', async () => {
-    expect(await rulesBrokenIn('src/ui/imports-background.ts')).toContain(
-      'import-x/no-restricted-paths',
-    );
+  it.each([
+    ['content-side code importing background/', 'src/autofill/imports-background.ts'],
+    ['a type-only import of background/', 'src/autofill/type-import.ts'],
+    ['content-side code importing ui/', 'src/autofill/imports-ui.ts'],
+    [
+      'content-side code re-exporting another entrypoint',
+      'src/entrypoints/content/reexports-popup.ts',
+    ],
+    [
+      'a module content code imports re-exporting background/',
+      'src/protocol/reexport-background.ts',
+    ],
+    ['ui/ importing background/ directly', 'src/ui/imports-background.ts'],
+  ])('reject %s', async (_, file) => {
+    expect(await rulesBrokenIn(file)).toContain('import-x/no-restricted-paths');
   });
 });
 
@@ -45,6 +50,18 @@ describe('content code and storage', () => {
   it('rejects browser.storage reached by destructuring', async () => {
     expect(await rulesBrokenIn('src/entrypoints/content/destructured-storage.ts')).toContain(
       'no-restricted-properties',
+    );
+  });
+
+  it('rejects browser.storage in a module content code imports', async () => {
+    expect(await rulesBrokenIn('src/protocol/browser-storage.ts')).toContain(
+      'no-restricted-properties',
+    );
+  });
+
+  it('rejects the storage global', async () => {
+    expect(await rulesBrokenIn('src/autofill/storage-global.ts')).toContain(
+      'no-restricted-globals',
     );
   });
 

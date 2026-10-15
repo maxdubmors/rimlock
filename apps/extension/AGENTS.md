@@ -9,12 +9,12 @@ Local rules for the WXT app. The module folders and their roles are `docs/spec/e
 
 ## Boundaries and storage (`eslint.config.ts`)
 
-- **Content side** (`src/autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/`, `settings/` or `ui/`.
-- **Shared with content** (`src/protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`) obeys the same boundary. `import-x/no-restricted-paths` checks one import at a time, so this is what stops a re-export from carrying `background/` into the content bundle. A shared module that needs one of those folders is a design question: raise it, never add an exception.
+- **Content side** (`src/autofill/`, the `content` and `inline-menu` entrypoints) imports only content-side code and the modules shared with content. That keeps out `background/`, `sources/`, `core-bindings/`, `settings/`, `ui/` and the other entrypoints.
+- **Shared with content** (`src/protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`) imports only each other. `import-x/no-restricted-paths` checks one import at a time, so this is what stops a re-export from carrying `background/` into the content bundle. A shared module that needs anything else is a design question: raise it, never add an exception.
 - `ui/` reaches the background only through `protocol/`.
 - Content-side and shared code never touches storage: any `.storage` property (destructuring included), the `storage` global, `wxt/utils/storage` and `@wxt-dev/storage` are errors there.
 - The boundary rules count type-only imports too.
-- Known gap: a property name computed at run time (`browser[key]`) escapes the storage rule.
+- Known gaps: a property name computed at run time (`browser[key]`) escapes the storage rule; `ui/` → `sources/` → `background/` is not checked, because the spec does not say what `sources/` may import.
 
 ## Svelte
 
