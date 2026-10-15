@@ -1,0 +1,15 @@
+[package]
+name = "rimlock-core-wasm"
+description = "Thin wasm-bindgen bindings of the rimlock Core for the Extension."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+rimlock-core = { path = "../rimlock-core" }
+
+[lints]
+workspace = true

@@ -1,0 +1,5 @@
+.output/
+.wxt/
+# Vendored code keeps its upstream formatting; generated bindings are not edited.
+src/vendor/
+src/core-bindings/

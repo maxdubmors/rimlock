@@ -1,0 +1,33 @@
+[workspace]
+resolver = "3"
+members = ["crates/rimlock-core", "crates/rimlock-core-wasm"]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.98.1"
+license = "GPL-3.0-only"
+repository = "https://github.com/maxdubmors/rimlock"
+publish = false
+
+[workspace.lints.rust]
+# rimlock-core raises this to forbid; the wasm bindings may need a local #[expect].
+unsafe_code = "deny"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "deny", priority = -1 }
+# restriction: a panic kills the WASM instance (engineering.md § Checks)
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+indexing_slicing = "deny"
+todo = "deny"
+unimplemented = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+# exceptions only as #[expect(lint, reason = "…")]
+allow_attributes = "deny"
+allow_attributes_without_reason = "deny"
+

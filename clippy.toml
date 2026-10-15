@@ -1,0 +1,9 @@
+# The restriction lints that guard against panics in the Core apply to
+# product code only; tests may unwrap, expect, panic and index.
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+allow-panic-in-tests = true
+allow-indexing-slicing-in-tests = true
+
+# Product names that doc comments spell as prose, not code ("..": keep the defaults).
+doc-valid-idents = ["KeePass", "KeePassXC", "KeePassDX", ".."]

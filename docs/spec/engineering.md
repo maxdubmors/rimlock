@@ -43,9 +43,11 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 ```
 
 - Folders, not packages. Boundaries are ESLint rules on **resolved** paths (`import-x/no-restricted-paths`, so re-exports cannot bypass them; `no-restricted-imports` is the fallback):
-  - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`;
-  - `ui/` reaches the background only through `protocol/`.
-- Content code never touches `storage`: `no-restricted-properties` (`browser.storage`, destructuring too), `no-restricted-globals` (`storage`), `no-restricted-imports` (`wxt/utils/storage`, `@wxt-dev/storage`).
+  - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`. The rule is an allowlist: content-side code imports only content-side code and `protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`, so neither `ui/` nor another entrypoint opens a path around it;
+  - those shared modules import only each other: the plugin checks one import at a time, so this is what stops a re-export ([`verification.md`](verification.md) V4);
+  - only `background/` itself and the `background` entrypoint import `background/`; every other context, `ui/` included, reaches the background through `protocol/` messages, so no chain of imports leads into it.
+- Content code, and the modules it may import, never touch `storage`: `no-restricted-properties` (any `.storage`, so `browser.storage`, destructuring and aliases of `browser`), `no-restricted-globals` (`storage`), `no-restricted-imports` (`wxt/utils/storage`, `@wxt-dev/storage`).
+- Every boundary and storage rule has a permanent lint fixture test (`apps/extension/tests/lint/`).
 - WXT auto-imports are off (`imports: false`); every import is explicit.
 - Vendored code lives in `vendor/<name>/` with `UPSTREAM.md` (repository, commit, licence, local modifications). It is not reformatted, but it is type-checked and boundary-checked. The Proton classifier is an npm dependency, not vendored.
 - Messages between contexts are typed in `protocol/` with an exhaustive discriminated union. `Secret` crosses only through the protocol codec.
@@ -53,7 +55,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## Rust crates
 
-- `rimlock-core`: `unsafe_code = "forbid"`. Secrets in `zeroize` types that implement neither `Debug` nor `Display` with their content. Clock and RNG are injected.
+- `rimlock-core`: `unsafe_code = "forbid"` (`#![forbid(unsafe_code)]`; the workspace denies it, so the bindings can `#[expect]` what `wasm-bindgen` generates). Secrets in `zeroize` types that implement neither `Debug` nor `Display` with their content. Clock and RNG are injected.
 - `rimlock-core-wasm`: wasm-bindgen + `tsify` (use `tsify::Ts<T>`, not the deprecated `into_wasm_abi`/`from_wasm_abi`). As strict as the generated code allows.
 - The Core API is [`core-api.md`](core-api.md); the committed `.d.ts` must match it.
 
@@ -80,7 +82,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 One command: formatting check, lint, type checks and clippy.
 
-- **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`. ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above. Prettier + `prettier-plugin-svelte` formats. Not oxlint, not Biome, not a hybrid ([Compare TypeScript linters: ESLint, Biome and oxlint](https://github.com/maxdubmors/rimlock/issues/37)).
+- **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`. ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above + the local rule `rimlock/no-async-event-handler`, which does for Svelte event attributes what `no-misused-promises` does for JSX ([`verification.md`](verification.md) V4). Prettier + `prettier-plugin-svelte` formats. Not oxlint, not Biome, not a hybrid ([Compare TypeScript linters: ESLint, Biome and oxlint](https://github.com/maxdubmors/rimlock/issues/37)).
 - **Rust:** `rustfmt`; root `[workspace.lints]`: `clippy::all` + `clippy::pedantic` as `deny` with no global exceptions; from `restriction`: `unwrap_used`, `expect_used`, `panic`, `indexing_slicing`, `todo`, `unimplemented` (a panic kills the WASM instance), `dbg_macro`, `print_stdout`, `print_stderr`, `allow_attributes`, `allow_attributes_without_reason` (exceptions only as `#[expect(lint, reason = "…")]`). `clippy.toml` allows unwrap/expect/panic/indexing in tests. Run as `cargo clippy --all-targets -- -D warnings`.
 
 ## Tests

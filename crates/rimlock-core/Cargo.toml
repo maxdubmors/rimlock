@@ -1,0 +1,12 @@
+[package]
+name = "rimlock-core"
+description = "The rimlock Core: KDBX, keys, edits, Merge, search and TOTP, in pure Rust."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true
