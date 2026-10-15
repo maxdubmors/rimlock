@@ -49,3 +49,7 @@ If the concept you need isn't in the glossary yet, that's a signal: either you'r
 If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:
 
 > _Contradicts ADR-0007 (event-sourced orders), but worth reopening because…_
+
+## Link issues from an ADR by title
+
+An ADR names a tracker issue by its title, on a closing Consequences line: `Decision detail: [title](url)` for the issue that decided it, `Facts: [title](url)` for the research behind it.
