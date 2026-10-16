@@ -2,7 +2,7 @@
 
 The contract between the Core (Rust, compiled to WASM) and the TypeScript side of the Extension, plus the contract every Source adapter implements. Agents implement both sides against this file; the `tsify`-generated types must match it. Signatures are written in TypeScript notation as TS sees them.
 
-Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28); the write order of a `Commit` and its `cachedKey` in [Stale CachedKey on wake-up: lock, or rebuild from the hashed Composite key (ADR-0005)?](https://github.com/maxdubmors/rimlock/issues/87). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
+Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28); the write order of a `Commit` and its `cachedKey` in [Stale CachedKey on wake-up: lock, or rebuild from the hashed Composite key (ADR-0005)?](https://github.com/maxdubmors/rimlock/issues/87); the shape of the `merge` result in [Can merge return a cachedKey without a commit?](https://github.com/maxdubmors/rimlock/issues/90). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
 
 ## 1. Shape
 
@@ -58,7 +58,7 @@ type HeaderInfo = {
 type Commit = {
   bytes: Uint8Array;                // the whole encrypted .kdbx, already verified
   created: Uuid[];                  // UUIDs of Entries/Groups created by this commit, in Change order
-  cachedKey?: CachedKey;            // present only when the key material changed
+  cachedKey?: CachedKey;            // present only when the key material changed: a merge that adopted a KDF seed or a key
 };
 ```
 
@@ -244,14 +244,14 @@ type EntryEdit =
 merge(remoteBytes: Uint8Array, opts?: { components?: KeyComponent[] }): Promise<CoreResult<{
   commit?: Commit;                  // when the local side changed
   remoteNeedsWrite: boolean;        // the merged result differs from the remote → Sync writes it back
-  cachedKey?: CachedKey;            // when a KDF seed or a key was adopted
   stats: { added: number; updated: number; deleted: number };
 }>>;
 ```
 
 - KeePassXC `Merger` semantics (ADR-0008). Used by WebDAV Sync, Chrome file Sync and Firefox Re-import….
 - Without `components` the Core opens the remote with its own hashed Composite key; a different KDF seed costs one KDF run.
-- If that key fails: `RemoteKeyChanged`. Sync stops pushing; the UI asks for the new key; TS calls `merge(remote, { components })`. The Local copy then takes the remote's key and encryption settings, and the result carries a new `cachedKey`.
+- If that key fails: `RemoteKeyChanged`. Sync stops pushing; the UI asks for the new key; TS calls `merge(remote, { components })`. The Local copy then takes the remote's key and encryption settings, and the `commit` carries a new `cachedKey`.
+- Adopting a KDF seed or a key changes the Local copy, so `merge` returns its new `cachedKey` only in `Commit.cachedKey`.
 - If the Database has a challenge-response component and the remote's KDF seed differs: `ChallengeResponseRequired { challenge }`. TS asks the provider and retries with `components` including the response. Stateless, like unlock. KDBX 4.x only: challenge-response is not supported for a KDBX 3.1 remote, whose challenge is the master seed ([#80](https://github.com/maxdubmors/rimlock/issues/80)).
 
 ## 7. Verify-on-commit
@@ -288,7 +288,7 @@ type CoreResult<T> = { ok: true; value: T } | { ok: false; error: CoreError | { 
 - One queue: calls on a handle never run concurrently.
 - Every `SecretBytes` is wrapped into a `Secret` on arrival; every `Secret` input is unwrapped only at the call, into its UTF-8 bytes, and wiped after it. The generated bindings therefore take `SecretBytes` wherever this file says `Secret` (`KeyComponent`'s `Password` is `{ kind: 'Password'; value: SecretBytes }`).
 - **The Local copy is the source of truth; the in-memory Database is its cache.** A `Commit` is stored atomically in IndexedDB before the result is reported as saved. If storing fails, the handle is dropped and rebuilt from the Local copy; the edit is lost and the user sees an error.
-- A new `cachedKey` replaces the one in `storage.session` through the single restore point of ADR-0012. One that comes with a `commit` (in the `Commit` of `apply`, or next to the `commit` of `merge`) replaces it only after the `Commit` is stored in the Local copy. If storing the `Commit` fails, the old `cachedKey` stays, and the rebuild from the Local copy uses it. A `cachedKey` without a `commit` (`unlock`) is stored as soon as it arrives; `merge` returns one only with a `commit`, because adopting a KDF seed or a key changes the Local copy. Apart from an update that changed the `CachedKey` format, the only way to a stale `CachedKey` is then the background dying between the two writes, and that locks (§ 11).
+- A new `cachedKey` replaces the one in `storage.session` through the single restore point of ADR-0012. One in a `Commit` (of `apply` or `merge`) replaces it only after the `Commit` is stored in the Local copy. If storing the `Commit` fails, the old `cachedKey` stays, and the rebuild from the Local copy uses it. The `cachedKey` of `unlock` comes without a `Commit` and is stored as soon as it arrives. Apart from an update that changed the `CachedKey` format, the only way to a stale `CachedKey` is then the background dying between the two writes, and that locks (§ 11).
 
 ## 10. Source adapter (TS)
 
@@ -315,5 +315,5 @@ type SourceResult<T> = { ok: true; value: T } | { ok: false; error: SourceError 
 - **Unlock:** popup sends components → background: Local copy (or Source read on first add) → `readHeader` → provider if configured → `unlock` → store `cachedKey` in `storage.session`.
 - **Wake-up:** `open(localCopy, cachedKey)`; `CachedKeyStale` → lock.
 - **Edit:** `apply([...])` → store `Commit` in the Local copy → Sync pushes when it can.
-- **Sync:** `stat`; if the version differs from the last synced one: `read` → `merge` → store `commit` if any, then its `cachedKey` if any (§ 9) → `write(bytes, version)` if `remoteNeedsWrite` or there were Pending changes before the merge; otherwise mark the Local copy synced with the remote version without writing (a merge commit alone is not a Pending change); `conflict` → start over. Full loop: [`sources.md`](sources.md) § Sync.
-- **Key changed elsewhere:** `RemoteKeyChanged` → push stops → user enters the new key → `merge` with `components` → store the `commit`, then the new `cachedKey` (§ 9).
+- **Sync:** `stat`; if the version differs from the last synced one: `read` → `merge` → store `commit` if any, then its `Commit.cachedKey` if any (§ 9) → `write(bytes, version)` if `remoteNeedsWrite` or there were Pending changes before the merge; otherwise mark the Local copy synced with the remote version without writing (a merge commit alone is not a Pending change); `conflict` → start over. Full loop: [`sources.md`](sources.md) § Sync.
+- **Key changed elsewhere:** `RemoteKeyChanged` → push stops → user enters the new key → `merge` with `components` → store the `commit`, then its new `Commit.cachedKey` (§ 9).

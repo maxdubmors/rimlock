@@ -6,7 +6,7 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
 
 - Every Database has a **Local copy**: its encrypted `.kdbx` bytes in IndexedDB, keyed by Database id. For a Chrome file it duplicates the file; for a Firefox import it *is* the Database; for WebDAV it is the offline copy.
 - **The Local copy is the source of truth; the Core's in-memory Database is its cache.** Every `Commit` (from `apply` or `merge`) is stored atomically before the result is reported. If storing fails, the background drops the Core handle and rebuilds it from the Local copy; the edit is lost and the user sees an error.
-- A `cachedKey` that comes with a `Commit` replaces the one in `storage.session` only after the `Commit` is stored. If storing the `Commit` fails, the old `cachedKey` stays and the rebuild uses it ([`core-api.md`](core-api.md) § 9).
+- When a `cachedKey` in a `Commit` replaces the one in `storage.session`: [`core-api.md`](core-api.md) § 9.
 - **Pending changes** are counted by a `revision` in the Local copy store: it increments on every stored `Commit`, and Sync records `lastSyncedRevision`. Pending changes exist when `revision ≠ lastSyncedRevision`.
 - `unlimitedStorage` is required so the Local copy is never evicted ([ADR-0013](../adr/0013-permissions-frozen-required-set.md)).
 
@@ -29,7 +29,7 @@ The same loop for every live Source:
 
 1. `stat()`. If the version equals the last synced version and there are no Pending changes, stop.
 2. Note whether there were Pending changes **before** the Merge.
-3. If the version differs: `read()`, then `CoreClient.merge(remoteBytes)`. Store the `commit` if there is one, then the `cachedKey` if there is one.
+3. If the version differs: `read()`, then `CoreClient.merge(remoteBytes)`. Store the `commit` if there is one, then its `Commit.cachedKey` if there is one ([`core-api.md`](core-api.md) § 9).
 4. If there were no Pending changes before the Merge and `remoteNeedsWrite` is false, the Local copy now holds what the remote holds: record the remote version and set `lastSyncedRevision` to the current revision. Stop; nothing is written.
 5. Otherwise `write(bytes, version)`. On `conflict`, start over from 1, at most 3 times, then fall back to the normal retry backoff.
 6. On success, record the new version and `lastSyncedRevision`.
