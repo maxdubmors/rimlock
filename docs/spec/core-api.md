@@ -2,7 +2,7 @@
 
 The contract between the Core (Rust, compiled to WASM) and the TypeScript side of the Extension, plus the contract every Source adapter implements. Agents implement both sides against this file; the `tsify`-generated types must match it. Signatures are written in TypeScript notation as TS sees them.
 
-Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
+Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28); the write order of a `Commit` and its `cachedKey` in [Stale CachedKey on wake-up: lock, or rebuild from the hashed Composite key (ADR-0005)?](https://github.com/maxdubmors/rimlock/issues/87). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
 
 ## 1. Shape
 
@@ -91,6 +91,7 @@ type CoreInfo = { version: string };   // the rimlock-core crate version
 - `unlock` reads the header as `readHeader` does first, so a file `readHeader` rejects fails `unlock` with the same error. No components, a password that is not UTF-8, or a Key file that does not parse, is `WrongKey` too (KeePass hashes any bytes as a Key file). A second `Password` or `KeyFile` component is `Internal`, a bug in the caller.
 - The bindings are synchronous, like every binding: `CoreClient` makes the calls async.
 - `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks. A `CachedKey` of another format version, as after an update that changed it, is `CachedKeyStale` too; one from another Database is `CachedKeyStale` or `WrongKey`.
+- `open` never reads the hashed Composite key in the `CachedKey` and never runs the KDF. The hashed Composite key is there for `merge` (§ 6): it opens a remote that another client saved with a fresh KDF seed, without the Master password, at one KDF run. A `CachedKeyStale` on wake-up therefore means the Local copy and `storage.session` are out of step (§ 9), and the background locks.
 - The Core runs the KDF itself, behind an injected `Kdf`, and keepass-rs decrypts with the transformed key, so `open` cannot run it: Core tests hand `open` a KDF that fails if called.
 - The `CachedKey` binds the Argon2 version too, so `readHeader` reads it: a missing one, or one other than `0x10` and `0x13`, is `Corrupt { reason: 'KdfParameters' }`, as keepass-rs rejects it. `HeaderInfo` leaves it out.
 
@@ -287,7 +288,7 @@ type CoreResult<T> = { ok: true; value: T } | { ok: false; error: CoreError | { 
 - One queue: calls on a handle never run concurrently.
 - Every `SecretBytes` is wrapped into a `Secret` on arrival; every `Secret` input is unwrapped only at the call, into its UTF-8 bytes, and wiped after it. The generated bindings therefore take `SecretBytes` wherever this file says `Secret` (`KeyComponent`'s `Password` is `{ kind: 'Password'; value: SecretBytes }`).
 - **The Local copy is the source of truth; the in-memory Database is its cache.** A `Commit` is stored atomically in IndexedDB before the result is reported as saved. If storing fails, the handle is dropped and rebuilt from the Local copy; the edit is lost and the user sees an error.
-- A new `cachedKey` in any result replaces the one in `storage.session` at once (this is also the single restore point of ADR-0012).
+- A new `cachedKey` replaces the one in `storage.session` through the single restore point of ADR-0012. One that comes with a `commit` (in the `Commit` of `apply`, or next to the `commit` of `merge`) replaces it only after the `Commit` is stored in the Local copy. If storing the `Commit` fails, the old `cachedKey` stays, and the rebuild from the Local copy uses it. A `cachedKey` without a `commit` (`unlock`) is stored as soon as it arrives. The only way to a stale `CachedKey` is then the background dying between the two writes, and that locks (§ 11).
 
 ## 10. Source adapter (TS)
 
@@ -314,5 +315,5 @@ type SourceResult<T> = { ok: true; value: T } | { ok: false; error: SourceError 
 - **Unlock:** popup sends components → background: Local copy (or Source read on first add) → `readHeader` → provider if configured → `unlock` → store `cachedKey` in `storage.session`.
 - **Wake-up:** `open(localCopy, cachedKey)`; `CachedKeyStale` → lock.
 - **Edit:** `apply([...])` → store `Commit` in the Local copy → Sync pushes when it can.
-- **Sync:** `stat`; if the version differs from the last synced one: `read` → `merge` → store `commit` if any → `write(bytes, version)` if `remoteNeedsWrite` or there were Pending changes before the merge; otherwise mark the Local copy synced with the remote version without writing (a merge commit alone is not a Pending change); `conflict` → start over. Full loop: [`sources.md`](sources.md) § Sync.
-- **Key changed elsewhere:** `RemoteKeyChanged` → push stops → user enters the new key → `merge` with `components`.
+- **Sync:** `stat`; if the version differs from the last synced one: `read` → `merge` → store `commit` if any, then its `cachedKey` if any (§ 9) → `write(bytes, version)` if `remoteNeedsWrite` or there were Pending changes before the merge; otherwise mark the Local copy synced with the remote version without writing (a merge commit alone is not a Pending change); `conflict` → start over. Full loop: [`sources.md`](sources.md) § Sync.
+- **Key changed elsewhere:** `RemoteKeyChanged` → push stops → user enters the new key → `merge` with `components` → store the `commit`, then the new `cachedKey` (§ 9).

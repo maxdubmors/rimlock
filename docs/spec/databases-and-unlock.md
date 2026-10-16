@@ -71,6 +71,7 @@ Until M3 there is no write step in Sync, so **Sync first** is not offered before
 - **Only the background** (Chrome service worker, Firefox event page) holds the Core and the Unlocked Database. Popup, tab, options page, content scripts and the Inline menu iframe are clients over typed messages.
 - `storage.session` holds, per Database: the opaque `CachedKey` (hashed Composite key plus the transformed-key cache tied to the KDF seed and parameters), lock metadata (last use, deadlines, lock reason), the Draft and pending saves. It is never the Master password or the Key file bytes. The access level of `storage.session` stays `TRUSTED_CONTEXTS`.
 - On every wake-up: check the Auto-lock deadlines, then `open(localCopy, cachedKey)`. No KDF, no Source read. `CachedKeyStale` locks.
+- `open` never reads the hashed Composite key in the `CachedKey` and never runs the KDF. The hashed Composite key is there for `merge`: it opens a remote that another client saved with a fresh KDF seed, without the Master password, at one KDF run ([`sources.md`](sources.md) § Sync). A `CachedKeyStale` on wake-up means the Local copy and `storage.session` are out of step, so the background locks rather than guess why.
 - **Acceptance criterion:** the rebuild (WASM instantiate + IndexedDB read + decrypt + XML parse) takes **≤ 200 ms** for the reference Database (~1000 Entries with History, ~1 MB) on a mid-range laptop in Chrome and Firefox. Measured in M0 ([`verification.md`](verification.md) V1).
 - The `CoreClient` runs calls on the handle one at a time. A WASM panic marks the Core dead (`CoreUnavailable`), and the background rebuilds it from the Local copy.
 
@@ -85,7 +86,7 @@ Until M3 there is no write step in Sync, so **Sync first** is not offered before
   5. pending saves are dropped;
   6. the clipboard is cleared at once if it still holds our value;
   7. an upload of encrypted bytes already in flight continues; a Merge that needs to decrypt the remote waits for the next unlock.
-- **One restore point:** the only code that puts key material into `storage.session` is the one function that stores a `CachedKey` from a Core result. Quick unlock will reuse it (ADR-0012).
+- **One restore point:** the only code that puts key material into `storage.session` is the one function that stores a `CachedKey` from a Core result. Quick unlock will reuse it (ADR-0012). A `CachedKey` that comes with a `Commit` is stored only after the `Commit` is in the Local copy; if that store fails, the old one stays ([`core-api.md`](core-api.md) § 9).
 
 ## Auto-lock
 
@@ -105,4 +106,4 @@ Global Settings, the same in both browsers:
 - Never request the `background` permission: it keeps Chrome's profile, and `storage.session` with it, alive after the last window closes.
 - Changing T1 recomputes the deadline as last use + new value, so shortening it below the time already idle locks at the next check.
 
-Decision detail: [Decide where the unlocked Database lives and how locking works](https://github.com/maxdubmors/rimlock/issues/12), [Decide first run and adding a Database](https://github.com/maxdubmors/rimlock/issues/27), [Decide quick unlock](https://github.com/maxdubmors/rimlock/issues/22).
+Decision detail: [Decide where the unlocked Database lives and how locking works](https://github.com/maxdubmors/rimlock/issues/12), [Decide first run and adding a Database](https://github.com/maxdubmors/rimlock/issues/27), [Decide quick unlock](https://github.com/maxdubmors/rimlock/issues/22), [Stale CachedKey on wake-up: lock, or rebuild from the hashed Composite key (ADR-0005)?](https://github.com/maxdubmors/rimlock/issues/87).
