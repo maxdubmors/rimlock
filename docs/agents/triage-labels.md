@@ -18,6 +18,6 @@ Its acceptance criteria list what this ticket makes observable, checked against 
 
 In a documentation ticket, Desired behavior is text the agent copies into the spec. Before the label goes on, that text is reviewed as a diff against the spec rules of [`CODING_STANDARDS.md`](../../CODING_STANDARDS.md) (sourced claims, one home per rule, docs describe what exists), and a sentence that fails is rewritten in the ticket. A rule the ticket adds or rewords names its one home ([`docs/spec/README.md`](../spec/README.md) § How the docs fit together); every other file that states it links there instead.
 
-A test that holds behaviour the ticket leaves unchanged is a **pin**, and the ticket calls it one: it passes on `main` from the start, and "a bug fix starts with a failing test" covers only the behaviour the ticket changes.
+A test that holds behaviour the ticket leaves unchanged is a **pin**, and the ticket calls it one: it passes on `main` from the start and goes _red_ once that behaviour is removed. The criterion names each run where it goes red (`pnpm test` on a fake, `pnpm test:e2e` on the real thing); the implementing agent checks it by removing the behaviour once and restoring it. "A bug fix starts with a failing test" covers only the behaviour the ticket changes.
 
 Edit the right-hand column to match whatever vocabulary you actually use.
