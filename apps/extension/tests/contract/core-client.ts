@@ -205,6 +205,13 @@ export function describeCoreClientContract(subjectFor: () => Promise<CoreSubject
       expect(await db.info()).toEqual({ ok: false, error: { kind: 'Internal' } });
       expect((await client.readHeader(subject.databases.password.bytes)).ok).toBe(true);
     });
+
+    it('takes a second free() without reaching the Core', async () => {
+      const { db } = await unlocked(client, subject.databases.password);
+      await db.free();
+      await db.free();
+      expect((await client.readHeader(subject.databases.password.bytes)).ok).toBe(true);
+    });
   });
 }
 
