@@ -148,7 +148,7 @@ The rules every agent follows live in the root [`AGENTS.md`](../../AGENTS.md) §
 ## CI
 
 - GitHub Actions on GitHub-hosted runners (`ubuntu-24.04`, `ubuntu-24.04-arm`). Every action pinned by commit SHA; default `permissions: contents: read`, widened per job; no `pull_request_target`; no secrets in any pull-request job.
-- **Every pull request (required):** `pnpm check`, `pnpm test`, the regenerated `core-bindings/*.d.ts` equal to the committed ones, `pnpm test:e2e` in Chrome and Firefox, and the bundle report below.
+- **Every pull request (required):** `pnpm check`, `pnpm test`, the regenerated `core-bindings/*.d.ts` equal to the committed ones, the keepass-rs `rev` equal to the commit its `rimlock-*` tag names on the fork (`pnpm check:fork-pin`, [`crates/AGENTS.md`](../../crates/AGENTS.md) § Pinning), `pnpm test:e2e` in Chrome and Firefox, and the bundle report below.
 - **Path-filtered (required when they run):** `test:webdav` (`sources/`, the WebDAV suite or compose file); `test:interop` (`crates/`); the cross-architecture job (`crates/`, `Cargo.lock`, `rust-toolchain.toml`, `scripts/`, the Dockerfile, `pnpm-lock.yaml`), which runs `build-release.sh` natively on x86_64 and arm64 and fails if the `SHA256SUMS` differ.
   Each filters by a job-level `if:` on the output of a paths job in the same workflow, never by `on: … paths:`: a skipped job reports `skipped`, which a required check accepts, while a workflow that never starts leaves its required check waiting forever. The pull request that adds such a job asks the owner to add its `name:` to the required checks of the `main` ruleset.
 - **Nightly on `main`:** all of the above unfiltered, plus `cargo-fuzz`. A fuzz failure opens an issue and never blocks a merge.
