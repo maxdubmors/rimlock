@@ -14,6 +14,7 @@ The rules are `docs/spec/engineering.md` § TypeScript modules; `eslint.config.t
 - They are allowlists, because `import-x/no-restricted-paths` checks one import at a time and any unlisted path would let a re-export through. A module shared with content that needs anything outside the list is a design question: raise it, never add an exception.
 - Type-only imports count too.
 - Known gap: a property name computed at run time (`browser[key]`) escapes the storage rule.
+- A new restriction on a rule the boundary or storage blocks already set (`no-restricted-imports`, `no-restricted-properties`, `no-restricted-globals`) goes into that block. In a flat config, a later block that sets the same rule replaces its options for every file both blocks match.
 
 ## Manifest
 
