@@ -1,6 +1,6 @@
 //! Secrets never print their content (`docs/spec/core-api.md` § 8).
 
-use rimlock_core::{KeyComponent, SecretBytes, unlock};
+use rimlock_core::{CachedKey, Core, KeyComponent, SecretBytes, TransformedKey};
 
 use crate::fixtures::database;
 
@@ -37,10 +37,21 @@ fn key_components_do_not_print_their_content() {
 }
 
 #[test]
+fn key_material_does_not_print_its_content() {
+    let mut key = [0; 32];
+    key[..CANARY.len()].copy_from_slice(CANARY.as_bytes());
+    assert_hidden(&format!("{:?}", TransformedKey::from(key)));
+    assert_hidden(&format!(
+        "{:?}",
+        CachedKey::from(CANARY.as_bytes().to_vec())
+    ));
+}
+
+#[test]
 fn a_wrong_key_error_does_not_carry_the_password() {
     let (bytes, _) = database("scenario.kdbx");
     let password = KeyComponent::Password(SecretBytes::from(CANARY.as_bytes().to_vec()));
-    let Err(error) = unlock(&bytes, &[password]) else {
+    let Err(error) = Core::default().unlock(&bytes, &[password]) else {
         panic!("unlocked with the wrong password");
     };
     assert_hidden(&format!("{error:?}"));

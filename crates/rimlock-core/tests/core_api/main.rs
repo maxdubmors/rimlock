@@ -9,6 +9,7 @@ mod generator;
 
 mod fixtures;
 mod generator_output;
+mod open;
 mod read_header;
 mod secrets;
 mod unlock;

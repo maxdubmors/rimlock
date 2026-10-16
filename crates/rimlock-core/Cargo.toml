@@ -8,25 +8,26 @@ license.workspace = true
 repository.workspace = true
 publish.workspace = true
 
+# The Core runs the KDF itself (src/kdf.rs), so a test can inject one; keepass-rs takes the result.
 [dependencies]
-# The rimlock fork (crates/AGENTS.md § keepass-rs fork), pinned at tag rimlock-2026-10-15.
-keepass = { git = "https://github.com/maxdubmors/keepass-rs", rev = "28c078cfc8246357c81108fec72f1395448d3bbd" }
+aes = "0.9.3"
+# The rimlock fork (crates/AGENTS.md § keepass-rs fork), pinned at tag rimlock-2026-10-15.3.
+keepass = { git = "https://github.com/maxdubmors/keepass-rs", rev = "a501853ee2932199016bdc2a5f662f5de72176df" }
+rust-argon2 = "3.0.0"
+sha2 = "0.11.0"
 uuid = "1.18.1"
 zeroize = "1.9.0"
 
 # The test-Database generator (examples/fixtures) writes KDBX itself, so it needs the primitives.
 [dev-dependencies]
-aes = "0.9.3"
 base64 = "0.22.1"
 cbc = { version = "0.2.1", features = ["alloc"] }
 chacha20 = "0.10.2"
 flate2 = "1.1.10"
 hmac = "0.13.0"
-rust-argon2 = "3.0.0"
 salsa20 = "0.11.0"
 serde.workspace = true
 serde_json = "1.0.145"
-sha2 = "0.11.0"
 
 [lints]
 workspace = true

@@ -1,4 +1,4 @@
-//! `unlock` and the Unlocked Database (`docs/spec/core-api.md` § 3–4).
+//! `unlock`, `open` and the Unlocked Database (`docs/spec/core-api.md` § 3–4, ADR-0005).
 
 use keepass::{
     Database, DatabaseKey,
@@ -8,12 +8,26 @@ use keepass::{
     },
 };
 use uuid::Uuid;
+use zeroize::Zeroizing;
 
 use crate::{
+    cached_key::CachedKey,
     error::{CoreError, CorruptReason, UnsupportedReason, corrupt, unsupported},
     header::{FormatVersion, read_header},
+    kdf::{Kdf, RustKdf, TransformedKey},
     secret::KeyComponent,
 };
+
+/// The Core's injected dependencies: the KDF.
+pub struct Core {
+    kdf: Box<dyn Kdf>,
+}
+
+/// What `unlock` returns: the Database and the key material `open` rebuilds it from.
+pub struct Unlocked {
+    pub db: UnlockedDatabase,
+    pub cached_key: CachedKey,
+}
 
 /// One Unlocked Database: the decrypted model, held by the background alone.
 pub struct UnlockedDatabase {
@@ -49,23 +63,71 @@ impl UnlockedDatabase {
     }
 }
 
-/// Decrypts a `.kdbx` with the given Composite key; runs the KDF.
-///
-/// # Errors
-///
-/// What `read_header` returns for a file the Core cannot read; `WrongKey` when the components
-/// do not open it, when they are empty, and for any `ChallengeResponse` component, since no
-/// provider exists yet and challenge-response is not supported for KDBX 3.1 (ADR-0011);
-/// `Corrupt` for damage past the header; `Internal` for a second password or Key file, a bug in
-/// the caller.
-pub fn unlock(bytes: &[u8], components: &[KeyComponent]) -> Result<UnlockedDatabase, CoreError> {
-    let header = read_header(bytes)?;
-    let key = database_key(components)?;
-    let database =
-        Database::parse(bytes, key).map_err(|error| open_error(&error, header.format_version))?;
+impl Core {
+    /// A Core that runs `kdf`.
+    pub fn new(kdf: impl Kdf + 'static) -> Self {
+        Self { kdf: Box::new(kdf) }
+    }
+
+    /// Decrypts a `.kdbx` with the given Composite key; runs the KDF.
+    ///
+    /// # Errors
+    ///
+    /// What `read_header` returns for a file the Core cannot read; `WrongKey` when the components
+    /// do not open it, when they are empty, and for any `ChallengeResponse` component, since no
+    /// provider exists yet and challenge-response is not supported for KDBX 3.1 (ADR-0011);
+    /// `Corrupt` for damage past the header; `Internal` for a second password or Key file, a bug
+    /// in the caller.
+    pub fn unlock(&self, bytes: &[u8], components: &[KeyComponent]) -> Result<Unlocked, CoreError> {
+        let header = read_header(bytes)?;
+        let composite_key = Zeroizing::new(
+            database_key(components)?
+                .composite_key()
+                .map_err(|_| CoreError::Internal)?,
+        );
+        let transformed_key = self
+            .kdf
+            .transform(&composite_key, &header.kdf, &header.challenge)?;
+        let db = decrypt(bytes, &transformed_key, header.format_version)?;
+        let cached_key = CachedKey::new(&composite_key, &transformed_key, &header);
+        Ok(Unlocked { db, cached_key })
+    }
+
+    /// Rebuilds the Unlocked Database from the Local copy and its `CachedKey`; never runs the KDF.
+    ///
+    /// # Errors
+    ///
+    /// `CachedKeyStale` when the file's KDF seed or parameters differ from the cache's, as after
+    /// another client saved it, or for a `CachedKey` of another format; `WrongKey` for one that
+    /// does not open this file; otherwise what `unlock` returns for the file.
+    pub fn open(
+        &self,
+        bytes: &[u8],
+        cached_key: &CachedKey,
+    ) -> Result<UnlockedDatabase, CoreError> {
+        let header = read_header(bytes)?;
+        let transformed_key = cached_key.transformed_key_for(&header)?;
+        decrypt(bytes, &transformed_key, header.format_version)
+    }
+}
+
+impl Default for Core {
+    /// A Core that runs `RustKdf`.
+    fn default() -> Self {
+        Self::new(RustKdf)
+    }
+}
+
+fn decrypt(
+    bytes: &[u8],
+    transformed_key: &TransformedKey,
+    format_version: FormatVersion,
+) -> Result<UnlockedDatabase, CoreError> {
+    let database = Database::parse_with_transformed_key(bytes, transformed_key.expose())
+        .map_err(|error| open_error(&error, format_version))?;
     Ok(UnlockedDatabase {
         database,
-        format_version: header.format_version,
+        format_version,
     })
 }
 

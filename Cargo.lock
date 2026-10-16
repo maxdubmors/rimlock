@@ -403,7 +403,7 @@ dependencies = [
 [[package]]
 name = "keepass"
 version = "0.0.0-placeholder-version"
-source = "git+https://github.com/maxdubmors/keepass-rs?rev=28c078cfc8246357c81108fec72f1395448d3bbd#28c078cfc8246357c81108fec72f1395448d3bbd"
+source = "git+https://github.com/maxdubmors/keepass-rs?rev=a501853ee2932199016bdc2a5f662f5de72176df#a501853ee2932199016bdc2a5f662f5de72176df"
 dependencies = [
  "aes",
  "base64 0.23.1",
@@ -540,6 +540,7 @@ dependencies = [
 name = "rimlock-core-wasm"
 version = "0.0.0"
 dependencies = [
+ "js-sys",
  "rimlock-core",
  "serde",
  "serde_bytes",

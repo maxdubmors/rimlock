@@ -12,6 +12,7 @@ publish.workspace = true
 crate-type = ["cdylib"]
 
 [dependencies]
+js-sys = "0.3.106"
 rimlock-core = { path = "../rimlock-core" }
 serde.workspace = true
 serde_bytes.workspace = true

@@ -17,11 +17,11 @@ The boundary follows meaning, not convenience. The Core holds the decrypted Data
 - What crosses the boundary: `EntrySummary` (UUID, title, username, URLs, tags, Group path, icon, flags, has-TOTP, and `MatchingInfo`, which normalises `URL`/`KP2A_URL*`/`URL_n`/Kee/KeePassXC CustomData/AutoType opt-outs) crosses freely. Secrets (password, protected strings, TOTP seed, notes) cross only on an explicit per-use command and arrive in TS wrapped in a `Secret` that is never printed or serialised by accident; only the messaging codec encodes it (ADR-0014, [`docs/spec/core-api.md`](../spec/core-api.md)). In Rust they live in `zeroize` types. No full TS-side model of the Database exists.
 - The keepass-rs fixes the MVP needs:
   - open Groups with unknown children (dropping them) and non-contiguous `<String>` (quick-xml `overlapped-lists`);
-  - a KDF hook so AES-KDF runs in WebCrypto;
   - complete merge with attachments, icons and Meta, or an own merge in the Core;
   - v2 key file hash check;
   - never write above KDBX 4.1, with a verified 3.1 → 4.1 round trip.
 - Opening from a cached transformed key and saving without re-running the KDF (reusing the KDF seed with a fresh master seed) are MVP fixes too, per ADR-0005. Note that KeePassXC does not do this: it draws a fresh KDF seed on every save.
+- The Core runs the KDF itself, behind an injected `Kdf`, and keepass-rs only decrypts with the transformed key. A test can then show that the wake-up rebuild never runs the KDF, and AES-KDF moves to WebCrypto behind that same `Kdf`, so the fork needs no KDF hook. The cost is that the Core keeps its own Argon2 and AES-KDF calls, on the same crates keepass-rs uses.
 - A challenge-response injection hook is not built for the MVP, but the API must leave room for it. KDBX 4.0 writes are not needed.
 - The Rust toolchain enters the reproducible build AMO requires. The `.wasm` is built in a pinned container, and a Firefox WASM smoke test plus an AMO unlisted dry run come first in implementation.
-- Decision detail: [Lock the stack and the TS/Rust split](https://github.com/maxdubmors/rimlock/issues/11).
+- Decision detail: [Lock the stack and the TS/Rust split](https://github.com/maxdubmors/rimlock/issues/11); the KDF in the Core: [Rebuild from a CachedKey with open (fork fix)](https://github.com/maxdubmors/rimlock/issues/46).

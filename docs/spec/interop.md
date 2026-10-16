@@ -9,7 +9,7 @@ The same `.kdbx` is edited by KeePassXC, KeePass 2.x, Strongbox, KeePassDX, Keep
 - rimlock's own saves reuse the KDF seed and draw a fresh master seed. A new KDF seed is drawn only when the Composite key or the KDF parameters change ([ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md)).
 - **Never write non-standard XML.** KeePassium refuses files with any unknown element. If rimlock ever needs its own data, it goes into `rimlock.`-prefixed CustomData. In the MVP rimlock writes no data of its own.
 - Unknown CustomData, passkeys, attachments, custom icons, tags, History and the Recycle Bin survive byte for byte.
-- Required keepass-rs fork fixes: open Groups with unknown children (dropping them) and non-contiguous `<String>`; a KDF hook so AES-KDF runs in WebCrypto; complete Merge; v2 Key file hash check; never write above 4.1, with a verified 3.1 → 4.1 round trip; open from a cached transformed key; save without re-running the KDF ([ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)).
+- Required keepass-rs fork fixes: open Groups with unknown children (dropping them) and non-contiguous `<String>`; complete Merge; v2 Key file hash check; never write above 4.1, with a verified 3.1 → 4.1 round trip; open from a cached transformed key; save without re-running the KDF ([ADR-0003](../adr/0003-core-over-keepass-rs-fork.md)). The KDF itself runs in the Core ([`core-api.md`](core-api.md) § 3), where AES-KDF moves to WebCrypto.
 
 ## Untouched means byte-identical
 

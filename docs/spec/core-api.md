@@ -9,7 +9,7 @@ Decided in [Define the Core API and the Source adapter contract](https://github.
 - The WASM bindings crate exports **free functions** without state (`coreInfo`, `readHeader`, `unlock`, `open`) and one **handle class**, `UnlockedDatabase`, that holds the keepass-rs model of one Unlocked Database. Each method has its own input and output types.
 - keepass-rs types never cross the seam.
 - Only the background calls the Core, through a TS wrapper `CoreClient`. Popup, extension pages, content scripts and the Inline menu iframe never see Core types directly; they speak the background's own messaging protocol, which is a separate TS layer (it adds Auto-lock checks, Sync, pending saves).
-- All calls are async from TS. Argon2 runs synchronously inside WASM and blocks the worker for ~0.7 s during `unlock` and `merge`; the UI shows a spinner. AES-KDF runs in WebCrypto through the keepass-rs KDF hook.
+- All calls are async from TS. Argon2 runs synchronously inside WASM and blocks the worker for ~0.7 s during `unlock` and `merge`; the UI shows a spinner. AES-KDF runs in WebCrypto through the Core's injected `Kdf` (§ 3), so no keepass-rs hook is needed.
 - Quick unlock adds no Core command (ADR-0012).
 
 ## 2. Shared types
@@ -89,8 +89,10 @@ type CoreInfo = { version: string };   // the rimlock-core crate version
 - In the MVP no provider exists, so a challenge-response Database fails with `WrongKey` (ADR-0011). Core tests use a software HMAC-SHA1 provider over `challenge` as the reference.
 - Challenge-response is not supported for KDBX 3.1, now or after the Companion: KeePassXC challenges the master seed there, not `challenge`, and hashes the response in after the KDF, so it would need a second key shape in the `CachedKey` ([#80](https://github.com/maxdubmors/rimlock/issues/80)). A `ChallengeResponse` component on a 3.1 file is `WrongKey`; the user converts the file to KDBX 4 in KeePassXC.
 - `unlock` reads the header as `readHeader` does first, so a file `readHeader` rejects fails `unlock` with the same error. No components, a password that is not UTF-8, or a Key file that does not parse, is `WrongKey` too (KeePass hashes any bytes as a Key file). A second `Password` or `KeyFile` component is `Internal`, a bug in the caller.
-- Until [#46](https://github.com/maxdubmors/rimlock/issues/46) adds the `CachedKey`, the bindings' `unlock` returns the `UnlockedDatabase` alone, and synchronously, like every binding (`CoreClient` makes the calls async).
-- `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks.
+- The bindings are synchronous, like every binding: `CoreClient` makes the calls async.
+- `open` is the wake-up rebuild (ADR-0005). If the Local copy's KDF seed or parameters do not match the cache, it returns `CachedKeyStale` and the background locks. A `CachedKey` of another format version, as after an update that changed it, is `CachedKeyStale` too; one from another Database is `CachedKeyStale` or `WrongKey`.
+- The Core runs the KDF itself, behind an injected `Kdf`, and keepass-rs decrypts with the transformed key, so `open` cannot run it: Core tests hand `open` a KDF that fails if called.
+- The `CachedKey` binds the Argon2 version too, so `readHeader` reads it: a missing one, or one other than `0x10` and `0x13`, is `Corrupt { reason: 'KdfParameters' }`, as keepass-rs rejects it. `HeaderInfo` leaves it out.
 
 ## 4. `UnlockedDatabase`: reads
 
