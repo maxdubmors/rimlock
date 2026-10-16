@@ -4,9 +4,7 @@ import { CoreClient } from '../../src/background/core-client';
 import { fakeDatabase, FakeCore } from '../../src/background/fake-core';
 import { describeCoreClientContract, type TestDatabase } from './core-client';
 
-function database(
-  options: Omit<TestDatabase, 'bytes'> & { seed?: string; iterations?: number },
-): TestDatabase {
+function database(options: Omit<TestDatabase, 'bytes'> & { seed?: string }): TestDatabase {
   return { ...options, bytes: fakeDatabase(options) };
 }
 

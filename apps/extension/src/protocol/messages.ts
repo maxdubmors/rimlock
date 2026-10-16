@@ -10,7 +10,7 @@ export type Request = StatusRequest;
 
 export type StatusResponse =
   | { core: 'running'; version: string }
-  /** The Core could not be instantiated in this background (core-api.md § 8, `CoreUnavailable`). */
+  /** The Core could not be instantiated in this background, or a panic aborted it (core-api.md § 8, `CoreUnavailable`). */
   | { core: 'unavailable' };
 
 /** The background's answer to each kind of request. */

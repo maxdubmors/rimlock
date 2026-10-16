@@ -19,11 +19,8 @@ export type CoreBindings = Pick<typeof Bindings, 'coreInfo' | 'readHeader' | 'un
 /** The Core cannot answer: it failed to instantiate, or a panic aborted it (core-api.md § 8). */
 export type CoreUnavailable = { kind: 'CoreUnavailable' };
 
-/** core-api.md § 8; `E` narrows it for a call that can fail in fewer ways. */
-export type CoreResult<
-  T,
-  E extends CoreError | CoreUnavailable = CoreError | CoreUnavailable,
-> = Result<T, E>;
+/** core-api.md § 8. */
+export type CoreResult<T> = Result<T, CoreError | CoreUnavailable>;
 
 /**
  * One part of the Composite key (core-api.md § 2). The bindings take the Master password as UTF-8
@@ -52,10 +49,16 @@ export class CoreClient {
     this.#load = load;
   }
 
-  /** The Core's version. It holds no state, so any failure means the bindings are broken. */
-  async coreInfo(): Promise<CoreResult<CoreInfo, CoreUnavailable>> {
+  /**
+   * The Core's version. It holds no state, so any failure means the bindings are broken: the
+   * instance is dead (core-api.md § 3).
+   */
+  async coreInfo(): Promise<Result<CoreInfo, CoreUnavailable>> {
     const result = await this.#call((core) => core.coreInfo());
-    return result.ok ? result : unavailable;
+    if (result.ok) return result;
+    // A failed instantiation is retried; a CoreError from the bindings means they are broken.
+    if (result.error.kind !== 'CoreUnavailable') this.#dead = true;
+    return unavailable;
   }
 
   readHeader(bytes: Uint8Array): Promise<CoreResult<HeaderInfo>> {
@@ -71,9 +74,9 @@ export class CoreClient {
       const bound = components.map(unwrap);
       try {
         const unlocked = core.unlock(bytes, bound);
-        return { db: this.#handle(unlocked.db), cachedKey: new Secret(unlocked.cachedKey) };
+        return { db: this.#wrap(unlocked.db), cachedKey: new Secret(unlocked.cachedKey) };
       } finally {
-        bound.forEach(wipe);
+        bound.forEach(wipeUnwrapped);
       }
     });
   }
@@ -83,14 +86,14 @@ export class CoreClient {
     return this.#call((core) => {
       const key = exposeSecret(cachedKey);
       try {
-        return this.#handle(core.open(localCopyBytes, key));
+        return this.#wrap(core.open(localCopyBytes, key));
       } finally {
         key.fill(0);
       }
     });
   }
 
-  #handle(db: BoundDatabase): UnlockedDatabase {
+  #wrap(db: BoundDatabase): UnlockedDatabase {
     return new UnlockedDatabase(db, (run) => this.#call(run));
   }
 
@@ -179,7 +182,7 @@ function unwrap(component: KeyComponent): BoundKeyComponent {
 }
 
 /** Zeroes the bytes `unwrap` took out of a Secret, once the call has them. */
-function wipe(component: BoundKeyComponent): void {
+function wipeUnwrapped(component: BoundKeyComponent): void {
   if (component.kind === 'Password') component.value.fill(0);
 }
 

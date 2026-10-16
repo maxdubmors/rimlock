@@ -162,6 +162,8 @@ export function createConfig(root: string): Linter.Config[] {
               "ImportSpecifier[imported.name='exposeSecret']",
               "ExportSpecifier[local.name='exposeSecret']",
               "MemberExpression[property.name='exposeSecret']",
+              "MemberExpression[property.value='exposeSecret']",
+              "ObjectPattern > Property[key.name='exposeSecret']",
             ].join(', '),
             message:
               "Only the protocol codec and CoreClient read a Secret's bytes; everything else uses reveal().",

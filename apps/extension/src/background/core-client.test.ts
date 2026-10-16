@@ -81,6 +81,14 @@ describe('a panic in the Core', () => {
     expect(handle.free).not.toHaveBeenCalled();
   });
 
+  it('is any failure of coreInfo, which holds no state: the bindings are broken', async () => {
+    const { core, client } = stubCore();
+    core.coreInfo.mockImplementation(() => fail({ kind: 'Internal' }));
+    expect(await client.coreInfo()).toEqual(unavailable);
+    expect(await client.readHeader(new Uint8Array())).toEqual(unavailable);
+    expect(core.readHeader).not.toHaveBeenCalled();
+  });
+
   it('is told apart from a CoreError by its shape', async () => {
     const { core, client } = stubCore();
     core.readHeader.mockImplementationOnce(() => {

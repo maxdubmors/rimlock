@@ -1,5 +1,5 @@
-// The one place a Secret is encoded (docs/spec/core-api.md § 2, security.md § Leaks): a message
-// that carries one holds it as `{ $secret: base64 }`, and its parser decodes that field back.
+// The one place a Secret is encoded (docs/spec/core-api.md § 2, security.md § Leaks): as
+// `{ $secret: base64 }`, for a message to carry and its parser to decode back.
 
 import { exposeSecret, Secret } from '../shared/secret';
 

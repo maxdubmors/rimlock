@@ -3,7 +3,8 @@ import { browser } from 'wxt/browser';
 import type { CoreInfo } from '../core-bindings/rimlock_core_wasm.js';
 import { parseRequest, type Request, type ResponseTo } from '../protocol/messages';
 import { core } from './core';
-import type { CoreResult, CoreUnavailable } from './core-client';
+import type { Result } from '../shared/result';
+import type { CoreUnavailable } from './core-client';
 
 /**
  * The background's answer to one request, from the Core that `readCoreInfo` reaches. Never
@@ -11,7 +12,7 @@ import type { CoreResult, CoreUnavailable } from './core-client';
  */
 export async function answer(
   request: Request,
-  readCoreInfo: () => Promise<CoreResult<CoreInfo, CoreUnavailable>> = () => core.coreInfo(),
+  readCoreInfo: () => Promise<Result<CoreInfo, CoreUnavailable>> = () => core.coreInfo(),
 ): Promise<ResponseTo<Request>> {
   switch (request.kind) {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- one kind so far; reported as unused once a second arrives

@@ -99,7 +99,7 @@ One command: formatting check, lint, type checks, clippy and the comment check.
 **Fakes and contract suites**
 
 - `FakeCore` (in-memory, typed against the committed `core-bindings/*.d.ts`) and `FakeSource` (in-memory, with fault injection: failed condition, network down, file changed between `stat` and `write`) live next to their interfaces, so TypeScript-only work needs no Rust toolchain.
-- A fake exists only with a **contract suite** that runs the same tests against the fake and the real thing: the Core suite against the WASM build (`dev-wasm`), instantiated in Node; the WebDAV adapter suite against the Docker matrix; the Chrome local-file adapter suite against OPFS handles in real Chrome.
+- A fake exists only with a **contract suite** that runs the same tests against the fake and the real thing: the Core suite against the WASM build (`dev-wasm`); the WebDAV adapter suite against the Docker matrix; the Chrome local-file adapter suite against OPFS handles in real Chrome.
 
 **Core depth**
 

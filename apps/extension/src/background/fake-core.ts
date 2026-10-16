@@ -83,7 +83,7 @@ export class FakeCore implements CoreBindings {
     components: KeyComponent[],
   ): { db: UnlockedDatabase; cachedKey: Uint8Array } {
     const file = readFile(bytes);
-    const key = keyOf(components);
+    const key = fakeKeyOf(components);
     if (!sameKey(key, file.key)) fail({ kind: 'WrongKey' });
     const cachedKey = encode(cachedKeyMarker, { seed: file.seed, kdf: file.kdf, key });
     return { db: new FakeUnlockedDatabase(file), cachedKey };
@@ -131,7 +131,7 @@ class FakeUnlockedDatabase {
 }
 
 /** The Composite key as the Core reads the components, in their order (core-api.md § 3). */
-function keyOf(components: KeyComponent[]): FakeKey {
+function fakeKeyOf(components: KeyComponent[]): FakeKey {
   const key: FakeKey = {};
   for (const component of components) {
     switch (component.kind) {
