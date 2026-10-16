@@ -50,6 +50,8 @@ export function describeCoreClientContract(subjectFor: () => Promise<CoreSubject
   let subject: CoreSubject;
   let client: CoreClient;
 
+  // One client for the whole suite: a case that kills the Core fails every later one with
+  // CoreUnavailable, so check a single case with `-t`.
   beforeAll(async () => {
     subject = await subjectFor();
     client = subject.client;
