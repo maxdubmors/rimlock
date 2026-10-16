@@ -242,7 +242,7 @@ type EntryEdit =
 
 ```ts
 merge(remoteBytes: Uint8Array, opts?: { components?: KeyComponent[] }): Promise<CoreResult<{
-  commit?: Commit;                  // when the local side changed; Commit.cachedKey when a KDF seed or a key was adopted
+  commit?: Commit;                  // when the local side changed
   remoteNeedsWrite: boolean;        // the merged result differs from the remote → Sync writes it back
   stats: { added: number; updated: number; deleted: number };
 }>>;
@@ -251,7 +251,7 @@ merge(remoteBytes: Uint8Array, opts?: { components?: KeyComponent[] }): Promise<
 - KeePassXC `Merger` semantics (ADR-0008). Used by WebDAV Sync, Chrome file Sync and Firefox Re-import….
 - Without `components` the Core opens the remote with its own hashed Composite key; a different KDF seed costs one KDF run.
 - If that key fails: `RemoteKeyChanged`. Sync stops pushing; the UI asks for the new key; TS calls `merge(remote, { components })`. The Local copy then takes the remote's key and encryption settings, and the `commit` carries a new `cachedKey`.
-- Adopting a KDF seed or a key changes the Local copy, so `merge` returns its new `cachedKey` only in `Commit.cachedKey`, as `apply` does. The result type has no other place for one.
+- Adopting a KDF seed or a key changes the Local copy, so `merge` returns its new `cachedKey` only in `Commit.cachedKey`.
 - If the Database has a challenge-response component and the remote's KDF seed differs: `ChallengeResponseRequired { challenge }`. TS asks the provider and retries with `components` including the response. Stateless, like unlock. KDBX 4.x only: challenge-response is not supported for a KDBX 3.1 remote, whose challenge is the master seed ([#80](https://github.com/maxdubmors/rimlock/issues/80)).
 
 ## 7. Verify-on-commit

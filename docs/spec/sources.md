@@ -6,7 +6,7 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
 
 - Every Database has a **Local copy**: its encrypted `.kdbx` bytes in IndexedDB, keyed by Database id. For a Chrome file it duplicates the file; for a Firefox import it *is* the Database; for WebDAV it is the offline copy.
 - **The Local copy is the source of truth; the Core's in-memory Database is its cache.** Every `Commit` (from `apply` or `merge`) is stored atomically before the result is reported. If storing fails, the background drops the Core handle and rebuilds it from the Local copy; the edit is lost and the user sees an error.
-- A `cachedKey` in a `Commit` replaces the one in `storage.session` only after the `Commit` is stored. If storing the `Commit` fails, the old `cachedKey` stays and the rebuild uses it ([`core-api.md`](core-api.md) § 9).
+- When a `cachedKey` in a `Commit` replaces the one in `storage.session`: [`core-api.md`](core-api.md) § 9.
 - **Pending changes** are counted by a `revision` in the Local copy store: it increments on every stored `Commit`, and Sync records `lastSyncedRevision`. Pending changes exist when `revision ≠ lastSyncedRevision`.
 - `unlimitedStorage` is required so the Local copy is never evicted ([ADR-0013](../adr/0013-permissions-frozen-required-set.md)).
 
