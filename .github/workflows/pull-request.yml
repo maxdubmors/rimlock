@@ -54,6 +54,17 @@ jobs:
           install: 'false'
       - run: pnpm check:core-bindings
 
+  fork-pin:
+    name: keepass-rs pinned at a tag
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Plain git and sed against the public fork: no toolchain to set up.
+      - run: scripts/check-fork-pin.sh
+
   e2e:
     name: pnpm test:e2e (Chrome and Firefox)
     runs-on: ubuntu-24.04

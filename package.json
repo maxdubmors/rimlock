@@ -16,6 +16,7 @@
     "check:ts": "pnpm --filter @rimlock/extension check",
     "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings && cargo clippy --locked --target wasm32-unknown-unknown --workspace -- -D warnings",
     "check:core-bindings": "scripts/check-core-bindings.sh",
+    "check:fork-pin": "scripts/check-fork-pin.sh",
     "test": "pnpm build:core && pnpm test:ts && pnpm test:rust",
     "test:ts": "pnpm --filter @rimlock/extension test",
     "test:rust": "cargo test --locked",

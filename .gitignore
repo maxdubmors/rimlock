@@ -1,2 +1,4 @@
 /target/
 node_modules/
+# A local [patch] of keepass-rs while a fork fix is tried (crates/AGENTS.md § A fork fix).
+/.cargo/config.toml
