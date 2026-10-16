@@ -5,7 +5,7 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 ## Conventions
 
 - **Create an issue**: `gh issue create --title "..." --body "..."`. Use a heredoc for multi-line bodies.
-- **Read an issue**: `gh issue view <number> --json title,body,labels,milestone,comments`. Outside a terminal, `gh issue view <number> --comments` prints nothing at all for an issue without comments.
+- **Read an issue**: `gh issue view <number> --json title,body,labels,milestone,comments`. Outside a terminal, `gh issue view <number> --comments` prints the comments alone: no title, no body, and nothing at all for an issue without comments.
 - **Read a milestone's tracking issue** (`M0: Foundation and checks`, …) only for its sub-issue list: its body restates `docs/spec/`, which is normative, so read the spec files instead.
 - **See what the sibling tickets cover**: `gh issue list --milestone <milestone> --state all --json number,title,labels`. Titles are usually enough to draw the boundary of your ticket; read a sibling's body only when its title leaves it unclear.
 - **List issues**: `gh issue list --state open --json number,title,body,labels,comments --jq '[.[] | {number, title, body, labels: [.labels[].name], comments: [.comments[].body]}]'` with appropriate `--label` and `--state` filters.
