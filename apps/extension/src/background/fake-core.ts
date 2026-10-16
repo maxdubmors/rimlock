@@ -116,13 +116,21 @@ class FakeUnlockedDatabase {
   }
 
   info(): DatabaseInfo {
-    // What wasm-bindgen throws for a call on a freed handle: an Error, not a CoreError.
-    if (this.#freed) throw new Error('null pointer passed to rust');
+    this.#throwIfFreed();
     return { ...this.#info };
   }
 
   free(): void {
+    this.#throwIfFreed();
     this.#freed = true;
+  }
+
+  /**
+   * What wasm-bindgen throws for `info()` or a second `free()` on a freed handle: an Error, not a
+   * CoreError.
+   */
+  #throwIfFreed(): void {
+    if (this.#freed) throw new Error('null pointer passed to rust');
   }
 
   [Symbol.dispose](): void {
