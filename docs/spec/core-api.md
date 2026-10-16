@@ -2,7 +2,7 @@
 
 The contract between the Core (Rust, compiled to WASM) and the TypeScript side of the Extension, plus the contract every Source adapter implements. Agents implement both sides against this file; the `tsify`-generated types must match it. Signatures are written in TypeScript notation as TS sees them.
 
-Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28); the write order of a `Commit` and its `cachedKey` in [Stale CachedKey on wake-up: lock, or rebuild from the hashed Composite key (ADR-0005)?](https://github.com/maxdubmors/rimlock/issues/87); the shape of the `merge` result in [Can merge return a cachedKey without a commit?](https://github.com/maxdubmors/rimlock/issues/90). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
+Decided in [Define the Core API and the Source adapter contract](https://github.com/maxdubmors/rimlock/issues/26); history reads and reserved custom-field keys added in [Decide the editing flows for Entries and Groups](https://github.com/maxdubmors/rimlock/issues/28); the write order of a `Commit` and its `cachedKey` in [Stale CachedKey on wake-up: lock, or rebuild from the hashed Composite key (ADR-0005)?](https://github.com/maxdubmors/rimlock/issues/87); the shape of the `merge` result in [Can merge return a cachedKey without a commit?](https://github.com/maxdubmors/rimlock/issues/90); a call on a freed handle in [What does CoreClient answer for a call on a freed UnlockedDatabase?](https://github.com/maxdubmors/rimlock/issues/94). Principles: ADR-0003 (the split), ADR-0005 (rebuild on wake-up), ADR-0010 (interop write policies), ADR-0011 (key components, Source adapter), ADR-0014 (commits and statelessness).
 
 ## 1. Shape
 
@@ -75,7 +75,7 @@ unlock(bytes: Uint8Array, components: KeyComponent[])
 open(localCopyBytes: Uint8Array, cachedKey: CachedKey)
   : Promise<CoreResult<UnlockedDatabase>>;                                 // never runs the KDF
 
-declare class UnlockedDatabase { free(): void }   // the handle: §§ 4–6 are its methods; free() drops the Database
+declare class UnlockedDatabase { free(): void }   // the handle: §§ 4–6 are its methods; free() drops the Database, and § 9 says what a later call gets
 ```
 
 ```ts
@@ -286,6 +286,7 @@ type CoreResult<T> = { ok: true; value: T } | { ok: false; error: CoreError | { 
 ## 9. `CoreClient` rules (TS, background only)
 
 - One queue: calls on a handle never run concurrently.
+- A method called on a handle after its `free()` is `Internal`, a bug in the caller: `CoreClient` answers it without reaching the Core, so the Core stays usable. The bindings would throw a plain `Error` there, which § 8 reads as a panic. A second `free()` does nothing.
 - Every `SecretBytes` is wrapped into a `Secret` on arrival; every `Secret` input is unwrapped only at the call, into its UTF-8 bytes, and wiped after it. The generated bindings therefore take `SecretBytes` wherever this file says `Secret` (`KeyComponent`'s `Password` is `{ kind: 'Password'; value: SecretBytes }`).
 - **The Local copy is the source of truth; the in-memory Database is its cache.** A `Commit` is stored atomically in IndexedDB before the result is reported as saved. If storing fails, the handle is dropped and rebuilt from the Local copy; the edit is lost and the user sees an error.
 - A new `cachedKey` replaces the one in `storage.session` through the single restore point of ADR-0012. One in a `Commit` (of `apply` or `merge`) replaces it only after the `Commit` is stored in the Local copy. If storing the `Commit` fails, the old `cachedKey` stays, and the rebuild from the Local copy uses it. The `cachedKey` of `unlock` comes without a `Commit` and is stored as soon as it arrives. Apart from an update that changed the `CachedKey` format, the only way to a stale `CachedKey` is then the background dying between the two writes, and that locks (§ 11).
