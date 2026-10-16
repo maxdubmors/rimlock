@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # pnpm build:core: compiles rimlock-core-wasm and generates its JS glue and .d.ts into the
 # Extension (docs/spec/engineering.md § WASM build). No wasm-pack and no wasm-opt.
-# Usage: scripts/build-core.sh [release|dev-wasm]   (default: release, the store bundle's Core)
+# Usage: scripts/build-core.sh [release|dev-wasm] [OUT_DIR]
+#   release, the default, is the store bundle's Core; OUT_DIR defaults to the Extension's
+#   src/core-bindings/, which the bundle imports.
 set -euo pipefail
 
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 profile=${1:-release}
 target_dir=${CARGO_TARGET_DIR:-$root/target}
-out=$root/apps/extension/src/core-bindings
+out=${2:-$root/apps/extension/src/core-bindings}
 
 case $profile in
   release | dev-wasm) ;;

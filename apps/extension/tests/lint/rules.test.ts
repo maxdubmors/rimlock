@@ -47,6 +47,34 @@ describe('module boundaries', () => {
   });
 });
 
+describe('a CoreResult', () => {
+  // Callers switch on it exhaustively (core-api.md § 8); a `default` must not hide a kind.
+  it('rejects a switch that leaves out a kind of failure', async () => {
+    expect(await rulesBrokenIn('src/background/core-result-default.ts')).toContain(
+      '@typescript-eslint/switch-exhaustiveness-check',
+    );
+  });
+
+  it('accepts a switch over every kind', async () => {
+    expect(await rulesBrokenIn('src/background/core-result-exhaustive.ts')).toEqual([]);
+  });
+});
+
+describe("a Secret's bytes", () => {
+  it.each([
+    ['an import', 'src/ui/exposes-secret.ts'],
+    ['a namespace import', 'src/ui/exposes-secret-namespace.ts'],
+  ])('are out of reach through %s outside the codec and CoreClient', async (_, file) => {
+    expect(await rulesBrokenIn(file)).toContain('no-restricted-syntax');
+  });
+
+  it('are in reach of the protocol codec', async () => {
+    expect(await rulesBrokenIn('src/protocol/secret-codec.ts')).not.toContain(
+      'no-restricted-syntax',
+    );
+  });
+});
+
 describe('content code and storage', () => {
   it('rejects browser.storage', async () => {
     expect(await rulesBrokenIn('src/autofill/browser-storage.ts')).toContain(

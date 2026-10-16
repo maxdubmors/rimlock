@@ -13,7 +13,7 @@ Review a change against:
 ## Rules
 
 - **The Core contract.** `docs/spec/core-api.md` is the contract of `rimlock-core-wasm`. Every export matches it in inputs, outputs and failure behaviour, including what the spec says a function never does ("never runs the KDF", "holds no state"). `apps/extension/tests/core-api/` checks only that each export is declared there.
-- **Core failures are values.** A Core error reaches its caller as a `CoreResult` (`core-api.md` § 8), and the caller switches on it. Only `CoreClient` (until it exists, `background/core.ts`) catches what the bindings throw.
+- **Core failures are values.** A Core error reaches its caller as a `CoreResult` (`core-api.md` § 8), and the caller switches on it. Only `CoreClient` catches what the bindings throw.
 - **The spec moves with the code.** A spec sentence the change leaves untrue is a finding, even in a file the diff does not touch.
 - **Every new spec claim has a source.** A sentence a pull request adds to `docs/spec/` or `docs/adr/` traces to its ticket, or the pull request body quotes the spec lines it follows from. A claim with neither is a finding, and becomes a `needs-triage` issue (root `AGENTS.md`).
 - **One home per rule.** A spec rule the change adds or rewords lives in one file ([`docs/spec/README.md`](docs/spec/README.md) § How the docs fit together); restating it in another file is a finding, even in a file the diff does not touch.
