@@ -146,6 +146,32 @@ export function createConfig(root: string): Linter.Config[] {
       },
     },
     {
+      // A Secret's bytes leave it only where it is encoded for a message or unwrapped at a Core
+      // call (core-api.md § 2, § 9; security.md § Leaks).
+      files: ['src/**'],
+      ignores: [
+        'src/shared/secret.ts',
+        'src/protocol/secret-codec.ts',
+        'src/background/core-client.ts',
+      ],
+      rules: {
+        'no-restricted-syntax': [
+          'error',
+          {
+            selector: [
+              "ImportSpecifier[imported.name='exposeSecret']",
+              "ExportSpecifier[local.name='exposeSecret']",
+              "MemberExpression[property.name='exposeSecret']",
+              "MemberExpression[property.value='exposeSecret']",
+              "ObjectPattern > Property[key.name='exposeSecret']",
+            ].join(', '),
+            message:
+              "Only the protocol codec and CoreClient read a Secret's bytes; everything else uses reveal().",
+          },
+        ],
+      },
+    },
+    {
       files: ['*.config.ts', 'tests/**'],
       languageOptions: { globals: globals.node },
     },
