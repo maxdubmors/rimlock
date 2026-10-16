@@ -86,7 +86,7 @@ Until M3 there is no write step in Sync, so **Sync first** is not offered before
   5. pending saves are dropped;
   6. the clipboard is cleared at once if it still holds our value;
   7. an upload of encrypted bytes already in flight continues; a Merge that needs to decrypt the remote waits for the next unlock.
-- **One restore point:** the only code that puts key material into `storage.session` is the one function that stores a `CachedKey` from a Core result. Quick unlock will reuse it (ADR-0012). A `CachedKey` that comes with a `Commit` is stored only after the `Commit` is in the Local copy; if that store fails, the old one stays ([`core-api.md`](core-api.md) § 9).
+- **One restore point:** the only code that puts key material into `storage.session` is the one function that stores a `CachedKey` from a Core result. Quick unlock will reuse it (ADR-0012). When a `CachedKey` in a `Commit` is stored: [`core-api.md`](core-api.md) § 9.
 
 ## Auto-lock
 
