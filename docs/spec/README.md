@@ -30,6 +30,8 @@ Not in the MVP: the Companion (only its seam), Safari, mobile, attachments, pass
 
 When the spec and a ticket disagree, the spec wins: it carries later amendments that the ticket text does not. When the spec and an ADR disagree, that is a bug in the spec: raise it.
 
+A rule has one home: the spec file whose area covers it in the table under Reading order. Another file that needs the rule links there with `§` instead of restating it, so changing the rule is a one-file edit.
+
 ## Reading order
 
 1. [`GLOSSARY.md`](../../GLOSSARY.md), the whole file (it is short).
