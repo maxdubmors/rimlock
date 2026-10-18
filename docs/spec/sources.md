@@ -71,7 +71,7 @@ Firefox has no File System Access, so a local file is an imported copy.
 - **Import** happens in an extension tab, because the popup closes when a picker opens. "Add local file" in the popup opens that tab. The Key file is picked there too.
 - Edits go into the Local copy. The popup always shows a status line such as "Imported 3 Oct · 5 changes not exported".
 - **Export…** saves the Local copy through `downloads.download({saveAs: true})` (the `downloads` permission is requested at the first Export…), defaulting to the original file name. It works while Locked.
-- **Re-import…** opens a tab, takes a file, and merges it into the Local copy. Decrypting it needs an unlock in that tab.
+- **Re-import…** opens a tab, takes a file, and merges it into the Local copy. Decrypting it needs an unlock in that tab. With the Local copy missing ([`databases-and-unlock.md`](databases-and-unlock.md) § An interrupted add or Remove), the re-imported file becomes the Local copy instead of being merged.
 - After a restart the Database unlocks from the Local copy; no re-import is needed. No notifications, no nagging.
 - The UI says plainly that a local file in Firefox is an imported copy and that live sync needs WebDAV.
 
