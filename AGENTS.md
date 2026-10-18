@@ -26,7 +26,7 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | Command | Does |
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
-| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment. Fails on any finding. |
+| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, the canary check in every end-to-end file that launches the bundle. Fails on any finding. |
 | `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. |
 | `pnpm test:e2e` | `build:core`, then Puppeteer runs the store bundle in pinned headless Chrome and Firefox (~700 MB downloaded on the first run), and the `CoreClient` contract suite runs against a `dev-wasm` Core built for the run. |
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
