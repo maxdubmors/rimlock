@@ -26,7 +26,12 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
    - **WebDAV:** server URL, login, password. The user pastes a file URL or a folder URL. For a folder, one `PROPFIND` lists its `.kdbx` files to pick from; there is no tree browsing. `http://` is refused ([`security.md`](security.md)).
 2. Enter the Composite key: Master password and, optionally, a Key file, plus the "Remember Key file on this device" checkbox (off by default).
 3. Unlock: `readHeader` → `unlock`. In Chrome, the same gesture also requests write access to the file.
-4. **Only now** is the Database stored: its registry record, Source config and Local copy, taken from the verified bytes. A Database that never opened is never stored.
+4. **Only now** is the Database stored, from the verified bytes, in this order:
+   1. one IndexedDB transaction writes the Local copy and, for a Chrome file, its `FileSystemFileHandle`;
+   2. one `storage.local.set` writes the registry record, the Source config and, if the box was ticked, the remembered Key file;
+   3. the `CachedKey` goes to `storage.session`.
+
+   The registry record is the commit point: a Database exists once its record does ([§ An interrupted add or Remove](#an-interrupted-add-or-remove)). A Database that never opened is never stored.
 
 **Duplicates:** the same Source cannot be added twice (same WebDAV URL; the same Chrome file by `FileSystemHandle.isSameEntry`; Firefox imports are not checked). The same Database through a different Source is allowed.
 
@@ -40,7 +45,7 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
 
 ## Removing a Database
 
-Settings → Databases → the Database → **Remove**. It deletes the Local copy, the `CachedKey`, the remembered Key file, the Source config (WebDAV credentials and the Chrome file handle included) and the Database's Settings.
+Settings → Databases → the Database → **Remove**. It deletes the registry record first, then the Local copy, the `CachedKey`, the remembered Key file, the Source config (WebDAV credentials and the Chrome file handle included) and the Database's Settings.
 
 With Pending changes, it asks first:
 
@@ -50,6 +55,13 @@ With Pending changes, it asks first:
 - **Cancel**.
 
 Until M3 there is no write step in Sync, so **Sync first** is not offered before then ([`plan.md`](plan.md)). Removing a WebDAV Database does not call `permissions.remove`. There is no "change Source": remove the Database and add it again.
+
+## An interrupted add or Remove
+
+Adding and Remove write to IndexedDB and `storage.local`, which share no transaction, and the browsers do not document whether a `storage.local.set` of several keys is atomic. So the background can be killed, or a write can fail, half-way through. The registry record decides what is left.
+
+- **Start-up sweep:** at `runtime.onStartup` the background deletes every Local copy and Chrome file handle in IndexedDB, and every per-Database item in `storage.local` ([`settings.md`](settings.md) § Global vs per-Database), whose Database id has no registry record. It runs only at browser start, when no add is in progress; on a wake-up it could delete the Local copy of an add still running in a tab.
+- **Local copy missing** (a registry record whose Local copy is gone, for example after the site data was cleared): the Database lists show the Database as "Local copy missing", and it cannot be unlocked. Its Settings page offers **Remove**, which asks nothing first because there is nothing left to sync or download, and for a Firefox import **Re-import…** ([`sources.md`](sources.md) § Firefox: imported copy). A WebDAV or Chrome file Database is removed and added again: unlock never reads the Source ([§ Unlock](#unlock)).
 
 ## Key file remembering
 
