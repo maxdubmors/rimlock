@@ -8,7 +8,8 @@ Review a change against:
 
 - root `AGENTS.md` § Rules, `crates/AGENTS.md`, `apps/extension/AGENTS.md`;
 - the spec files the change touches (`docs/spec/README.md` lists them) and the ADRs they link;
-- `docs/spec/security.md`, for anything that handles secrets, messages between contexts or storage.
+- `docs/spec/security.md`, for anything that handles secrets, messages between contexts or storage;
+- `GLOSSARY.md`: a name, comment or doc that uses a word under _Avoid_ in that term's sense.
 
 ## Rules
 
