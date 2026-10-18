@@ -309,7 +309,7 @@ type SourceResult<T> = { ok: true; value: T } | { ok: false; error: SourceError 
 - `write` enforces the conditions of its Source: for WebDAV a fresh ETag check, an `If-Match`-style condition and temp + `MOVE` (ADR-0008; the steps, and the failed condition on an unchanged file: [`sources.md`](sources.md) § WebDAV, Writes); for a Chrome file a `lastModified`/`size` check (ADR-0007; [`sources.md`](sources.md) § Chrome: local file, Concurrent writers). A changed remote returns `conflict`.
 - `permission-needed`: Chrome needs a user gesture in the popup to regain file access.
 - Adapters do bytes only. Merge-before-write and Sync live above them in a TS `Sync` module, which calls `stat`/`read`, `CoreClient.merge`, and `write`.
-- Adapters exist only for live Sources: Chrome local file, WebDAV, and later the Companion. A Firefox imported file is not an adapter: Re-import… hands the chosen file's bytes to `merge`, and Export… saves the Local copy's bytes.
+- Adapters exist only for live Sources: Chrome local file, WebDAV, and later the Companion. A Firefox imported file is not an adapter: Re-import… hands the chosen file's bytes to `merge` (unless the Local copy is missing: [`sources.md`](sources.md) § Firefox: imported copy), and Export… saves the Local copy's bytes.
 
 ## 11. Flows
 
