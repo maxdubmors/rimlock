@@ -1,29 +1,35 @@
-// The SourceAdapter contract suite (docs/spec/engineering.md § Fakes and contract suites): the same
-// tests against FakeSource (`pnpm test`) and against every real adapter, for what
-// docs/spec/core-api.md § 10 asks of a Source.
+// The SourceAdapter contract suite (docs/spec/engineering.md § Fakes and contract suites): what
+// docs/spec/core-api.md § 10 asks of a Source, run against FakeSource in `pnpm test`, and written
+// for the real adapters to run without copying a test.
 
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import type { SourceAdapter, SourceError, Version } from '../../src/sources/source-adapter';
+import type { SourceFault } from '../../src/sources/fake-source';
+import type { SourceAdapter, SourceResult, Version } from '../../src/sources/source-adapter';
 
 /** One Source, fresh for one test, and the means to act on it as nobody but the test can. */
 export type SourceSubject = {
   adapter: SourceAdapter;
   /** Saves `bytes` to the file as another client would. */
   saveElsewhere(bytes: Uint8Array): Promise<void>;
+  /**
+   * Another client saves `bytes` while the adapter's next write is under way, after the adapter
+   * checked the version: the write condition fails.
+   */
+  saveElsewhereDuringNextWrite(bytes: Uint8Array): Promise<void>;
   /** Brings about the fault that the adapter reports as `fault`, for the rest of the test. */
-  inject(fault: SourceError): Promise<void>;
+  failWith(fault: SourceFault): Promise<void>;
 };
 
 export type SourceContract = {
   /** A fresh Source whose file holds `bytes`. */
   subjectFor(bytes: Uint8Array): Promise<SourceSubject>;
   /** The faults the Source can have and the subject can bring about: WebDAV asks no permission. */
-  faults: readonly SourceError[];
+  faults: readonly SourceFault[];
 };
 
-/** Faults that stop every operation, unlike a missing file or a failed write condition. */
-const everyOperation: readonly SourceError[] = ['offline', 'auth', 'permission-needed'];
+/** Faults that stop every operation, unlike a missing file. */
+const everyOperation: readonly SourceFault[] = ['offline', 'auth', 'permission-needed'];
 
 const saved = new TextEncoder().encode('the file as the Source holds it');
 const edited = new TextEncoder().encode('the file as rimlock saved it');
@@ -96,6 +102,18 @@ export function describeSourceAdapterContract(contract: SourceContract): void {
       });
       expect((await contentOf(adapter)).bytes).toEqual(elsewhere);
     });
+
+    it('gives conflict when another client saves the file during the write', async () => {
+      const version = await versionOf(adapter);
+      await subject.saveElsewhereDuringNextWrite(elsewhere.slice());
+      expect(await adapter.write(edited.slice(), version)).toEqual({
+        ok: false,
+        error: 'conflict',
+      });
+      const after = await contentOf(adapter);
+      expect(after.bytes).toEqual(elsewhere);
+      expect(after.version.token).not.toBe(version.token);
+    });
   });
 
   describe.each(contract.faults.filter((fault) => everyOperation.includes(fault)))(
@@ -103,7 +121,7 @@ export function describeSourceAdapterContract(contract: SourceContract): void {
     (fault) => {
       it('fails stat, read and write with it', async () => {
         const version = await versionOf(adapter);
-        await subject.inject(fault);
+        await subject.failWith(fault);
         const failed = { ok: false, error: fault };
         expect(await adapter.stat()).toEqual(failed);
         expect(await adapter.read()).toEqual(failed);
@@ -114,22 +132,10 @@ export function describeSourceAdapterContract(contract: SourceContract): void {
 
   describe.runIf(contract.faults.includes('not-found'))('with the file gone', () => {
     it('fails stat and read with not-found', async () => {
-      await subject.inject('not-found');
+      await subject.failWith('not-found');
       const failed = { ok: false, error: 'not-found' };
       expect(await adapter.stat()).toEqual(failed);
       expect(await adapter.read()).toEqual(failed);
-    });
-  });
-
-  describe.runIf(contract.faults.includes('conflict'))('with a failing write condition', () => {
-    it('fails write with conflict and leaves the file as it is', async () => {
-      const version = await versionOf(adapter);
-      await subject.inject('conflict');
-      expect(await adapter.write(edited.slice(), version)).toEqual({
-        ok: false,
-        error: 'conflict',
-      });
-      expect(await contentOf(adapter)).toEqual({ bytes: saved, version });
     });
   });
 }
@@ -139,19 +145,18 @@ async function written(
   bytes: Uint8Array,
   ifVersion: Version,
 ): Promise<Version> {
-  const result = await adapter.write(bytes.slice(), ifVersion);
-  if (!result.ok) throw new Error(`write failed: ${result.error}`);
-  return result.value;
+  return succeeded('write', await adapter.write(bytes.slice(), ifVersion));
 }
 
 async function contentOf(adapter: SourceAdapter): Promise<{ bytes: Uint8Array; version: Version }> {
-  const result = await adapter.read();
-  if (!result.ok) throw new Error(`read failed: ${result.error}`);
-  return result.value;
+  return succeeded('read', await adapter.read());
 }
 
 async function versionOf(adapter: SourceAdapter): Promise<Version> {
-  const result = await adapter.stat();
-  if (!result.ok) throw new Error(`stat failed: ${result.error}`);
+  return succeeded('stat', await adapter.stat());
+}
+
+function succeeded<T>(operation: string, result: SourceResult<T>): T {
+  if (!result.ok) throw new Error(`${operation} failed: ${result.error}`);
   return result.value;
 }

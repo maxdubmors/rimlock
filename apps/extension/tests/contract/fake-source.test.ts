@@ -13,12 +13,16 @@ describe('FakeSource', () => {
           source.saveElsewhere(bytes);
           return Promise.resolve();
         },
-        inject: (fault) => {
-          source.inject(fault);
+        saveElsewhereDuringNextWrite: (bytes) => {
+          source.saveElsewhereDuringNextWrite(bytes);
+          return Promise.resolve();
+        },
+        failWith: (fault) => {
+          source.failWith(fault);
           return Promise.resolve();
         },
       });
     },
-    faults: ['offline', 'not-found', 'auth', 'permission-needed', 'conflict'],
+    faults: ['offline', 'not-found', 'auth', 'permission-needed'],
   });
 });
