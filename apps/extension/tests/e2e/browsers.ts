@@ -80,9 +80,9 @@ export type ExtensionSession = {
   stopBackground(): Promise<void>;
   /**
    * Runs `inspect` on the background's global object, as a debugger would, to read what the
-   * background observes about itself (its `performance` entries), with `arg` passed along. Wakes
-   * the background in Firefox, not in Chrome. Never use it to change the Extension's state
-   * (ADR-0017).
+   * background observes about itself (its `performance` entries), with `arg` passed along. In
+   * Firefox it first sends a status request, which wakes the background and restarts its idle
+   * timeout; in Chrome it wakes nothing. Never use it to change the Extension's state (ADR-0017).
    */
   inspectBackground<T>(
     inspect: (background: typeof globalThis, arg: string) => T,
@@ -207,8 +207,11 @@ export async function launchWithExtension(
       }
       const page = await openPage('popup.html');
       try {
-        const background = (await page.evaluateHandle(() => {
+        const background = (await page.evaluateHandle(async () => {
           const global = globalThis as unknown as { browser: ExtensionApi };
+          // A message restarts the short idle timeout, so the event page outlives the inspection:
+          // one already near its deadline would unload between this call and the next.
+          await global.browser.runtime.sendMessage({ kind: 'status' });
           // eslint-disable-next-line @typescript-eslint/no-deprecated -- Chrome's types; Firefox's event page is a page, and this is the way into it
           return global.browser.runtime.getBackgroundPage();
         })) as unknown as JSHandle<typeof globalThis>;
