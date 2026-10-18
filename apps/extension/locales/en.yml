@@ -2,3 +2,14 @@ extensionName: rimlock
 extensionDescription: Fill and manage passwords from your own KeePass database.
 commandFill: Fill the login on this page
 commandLock: Lock rimlock
+addDatabaseTitle: Add a Database
+addDatabaseFile: Database file
+addDatabaseMasterPassword: Master password
+addDatabaseUnlock: Unlock
+statusLocked: Locked
+statusUnlocking: Unlocking…
+statusUnlocked: 'Unlocked: $1'
+statusCoreUnavailable: rimlock can't run in this browser.
+unlockWrongKey: Wrong Master password or Key file. If this Database uses a YubiKey, rimlock can't open it yet.
+unlockUnsupportedFile: "rimlock can't open this file ($1)."
+unlockFailed: Something went wrong; the Database was not added.

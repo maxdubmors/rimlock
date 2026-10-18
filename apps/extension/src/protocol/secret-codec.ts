@@ -1,14 +1,15 @@
 // The one place a Secret is encoded (docs/spec/core-api.md § 2, security.md § Leaks): as
-// `{ $secret: base64 }`, for a message to carry and its parser to decode back.
+// `{ $secret: base64 }`, for a message to carry and its parser to decode back, or for the
+// background to keep the CachedKey in storage.session, which also holds only JSON.
 
 import { exposeSecret, Secret } from '../shared/secret';
+import { decodeBase64, encodeBase64 } from './base64';
 
 export type EncodedSecret = { $secret: string };
 
 export function encodeSecret(secret: Secret): EncodedSecret {
   const bytes = exposeSecret(secret);
-  // btoa, since Uint8Array.prototype.toBase64 is newer than the Chrome floor (Chrome 140).
-  const encoded = btoa(String.fromCharCode(...bytes));
+  const encoded = encodeBase64(bytes);
   bytes.fill(0);
   return { $secret: encoded };
 }
@@ -17,11 +18,6 @@ export function encodeSecret(secret: Secret): EncodedSecret {
 export function decodeSecret(value: unknown): Secret | undefined {
   if (typeof value !== 'object' || value === null || !('$secret' in value)) return undefined;
   if (typeof value.$secret !== 'string') return undefined;
-  let binary: string;
-  try {
-    binary = atob(value.$secret);
-  } catch {
-    return undefined;
-  }
-  return new Secret(Uint8Array.from(binary, (char) => char.charCodeAt(0)));
+  const bytes = decodeBase64(value.$secret);
+  return bytes && new Secret(bytes);
 }

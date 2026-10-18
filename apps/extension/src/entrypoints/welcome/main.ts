@@ -1,5 +1,5 @@
 import { mount } from 'svelte';
 
-import App from '../../ui/App.svelte';
+import AddDatabase from '../../ui/AddDatabase.svelte';
 
-mount(App, { target: document.body });
+mount(AddDatabase, { target: document.body });

@@ -6,6 +6,7 @@ import { afterAll, beforeAll, describe, expect, inject, it } from 'vitest';
 import type { Request, ResponseTo } from '../../src/protocol/messages';
 import type { BrowserName } from '../build-bundle';
 import { launchWithExtension, type ExtensionSession } from './browsers';
+import { useCanaryCheck } from './canaries';
 
 /** The version the Core is built with, read from the workspace manifest, not from the build. */
 async function workspaceVersion(): Promise<string> {
@@ -27,6 +28,8 @@ describe.each<BrowserName>(['chrome', 'firefox'])('the background in %s', (name)
     await session.close();
   });
 
+  useCanaryCheck(() => session);
+
   // V2: the .wasm loads in the Chrome service worker and the Firefox event page under the CSP.
   it('runs the Core and answers a status request with its version', async () => {
     const page = await session.openPage('popup.html');
@@ -43,6 +46,7 @@ describe.each<BrowserName>(['chrome', 'firefox'])('the background in %s', (name)
     expect(response).toEqual({
       core: 'running',
       version: await workspaceVersion(),
+      unlocked: null,
     } satisfies ResponseTo<typeof request>);
   });
 });
