@@ -43,6 +43,7 @@ describe.each<BrowserName>(['chrome', 'firefox'])('the background in %s', (name)
     expect(response).toEqual({
       core: 'running',
       version: await workspaceVersion(),
+      unlocked: null,
     } satisfies ResponseTo<typeof request>);
   });
 });

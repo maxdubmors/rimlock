@@ -11,3 +11,5 @@ All notable user-visible changes to rimlock are recorded here. The format follow
 - Keyboard shortcuts: Alt+Shift+K opens rimlock and Alt+Shift+U fills the login on the
   page (Control+Shift on macOS); Lock has no default key.
 - rimlock needs Chrome 133 or later, or Firefox 153 (the current ESR) or later.
+- A first, minimal way to add a Database, in the welcome page: pick a `.kdbx` file and unlock
+  it with its Master password. It stays Unlocked when the browser stops rimlock's background.
