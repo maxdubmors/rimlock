@@ -50,6 +50,8 @@ If your output contradicts an existing ADR, surface it explicitly rather than si
 
 > _Contradicts ADR-0007 (event-sourced orders), but worth reopening because…_
 
+A brief that changes a spec rule lists every file in `docs/spec/` and `docs/adr/` that states the old rule. Grep for the rule's subject (the action or term it governs, such as `Re-import`), not only for the new wording.
+
 ## Link issues from an ADR by title
 
 An ADR names a tracker issue by its title, on a closing Consequences line: `Decision detail: [title](url)` for the issue that decided it, `Facts: [title](url)` for the research behind it.
