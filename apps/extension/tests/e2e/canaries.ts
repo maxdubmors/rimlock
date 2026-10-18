@@ -1,8 +1,6 @@
-// The canary check every end-to-end scenario ends with (engineering.md § Tests, Secret leaks): the
-// test Databases carry unique canary markers, and none may appear in storage.local, IndexedDB,
-// storage.session, a message to a content script or the console. The encrypted Local copy in
-// IndexedDB is allowed, since its bytes show no marker, and in storage.session only the CachedKey
-// may hold key material: its bytes are a canary everywhere else.
+// The canary check every end-to-end scenario ends with (engineering.md § Tests, Secret leaks). The
+// encrypted Local copy needs no exception, since its bytes show no marker; the CachedKey's bytes
+// count as one more canary everywhere but its own storage.session item.
 
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -10,7 +8,7 @@ import { join } from 'node:path';
 import { afterEach, expect, inject } from 'vitest';
 
 import { unlockedItem } from '../../src/background/unlocked-state';
-import type { ExtensionSession } from './browsers';
+import type { ExtensionApi, ExtensionSession } from './browsers';
 
 /** One entry of the generator's `canaries.json` (engineering.md § Corpora and data). */
 export type Canary = { database: string; kind: string; value: string };
@@ -50,13 +48,7 @@ export function useCanaryCheck(current: () => ExtensionSession | undefined): voi
 
 /** Every place one of `canaries`, or the stored CachedKey, shows up in where it must not. */
 export async function findLeaks(session: ExtensionSession, canaries: Canary[]): Promise<Leak[]> {
-  const page = await session.openPage('popup.html');
-  let dumped: Dumped[];
-  try {
-    dumped = await page.evaluate(dumpStorage);
-  } finally {
-    await page.close();
-  }
+  const dumped = await session.asExtension(dumpStorage, []);
   dumped.push(
     ...(await session.receivedMessages()).map((text) => ({
       place: 'a message to a content script',
@@ -133,8 +125,7 @@ function scan(dumped: Dumped[], needles: Needle[]): Leak[] {
  * item of storage.local and storage.session, and every record of every IndexedDB database.
  */
 async function dumpStorage(): Promise<Dumped[]> {
-  type Api = typeof import('wxt/browser').browser;
-  const global = globalThis as unknown as { browser?: Api; chrome: Api };
+  const global = globalThis as unknown as { browser?: ExtensionApi; chrome: ExtensionApi };
   const api = global.browser ?? global.chrome;
 
   const latin1 = (bytes: Uint8Array) => {

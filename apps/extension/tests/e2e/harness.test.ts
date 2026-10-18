@@ -10,29 +10,13 @@ import {
   installFakeClock,
   launchWithExtension,
   testHosts,
+  type ExtensionApi,
   type ExtensionSession,
 } from './browsers';
 import { findLeaks, generatedCanaries, type Canary } from './canaries';
 import { serveWebPages, type WebServer } from './web-server';
 
 const clockPage = '<script>document.title = String(Date.now())</script>';
-
-/** Runs `run` in an extension page, with the Extension's own privileges. */
-async function asExtension(
-  session: ExtensionSession,
-  run: (arg: string) => Promise<unknown>,
-  arg: string,
-): Promise<void> {
-  const page = await session.openPage('popup.html');
-  try {
-    await page.evaluate(run, arg);
-  } finally {
-    await page.close();
-  }
-}
-
-/** The Extension API inside an evaluated function, which cannot reach this module. */
-type Api = typeof import('wxt/browser').browser;
 
 describe.each<BrowserName>(['chrome', 'firefox'])('the harness in %s', (name) => {
   let session: ExtensionSession;
@@ -59,12 +43,10 @@ describe.each<BrowserName>(['chrome', 'firefox'])('the harness in %s', (name) =>
 
   it('kills the background, and the next message starts a new one', async () => {
     const wake = async () => {
-      const page = await session.openPage('popup.html');
-      await page.evaluate(() => {
-        const global = globalThis as unknown as { browser?: Api; chrome: Api };
-        return (global.browser ?? global.chrome).runtime.sendMessage({ kind: 'status' });
-      });
-      await page.close();
+      await session.asExtension(async () => {
+        const global = globalThis as unknown as { browser?: ExtensionApi; chrome: ExtensionApi };
+        await (global.browser ?? global.chrome).runtime.sendMessage({ kind: 'status' });
+      }, []);
       return session.inspectBackground((background) => background.performance.timeOrigin);
     };
     const before = await wake();
@@ -95,80 +77,74 @@ describe.each<BrowserName>(['chrome', 'firefox'])('the harness in %s', (name) =>
   });
 
   describe('the canary check', () => {
-    const encoded = (value: string) => btoa(value);
+    /** Plants `value` in one place; returns a web page it opened, to close afterwards. */
+    type Plant = (value: string) => Promise<Page | undefined>;
 
-    it.each<[string, string, (session: ExtensionSession, value: string) => Promise<unknown>]>([
+    const inExtensionPage =
+      (run: (args: string[]) => Promise<void>): Plant =>
+      async (value) => {
+        await session.asExtension(run, [value]);
+        return undefined;
+      };
+
+    it.each<[string, string, Plant]>([
       [
         'storage.local',
         'storage.local probe',
-        (session, value) =>
-          asExtension(
-            session,
-            (planted) => {
-              const global = globalThis as unknown as { browser?: Api; chrome: Api };
-              return (global.browser ?? global.chrome).storage.local.set({ probe: planted });
-            },
-            value,
-          ),
+        inExtensionPage(async ([planted = '']) => {
+          const global = globalThis as unknown as { browser?: ExtensionApi; chrome: ExtensionApi };
+          await (global.browser ?? global.chrome).storage.local.set({ probe: planted });
+        }),
       ],
       [
         'storage.session, outside the CachedKey',
         'storage.session probe',
-        (session, value) =>
-          asExtension(
-            session,
-            (planted) => {
-              const global = globalThis as unknown as { browser?: Api; chrome: Api };
-              return (global.browser ?? global.chrome).storage.session.set({
-                probe: { note: planted },
-              });
-            },
-            value,
-          ),
+        inExtensionPage(async ([planted = '']) => {
+          const global = globalThis as unknown as { browser?: ExtensionApi; chrome: ExtensionApi };
+          await (global.browser ?? global.chrome).storage.session.set({ probe: { note: planted } });
+        }),
       ],
       [
         'IndexedDB, as bytes',
         'IndexedDB probe/records "probe"',
-        (session, value) =>
-          asExtension(
-            session,
-            (planted) =>
-              new Promise((resolve, reject) => {
-                const opening = indexedDB.open('probe', 1);
-                opening.onupgradeneeded = () => opening.result.createObjectStore('records');
-                opening.onerror = () => {
-                  reject(opening.error ?? new Error('cannot open probe'));
+        inExtensionPage(
+          ([planted]) =>
+            new Promise((resolve, reject) => {
+              const opening = indexedDB.open('probe', 1);
+              opening.onupgradeneeded = () => opening.result.createObjectStore('records');
+              opening.onerror = () => {
+                reject(opening.error ?? new Error('cannot open probe'));
+              };
+              opening.onsuccess = () => {
+                const transaction = opening.result.transaction('records', 'readwrite');
+                transaction
+                  .objectStore('records')
+                  .put({ bytes: new TextEncoder().encode(planted) }, 'probe');
+                transaction.oncomplete = () => {
+                  opening.result.close();
+                  resolve();
                 };
-                opening.onsuccess = () => {
-                  const transaction = opening.result.transaction('records', 'readwrite');
-                  transaction
-                    .objectStore('records')
-                    .put({ bytes: new TextEncoder().encode(planted) }, 'probe');
-                  transaction.oncomplete = () => {
-                    opening.result.close();
-                    resolve(undefined);
-                  };
-                };
-              }),
-            value,
-          ),
+              };
+            }),
+        ),
       ],
       [
         'a message to a content script, encoded as a Secret',
         'a message to a content script',
-        async (session, value) => {
+        async (value) => {
           const url = server.url('localhost', '/');
           const page = await session.openWebPage(url);
-          await asExtension(
-            session,
-            async (message) => {
-              const global = globalThis as unknown as { browser?: Api; chrome: Api };
+          await session.asExtension(
+            async ([shown, secret]) => {
+              const global = globalThis as unknown as {
+                browser?: ExtensionApi;
+                chrome: ExtensionApi;
+              };
               const api = global.browser ?? global.chrome;
-              const { url: shown, secret } = JSON.parse(message) as { url: string; secret: string };
               const tab = (await api.tabs.query({})).find((candidate) => candidate.url === shown);
               await api.tabs.sendMessage(tab?.id ?? -1, { probe: { $secret: secret } });
             },
-            JSON.stringify({ url, secret: encoded(value) }),
+            [url, btoa(value)],
           );
           return page;
         },
@@ -176,51 +152,43 @@ describe.each<BrowserName>(['chrome', 'firefox'])('the harness in %s', (name) =>
       [
         "an extension page's console",
         'the console',
-        (session, value) =>
-          asExtension(
-            session,
-            (planted) => {
-              console.log(planted);
-              return Promise.resolve();
-            },
-            value,
-          ),
+        inExtensionPage(([planted]) => {
+          console.log(planted);
+          return Promise.resolve();
+        }),
       ],
       [
         "the background's console",
         'the console',
-        (session, value) =>
-          session.inspectBackground((background, planted) => {
+        async (value) => {
+          await session.inspectBackground((background, planted) => {
             background.console.log(planted);
-          }, value),
+          }, value);
+          return undefined;
+        },
       ],
     ])('finds a canary planted in %s', async (_, place, plant) => {
       const canary = unplanted();
-      const planted = await plant(session, canary.value);
+      const page = await plant(canary.value);
       expect(await findLeaks(session, [canary])).toContainEqual({
         place,
         canary: `${canary.kind} of ${canary.database}`,
       });
-      if (planted !== undefined) await (planted as Page).close();
+      await page?.close();
     });
 
     it('finds the CachedKey anywhere outside its storage.session item', async () => {
-      const cachedKey = encoded('cached key bytes, as opaque as the real ones');
-      await asExtension(
-        session,
-        async (stored) => {
-          const global = globalThis as unknown as { browser?: Api; chrome: Api };
+      const cachedKey = btoa('cached key bytes, as opaque as the real ones');
+      await session.asExtension(
+        async ([item = '', key = '']) => {
+          const global = globalThis as unknown as { browser?: ExtensionApi; chrome: ExtensionApi };
           const api = global.browser ?? global.chrome;
-          const { item, cachedKey: key } = JSON.parse(stored) as {
-            item: string;
-            cachedKey: string;
-          };
           await api.storage.session.set({
             [item]: { database: 'probe', cachedKey: { $secret: key } },
           });
           await api.storage.local.set({ copied: key });
         },
-        JSON.stringify({ item: unlockedItem, cachedKey }),
+        [unlockedItem, cachedKey],
       );
       expect(await findLeaks(session, [])).toEqual([
         { place: 'storage.local copied', canary: 'the CachedKey' },

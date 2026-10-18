@@ -82,26 +82,34 @@ export class UnlockedState {
   /** The wake-up rebuild: `open(localCopy, cachedKey)`; a stale CachedKey locks. */
   async #rebuild(): Promise<Current | undefined> {
     const start = performance.now();
+    // The Core instantiates while storage.session is read, so its measure starts with the wake-up.
+    const instantiated = timed(() => this.#core.coreInfo());
     const stored = await readStoredUnlocked();
     if (stored === undefined) return undefined;
     const [core, localCopy] = await Promise.all([
-      measured(rebuildMeasures.instantiate, () => this.#core.coreInfo()),
-      measured(rebuildMeasures.readLocalCopy, () => readLocalCopy(stored.database)),
+      instantiated,
+      timed(() => readLocalCopy(stored.database)),
     ]);
+    record(rebuildMeasures.instantiate, core);
+    record(rebuildMeasures.readLocalCopy, localCopy);
     // The key material stays: the next background may get a working Core.
-    if (!core.ok) return undefined;
+    if (!core.value.ok) return undefined;
+    const bytes = localCopy.value;
     const cachedKey = decodeSecret(stored.cachedKey);
     // The Local copy and storage.session are out of step: nothing to open, so lock.
-    if (localCopy === undefined || cachedKey === undefined) return lock();
-    const opened = await measured(rebuildMeasures.open, () =>
-      this.#core.open(localCopy, cachedKey),
-    );
+    if (bytes === undefined || cachedKey === undefined) {
+      cachedKey?.wipe();
+      return lock();
+    }
+    const opened = await timed(() => this.#core.open(bytes, cachedKey));
     cachedKey.wipe();
-    if (!opened.ok) return opened.error.kind === 'CachedKeyStale' ? lock() : undefined;
+    record(rebuildMeasures.open, opened);
+    if (!opened.value.ok) return opened.value.error.kind === 'CachedKeyStale' ? lock() : undefined;
     performance.measure(rebuildMeasures.total, { start });
-    const info = await opened.value.info();
-    if (info.ok) return { db: opened.value, name: info.value.name };
-    await opened.value.free();
+    const db = opened.value.value;
+    const info = await db.info();
+    if (info.ok) return { db, name: info.value.name };
+    await db.free();
     return undefined;
   }
 }
@@ -127,13 +135,15 @@ async function lock(): Promise<undefined> {
   return undefined;
 }
 
-async function measured<T>(name: string, run: () => Promise<T>): Promise<T> {
+/** What `run` resolved to, and when it started and ended, for `record`. */
+async function timed<T>(run: () => Promise<T>): Promise<{ value: T; start: number; end: number }> {
   const start = performance.now();
-  try {
-    return await run();
-  } finally {
-    performance.measure(name, { start });
-  }
+  const value = await run();
+  return { value, start, end: performance.now() };
+}
+
+function record(name: string, { start, end }: { start: number; end: number }): void {
+  performance.measure(name, { start, end });
 }
 
 function failed(result: { ok: false; error: CoreFailure }): UnlockResponse {

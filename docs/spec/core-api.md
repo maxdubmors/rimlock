@@ -23,7 +23,7 @@ type SecretBytes = Uint8Array;
 
 // TS-side wrapper. CoreClient wraps every SecretBytes immediately.
 // toString / toJSON / util.inspect → "[Secret]".
-// Only the messaging codec may encode it ({ $secret: base64 }).
+// Only the messaging codec may encode it ({ $secret: base64 }): in a message, or as the CachedKey in storage.session.
 declare class Secret {
   reveal(): string;
   wipe(): void;                     // best effort: zero the bytes

@@ -54,6 +54,8 @@ export type ExtensionSession = {
   name: BrowserName;
   /** Opens one of the Extension's own pages, such as `popup.html`, in a new tab. */
   openPage(path: string): Promise<Page>;
+  /** Runs `run` in a fresh extension page, with the Extension's own privileges, and closes it. */
+  asExtension<T>(run: (args: string[]) => Promise<T>, args: string[]): Promise<T>;
   /**
    * Type, click and pick a file in one of the Extension's own pages, as a user would. Firefox's
    * WebDriver BiDi input module fails on extension pages (`input.performActions` and
@@ -113,7 +115,6 @@ export async function launchWithExtension(
     return page;
   }
 
-  /** Runs `run` in a fresh extension page, with the Extension's own privileges. */
   async function asExtension<T>(run: (args: string[]) => Promise<T>, args: string[]): Promise<T> {
     const page = await openPage('popup.html');
     try {
@@ -136,6 +137,7 @@ export async function launchWithExtension(
   return {
     name,
     openPage,
+    asExtension,
     async type(page, selector, text) {
       const input = await element(page, selector);
       if (name === 'chrome') {
@@ -263,7 +265,7 @@ export async function installFakeClock(page: Page, now: number): Promise<void> {
  * The Extension API in a page an evaluated function runs in: `browser` in Firefox, `chrome` in
  * Chrome. An evaluated function is serialised on its own, so it reaches the API itself.
  */
-type ExtensionApi = typeof import('wxt/browser').browser;
+export type ExtensionApi = typeof import('wxt/browser').browser;
 
 /**
  * Evaluated in an extension page: adds listeners to the content-script world of every frame of

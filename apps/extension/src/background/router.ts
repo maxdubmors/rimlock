@@ -1,4 +1,4 @@
-import { browser } from 'wxt/browser';
+import { browser, type Browser } from 'wxt/browser';
 
 import { parseRequest, type Request, type ResponseTo } from '../protocol/messages';
 import { core } from './core';
@@ -42,13 +42,33 @@ export async function answer(
  * a message that wakes the background is not lost. The answer goes through `sendResponse` after
  * `return true`, the asynchronous form both browsers understand.
  */
-export function startRouter(): void {
-  const background: Background = { core, unlocked: new UnlockedState(core) };
-  browser.runtime.onMessage.addListener((message: unknown, _sender, sendResponse) => {
+export function startRouter(
+  background: Background = { core, unlocked: new UnlockedState(core) },
+): void {
+  browser.runtime.onMessage.addListener((message: unknown, sender, sendResponse) => {
     const request = parseRequest(message);
-    if (request === undefined) return false;
+    if (request === undefined || !accepts(request, sender)) return false;
     void answer(request, background).then(sendResponse);
     return true;
   });
   void background.unlocked.name();
+}
+
+/**
+ * Whether `sender` may make `request`. A Master password is entered only in the popup or an
+ * extension tab (ADR-0006), so only one of the Extension's own pages that is no frame inside
+ * another page may unlock: neither a content script, in a hostile page (security.md), nor an
+ * extension-origin iframe in one.
+ */
+function accepts(request: Request, sender: Browser.runtime.MessageSender): boolean {
+  switch (request.kind) {
+    case 'status':
+      return true;
+    case 'unlock':
+      return (
+        sender.id === browser.runtime.id &&
+        (sender.url?.startsWith(browser.runtime.getURL('/')) ?? false) &&
+        (sender.tab === undefined || sender.frameId === 0)
+      );
+  }
 }

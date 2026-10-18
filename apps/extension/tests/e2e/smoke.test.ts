@@ -10,8 +10,9 @@ import type { Page } from 'puppeteer-core';
 
 import { rebuildMeasures } from '../../src/background/unlocked-state';
 import type { BrowserName } from '../build-bundle';
-import { launchWithExtension, type ExtensionSession } from './browsers';
+import { launchWithExtension, testHosts, type ExtensionSession } from './browsers';
 import { useCanaryCheck } from './canaries';
+import { serveWebPages, type WebServer } from './web-server';
 
 /** CI fails above this; the real gate, 200 ms, is measured on the owner's machine (V1). */
 const rebuildBudgetMs = 400;
@@ -56,14 +57,17 @@ function nameOf(file: string): string {
 }
 
 /**
- * Kills the background, then asks a fresh page for the status; the page that answers was served
- * by a new background, which rebuilt the Database. Returns the rebuild's measures, in ms.
+ * Kills the background, then asks a fresh page for the status, which a new background answers
+ * after it rebuilt the Database. Returns the rebuild's measures, in ms.
  */
 async function rebuildAfterKill(session: ExtensionSession, file: string) {
+  const timeOrigin = (background: typeof globalThis) => background.performance.timeOrigin;
+  const killed = await session.inspectBackground(timeOrigin);
   await session.stopBackground();
   const page = await session.openPage('welcome.html');
   await expectStatus(page, `Unlocked: ${nameOf(file)}`);
   await page.close();
+  expect(await session.inspectBackground(timeOrigin), 'a new background').toBeGreaterThan(killed);
   const measures = await session.inspectBackground((background) =>
     background.performance
       .getEntriesByType('measure')
@@ -79,14 +83,19 @@ async function rebuildAfterKill(session: ExtensionSession, file: string) {
 
 describe.each<BrowserName>(['chrome', 'firefox'])('the store bundle in %s', (name) => {
   let session: ExtensionSession;
+  let server: WebServer;
 
   beforeAll(async () => {
     const { bundleDir, executablePath } = inject('e2e')[name];
     session = await launchWithExtension(name, executablePath, bundleDir);
+    // A web page with the content script, so the canary check covers what it receives.
+    server = await serveWebPages({ '/': '<p>A web page</p>' });
+    await session.openWebPage(server.url(testHosts[0] ?? 'localhost', '/'));
   });
 
   afterAll(async () => {
     await session.close();
+    await server.close();
   });
 
   useCanaryCheck(() => session);

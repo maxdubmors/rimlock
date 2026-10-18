@@ -1,9 +1,13 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { browser, type Browser } from 'wxt/browser';
+import { fakeBrowser } from 'wxt/testing/fake-browser';
+
+import { encodeRequest } from '../protocol/messages';
 
 import { Secret } from '../shared/secret';
 import { CoreClient, type CoreBindings } from './core-client';
 import { FakeCore, fakeDatabase } from './fake-core';
-import { answer, type Background } from './router';
+import { answer, startRouter, type Background } from './router';
 import { rebuildMeasures, UnlockedState } from './unlocked-state';
 
 const masterPassword = 'correct horse';
@@ -15,6 +19,12 @@ const file = fakeDatabase({ name: 'Scenario', masterPassword });
  */
 function startBackground(core: CoreBindings = new FakeCore()): Background {
   const client = new CoreClient(() => Promise.resolve(core));
+  return { core: client, unlocked: new UnlockedState(client) };
+}
+
+/** A background whose Core cannot be instantiated. */
+function startBackgroundWithoutCore(): Background {
+  const client = new CoreClient(() => Promise.reject(new Error('no WebAssembly')));
   return { core: client, unlocked: new UnlockedState(client) };
 }
 
@@ -35,9 +45,9 @@ describe('the status request', () => {
   });
 
   it('reports the Core unavailable when it cannot be instantiated, instead of never answering', async () => {
-    const client = new CoreClient(() => Promise.reject(new Error('no WebAssembly')));
-    const background = { core: client, unlocked: new UnlockedState(client) };
-    expect(await answer({ kind: 'status' }, background)).toEqual({ core: 'unavailable' });
+    expect(await answer({ kind: 'status' }, startBackgroundWithoutCore())).toEqual({
+      core: 'unavailable',
+    });
   });
 });
 
@@ -114,10 +124,17 @@ describe('a background woken after the one that unlocked died', () => {
     expect(await answer({ kind: 'status' }, startBackground())).toMatchObject({ unlocked: null });
   });
 
+  it('has no Unlocked Database when the Local copy is gone, as when site data is cleared', async () => {
+    await unlock(startBackground());
+    await new Promise((resolve) => {
+      indexedDB.deleteDatabase('rimlock').onsuccess = resolve;
+    });
+    expect(await answer({ kind: 'status' }, startBackground())).toMatchObject({ unlocked: null });
+  });
+
   it('keeps the key material while the Core is unavailable, so a later wake-up rebuilds', async () => {
     await unlock(startBackground());
-    const client = new CoreClient(() => Promise.reject(new Error('no WebAssembly')));
-    await answer({ kind: 'status' }, { core: client, unlocked: new UnlockedState(client) });
+    await answer({ kind: 'status' }, startBackgroundWithoutCore());
     expect(await answer({ kind: 'status' }, startBackground())).toMatchObject({
       unlocked: { name: 'Scenario' },
     });
@@ -127,5 +144,52 @@ describe('a background woken after the one that unlocked died', () => {
     performance.clearMeasures();
     await answer({ kind: 'status' }, startBackground());
     expect(performance.getEntriesByType('measure')).toEqual([]);
+  });
+});
+
+describe('the router', () => {
+  /** Delivers `message` as the browser would from `sender`; resolves to the answer, if any. */
+  async function deliver(message: unknown, sender: Browser.runtime.MessageSender) {
+    startRouter(startBackground());
+    const sendResponse = vi.fn();
+    // The router's listener returns whether it will answer, as both browsers expect.
+    const [handled] = (await fakeBrowser.runtime.onMessage.trigger(
+      message,
+      sender,
+      sendResponse,
+    )) as unknown[];
+    if (handled !== true) return undefined;
+    await vi.waitFor(() => {
+      expect(sendResponse).toHaveBeenCalled();
+    });
+    return sendResponse.mock.calls[0]?.[0] as unknown;
+  }
+
+  const unlockMessage = () =>
+    encodeRequest({ kind: 'unlock', file, masterPassword: Secret.fromText(masterPassword) });
+
+  // The router reads only whether a sender has a tab.
+  const tab = { id: 1 } as Browser.tabs.Tab;
+
+  it.each<[string, Browser.runtime.MessageSender]>([
+    ['the popup', { id: browser.runtime.id, url: browser.runtime.getURL('/popup.html') }],
+    [
+      'an extension tab',
+      { id: browser.runtime.id, url: browser.runtime.getURL('/welcome.html'), tab, frameId: 0 },
+    ],
+  ])('takes an unlock from %s', async (_, sender) => {
+    expect(await deliver(unlockMessage(), sender)).toEqual({ unlocked: true, name: 'Scenario' });
+  });
+
+  // The Composite key is entered only in the popup or an extension tab (ADR-0006).
+  it.each<[string, Browser.runtime.MessageSender]>([
+    ['a content script', { id: browser.runtime.id, url: 'https://example.test/', tab, frameId: 0 }],
+    [
+      'an extension-origin iframe inside a web page',
+      { id: browser.runtime.id, url: browser.runtime.getURL('/inline-menu.html'), tab, frameId: 3 },
+    ],
+  ])('never answers an unlock from %s', async (_, sender) => {
+    expect(await deliver(unlockMessage(), sender)).toBeUndefined();
+    expect(await answer({ kind: 'status' }, startBackground())).toMatchObject({ unlocked: null });
   });
 });
