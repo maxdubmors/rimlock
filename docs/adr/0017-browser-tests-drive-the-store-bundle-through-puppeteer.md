@@ -13,6 +13,6 @@ End-to-end and autofill tests load the Extension into Chrome for Testing and Fir
 ## Consequences
 
 - Where Firefox's BiDi support is narrower than CDP, a scenario that cannot be expressed goes to the manual pre-release checklist; it does not bring in a second tool.
-- Picker-based flows cannot be automated (`showOpenFilePicker` is not interceptable), so adding a Database in end-to-end tests goes through WebDAV in Chrome and import `<input type=file>` in Firefox; the File System Access permission lifecycle stays on the manual checklist.
+- Picker-based flows cannot be automated (`showOpenFilePicker` is not interceptable), so adding a Database in end-to-end tests goes through WebDAV in Chrome and import `<input type=file>` in Firefox; the File System Access permission lifecycle stays on the manual checklist. Until M1's add flow exists, the M0 walking skeleton adds a Database through `<input type=file>` in both browsers ([`plan.md`](../spec/plan.md) § M0).
 - The wake-up rebuild criterion of ADR-0005 is measured in the same harness on the store bundle.
 - Decision detail: [Decide the testing strategy](https://github.com/maxdubmors/rimlock/issues/33).

@@ -44,7 +44,7 @@ M0 Foundation and checks ──────────┐
   1. Vitest + `WxtVitest` + `fakeBrowser`; `pnpm test` also runs `cargo test`.
   2. The `CoreClient` and `SourceAdapter` interfaces with `FakeCore`, `FakeSource` and their (small) contract suites against both sides.
   3. The test-Database generator, including the reference Database.
-  4. The Puppeteer harness: build the release bundle, load it into Chrome for Testing and Firefox, and run one smoke test: WASM loads in the background, unlock, background killed, rebuild timed, canary check.
+  4. The Puppeteer harness: build the release bundle, load it into Chrome for Testing and Firefox, and run one smoke test: WASM loads in the background, unlock, background killed, rebuild timed, canary check. The store bundle has no test hooks ([ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md)), so the smoke test unlocks through the **walking skeleton**: a minimal extension page that takes a `.kdbx` through `<input type=file>` and a Master password, in both browsers, and sends them through `protocol/` to the background. M1 replaces the page with the real add flow and keeps the background path.
   5. The synthetic and shadow-DOM autofill fixtures with their runner, ported from the prototype branches. The runner targets the `FormDetector` interface; the prototype's walk and grouping, ported as they are, are its first implementation and M2's starting point.
   6. The interop corpus directory with its `manifest` and the first KeePassXC files.
   7. `docker-compose` for the WebDAV matrix, with the throwaway test CA script and the Caddy TLS proxy in front of every server ([`engineering.md`](engineering.md) § Tests).
