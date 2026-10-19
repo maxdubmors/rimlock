@@ -101,3 +101,44 @@ jobs:
           name: bundle-report
           path: apps/extension/.output/bundle-report/
           if-no-files-found: error
+
+  # What the path-filtered jobs filter on (docs/spec/engineering.md § CI): a job-level if: on these
+  # outputs, so a filtered-out job reports skipped, which its required check accepts.
+  paths:
+    name: Changed paths
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      interop: ${{ steps.changed.outputs.interop }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      # A diff that cannot be computed, as for a push whose parent is unknown, runs every job.
+      - id: changed
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if changed=$(git diff --name-only "$BASE" HEAD); then
+            matches() { grep -qE "$1" <<<"$changed" && echo true || echo false; }
+          else
+            matches() { echo true; }
+          fi
+          echo "interop=$(matches '^(crates/|scripts/test-interop\.mjs$|scripts/interop\.Dockerfile$)')" >> "$GITHUB_OUTPUT"
+
+  interop:
+    name: pnpm test:interop
+    needs: paths
+    if: needs.paths.outputs.interop == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # Rust and pnpm; the script needs no packages, and Docker is on the runner image.
+      - uses: ./.github/actions/setup
+        with:
+          install: 'false'
+      - run: pnpm test:interop

@@ -10,6 +10,19 @@ Local rules for the Rust crates.
 - `clippy.toml` lets tests unwrap, expect, panic and index, but clippy counts only `#[test]` functions and `#[cfg(test)]` items as tests. An integration test file therefore starts with `#![cfg(test)]`, so its helpers get the same relaxation.
 - Cargo commands take `--locked`; `Cargo.lock` changes only on purpose.
 
+## Interop corpus
+
+`rimlock-core/tests/corpus/` holds `.kdbx` files other KeePass clients saved ([`docs/spec/engineering.md`](../docs/spec/engineering.md) § Tests, which says what they may contain). `tests/corpus.rs`, part of `pnpm test`, opens each one with the key its `manifest.json` entry names and checks what `read_header` and `info()` give against the entry; it fails on a file the manifest does not list. `pnpm test:interop` runs the same tests on files `keepassxc-cli` has just created or saved.
+
+Adding a file:
+
+1. Start from a Database of the generator (`cargo run --locked -p rimlock-core --example fixtures -- DIR`; `databases.json` names its key), open it in the client, edit it, save it.
+2. Name it `<client>-<version>-<setting>.kdbx`, its Key file the same with `.keyx`, and put both in `tests/corpus/`.
+3. Add its entry to `manifest.json`: `client` and `version`; `made`, how it was made, so the next person can make one like it; `masterPassword` and `keyFile`, `null` when unused; `header`, the format version and KDF parameters the client wrote; `contents`, the Database's name and whether its Recycle Bin is on and exists. Take `header` from a hex dump or the client's database settings, never from what the test reports.
+4. `cargo test --locked -p rimlock-core --test corpus`.
+
+A file from `keepassxc-cli`: run `pnpm test:interop DIR` and copy the file, its Key file and its entry from `DIR/manifest.json`; not the `created-*` files, whose KDF is `db-create`'s 1,000,000 rounds. A setting `test:interop` should cover is a line in `settings` of `scripts/test-interop.mjs`; a new KeePassXC version starts in `scripts/interop.Dockerfile`.
+
 ## keepass-rs fork
 
 `rimlock-core` depends on [`maxdubmors/keepass-rs`](https://github.com/maxdubmors/keepass-rs), pinned by `rev`. The fork is upstream plus one commit per pending upstream pull request ([`docs/spec/plan.md`](../docs/spec/plan.md) § Fork upkeep). Every commit rimlock pins stays fetchable forever: the AMO source package does not vendor Cargo dependencies, so a reviewer's build fetches the fork by `rev`. A `rimlock-YYYY-MM-DD` tag on the pinned commit is what keeps it reachable after a rebase.

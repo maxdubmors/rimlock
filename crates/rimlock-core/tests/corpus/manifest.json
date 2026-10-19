@@ -1,0 +1,169 @@
+[
+  {
+    "file": "keepassxc-2.7.10-argon2d.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-4.0-argon2d.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-efaa03425ae0b2cb17301cf0",
+    "keyFile": null,
+    "header": {
+      "formatVersion": "4.0",
+      "kdf": {
+        "kind": "argon2d",
+        "iterations": 2,
+        "memoryBytes": 1048576,
+        "parallelism": 2,
+        "version": 19
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-argon2id.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-4.1-argon2id.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-b9192f2c3fb7a7d40315e608",
+    "keyFile": null,
+    "header": {
+      "formatVersion": "4.0",
+      "kdf": {
+        "kind": "argon2id",
+        "iterations": 2,
+        "memoryBytes": 1048576,
+        "parallelism": 2,
+        "version": 19
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-aes-kdf.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-4.0-aes-kdf.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-2169ca88841280c743374601",
+    "keyFile": null,
+    "header": {
+      "formatVersion": "4.0",
+      "kdf": {
+        "kind": "aesKdf",
+        "rounds": 1000
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-3.1.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-3.1.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-403e0f51ee5ed05cb4e8c6a4",
+    "keyFile": null,
+    "header": {
+      "formatVersion": "3.1",
+      "kdf": {
+        "kind": "aesKdf",
+        "rounds": 1000
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-3.1-entry-deleted.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-3.1.kdbx, then keepassxc-cli mkdir and add, add and rm (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-403e0f51ee5ed05cb4e8c6a4",
+    "keyFile": null,
+    "header": {
+      "formatVersion": "4.1",
+      "kdf": {
+        "kind": "aesKdf",
+        "rounds": 1000
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-from-4.1.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-2a7dc3b92cb3486c989e6259",
+    "keyFile": null,
+    "header": {
+      "formatVersion": "4.0",
+      "kdf": {
+        "kind": "argon2d",
+        "iterations": 2,
+        "memoryBytes": 1048576,
+        "parallelism": 2,
+        "version": 19
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-password-key-file.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-4.0-argon2d.kdbx, then keepassxc-cli db-edit --set-key-file keepassxc-2.7.10-password-key-file.keyx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-efaa03425ae0b2cb17301cf0",
+    "keyFile": "keepassxc-2.7.10-password-key-file.keyx",
+    "header": {
+      "formatVersion": "4.0",
+      "kdf": {
+        "kind": "argon2d",
+        "iterations": 2,
+        "memoryBytes": 1048576,
+        "parallelism": 2,
+        "version": 19
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  },
+  {
+    "file": "keepassxc-2.7.10-key-file.kdbx",
+    "client": "KeePassXC",
+    "version": "2.7.10",
+    "made": "the test-Database generator's scenario-4.0-argon2d.kdbx, then keepassxc-cli db-edit --set-key-file keepassxc-2.7.10-key-file.keyx --unset-password, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": null,
+    "keyFile": "keepassxc-2.7.10-key-file.keyx",
+    "header": {
+      "formatVersion": "4.0",
+      "kdf": {
+        "kind": "argon2d",
+        "iterations": 2,
+        "memoryBytes": 1048576,
+        "parallelism": 2,
+        "version": 19
+      }
+    },
+    "contents": {
+      "name": "rimlock scenario",
+      "recycleBin": true
+    }
+  }
+]
