@@ -17,8 +17,8 @@ const extensionSource = join(import.meta.dirname, 'extension');
 
 /**
  * Builds the test extension into `outDir`: the Extension's FormDetector in a content script of
- * its own. The store bundle has no way yet to show what FormDetector found without a test hook
- * (ADR-0017), so the runner observes it here instead.
+ * its own. A field's label never leaves the store bundle's content script, so the runner observes
+ * FormDetector here instead (ADR-0017).
  */
 export async function buildTestExtension(outDir: string): Promise<void> {
   await build({
