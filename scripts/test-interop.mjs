@@ -4,9 +4,11 @@
 // with a manifest.json in the interop corpus's shape, then runs rimlock-core's corpus tests on DIR
 // (crates/rimlock-core/tests/corpus.rs). DIR must be empty or missing; by default it is a fresh
 // temporary directory, kept so a file can be copied into the corpus. Needs Docker and Rust.
+// Exits 1 when a step or a test fails, 2 when DIR is not empty.
 //
 // keepassxc-cli creates only KDBX 3.1 with AES-KDF at 1,000,000 rounds, so the other settings
-// start from the test-Database generator's low-KDF files: KeePassXC edits each one and writes the
+// start from the test-Database generator's low-KDF files, opened with their Master password:
+// KeePassXC edits each one, sets a Key file of its own where the setting has one, and writes the
 // whole file again itself. The expected headers are what KeePassXC 2.7 writes: every KDF and its
 // parameters kept; the oldest format that holds the contents, so a 4.1 file is saved as 4.0; 4.1
 // once an Entry is in the Recycle Bin, since KeePassXC then records the Group it came from.
@@ -52,16 +54,16 @@ const lowAesKdf = { kind: 'aesKdf', rounds: 1000 };
 // What keepassxc-cli db-create writes.
 const created = { formatVersion: '3.1', kdf: { kind: 'aesKdf', rounds: 1_000_000 } };
 
-// Each setting: a file db-create makes (`create`), or a generator file KeePassXC saves (`seed`);
+// Each setting: a file db-create makes, or one KeePassXC saves from the generator's `seed`. Every
+// file has a Master password unless `noPassword`, and a Key file KeePassXC writes if `keyFile`;
 // `deleteEntry` also moves an Entry to the Recycle Bin.
 const argon2d = { kind: 'argon2d', ...argon2 };
 const settings = [
-  { name: 'created-password', create: { password: true, keyFile: false }, header: created },
-  { name: 'created-key-file', create: { password: false, keyFile: true }, header: created },
-  { name: 'created-password-key-file', create: { password: true, keyFile: true }, header: created },
+  { name: 'created-password', header: created },
+  { name: 'created-key-file', keyFile: true, noPassword: true, header: created },
+  { name: 'created-password-key-file', keyFile: true, header: created },
   {
     name: 'created-entry-deleted',
-    create: { password: true, keyFile: false },
     deleteEntry: true,
     header: { ...created, formatVersion: '4.1' },
   },
@@ -90,12 +92,15 @@ const settings = [
   { name: 'from-4.1', seed: 'scenario.kdbx', header: { formatVersion: '4.0', kdf: argon2d } },
   {
     name: 'password-key-file',
-    seed: 'scenario-password-key-file.kdbx',
+    seed: 'scenario-4.0-argon2d.kdbx',
+    keyFile: true,
     header: { formatVersion: '4.0', kdf: argon2d },
   },
   {
     name: 'key-file',
-    seed: 'scenario-key-file.kdbx',
+    seed: 'scenario-4.0-argon2d.kdbx',
+    keyFile: true,
+    noPassword: true,
     header: { formatVersion: '4.0', kdf: argon2d },
   },
 ];
@@ -154,36 +159,39 @@ try {
   const manifest = [];
   for (const setting of settings) {
     const file = `keepassxc-${version}-${setting.name}.kdbx`;
-    const keyFileFor = () => file.replace(/\.kdbx$/, '.keyx');
-    let masterPassword = null;
-    let keyFile = null;
+    // With --set-key-file, db-create and db-edit write a new Key file there.
+    const keyFile = setting.keyFile ? file.replace(/\.kdbx$/, '.keyx') : null;
+    let masterPassword;
     let made;
-    let name;
-    if (setting.create) {
-      if (setting.create.password) masterPassword = `interop ${setting.name}`;
-      if (setting.create.keyFile) keyFile = keyFileFor();
+    let contents;
+    if (setting.seed === undefined) {
+      masterPassword = setting.noPassword ? null : `interop ${setting.name}`;
       const options = [
         ...(keyFile ? ['--set-key-file', keyFile] : []),
         ...(masterPassword ? ['--set-password'] : []),
       ];
-      // With --set-key-file, db-create writes a new Key file there.
       cli(
         ['db-create', '--quiet', ...options, file],
         ...(masterPassword ? [masterPassword, masterPassword] : []),
       );
       made = `keepassxc-cli db-create ${options.join(' ')}`;
-      // db-create gives a Database no name.
-      name = '';
+      // db-create gives a Database no name and no Recycle Bin Group.
+      contents = { name: '', recycleBin: Boolean(setting.deleteEntry) };
     } else {
       const seed = seedKeys.find((database) => database.file === setting.seed);
       copyFileSync(join(seeds, seed.file), join(dir, file));
-      masterPassword = seed.masterPassword;
-      if (seed.keyFile) {
-        keyFile = keyFileFor();
-        copyFileSync(join(seeds, seed.keyFile), join(dir, keyFile));
-      }
       made = `the test-Database generator's ${seed.file}`;
-      name = 'rimlock scenario';
+      if (keyFile) {
+        const options = [
+          '--set-key-file',
+          keyFile,
+          ...(setting.noPassword ? ['--unset-password'] : []),
+        ];
+        cli(['db-edit', '--quiet', ...options, file], seed.masterPassword);
+        made += `, then keepassxc-cli db-edit ${options.join(' ')}`;
+      }
+      masterPassword = setting.noPassword ? null : seed.masterPassword;
+      contents = { name: 'rimlock scenario', recycleBin: true };
     }
 
     // keepassxc-cli saves the file after each edit.
@@ -191,31 +199,26 @@ try {
       ...(keyFile ? ['--key-file', keyFile] : []),
       ...(masterPassword ? [] : ['--no-password']),
     ];
-    const unlock = masterPassword ? [masterPassword] : [];
-    const addEntry = (title) =>
+    const edit = (command, options, path, ...answers) =>
       cli(
-        [
-          'add',
-          '--quiet',
-          ...open,
-          '--username',
-          'someone',
-          '--url',
-          'https://login.example.test',
-          '--password-prompt',
-          file,
-          `Saved by KeePassXC/${title}`,
-        ],
-        ...unlock,
+        [command, '--quiet', ...open, ...options, file, path],
+        ...(masterPassword ? [masterPassword] : []),
+        ...answers,
+      );
+    const addEntry = (title) =>
+      edit(
+        'add',
+        ['--username', 'someone', '--url', 'https://login.example.test', '--password-prompt'],
+        `Saved by KeePassXC/${title}`,
         `entry password ${title}`,
       );
-    cli(['mkdir', '--quiet', ...open, file, 'Saved by KeePassXC'], ...unlock);
+    edit('mkdir', [], 'Saved by KeePassXC');
     addEntry('Login');
     made += ', then keepassxc-cli mkdir and add';
     if (setting.deleteEntry) {
       addEntry('Old login');
       // Creates the Recycle Bin if the Database has none.
-      cli(['rm', '--quiet', ...open, file, 'Saved by KeePassXC/Old login'], ...unlock);
+      edit('rm', [], 'Saved by KeePassXC/Old login');
       made += ', add and rm';
     }
 
@@ -227,8 +230,7 @@ try {
       masterPassword,
       keyFile,
       header: setting.header,
-      // The generator's Databases have a Recycle Bin.
-      contents: { name, recycleBin: Boolean(setting.seed || setting.deleteEntry) },
+      contents,
     });
   }
   writeFileSync(join(dir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);

@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <KeyFile>
-	<Meta>
-		<Version>2.0</Version>
-	</Meta>
-	<Key>
-		<Data Hash="734DEE6A">
-			4A2D81C8 E5F09851 EFA20396 56EFAC1A
-			BDD13E81 4E78179F D29BD4FD FC6BC8DA
-		</Data>
-	</Key>
+    <Meta>
+        <Version>2.0</Version>
+    </Meta>
+    <Key>
+        <Data Hash="79CBBE44">
+            FA352D00 B22FB5B3 98A42313 42836824
+            0F9D4B2D 7FE219CF 5881838D A533BC31
+        </Data>
+    </Key>
 </KeyFile>

@@ -3,7 +3,7 @@
 //! the manifest says about it.
 //!
 //! `RIMLOCK_CORPUS` points the same tests at another directory of the same shape:
-//! `pnpm test:interop` runs them on the files `keepassxc-cli` has just created.
+//! `pnpm test:interop` runs them on the files `keepassxc-cli` has just created or saved.
 
 #![cfg(test)]
 

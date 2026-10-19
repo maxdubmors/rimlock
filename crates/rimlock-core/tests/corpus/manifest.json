@@ -126,8 +126,8 @@
     "file": "keepassxc-2.7.10-password-key-file.kdbx",
     "client": "KeePassXC",
     "version": "2.7.10",
-    "made": "the test-Database generator's scenario-password-key-file.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
-    "masterPassword": "rmlk-master-e6da0fadcfe66837364f9d7f",
+    "made": "the test-Database generator's scenario-4.0-argon2d.kdbx, then keepassxc-cli db-edit --set-key-file keepassxc-2.7.10-password-key-file.keyx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "masterPassword": "rmlk-master-efaa03425ae0b2cb17301cf0",
     "keyFile": "keepassxc-2.7.10-password-key-file.keyx",
     "header": {
       "formatVersion": "4.0",
@@ -148,7 +148,7 @@
     "file": "keepassxc-2.7.10-key-file.kdbx",
     "client": "KeePassXC",
     "version": "2.7.10",
-    "made": "the test-Database generator's scenario-key-file.kdbx, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
+    "made": "the test-Database generator's scenario-4.0-argon2d.kdbx, then keepassxc-cli db-edit --set-key-file keepassxc-2.7.10-key-file.keyx --unset-password, then keepassxc-cli mkdir and add (scripts/test-interop.mjs)",
     "masterPassword": null,
     "keyFile": "keepassxc-2.7.10-key-file.keyx",
     "header": {
