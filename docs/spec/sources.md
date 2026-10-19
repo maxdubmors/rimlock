@@ -33,6 +33,8 @@ Step 4 matters: storing a Merge commit raises the revision, so without it every 
 
 **While Locked:** Sync works on encrypted bytes. If the remote has not changed, Pending changes are written. If it has, the download waits next to the Local copy as a remote snapshot, and the Merge runs after the next unlock.
 
+**With the Local copy missing** ([`databases-and-unlock.md`](databases-and-unlock.md) § An interrupted add or Remove), Sync does not run, not even the Pull check: there is nothing to merge into, and nothing is read from or written to the Source. The status line reads "Local copy missing", with no action. A Firefox import has no Sync; its status line in that state is in [§ Firefox: imported copy](#firefox-imported-copy).
+
 **After unlock:** if a newer remote snapshot is on hand, it is merged in the background (one more KDF run, ~0.7 s, when the remote's KDF seed differs). The popup shows "Syncing…" and refreshes.
 
 **The key changed on another device** (`RemoteKeyChanged`): pushing stops and the status says "Database password was changed on another device".
