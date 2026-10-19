@@ -1,4 +1,4 @@
-//! `cargo run -p rimlock-core --example fixtures -- [--seed N] [DIR]`
+//! `cargo run --locked -p rimlock-core --example fixtures -- [--seed N] [DIR]`
 //!
 //! Writes the test Databases, their Key files, `databases.json` (which key opens which file) and
 //! `canaries.json` (every canary marker) to `DIR`, by default `target/fixtures`. Nothing generated

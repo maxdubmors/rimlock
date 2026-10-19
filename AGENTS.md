@@ -26,8 +26,8 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | Command | Does |
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
-| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, every `§` reference naming a heading that exists, the canary check in every end-to-end file that launches the bundle. Fails on any finding; ends on `pnpm check: green` when it passes. |
-| `pnpm format` | Writes what `pnpm check` checks for format: Prettier on the same files, `cargo fmt`. |
+| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, one sentence per line in `docs/spec/engineering.md`, every `§` reference naming a heading that exists, the canary check in every end-to-end file that launches the bundle. Fails on any finding; ends on `pnpm check: green` when it passes. |
+| `pnpm format` | Writes what `pnpm check` checks for format: Prettier on the same files, `cargo fmt`, one sentence per line in `docs/spec/engineering.md`. |
 | `pnpm grep:sections <pattern> [path…]` | `grep -rni` that names each Markdown match's section (`docs/spec/sources.md:25 § Sync: …`), for an acceptance criterion such as "matches only `sources.md` § Sync". Exits 1 on no match. |
 | `pnpm check:copied-text <issue>` | Finds each `>` quote of the ticket's Desired behavior, word for word, in a Markdown file and prints where. Exits 1 on a quote not found. |
 | `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. Ends on `pnpm test: green` when it passes. |
@@ -35,12 +35,13 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | `pnpm test:interop [DIR]` | Creates Databases with `keepassxc-cli` in a digest-pinned container (Docker), then runs the interop corpus tests on them; keeps the files in `DIR`, empty or new, by default a temporary directory. Adding a file to the corpus: `crates/AGENTS.md` § Interop corpus. Ends on `pnpm test:interop: green` when it passes. |
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
 | `pnpm check:core-bindings` | Fails if the `*.d.ts` in the working tree are stale; fresh uncommitted ones pass. |
+| `pnpm check:required-checks` | Fails unless the jobs of `.github/workflows/pull-request.yml` and the required checks of the `main` ruleset are the same names (`gh` signed in). |
 | `pnpm check:fork-pin` | Fails unless the keepass-rs `rev` is the commit its comment's `rimlock-*` tag points at on the fork. |
 | `pnpm build` | `build:core`, then the Extension for both browsers into `apps/extension/.output/`. |
 | `pnpm build:report` | `build:core`, then per browser the built `manifest.json` and the `content` bundle's module list into `apps/extension/.output/bundle-report/`, the files CI publishes. |
 | `pnpm dev` | WXT dev server for Chrome on a `dev-wasm` Core (Firefox: `pnpm --filter @rimlock/extension dev:firefox`). |
 
-One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to-end: add `--config vitest.e2e.config.ts`; both need `pnpm build:core` once in a fresh checkout) or `cargo test -p rimlock-core --test <name>`.
+One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to-end: add `--config vitest.e2e.config.ts`; both need `pnpm build:core` once in a fresh checkout) or `cargo test --locked -p rimlock-core --test <name>`.
 
 ## Rules
 

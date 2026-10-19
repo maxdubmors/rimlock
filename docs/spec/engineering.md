@@ -4,7 +4,9 @@ Principles: [ADR-0016](../adr/0016-one-repository-isolated-extension-build.md) (
 
 ## Stack
 
-pnpm + WXT (exact pin) + Svelte 5 + TypeScript 6.x; Rust + `wasm-bindgen` + `tsify` for the Core; MV3 in both browsers. The Core depends on a rimlock fork of keepass-rs pinned to a commit. Every fork fix also goes upstream as its own pull request, and rimlock returns to crates.io once all of them have merged.
+pnpm + WXT (exact pin) + Svelte 5 + TypeScript 6.x; Rust + `wasm-bindgen` + `tsify` for the Core; MV3 in both browsers.
+The Core depends on a rimlock fork of keepass-rs pinned to a commit.
+Every fork fix also goes upstream as its own pull request, and rimlock returns to crates.io once all of them have merged.
 
 ## Repository layout
 
@@ -42,37 +44,56 @@ core-bindings/  # wasm-bindgen output (only *.d.ts committed)
 vendor/         # vendored third-party code, each with UPSTREAM.md
 ```
 
-- Folders, not packages. Boundaries are ESLint rules on **resolved** paths (`import-x/no-restricted-paths`, so re-exports cannot bypass them; `no-restricted-imports` is the fallback):
-  - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`. The rule is an allowlist: content-side code imports only content-side code and `protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`, so neither `ui/` nor another entrypoint opens a path around it;
+- Folders, not packages.
+  Boundaries are ESLint rules on **resolved** paths (`import-x/no-restricted-paths`, so re-exports cannot bypass them; `no-restricted-imports` is the fallback):
+  - content-side code (`autofill/`, the `content` and `inline-menu` entrypoints) never imports `background/`, `sources/`, `core-bindings/` or `settings/`.
+    The rule is an allowlist: content-side code imports only content-side code and `protocol/`, `shared/`, `generator/`, `matching/`, `vendor/`, so neither `ui/` nor another entrypoint opens a path around it;
   - those shared modules import only each other: the plugin checks one import at a time, so this is what stops a re-export ([`verification.md`](verification.md) V4);
   - only `background/` itself and the `background` entrypoint import `background/`; every other context, `ui/` included, reaches the background through `protocol/` messages, so no chain of imports leads into it.
 - Content code, and the modules it may import, never touch `storage`: `no-restricted-properties` (any `.storage`, so `browser.storage`, destructuring and aliases of `browser`), `no-restricted-globals` (`storage`), `no-restricted-imports` (`wxt/utils/storage`, `@wxt-dev/storage`).
 - Every boundary and storage rule has a permanent lint fixture test (`apps/extension/tests/lint/`).
 - WXT auto-imports are off (`imports: false`); every import is explicit.
-- Vendored code lives in `vendor/<name>/` with `UPSTREAM.md` (repository, commit, licence, local modifications). It is not reformatted, but it is type-checked and boundary-checked. The Proton classifier is an npm dependency, not vendored.
-- Messages between contexts are typed in `protocol/` with an exhaustive discriminated union. `Secret` crosses only through the protocol codec.
-- i18n: `@wxt-dev/i18n`, strings in `apps/extension/locales/en.yml`, typed keys, generated `_locales/`. No string literal in UI code.
+- Vendored code lives in `vendor/<name>/` with `UPSTREAM.md` (repository, commit, licence, local modifications).
+  It is not reformatted, but it is type-checked and boundary-checked.
+  The Proton classifier is an npm dependency, not vendored.
+- Messages between contexts are typed in `protocol/` with an exhaustive discriminated union.
+  `Secret` crosses only through the protocol codec.
+- i18n: `@wxt-dev/i18n`, strings in `apps/extension/locales/en.yml`, typed keys, generated `_locales/`.
+  No string literal in UI code.
 
 ## Rust crates
 
-- `rimlock-core`: `unsafe_code = "forbid"` (`#![forbid(unsafe_code)]`; the workspace denies it, so the bindings can `#[expect]` what `wasm-bindgen` generates). Secrets in `zeroize` types that implement neither `Debug` nor `Display` with their content. Clock and RNG are injected.
-- `rimlock-core-wasm`: wasm-bindgen + `tsify` (use `tsify::Ts<T>`, not the deprecated `into_wasm_abi`/`from_wasm_abi`). As strict as the generated code allows.
+- `rimlock-core`: `unsafe_code = "forbid"` (`#![forbid(unsafe_code)]`; the workspace denies it, so the bindings can `#[expect]` what `wasm-bindgen` generates).
+  Secrets in `zeroize` types that implement neither `Debug` nor `Display` with their content.
+  Clock and RNG are injected.
+- `rimlock-core-wasm`: wasm-bindgen + `tsify` (use `tsify::Ts<T>`, not the deprecated `into_wasm_abi`/`from_wasm_abi`).
+  As strict as the generated code allows.
 - The Core API is [`core-api.md`](core-api.md); the committed `.d.ts` must match it.
 
 ## WASM build
 
-- `pnpm build:core` (`scripts/build-core.sh`): `cargo build --target wasm32-unknown-unknown -p rimlock-core-wasm`, then `wasm-bindgen --target web` into `apps/extension/src/core-bindings/`. The CLI version equals the pinned `wasm-bindgen = "=X"` crate version: the script reads it from `Cargo.lock` and installs that CLI into `target/tools/` on first use. No wasm-pack and no wasm-opt in the MVP.
-- Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`. Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on. `pnpm build:core` builds `release`, the Core of the store bundle; `pnpm dev` builds `dev-wasm`.
-- Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin. The background is an ES module (`type: "module"` in both browsers): WXT builds a classic background as a Vite library, and Vite inlines every asset of a library as base64, which would put the whole Core into `background.js`. The manifest CSP needs `'wasm-unsafe-eval'`.
+- `pnpm build:core` (`scripts/build-core.sh`): `cargo build --target wasm32-unknown-unknown -p rimlock-core-wasm`, then `wasm-bindgen --target web` into `apps/extension/src/core-bindings/`.
+  The CLI version equals the pinned `wasm-bindgen = "=X"` crate version: the script reads it from `Cargo.lock` and installs that CLI into `target/tools/` on first use.
+  No wasm-pack and no wasm-opt in the MVP.
+- Release profile: `opt-level = 3`, `lto = "fat"`, `codegen-units = 1`.
+  Development profile `dev-wasm`: optimised (Argon2 in debug is unusably slow) with debug assertions on.
+  `pnpm build:core` builds `release`, the Core of the store bundle; `pnpm dev` builds `dev-wasm`.
+- Vite picks up the `.wasm` from wasm-bindgen's `new URL(…, import.meta.url)` with no plugin.
+  The background is an ES module (`type: "module"` in both browsers): WXT builds a classic background as a Vite library, and Vite inlines every asset of a library as base64, which would put the whole Core into `background.js`.
+  The manifest CSP needs `'wasm-unsafe-eval'`.
 - No Rust watcher: after Rust edits, run `pnpm build:core`; WXT reloads the new glue.
-- Only the generated `*.d.ts` are committed. `pnpm check:core-bindings` regenerates them and fails if the ones in the working tree change, so freshly built `*.d.ts` pass before they are committed; CI runs it on every pull request, where the working tree is the commit.
+- Only the generated `*.d.ts` are committed.
+  `pnpm check:core-bindings` regenerates them and fails if the ones in the working tree change, so freshly built `*.d.ts` pass before they are committed; CI runs it on every pull request, where the working tree is the commit.
 - A field or variant the bindings document carries the Core's doc text for the same member, word for word; `crates/rimlock-core-wasm/tests/core_docs.rs` checks it, so the `.d.ts` cannot drift from the Core.
 
 ## Pinning and reproducibility
 
 - `rust-toolchain.toml` (exact version, `wasm32-unknown-unknown`), `.node-version` + `engines`, `packageManager: pnpm@…`, exact npm versions (`save-exact`), `Cargo.lock` committed, `cargo build --locked`.
-- TypeScript 6.x everywhere (typescript-eslint and `svelte-check` do not support TS 7 yet). If WXT pulls TS 7, alias `typescript` to the TS 6 package ([`verification.md`](verification.md) V4).
-- **Release build:** `scripts/build-release.sh` inside a digest-pinned container (pinned Rust image, `wasm-bindgen-cli`, Node, pnpm). The same script runs bare for AMO reviewers, following `BUILDING.md`. It must:
+- TypeScript 6.x everywhere (typescript-eslint and `svelte-check` do not support TS 7 yet).
+  If WXT pulls TS 7, alias `typescript` to the TS 6 package ([`verification.md`](verification.md) V4).
+- **Release build:** `scripts/build-release.sh` inside a digest-pinned container (pinned Rust image, `wasm-bindgen-cli`, Node, pnpm).
+  The same script runs bare for AMO reviewers, following `BUILDING.md`.
+  It must:
   1. set `RUSTC_WRAPPER=scripts/rustc-wrapper.sh`, which gives wasm32 units a host-independent `-C metadata` ([rust-lang/cargo#8140](https://github.com/rust-lang/cargo/issues/8140)); without it the aarch64 `.wasm` differs;
   2. set `RUSTFLAGS` explicitly (the `getrandom` cfg, `--remap-path-prefix` for `$CARGO_HOME`, which is required, and for the project path) after unsetting `CARGO_ENCODED_RUSTFLAGS`, `CARGO_BUILD_RUSTFLAGS`, `CARGO_PROFILE_*`, target-dir and wrapper overrides;
   3. write `SHA256SUMS` of the outputs.
@@ -81,23 +102,48 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## Checks: `pnpm check`
 
-One command: formatting check, lint, type checks, clippy, and four script checks: comments, Markdown tables, section references and the canary check's wiring.
+One command: formatting check, lint, type checks, clippy, and five script checks: comments, Markdown tables, one sentence per line, section references and the canary check's wiring.
 
-- **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`. ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above + the local rule `rimlock/no-async-event-handler`, which does for Svelte event attributes what `no-misused-promises` does for JSX ([`verification.md`](verification.md) V4). Prettier + `prettier-plugin-svelte` formats. Not oxlint, not Biome, not a hybrid ([Compare TypeScript linters: ESLint, Biome and oxlint](https://github.com/maxdubmors/rimlock/issues/37)).
-- **Rust:** `rustfmt`; root `[workspace.lints]`: `clippy::all` + `clippy::pedantic` as `deny` with no global exceptions; from `restriction`: `unwrap_used`, `expect_used`, `panic`, `indexing_slicing`, `todo`, `unimplemented` (a panic kills the WASM instance), `dbg_macro`, `print_stdout`, `print_stderr`, `allow_attributes`, `allow_attributes_without_reason` (exceptions only as `#[expect(lint, reason = "…")]`). `clippy.toml` allows unwrap/expect/panic/indexing in tests. Run as `cargo clippy --all-targets -- -D warnings`, and again for `--target wasm32-unknown-unknown`, so code compiled only for the WASM build is linted too.
-- **Comments:** `scripts/check-issue-refs.sh` fails on a code comment (Rust, TypeScript, JavaScript, Svelte) that names a tracker issue (`#80`, `…/issues/80`). A comment cites the ADR or spec section that carries the rule, since an issue number goes stale once the issue closes. Docs under `docs/` link issues freely.
-- **Markdown tables:** `scripts/check-md-tables.sh` fails on a table row whose cell count differs from its header's. Markdown is formatted by hand, and a stray `|` moves the rest of its row into the wrong columns. As in GFM, every unescaped `|` splits cells, inside a code span too.
-- **Section references:** `scripts/check-section-refs.mjs` fails on a `§` reference that cites a Markdown file missing from the repository or names no heading of it, and on a `§` with no space before its number or word (`§10`). A heading moves and is renamed by hand, and nothing else notices the references it leaves behind. A reference passes when it starts with a heading, its number, or its part before `: ` or ` (` (`§ Checks`), so only the first heading of `§ WebDAV, Writes` is checked. A bare file name two files share is skipped. It is a Node script, not shell, because it resolves file names across the repository.
-- **Canary check:** `scripts/check-canary-check.sh` fails on an end-to-end test file that calls `launchWithExtension` without `useCanaryCheck` (§ Tests, Secret leaks). `harness.test.ts` is exempt, because it plants markers on purpose.
+- **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`.
+  ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above + the local rule `rimlock/no-async-event-handler`, which does for Svelte event attributes what `no-misused-promises` does for JSX ([`verification.md`](verification.md) V4).
+  Prettier + `prettier-plugin-svelte` formats.
+  Not oxlint, not Biome, not a hybrid ([Compare TypeScript linters: ESLint, Biome and oxlint](https://github.com/maxdubmors/rimlock/issues/37)).
+- **Rust:** `rustfmt`; root `[workspace.lints]`: `clippy::all` + `clippy::pedantic` as `deny` with no global exceptions; from `restriction`: `unwrap_used`, `expect_used`, `panic`, `indexing_slicing`, `todo`, `unimplemented` (a panic kills the WASM instance), `dbg_macro`, `print_stdout`, `print_stderr`, `allow_attributes`, `allow_attributes_without_reason` (exceptions only as `#[expect(lint, reason = "…")]`).
+  `clippy.toml` allows unwrap/expect/panic/indexing in tests.
+  Run as `cargo clippy --all-targets -- -D warnings`, and again for `--target wasm32-unknown-unknown`, so code compiled only for the WASM build is linted too.
+- **Comments:** `scripts/check-issue-refs.sh` fails on a code comment (Rust, TypeScript, JavaScript, Svelte) that names a tracker issue (`#80`, `…/issues/80`).
+  A comment cites the ADR or spec section that carries the rule, since an issue number goes stale once the issue closes.
+  Docs under `docs/` link issues freely.
+- **Markdown tables:** `scripts/check-md-tables.sh` fails on a table row whose cell count differs from its header's.
+  Markdown tables are formatted by hand, and a stray `|` moves the rest of its row into the wrong columns.
+  As in GFM, every unescaped `|` splits cells, inside a code span too.
+- **One sentence per line:** `scripts/check-md-sentences.mjs` fails on a line of `engineering.md` that holds two sentences, and `pnpm format` breaks it.
+  Two pull requests that edit neighbouring sentences then touch different lines, where one line per paragraph made them conflict.
+  Other Markdown keeps one line per paragraph until its file joins the script's list.
+  `pnpm check:copied-text` reads a wrapped paragraph as one line, so a ticket's quote still matches.
+- **Section references:** `scripts/check-section-refs.mjs` fails on a `§` reference that cites a Markdown file missing from the repository or names no heading of it, and on a `§` with no space before its number or word (`§10`).
+  A heading moves and is renamed by hand, and nothing else notices the references it leaves behind.
+  A reference passes when it starts with a heading, its number, or its part before `: ` or ` (` (`§ Checks`), so only the first heading of `§ WebDAV, Writes` is checked.
+  A bare file name two files share is skipped.
+  It is a Node script, not shell, because it resolves file names across the repository.
+- **Canary check:** `scripts/check-canary-check.sh` fails on an end-to-end test file that calls `launchWithExtension` without `useCanaryCheck` (§ Tests, Secret leaks).
+  `harness.test.ts` is exempt, because it plants markers on purpose.
 
 ## Tests
 
 **Runners**
 
-- Rust: `cargo test`. Unit tests inline; integration tests in `crates/rimlock-core/tests/`; the interop corpus in `crates/rimlock-core/tests/corpus/`.
-- TypeScript: Vitest + `WxtVitest` + `fakeBrowser` (`@webext-core/fake-browser`). Unit tests next to the code (`foo.test.ts`); the rest in `apps/extension/tests/{e2e,autofill,contract,webdav,manifest}/` (`manifest/` builds both browsers with WXT and checks the built `manifest.json`).
-- Svelte: Vitest + `@testing-library/svelte` on jsdom, only for components with logic (Draft, Entry editor, generator). No UI snapshot tests.
-- Browsers: Puppeteer (`puppeteer-core`) driving pinned Chrome for Testing and Firefox, headless, with Vitest as the runner (`vitest.e2e.config.ts`). The pins are the builds `puppeteer-core` itself is tested against (`tests/e2e/browsers.ts`), downloaded by `@puppeteer/browsers` into Puppeteer's cache. They load the **release bundle**: the harness builds it with `wxt build` in production mode before the run, with no test hooks and no test build flavour. The autofill fixtures load a test extension instead, one level down ([ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md), **Autofill corpus** below). Time moves through fake clocks installed in page contexts and the shortest values the Settings schema allows; what cannot be reached that way is tested one level down with injected clocks.
+- Rust: `cargo test`.
+  Unit tests inline; integration tests in `crates/rimlock-core/tests/`; the interop corpus in `crates/rimlock-core/tests/corpus/`.
+- TypeScript: Vitest + `WxtVitest` + `fakeBrowser` (`@webext-core/fake-browser`).
+  Unit tests next to the code (`foo.test.ts`); the rest in `apps/extension/tests/{e2e,autofill,contract,webdav,manifest}/` (`manifest/` builds both browsers with WXT and checks the built `manifest.json`).
+- Svelte: Vitest + `@testing-library/svelte` on jsdom, only for components with logic (Draft, Entry editor, generator).
+  No UI snapshot tests.
+- Browsers: Puppeteer (`puppeteer-core`) driving pinned Chrome for Testing and Firefox, headless, with Vitest as the runner (`vitest.e2e.config.ts`).
+  The pins are the builds `puppeteer-core` itself is tested against (`tests/e2e/browsers.ts`), downloaded by `@puppeteer/browsers` into Puppeteer's cache.
+  They load the **release bundle**: the harness builds it with `wxt build` in production mode before the run, with no test hooks and no test build flavour.
+  The autofill fixtures load a test extension instead, one level down ([ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md), **Autofill corpus** below).
+  Time moves through fake clocks installed in page contexts and the shortest values the Settings schema allows; what cannot be reached that way is tested one level down with injected clocks.
 
 **Fakes and contract suites**
 
@@ -114,16 +160,39 @@ One command: formatting check, lint, type checks, clippy, and four script checks
 
 **Corpora and data**
 
-- **Interop corpus:** small synthetic `.kdbx` files with no real secrets and a low KDF, plus a `manifest` (client, version, contents, password). The contents it lists are what the Core's API reads, and grow with it: the name and Recycle Bin now, the Groups and Entries once the read API exists (M1). `pnpm test:interop` automates KeePassXC → rimlock with `keepassxc-cli` in a container, on files `keepassxc-cli` creates and on generator files it edits and saves; rimlock → KeePassXC → rimlock joins once the Core writes (M1, M3). KeePass 2.x, Strongbox and KeePassDX are done by hand before releases and after interop changes, and the files they save are committed.
-- **Autofill corpus:** the synthetic fixtures and the shadow-DOM fixtures of [Compare form-detection engines: Proton classifier vs Bitwarden heuristics](https://github.com/maxdubmors/rimlock/issues/17) and [Verify Proton classification across shadow roots](https://github.com/maxdubmors/rimlock/issues/24) live in `apps/extension/tests/autofill/fixtures/`, each field's expected label inline (`data-gt`, removed before detection). The runner serves every fixture under every test host name, the iframe fixture also with its login frame from the other host, and compares `FormDetector`'s labels in Chrome and Firefox with the expected ones: a hidden field expects no label. `known-misses.ts` is the baseline: each miss the classifier is known to make, with why, so that a Proton bump that fixes or adds a miss fails the suite. The runner loads a **test extension** of its own, not the store bundle: a manifest and a content script around `autofill/`'s `FormDetector`, in the same pinned browsers ([ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md), [Observe FormDetector's labels through the store bundle](https://github.com/maxdubmors/rimlock/issues/137)). It does not test the store bundle's build: end-to-end scenario 4, below, runs on five of these fixtures for that. Third-party page snapshots never enter the repository; `live-corpus.json` (URL + expected labels) and `live-run.ts` drive a manual live run on every Proton bump, and each miss becomes a synthetic fixture.
+- **Interop corpus:** small synthetic `.kdbx` files with no real secrets and a low KDF, plus a `manifest` (client, version, contents, password).
+  The contents it lists are what the Core's API reads, and grow with it: the name and Recycle Bin now, the Groups and Entries once the read API exists (M1).
+  `pnpm test:interop` automates KeePassXC → rimlock with `keepassxc-cli` in a container, on files `keepassxc-cli` creates and on generator files it edits and saves; rimlock → KeePassXC → rimlock joins once the Core writes (M1, M3).
+  KeePass 2.x, Strongbox and KeePassDX are done by hand before releases and after interop changes, and the files they save are committed.
+- **Autofill corpus:** the synthetic fixtures and the shadow-DOM fixtures of [Compare form-detection engines: Proton classifier vs Bitwarden heuristics](https://github.com/maxdubmors/rimlock/issues/17) and [Verify Proton classification across shadow roots](https://github.com/maxdubmors/rimlock/issues/24) live in `apps/extension/tests/autofill/fixtures/`, each field's expected label inline (`data-gt`, removed before detection).
+  The runner serves every fixture under every test host name, the iframe fixture also with its login frame from the other host, and compares `FormDetector`'s labels in Chrome and Firefox with the expected ones: a hidden field expects no label.
+  `known-misses.ts` is the baseline: each miss the classifier is known to make, with why, so that a Proton bump that fixes or adds a miss fails the suite.
+  The runner loads a **test extension** of its own, not the store bundle: a manifest and a content script around `autofill/`'s `FormDetector`, in the same pinned browsers ([ADR-0017](../adr/0017-browser-tests-drive-the-store-bundle-through-puppeteer.md), [Observe FormDetector's labels through the store bundle](https://github.com/maxdubmors/rimlock/issues/137)).
+  It does not test the store bundle's build: end-to-end scenario 4, below, runs on five of these fixtures for that.
+  Third-party page snapshots never enter the repository; `live-corpus.json` (URL + expected labels) and `live-run.ts` drive a manual live run on every Proton bump, and each miss becomes a synthetic fixture.
 - **WebDAV matrix:** `docker-compose` with Nextcloud, oCIS, Apache `mod_dav`, nginx `dav` and rclone `serve webdav`.
-- **TLS for test servers:** rimlock refuses `http://` everywhere, so the test servers speak HTTPS. A script creates a throwaway test CA and server certificates on every run (openssl; nothing is committed), and one Caddy container in the same `docker-compose` terminates TLS in front of all servers under names such as `nextcloud.webdav.test`. The Node contract suite (`test:webdav`) runs on the host, trusts the CA through `NODE_EXTRA_CA_CERTS`, and resolves `*.webdav.test` to the proxy with a custom `lookup` on the global undici dispatcher, set in the suite's setup file, so it needs neither `/etc/hosts` edits nor a run inside the Docker network (V5). `NODE_EXTRA_CA_CERTS`, unlike the dispatcher, does **not** go in that setup file: Node reads it only when the process starts, so assigning `process.env` there has no effect. The script that creates the CA exports it before it launches Vitest. The browser E2E scenarios launch Chrome and Firefox through Puppeteer with `acceptInsecureCerts: true`; whether that also covers fetches from the Extension's background is [`verification.md`](verification.md) V24, whose Plan B imports the CA into the test browser profile instead. There is no test build that allows `http://` (ADR-0017). The "certificate not trusted" path stays on the manual checklist.
-- **Test Databases:** a deterministic Rust generator (`cargo run -p rimlock-core --example fixtures -- [--seed N] [DIR]`), for the E2E run to call before it starts, builds the scenario Database (low KDF, since the scenarios unlock it many times), the **reference Database** (~1000 Entries with History, ~1 MB, KeePassXC-default KDF: Argon2d, 64 MiB, 4 lanes, 10 iterations) and low-KDF variants in KDBX 3.1, 4.0 and 4.1 and with a Key file. It writes its own KDBX from a seeded RNG and a fixed clock, so the same seed gives the same bytes. Into `DIR` (default `target/fixtures/`) go the `.kdbx` files, their `.keyx` Key files, `databases.json` (which key opens which file) and `canaries.json` (every canary marker, by Database and kind). `cargo test` builds the same files through `crates/rimlock-core/tests/core_api/`, and asks the generator for one Database saved twice, with fresh seeds each time, as another client re-saves a file. Nothing generated is committed.
+- **TLS for test servers:** rimlock refuses `http://` everywhere, so the test servers speak HTTPS.
+  A script creates a throwaway test CA and server certificates on every run (openssl; nothing is committed), and one Caddy container in the same `docker-compose` terminates TLS in front of all servers under names such as `nextcloud.webdav.test`.
+  The Node contract suite (`test:webdav`) runs on the host, trusts the CA through `NODE_EXTRA_CA_CERTS`, and resolves `*.webdav.test` to the proxy with a custom `lookup` on the global undici dispatcher, set in the suite's setup file, so it needs neither `/etc/hosts` edits nor a run inside the Docker network (V5).
+  `NODE_EXTRA_CA_CERTS`, unlike the dispatcher, does **not** go in that setup file: Node reads it only when the process starts, so assigning `process.env` there has no effect.
+  The script that creates the CA exports it before it launches Vitest.
+  The browser E2E scenarios launch Chrome and Firefox through Puppeteer with `acceptInsecureCerts: true`; whether that also covers fetches from the Extension's background is [`verification.md`](verification.md) V24, whose Plan B imports the CA into the test browser profile instead.
+  There is no test build that allows `http://` (ADR-0017).
+  The "certificate not trusted" path stays on the manual checklist.
+- **Test Databases:** a deterministic Rust generator (`cargo run --locked -p rimlock-core --example fixtures -- [--seed N] [DIR]`), for the E2E run to call before it starts, builds the scenario Database (low KDF, since the scenarios unlock it many times), the **reference Database** (~1000 Entries with History, ~1 MB, KeePassXC-default KDF: Argon2d, 64 MiB, 4 lanes, 10 iterations) and low-KDF variants in KDBX 3.1, 4.0 and 4.1 and with a Key file.
+  It writes its own KDBX from a seeded RNG and a fixed clock, so the same seed gives the same bytes.
+  Into `DIR` (default `target/fixtures/`) go the `.kdbx` files, their `.keyx` Key files, `databases.json` (which key opens which file) and `canaries.json` (every canary marker, by Database and kind).
+  `cargo test` builds the same files through `crates/rimlock-core/tests/core_api/`, and asks the generator for one Database saved twice, with fresh seeds each time, as another client re-saves a file.
+  Nothing generated is committed.
 
 **Tiers**
 
-1. `pnpm test`: no browsers, no Docker. Rust unit + golden corpus, TS unit on fakes, contract suites against `FakeCore`. About one minute. **`pnpm check && pnpm test` is green before every pull request** (a diff only in Markdown: root `AGENTS.md` § Rules).
-2. `pnpm test:e2e`: headless Chrome and Firefox. Autofill fixtures, the end-to-end scenarios, the Core contract suite against real WASM, the wake-up benchmark.
+1. `pnpm test`: no browsers, no Docker.
+   Rust unit + golden corpus, TS unit on fakes, contract suites against `FakeCore`.
+   About one minute.
+   **`pnpm check && pnpm test` is green before every pull request** (a diff only in Markdown: root `AGENTS.md` § Rules).
+2. `pnpm test:e2e`: headless Chrome and Firefox.
+   Autofill fixtures, the end-to-end scenarios, the Core contract suite against real WASM, the wake-up benchmark.
 3. `pnpm test:webdav`, `pnpm test:interop`: Docker matrices.
 4. The manual pre-release checklist: Strongbox, KeePassDX, KeePass 2.x, Synology, a self-signed certificate, the live autofill corpus, the File System Access permission lifecycle and `FileSystemObserver`, the 200 ms gate on the owner's machine.
 
@@ -140,9 +209,13 @@ One command: formatting check, lint, type checks, clippy, and four script checks
 
 A scenario that cannot be expressed in Puppeteer moves to the manual checklist; it does not bring in a second tool.
 
-**Performance:** the E2E benchmark kills the background and measures the rebuild with `performance.mark` on the reference Database in both browsers. CI reports the number and fails only above 400 ms. The real gate (≤ 200 ms) is a manual measurement on the owner's machine before each release.
+**Performance:** the E2E benchmark kills the background and measures the rebuild with `performance.mark` on the reference Database in both browsers.
+CI reports the number and fails only above 400 ms.
+The real gate (≤ 200 ms) is a manual measurement on the owner's machine before each release.
 
-**Secret leaks:** the test Databases contain unique canary markers (Master password, Entry passwords, TOTP seed). After every E2E scenario a shared `afterEach` dumps `storage.local`, IndexedDB (the encrypted Local copy is fine), `storage.session` (only the `CachedKey` may hold key material), messages to content scripts and console logs, and fails on any marker. A unit test checks that `Secret` gives a placeholder under `JSON.stringify`, `String()` and `console.log`.
+**Secret leaks:** the test Databases contain unique canary markers (Master password, Entry passwords, TOTP seed).
+After every E2E scenario a shared `afterEach` dumps `storage.local`, IndexedDB (the encrypted Local copy is fine), `storage.session` (only the `CachedKey` may hold key material), messages to content scripts and console logs, and fails on any marker.
+A unit test checks that `Secret` gives a placeholder under `JSON.stringify`, `String()` and `console.log`.
 
 ## Rules for agents
 
@@ -150,32 +223,46 @@ The rules every agent follows live in the root [`AGENTS.md`](../../AGENTS.md) §
 
 ## CI
 
-- GitHub Actions on GitHub-hosted runners (`ubuntu-24.04`, `ubuntu-24.04-arm`). Every action pinned by commit SHA; default `permissions: contents: read`, widened per job; no `pull_request_target`; no secrets in any pull-request job.
+- GitHub Actions on GitHub-hosted runners (`ubuntu-24.04`, `ubuntu-24.04-arm`).
+  Every action pinned by commit SHA; default `permissions: contents: read`, widened per job; no `pull_request_target`; no secrets in any pull-request job.
 - **Every pull request (required):** `pnpm check`, `pnpm test`, the regenerated `core-bindings/*.d.ts` equal to the committed ones, the keepass-rs `rev` equal to the commit its `rimlock-*` tag names on the fork (`pnpm check:fork-pin`, [`crates/AGENTS.md`](../../crates/AGENTS.md) § Pinning), `pnpm test:e2e` in Chrome and Firefox, and the bundle report below.
 - **Path-filtered (required when they run):** `test:webdav` (`sources/`, the WebDAV suite or compose file); `test:interop` (`crates/`, `scripts/test-interop.mjs`, `scripts/interop.Dockerfile`); the cross-architecture job (`crates/`, `Cargo.lock`, `rust-toolchain.toml`, `scripts/`, the Dockerfile, `pnpm-lock.yaml`), which runs `build-release.sh` natively on x86_64 and arm64 and fails if the `SHA256SUMS` differ.
-  Each filters by a job-level `if:` on the output of a paths job in the same workflow, never by `on: … paths:`: a skipped job reports `skipped`, which a required check accepts, while a workflow that never starts leaves its required check waiting forever. The pull request that adds such a job asks the owner to add its `name:` to the required checks of the `main` ruleset.
-- **Nightly on `main`:** all of the above unfiltered, plus `cargo-fuzz`. A fuzz failure opens an issue and never blocks a merge.
+  Each filters by a job-level `if:` on the output of a paths job in the same workflow, never by `on: … paths:`: a skipped job reports `skipped`, which a required check accepts, while a workflow that never starts leaves its required check waiting forever.
+  The paths job is required too: when it fails, the jobs it feeds are skipped, and pass.
+  Every job of the workflow is a required check of the `main` ruleset, and every required check a job of it: `pnpm check:required-checks` compares the two, run by hand or by the job "Required checks match the jobs" on every push to `main`.
+  It runs on `main` only, since a pull request that adds or renames a job differs from the ruleset until it merges; that pull request asks the owner to change the ruleset right after the merge.
+- **Nightly on `main`:** all of the above unfiltered, plus `cargo-fuzz`.
+  A fuzz failure opens an issue and never blocks a merge.
 - CI publishes the built `manifest.json` and the module list of the `content` bundle as artifacts, so a pull request that changes them is visible: `pnpm build:report` writes both for each browser into `apps/extension/.output/bundle-report/`, and the bundle report job uploads that folder as the `bundle-report` artifact.
-- The pull-request jobs live in `.github/workflows/pull-request.yml` and set up their tools through `.github/actions/setup`. The workflow also runs on every push to `main`, so pull requests can restore the caches it saves.
+- The pull-request jobs live in `.github/workflows/pull-request.yml` and set up their tools through `.github/actions/setup`.
+  The workflow also runs on every push to `main`, so pull requests can restore the caches it saves.
 - `main`, through the repository ruleset `main`: pull requests only, no bypass, required checks green (each job's `name:`, source GitHub Actions), squash merge only, linear history, no force-push or deletion.
 
 ## Versions, changelog and releases
 
-- SemVer `X.Y.Z`, one version for both browsers, one tag `extension-vX.Y.Z`. The single source is `apps/extension/package.json`. `0.x` until the first stable public release; the first listed version is `0.1.0`. The fourth component `X.Y.Z.N` stays free.
+- SemVer `X.Y.Z`, one version for both browsers, one tag `extension-vX.Y.Z`.
+  The single source is `apps/extension/package.json`.
+  `0.x` until the first stable public release; the first listed version is `0.1.0`.
+  The fourth component `X.Y.Z.N` stays free.
 - If one store rejects a version, the fix ships as the next patch for both.
-- `CHANGELOG.md` in Keep a Changelog form, written by hand. The `Unreleased` text becomes the GitHub Release notes and the stores' "what's new".
+- `CHANGELOG.md` in Keep a Changelog form, written by hand.
+  The `Unreleased` text becomes the GitHub Release notes and the stores' "what's new".
 - **Release flow** (written into `RELEASING.md` and `.github/ISSUE_TEMPLATE/release.md` in M5):
   1. Open a release issue: the tier-4 checklist plus the publishing steps.
   2. Run the checklist on the candidate bundle (unpacked in Chrome; unsigned in Firefox Developer Edition or as a temporary add-on).
   3. The owner pushes an SSH-signed tag `extension-vX.Y.Z`; a ruleset lets only the owner create, move or delete `extension-v*` tags.
   4. The release workflow verifies the tag signature, builds in the pinned container on x86_64 and arm64 and compares `SHA256SUMS`, builds the AMO source package and rebuilds from it, attests the artifacts (`actions/attest`) and creates a **draft** GitHub Release.
   5. The owner runs `gh attestation verify --signer-workflow …`, checks the hashes, signs a CRX from the Chrome zip with the offline RSA key, uploads it to the Chrome Web Store dashboard, and uploads the Firefox zip with the source package and reviewer notes to AMO.
-  6. Each store publishes when it approves. The GitHub Release is published at the first approval.
+  6. Each store publishes when it approves.
+     The GitHub Release is published at the first approval.
 - No store API key, OAuth token, service account or CRX key ever enters GitHub secrets.
-- **Stores and accounts:** CWS verified CRX uploads turned on before the first upload of `0.1.0` (the RSA-2048 key is kept offline with two backups); a CWS group publisher account; a dedicated AMO account; 2FA everywhere with offline recovery codes; a dedicated project mailbox. `RELEASING.md` records where things are, never the secrets.
-- **AMO source package:** `git archive` of the tag with a whitelist: root manifests, `crates/`, `apps/extension/`, `scripts/`, the Dockerfile, `LICENSE`, `BUILDING.md`. No `docs/`, prototypes, Companions or test corpora.
+- **Stores and accounts:** CWS verified CRX uploads turned on before the first upload of `0.1.0` (the RSA-2048 key is kept offline with two backups); a CWS group publisher account; a dedicated AMO account; 2FA everywhere with offline recovery codes; a dedicated project mailbox.
+  `RELEASING.md` records where things are, never the secrets.
+- **AMO source package:** `git archive` of the tag with a whitelist: root manifests, `crates/`, `apps/extension/`, `scripts/`, the Dockerfile, `LICENSE`, `BUILDING.md`.
+  No `docs/`, prototypes, Companions or test corpora.
 - **`BUILDING.md`** is the single build instruction: a bare build on Ubuntu 24.04 arm64 (AMO's reviewer default), the expected `SHA256SUMS`, and a warning against a personal `~/.cargo/config.toml`.
-- **AMO dry run** (M0): an unlisted upload numbered `0.0.N` from the real release build, which also exercises `BUILDING.md`. There is no CWS dry run.
+- **AMO dry run** (M0): an unlisted upload numbered `0.0.N` from the real release build, which also exercises `BUILDING.md`.
+  There is no CWS dry run.
 - No beta channel.
 
 ## Dependency updates
