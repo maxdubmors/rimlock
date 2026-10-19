@@ -316,5 +316,5 @@ type SourceResult<T> = { ok: true; value: T } | { ok: false; error: SourceError 
 - **Unlock:** popup sends components → background: Local copy (or Source read on first add) → `readHeader` → provider if configured → `unlock` → store `cachedKey` in `storage.session`.
 - **Wake-up:** `open(localCopy, cachedKey)`; `CachedKeyStale` → lock.
 - **Edit:** `apply([...])` → store `Commit` in the Local copy → Sync pushes when it can.
-- **Sync:** `stat`; if the version differs from the last synced one: `read` → `merge` → store `commit` if any, then its `Commit.cachedKey` if any (§ 9) → `write(bytes, version)` if `remoteNeedsWrite` or there were Pending changes before the merge; otherwise mark the Local copy synced with the remote version without writing (a merge commit alone is not a Pending change); `conflict` → start over. Full loop: [`sources.md`](sources.md) § Sync.
+- **Sync:** `stat`, `read`, `merge`, `write(bytes, version)`, in that order, each only when [`sources.md`](sources.md) § Sync says, which also says what is stored after `merge` and what `conflict` does.
 - **Key changed elsewhere:** `RemoteKeyChanged` → push stops → user enters the new key → `merge` with `components` → store the `commit`, then its new `Commit.cachedKey` (§ 9).
