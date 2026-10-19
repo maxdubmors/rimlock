@@ -193,7 +193,7 @@ type TotpKind = 'otp' | 'TimeOtp' | 'TrayTotp' | 'NotesUri';
 apply(changes: Change[]): Promise<CoreResult<Commit>>;
 ```
 
-One entry point. All changes in one call are atomic: the Core applies them to a clone, serialises it, verifies it (§7), and only then swaps its state. One `apply` → one encryption → one `Commit`. Each Entry touched by one `UpdateEntry` gets exactly one history version.
+One entry point. All changes in one call are atomic: the Core applies them to a clone, serialises it, verifies it (§ 7), and only then swaps its state. One `apply` → one encryption → one `Commit`. Each Entry touched by one `UpdateEntry` gets exactly one history version.
 
 ```ts
 type Change =

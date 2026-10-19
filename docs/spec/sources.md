@@ -1,6 +1,6 @@
 # Sources, the Local copy and Sync
 
-Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (Local copy, commit at once), [ADR-0007](../adr/0007-local-file-source-per-browser.md) (local file per browser), [ADR-0008](../adr/0008-webdav-source-always-merge.md) (WebDAV: always merge), [ADR-0014](../adr/0014-core-mutations-return-the-verified-file.md) (the Local copy is the truth). Contract: [`core-api.md`](core-api.md) §6, §10, §11.
+Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (Local copy, commit at once), [ADR-0007](../adr/0007-local-file-source-per-browser.md) (local file per browser), [ADR-0008](../adr/0008-webdav-source-always-merge.md) (WebDAV: always merge), [ADR-0014](../adr/0014-core-mutations-return-the-verified-file.md) (the Local copy is the truth). Contract: [`core-api.md`](core-api.md) § 6, § 10, § 11.
 
 ## The Local copy
 

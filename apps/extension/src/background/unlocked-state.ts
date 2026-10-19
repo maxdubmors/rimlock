@@ -1,6 +1,7 @@
 // The Unlocked state: at most one Unlocked Database (ADR-0015), held only by the background and
 // rebuilt on every wake-up from its Local copy and the CachedKey in storage.session, without the
-// Master password and without the KDF (ADR-0005, databases-and-unlock.md § The Unlocked state).
+// Master password and without the KDF (ADR-0005, databases-and-unlock.md § The Unlocked state and
+// the wake-up rebuild).
 
 import { browser } from 'wxt/browser';
 
