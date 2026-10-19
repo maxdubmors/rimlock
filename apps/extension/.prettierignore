@@ -3,3 +3,5 @@
 # Vendored code keeps its upstream formatting; generated bindings are not edited.
 src/vendor/
 src/core-bindings/
+# The autofill fixtures are the classifier's input: a reformat could change its labels.
+tests/autofill/fixtures/

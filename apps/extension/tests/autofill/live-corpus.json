@@ -1,0 +1,479 @@
+{
+  "rules": "Hand labels for visible fields, keyed by the runner's field ids; unlisted visible fields are 'none'. A field that identifies the account on a login or combined sign-in/sign-up step is 'username'; on a sign-up form, every field the site accepts as a login identifier is 'signup-username'. Labels are decided from the field summary the live run prints with --fields, and from the page itself.",
+  "pages": [
+    {
+      "name": "github-login",
+      "kind": "login",
+      "url": "https://github.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "stackoverflow-login",
+      "kind": "login",
+      "url": "https://stackoverflow.com/users/login",
+      "labels": {
+        "f0:4": "username",
+        "f0:5": "current-password"
+      }
+    },
+    {
+      "name": "reddit-login",
+      "kind": "login",
+      "url": "https://www.reddit.com/login/",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "x-login",
+      "kind": "multistep",
+      "url": "https://x.com/i/flow/login",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "amazon-login",
+      "kind": "multistep",
+      "url": "https://www.amazon.com/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.com%2F&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=usflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "microsoft-login",
+      "kind": "multistep",
+      "url": "https://login.live.com/",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "microsoft-login-step2",
+      "kind": "multistep",
+      "url": "https://login.live.com/",
+      "note": "step 2 after a known-existing address; no password is entered",
+      "steps": [
+        {
+          "type": "input[type=email]",
+          "text": "test@outlook.com"
+        },
+        {
+          "press": "Enter",
+          "wait": 5000
+        }
+      ],
+      "labels": {
+        "f0:0": "current-password"
+      }
+    },
+    {
+      "name": "yahoo-login",
+      "kind": "multistep",
+      "url": "https://login.yahoo.com/",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "google-login",
+      "kind": "multistep",
+      "url": "https://accounts.google.com/signin",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "apple-login",
+      "kind": "login",
+      "url": "https://account.apple.com/sign-in",
+      "note": "form in a cross-origin iframe (idmsa.apple.com)",
+      "wait": 8000,
+      "labels": {
+        "f2:0": "username",
+        "f2:1": "current-password"
+      }
+    },
+    {
+      "name": "dropbox-login",
+      "kind": "multistep",
+      "url": "https://www.dropbox.com/login",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "netflix-login",
+      "kind": "login",
+      "url": "https://www.netflix.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "spotify-login",
+      "kind": "login",
+      "url": "https://accounts.spotify.com/en/login",
+      "wait": 8000,
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "twitch-login",
+      "kind": "login",
+      "url": "https://www.twitch.tv/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "slack-signin",
+      "kind": "multistep",
+      "url": "https://slack.com/signin",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "notion-login",
+      "kind": "multistep",
+      "url": "https://www.notion.so/login",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "atlassian-login",
+      "kind": "multistep",
+      "url": "https://id.atlassian.com/login",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "zoom-signin",
+      "kind": "multistep",
+      "url": "https://zoom.us/signin",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "wikipedia-login",
+      "kind": "login",
+      "url": "https://en.wikipedia.org/w/index.php?title=Special:UserLogin",
+      "labels": {
+        "f0:1": "username",
+        "f0:2": "current-password"
+      }
+    },
+    {
+      "name": "pinterest-login",
+      "kind": "login",
+      "url": "https://www.pinterest.com/login/",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "booking-signin",
+      "kind": "multistep",
+      "url": "https://account.booking.com/sign-in",
+      "labels": {
+        "f0:1": "username"
+      }
+    },
+    {
+      "name": "steam-login",
+      "kind": "login",
+      "url": "https://store.steampowered.com/login/",
+      "labels": {
+        "f0:1": "username",
+        "f0:2": "current-password"
+      }
+    },
+    {
+      "name": "epicgames-login",
+      "kind": "login",
+      "url": "https://www.epicgames.com/id/login/email",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "digitalocean-login",
+      "kind": "login",
+      "url": "https://cloud.digitalocean.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "heroku-login",
+      "kind": "login",
+      "url": "https://id.heroku.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "cloudflare-login",
+      "kind": "login",
+      "url": "https://dash.cloudflare.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "npm-login",
+      "kind": "login",
+      "url": "https://www.npmjs.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "dockerhub-login",
+      "kind": "multistep",
+      "url": "https://login.docker.com/u/login/",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "figma-login",
+      "kind": "login",
+      "url": "https://www.figma.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "trello-login",
+      "kind": "multistep",
+      "url": "https://trello.com/login",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "hackernews-login",
+      "kind": "login",
+      "url": "https://news.ycombinator.com/login",
+      "note": "login and create-account forms on one page",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password",
+        "f0:2": "signup-username",
+        "f0:3": "new-password"
+      }
+    },
+    {
+      "name": "yandex-passport",
+      "kind": "multistep",
+      "url": "https://passport.yandex.ru/auth",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "vk-login",
+      "kind": "login",
+      "url": "https://vk.com/login",
+      "labels": {}
+    },
+    {
+      "name": "mailru-login",
+      "kind": "multistep",
+      "url": "https://account.mail.ru/login",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "gosuslugi-login",
+      "kind": "login",
+      "url": "https://esia.gosuslugi.ru/login/",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "reddit-register",
+      "kind": "signup",
+      "url": "https://www.reddit.com/register/",
+      "labels": {
+        "f0:0": "signup-username"
+      }
+    },
+    {
+      "name": "wikipedia-signup",
+      "kind": "signup",
+      "url": "https://en.wikipedia.org/w/index.php?title=Special:CreateAccount",
+      "labels": {
+        "f0:1": "signup-username",
+        "f0:2": "new-password",
+        "f0:3": "new-password"
+      }
+    },
+    {
+      "name": "github-reset",
+      "kind": "negative",
+      "url": "https://github.com/password_reset",
+      "labels": {}
+    },
+    {
+      "name": "wikipedia-home",
+      "kind": "negative",
+      "url": "https://en.wikipedia.org/wiki/Main_Page",
+      "labels": {}
+    },
+    {
+      "name": "python-newsletter",
+      "kind": "negative",
+      "url": "https://www.python.org/",
+      "labels": {}
+    },
+    {
+      "name": "bitbucket-login",
+      "kind": "multistep",
+      "url": "https://bitbucket.org/account/signin/",
+      "labels": {
+        "f0:0": "username"
+      }
+    },
+    {
+      "name": "tumblr-login",
+      "kind": "login",
+      "url": "https://www.tumblr.com/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "kaggle-login",
+      "kind": "login",
+      "url": "https://www.kaggle.com/account/login?phase=emailSignIn",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "codeberg-login",
+      "kind": "login",
+      "url": "https://codeberg.org/user/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "archive-org-login",
+      "kind": "login",
+      "url": "https://archive.org/account/login",
+      "wait": 6000,
+      "labels": {
+        "f0:3": "username",
+        "f0:4": "current-password"
+      }
+    },
+    {
+      "name": "openstreetmap-login",
+      "kind": "login",
+      "url": "https://www.openstreetmap.org/login",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "mastodon-login",
+      "kind": "login",
+      "url": "https://mastodon.social/auth/sign_in",
+      "labels": {
+        "f0:0": "username",
+        "f0:1": "current-password"
+      }
+    },
+    {
+      "name": "lichess-login",
+      "kind": "login",
+      "url": "https://lichess.org/login",
+      "labels": {
+        "f0:1": "username",
+        "f0:2": "current-password"
+      }
+    },
+    {
+      "name": "codeberg-signup",
+      "kind": "signup",
+      "url": "https://codeberg.org/user/sign_up",
+      "labels": {
+        "f0:0": "signup-username",
+        "f0:1": "signup-username",
+        "f0:2": "new-password",
+        "f0:3": "new-password"
+      }
+    },
+    {
+      "name": "openstreetmap-signup",
+      "kind": "signup",
+      "url": "https://www.openstreetmap.org/user/new",
+      "labels": {
+        "f0:0": "signup-username",
+        "f0:1": "signup-username",
+        "f0:2": "new-password",
+        "f0:3": "new-password"
+      }
+    },
+    {
+      "name": "dropbox-register",
+      "kind": "signup",
+      "url": "https://www.dropbox.com/register",
+      "labels": {
+        "f0:0": "signup-username"
+      }
+    },
+    {
+      "name": "hackernews-home",
+      "kind": "negative",
+      "url": "https://news.ycombinator.com/",
+      "labels": {}
+    },
+    {
+      "name": "openstreetmap-home",
+      "kind": "negative",
+      "url": "https://www.openstreetmap.org/",
+      "labels": {}
+    },
+    {
+      "name": "archive-org-home",
+      "kind": "negative",
+      "url": "https://archive.org/",
+      "wait": 6000,
+      "labels": {}
+    },
+    {
+      "name": "github-search",
+      "kind": "negative",
+      "url": "https://github.com/search",
+      "labels": {}
+    }
+  ]
+}
