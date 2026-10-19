@@ -142,3 +142,19 @@ jobs:
         with:
           install: 'false'
       - run: pnpm test:interop
+
+  # On main only: a pull request that adds or renames a job differs from the ruleset until the
+  # owner changes the ruleset after it merges (docs/spec/engineering.md § CI).
+  required-checks:
+    name: Required checks match the jobs
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The runner image's Node and gh; reading the rules needs only the token's metadata access.
+      - run: scripts/check-required-checks.mjs
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -11,24 +11,25 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fence, opensBlock } from './markdown.mjs';
 
 // Trimmed lines joined into logical lines, each with the 1-based number of its first line: a line
-// goes on the one before unless either is blank or it opens a block, and a heading, a table row or
-// a fence takes no line after it.
+// goes on the one before unless either is blank or it opens a block, and a heading, a table row,
+// HTML or a fence takes no line after it.
 function logicalLines(lines) {
   const logical = [];
   let fenced = false;
   let joinable = false;
   lines.forEach((raw, index) => {
-    const line = raw.trim();
-    const fence = /^(```|~~~)/.test(line);
-    if (fence) fenced = !fenced;
-    if (joinable && !fenced && line !== '' && !/^([-*+]\s|\d+[.)]\s|#|>|\||<)/.test(line)) {
-      logical[logical.length - 1].text += ` ${line}`;
+    const text = raw.trim();
+    const isFence = fence.test(text);
+    if (isFence) fenced = !fenced;
+    if (joinable && !fenced && text !== '' && !opensBlock.test(text)) {
+      logical[logical.length - 1].text += ` ${text}`;
       return;
     }
-    logical.push({ text: line, line: index + 1 });
-    joinable = !fenced && !fence && line !== '' && !/^(#|\||<)/.test(line);
+    logical.push({ text, start: index + 1 });
+    joinable = !fenced && !isFence && text !== '' && !/^(#|\||<)/.test(text);
   });
   return logical;
 }
@@ -87,7 +88,7 @@ for (const lines of blocks) {
   const found = files.flatMap(([path, fileLines]) =>
     fileLines.flatMap((_, start) =>
       lines.every((line, offset) => fileLines[start + offset]?.text === line)
-        ? [`${path}:${fileLines[start].line}`]
+        ? [`${path}:${fileLines[start].start}`]
         : [],
     ),
   );

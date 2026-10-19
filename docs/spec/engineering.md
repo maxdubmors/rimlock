@@ -102,7 +102,7 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## Checks: `pnpm check`
 
-One command: formatting check, lint, type checks, clippy, and four script checks: comments, Markdown tables, section references and the canary check's wiring.
+One command: formatting check, lint, type checks, clippy, and five script checks: comments, Markdown tables, one sentence per line, section references and the canary check's wiring.
 
 - **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`.
   ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above + the local rule `rimlock/no-async-event-handler`, which does for Svelte event attributes what `no-misused-promises` does for JSX ([`verification.md`](verification.md) V4).
@@ -115,7 +115,7 @@ One command: formatting check, lint, type checks, clippy, and four script checks
   A comment cites the ADR or spec section that carries the rule, since an issue number goes stale once the issue closes.
   Docs under `docs/` link issues freely.
 - **Markdown tables:** `scripts/check-md-tables.sh` fails on a table row whose cell count differs from its header's.
-  Markdown is formatted by hand, and a stray `|` moves the rest of its row into the wrong columns.
+  Markdown tables are formatted by hand, and a stray `|` moves the rest of its row into the wrong columns.
   As in GFM, every unescaped `|` splits cells, inside a code span too.
 - **One sentence per line:** `scripts/check-md-sentences.mjs` fails on a line of `engineering.md` that holds two sentences, and `pnpm format` breaks it.
   Two pull requests that edit neighbouring sentences then touch different lines, where one line per paragraph made them conflict.
@@ -229,7 +229,8 @@ The rules every agent follows live in the root [`AGENTS.md`](../../AGENTS.md) §
 - **Path-filtered (required when they run):** `test:webdav` (`sources/`, the WebDAV suite or compose file); `test:interop` (`crates/`, `scripts/test-interop.mjs`, `scripts/interop.Dockerfile`); the cross-architecture job (`crates/`, `Cargo.lock`, `rust-toolchain.toml`, `scripts/`, the Dockerfile, `pnpm-lock.yaml`), which runs `build-release.sh` natively on x86_64 and arm64 and fails if the `SHA256SUMS` differ.
   Each filters by a job-level `if:` on the output of a paths job in the same workflow, never by `on: … paths:`: a skipped job reports `skipped`, which a required check accepts, while a workflow that never starts leaves its required check waiting forever.
   The paths job is required too: when it fails, the jobs it feeds are skipped, and pass.
-  Every job of the workflow is a required check of the `main` ruleset, and every required check a job of it: `pnpm check:required-checks` compares the two, and a pull request that adds or renames a job asks the owner to change the ruleset until it passes.
+  Every job of the workflow is a required check of the `main` ruleset, and every required check a job of it: `pnpm check:required-checks` compares the two, run by hand or by the job "Required checks match the jobs" on every push to `main`.
+  It runs on `main` only, since a pull request that adds or renames a job differs from the ruleset until it merges; that pull request asks the owner to change the ruleset right after the merge.
 - **Nightly on `main`:** all of the above unfiltered, plus `cargo-fuzz`.
   A fuzz failure opens an issue and never blocks a merge.
 - CI publishes the built `manifest.json` and the module list of the `content` bundle as artifacts, so a pull request that changes them is visible: `pnpm build:report` writes both for each browser into `apps/extension/.output/bundle-report/`, and the bundle report job uploads that folder as the `bundle-report` artifact.

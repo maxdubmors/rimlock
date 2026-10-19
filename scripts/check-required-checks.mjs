@@ -11,23 +11,33 @@ import { fileURLToPath } from 'node:url';
 
 process.chdir(join(dirname(fileURLToPath(import.meta.url)), '..'));
 
-// A job's `name:` sits at four spaces, under `jobs:`; a step's is deeper.
-const jobs = readFileSync('.github/workflows/pull-request.yml', 'utf8')
-  .split('\n')
-  .flatMap((line) => /^ {4}name: (.+)$/.exec(line)?.[1] ?? [])
-  .map((name) => name.trim().replace(/^(['"])(.*)\1$/, '$2'));
+// A job is a key at two spaces under `jobs:`; GitHub names its check by the job's `name:`, at four
+// spaces (a step's is deeper), or else by the key.
+const jobs = [];
+let inJobs = false;
+for (const line of readFileSync('.github/workflows/pull-request.yml', 'utf8').split('\n')) {
+  if (/^\S/.test(line)) inJobs = line.startsWith('jobs:');
+  const key = inJobs ? /^ {2}([\w-]+):\s*$/.exec(line)?.[1] : undefined;
+  const name = inJobs ? /^ {4}name: (.+)$/.exec(line)?.[1] : undefined;
+  if (key !== undefined) jobs.push(key);
+  if (name !== undefined && jobs.length > 0) {
+    jobs[jobs.length - 1] = name.trim().replace(/^(['"])(.*)\1$/, '$2');
+  }
+}
 
-// `gh ruleset check` prints no JSON: the required checks are its `context:` values, each up to
-// the ` integration_id:` that follows it.
+// `gh ruleset check` prints no JSON: each required check is a `map[context:… integration_id:…]`,
+// the integration only when the check names its source.
 const rules = execFileSync('gh', ['ruleset', 'check', 'main'], { encoding: 'utf8' });
-const required = [...rules.matchAll(/context:(.+?) integration_id:/g)].map((match) => match[1]);
+const required = [...rules.matchAll(/map\[context:(.*?)(?: integration_id:\d+)?\]/g)].map(
+  (match) => match[1],
+);
 
 const notRequired = jobs.filter((job) => !required.includes(job));
 const noJob = required.filter((check) => !jobs.includes(check));
-for (const job of notRequired) console.log(`not a required check: ${job}`);
-for (const check of noJob) console.log(`required, but no job reports it: ${check}`);
+for (const job of notRequired) console.error(`not a required check: ${job}`);
+for (const check of noJob) console.error(`required, but no job reports it: ${check}`);
 if (notRequired.length > 0 || noJob.length > 0) {
-  console.log('The owner changes the required checks of the ruleset `main` on GitHub.');
+  console.error('The owner changes the required checks of the ruleset `main` on GitHub.');
   process.exit(1);
 }
 console.log(`pnpm check:required-checks: green (${jobs.length} jobs)`);
