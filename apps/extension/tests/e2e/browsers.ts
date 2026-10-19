@@ -98,10 +98,7 @@ export async function launchWithExtension(
   executablePath: string,
   bundleDir: string,
 ): Promise<ExtensionSession> {
-  const { browser, origin } =
-    name === 'chrome'
-      ? await launchChrome(executablePath, bundleDir)
-      : await launchFirefox(executablePath, bundleDir);
+  const { browser, origin } = await launchBrowser(name, executablePath, bundleDir);
   const output: string[] = [];
   const browserProcess = browser.process();
   browserProcess?.stdout?.on('data', (chunk: Buffer) => output.push(chunk.toString()));
@@ -338,6 +335,21 @@ async function openInFirefox(page: Page, url: string): Promise<void> {
       await sleep(50);
     }
   }
+}
+
+/**
+ * The pinned browser with the extension in `extensionDir` installed, headless, the test hosts
+ * resolving to 127.0.0.1, and the origin of the extension's pages. `launchWithExtension` drives
+ * the store bundle through it; the autofill runner, its test extension (`tests/autofill/`).
+ */
+export async function launchBrowser(
+  name: BrowserName,
+  executablePath: string,
+  extensionDir: string,
+): Promise<{ browser: Browser; origin: string }> {
+  return name === 'chrome'
+    ? await launchChrome(executablePath, extensionDir)
+    : await launchFirefox(executablePath, extensionDir);
 }
 
 async function launchChrome(

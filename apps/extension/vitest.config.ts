@@ -7,8 +7,8 @@ const builds = 'tests/manifest/**/*.test.ts';
 export default defineConfig({
   plugins: [WxtVitest()],
   test: {
-    // Browsers: pnpm test:e2e (vitest.e2e.config.ts).
-    exclude: [...configDefaults.exclude, 'tests/e2e/**'],
+    // Browsers, the autofill fixtures included: pnpm test:e2e (vitest.e2e.config.ts).
+    exclude: [...configDefaults.exclude, 'tests/e2e/**', 'tests/autofill/**'],
     setupFiles: ['tests/setup.ts'],
     projects: [
       {
@@ -16,7 +16,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           include: ['src/**/*.test.ts', 'tests/**/*.test.ts'],
-          exclude: [...configDefaults.exclude, 'tests/e2e/**', builds],
+          exclude: [...configDefaults.exclude, 'tests/e2e/**', 'tests/autofill/**', builds],
         },
       },
       { extends: true, test: { name: 'builds', include: [builds], fileParallelism: false } },

@@ -13,9 +13,11 @@
     "format": "prettier --write . ../../package.json ../../pnpm-workspace.yaml",
     "check": "prettier --check . ../../package.json ../../pnpm-workspace.yaml && wxt prepare && tsc --noEmit && svelte-check --fail-on-warnings && eslint --max-warnings 0 .",
     "test": "vitest run",
-    "test:e2e": "vitest run --config vitest.e2e.config.ts"
+    "test:e2e": "vitest run --config vitest.e2e.config.ts",
+    "autofill:live": "node tests/autofill/live-run.ts"
   },
   "dependencies": {
+    "@protontech/autofill": "0.0.38040317",
     "@wxt-dev/i18n": "0.2.8",
     "svelte": "5.57.2"
   },
@@ -34,6 +36,7 @@
     "prettier": "3.9.9",
     "prettier-plugin-svelte": "4.1.1",
     "puppeteer-core": "25.13.0",
+    "rolldown": "1.2.13",
     "svelte-check": "4.7.6",
     "svelte-eslint-parser": "1.8.1",
     "typescript": "6.0.3",

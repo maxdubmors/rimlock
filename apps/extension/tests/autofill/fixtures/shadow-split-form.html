@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><style>body{font:16px sans-serif;margin:40px}label,input,button{display:block;margin:6px 0}input{width:260px;padding:6px}</style><title>Log in</title><header style="display:flex;gap:12px;border-bottom:1px solid #ddd;padding:8px 0"><a href="/">Acme</a><nav><a href="/products">Products</a> <a href="/pricing">Pricing</a> <a href="/docs">Docs</a> <a href="/blog">Blog</a> <a href="/about">About</a></nav></header><main><h1>Log in</h1><form action="/session"><x-field label="Email or username" name="email" gt="username"></x-field><x-field label="Password" type="password" name="password" gt="current-password"></x-field><button type="submit">Log in</button></form>
+</main><footer style="margin-top:40px;border-top:1px solid #ddd;color:#666;font-size:13px"><p>© 2026 Acme Inc.</p><ul><li><a href="/terms">Terms</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/cookies">Cookies</a></li><li><a href="/status">Status</a></li><li><a href="/help">Help</a></li><li><a href="/contact">Contact</a></li></ul></footer><script>
+customElements.define("x-field", class extends HTMLElement { connectedCallback() {
+  const r = this.attachShadow({ mode: "open" });
+  const a = (n, d = "") => this.getAttribute(n) ?? d;
+  r.innerHTML = '<label>' + a("label") + '<input type="' + a("type", "text") + '" name="' + a("name") + '"' + (this.hasAttribute("autocomplete") ? ' autocomplete="' + a("autocomplete") + '"' : "") + ' data-gt="' + a("gt", "none") + '"></label>';
+}});
+</script>
