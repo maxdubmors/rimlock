@@ -17,6 +17,7 @@
     "check:rust": "cargo fmt --check && cargo clippy --locked --all-targets -- -D warnings && cargo clippy --locked --target wasm32-unknown-unknown --workspace -- -D warnings",
     "check:core-bindings": "scripts/check-core-bindings.sh",
     "check:fork-pin": "scripts/check-fork-pin.sh",
+    "check:copied-text": "scripts/check-copied-text.mjs",
     "format": "pnpm --filter @rimlock/extension format && cargo fmt",
     "grep:sections": "scripts/grep-sections.mjs",
     "test": "pnpm build:core && pnpm test:ts && pnpm test:rust && echo 'pnpm test: green'",

@@ -29,6 +29,7 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, every `§` reference naming a heading that exists, the canary check in every end-to-end file that launches the bundle. Fails on any finding; ends on `pnpm check: green` when it passes. |
 | `pnpm format` | Writes what `pnpm check` checks for format: Prettier on the same files, `cargo fmt`. |
 | `pnpm grep:sections <pattern> [path…]` | `grep -rni` that names each Markdown match's section (`docs/spec/sources.md:25 § Sync: …`), for an acceptance criterion such as "matches only `sources.md` § Sync". Exits 1 on no match. |
+| `pnpm check:copied-text <issue>` | Finds each `>` quote of the ticket's Desired behavior, word for word, in a Markdown file and prints where. Exits 1 on a quote not found. |
 | `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. Ends on `pnpm test: green` when it passes. |
 | `pnpm test:e2e` | `build:core`, then Puppeteer runs the store bundle in pinned headless Chrome and Firefox (~700 MB downloaded on the first run), and the `CoreClient` contract suite runs against a `dev-wasm` Core built for the run. |
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
