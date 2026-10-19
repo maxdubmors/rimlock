@@ -26,8 +26,8 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | Command | Does |
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
-| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, every `§` reference naming a heading that exists, the canary check in every end-to-end file that launches the bundle. Fails on any finding; ends on `pnpm check: green` when it passes. |
-| `pnpm format` | Writes what `pnpm check` checks for format: Prettier on the same files, `cargo fmt`. |
+| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, one sentence per line in `docs/spec/engineering.md`, every `§` reference naming a heading that exists, the canary check in every end-to-end file that launches the bundle. Fails on any finding; ends on `pnpm check: green` when it passes. |
+| `pnpm format` | Writes what `pnpm check` checks for format: Prettier on the same files, `cargo fmt`, one sentence per line. |
 | `pnpm grep:sections <pattern> [path…]` | `grep -rni` that names each Markdown match's section (`docs/spec/sources.md:25 § Sync: …`), for an acceptance criterion such as "matches only `sources.md` § Sync". Exits 1 on no match. |
 | `pnpm check:copied-text <issue>` | Finds each `>` quote of the ticket's Desired behavior, word for word, in a Markdown file and prints where. Exits 1 on a quote not found. |
 | `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. Ends on `pnpm test: green` when it passes. |

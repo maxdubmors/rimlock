@@ -2,13 +2,36 @@
 // `pnpm check:copied-text <issue>`: checks that a documentation ticket's Desired behavior text is in
 // the repository word for word. It reads the ticket's last Agent Brief (a comment, or else the
 // body), takes each `>` quote block under **Desired behavior:**, and looks for its lines, in order,
-// as consecutive lines of one Markdown file in the working tree. Lines compare without their
-// leading and trailing spaces, so a quoted `- ` bullet matches a sub-bullet. Prints where each
-// block is; exits 1 if one is missing, 2 if the ticket has no quoted Desired behavior.
+// as consecutive lines of one Markdown file in the working tree. A paragraph or list item wrapped
+// over several lines, as one sentence per line wraps it (docs/spec/engineering.md § Checks), is
+// one line, in the ticket and in the file. Lines compare without their leading and trailing
+// spaces, so a quoted `- ` bullet matches a sub-bullet. Prints where each block is; exits 1 if one
+// is missing, 2 if the ticket has no quoted Desired behavior.
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+// Trimmed lines joined into logical lines, each with the 1-based number of its first line: a line
+// goes on the one before unless either is blank or it opens a block, and a heading, a table row or
+// a fence takes no line after it.
+function logicalLines(lines) {
+  const logical = [];
+  let fenced = false;
+  let joinable = false;
+  lines.forEach((raw, index) => {
+    const line = raw.trim();
+    const fence = /^(```|~~~)/.test(line);
+    if (fence) fenced = !fenced;
+    if (joinable && !fenced && line !== '' && !/^([-*+]\s|\d+[.)]\s|#|>|\||<)/.test(line)) {
+      logical[logical.length - 1].text += ` ${line}`;
+      return;
+    }
+    logical.push({ text: line, line: index + 1 });
+    joinable = !fenced && !fence && line !== '' && !/^(#|\||<)/.test(line);
+  });
+  return logical;
+}
 
 const [issue] = process.argv.slice(2);
 if (!/^\d+$/.test(issue ?? '')) {
@@ -43,7 +66,8 @@ for (const line of brief.split(/\r?\n/)) {
 const blocks = quoteBlocks
   .map((lines) => lines.slice(lines.findIndex((line) => line !== '')))
   .map((lines) => lines.slice(0, lines.findLastIndex((line) => line !== '') + 1))
-  .filter((lines) => lines.length > 0);
+  .filter((lines) => lines.length > 0)
+  .map((lines) => logicalLines(lines).map(({ text }) => text));
 if (blocks.length === 0) {
   console.error(`#${issue} has no quoted text under **Desired behavior:**.`);
   process.exit(2);
@@ -56,19 +80,14 @@ const files = execFileSync(
 )
   .split('\0')
   .filter((path) => path !== '' && existsSync(path))
-  .map((path) => [
-    path,
-    readFileSync(path, 'utf8')
-      .split('\n')
-      .map((line) => line.trim()),
-  ]);
+  .map((path) => [path, logicalLines(readFileSync(path, 'utf8').split('\n'))]);
 
 let missing = 0;
 for (const lines of blocks) {
   const found = files.flatMap(([path, fileLines]) =>
     fileLines.flatMap((_, start) =>
-      lines.every((line, offset) => fileLines[start + offset] === line)
-        ? [`${path}:${start + 1}`]
+      lines.every((line, offset) => fileLines[start + offset]?.text === line)
+        ? [`${path}:${fileLines[start].line}`]
         : [],
     ),
   );
