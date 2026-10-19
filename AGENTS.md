@@ -35,6 +35,7 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | `pnpm test:interop [DIR]` | Creates Databases with `keepassxc-cli` in a digest-pinned container (Docker), then runs the interop corpus tests on them; keeps the files in `DIR`, empty or new, by default a temporary directory. Adding a file to the corpus: `crates/AGENTS.md` § Interop corpus. Ends on `pnpm test:interop: green` when it passes. |
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
 | `pnpm check:core-bindings` | Fails if the `*.d.ts` in the working tree are stale; fresh uncommitted ones pass. |
+| `pnpm check:required-checks` | Fails unless the jobs of `.github/workflows/pull-request.yml` and the required checks of the `main` ruleset are the same names (`gh` signed in). |
 | `pnpm check:fork-pin` | Fails unless the keepass-rs `rev` is the commit its comment's `rimlock-*` tag points at on the fork. |
 | `pnpm build` | `build:core`, then the Extension for both browsers into `apps/extension/.output/`. |
 | `pnpm build:report` | `build:core`, then per browser the built `manifest.json` and the `content` bundle's module list into `apps/extension/.output/bundle-report/`, the files CI publishes. |
