@@ -7,7 +7,7 @@ root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 cd "$root"
 # A comment opener (//, /*, a JSDoc *, <!--) followed on the same line by #123 or …/issues/123.
 pattern='(//|/\*|^[[:space:]]*\*|<!--).*(#[0-9]+|/issues/[0-9]+)'
-if git grep --untracked -nE "$pattern" -- '*.rs' '*.ts' '*.js' '*.svelte' \
+if git grep --untracked -nE "$pattern" -- '*.rs' '*.ts' '*.js' '*.mjs' '*.svelte' \
   ':!apps/extension/src/core-bindings/' >&2; then
   echo "A code comment names a tracker issue: cite the ADR or spec section that carries the rule." >&2
   exit 1

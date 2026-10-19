@@ -25,7 +25,7 @@ M0 Foundation and checks ──────────┐
 ## How a milestone runs
 
 1. The owner opens a GitHub Milestone named after it and slices its scope below into issues: vertical slices where possible, each labelled `ready-for-agent` (or `ready-for-human` for account and store work). Slicing happens when the milestone starts, not earlier, so it can use what the previous milestone learned.
-2. An agent takes one issue, works on a branch, and opens a pull request with `pnpm check && pnpm test` green and the spec updated if the work departed from it ([`README.md`](README.md)). The owner reviews and merges; agents never merge.
+2. An agent takes one issue, works on a branch, and opens a pull request with `pnpm check && pnpm test` green (a diff only in Markdown: root `AGENTS.md` § Rules) and the spec updated if the work departed from it ([`README.md`](README.md)). The owner reviews and merges; agents never merge.
 3. A question the spec does not answer becomes an issue labelled `needs-triage`, not a decision inside a pull request.
 4. The milestone closes with a comment on its tracking issue that shows evidence for every exit criterion (test runs, measurements, links). The milestone's heading below then gets a link to that comment.
 

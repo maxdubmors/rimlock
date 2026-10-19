@@ -81,12 +81,13 @@ vendor/         # vendored third-party code, each with UPSTREAM.md
 
 ## Checks: `pnpm check`
 
-One command: formatting check, lint, type checks, clippy, and three script checks: comments, Markdown tables and the canary check's wiring.
+One command: formatting check, lint, type checks, clippy, and four script checks: comments, Markdown tables, section references and the canary check's wiring.
 
 - **TypeScript:** `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `verbatimModuleSyntax`, `noImplicitOverride`; `svelte-check`. ESLint flat config: typescript-eslint `strictTypeChecked` (including `no-floating-promises`, `no-misused-promises`, `switch-exhaustiveness-check`, `restrict-template-expressions`) + `eslint-plugin-svelte` + the boundary and storage rules above + the local rule `rimlock/no-async-event-handler`, which does for Svelte event attributes what `no-misused-promises` does for JSX ([`verification.md`](verification.md) V4). Prettier + `prettier-plugin-svelte` formats. Not oxlint, not Biome, not a hybrid ([Compare TypeScript linters: ESLint, Biome and oxlint](https://github.com/maxdubmors/rimlock/issues/37)).
 - **Rust:** `rustfmt`; root `[workspace.lints]`: `clippy::all` + `clippy::pedantic` as `deny` with no global exceptions; from `restriction`: `unwrap_used`, `expect_used`, `panic`, `indexing_slicing`, `todo`, `unimplemented` (a panic kills the WASM instance), `dbg_macro`, `print_stdout`, `print_stderr`, `allow_attributes`, `allow_attributes_without_reason` (exceptions only as `#[expect(lint, reason = "…")]`). `clippy.toml` allows unwrap/expect/panic/indexing in tests. Run as `cargo clippy --all-targets -- -D warnings`, and again for `--target wasm32-unknown-unknown`, so code compiled only for the WASM build is linted too.
-- **Comments:** `scripts/check-issue-refs.sh` fails on a code comment (Rust, TypeScript, Svelte) that names a tracker issue (`#80`, `…/issues/80`). A comment cites the ADR or spec section that carries the rule, since an issue number goes stale once the issue closes. Docs under `docs/` link issues freely.
+- **Comments:** `scripts/check-issue-refs.sh` fails on a code comment (Rust, TypeScript, JavaScript, Svelte) that names a tracker issue (`#80`, `…/issues/80`). A comment cites the ADR or spec section that carries the rule, since an issue number goes stale once the issue closes. Docs under `docs/` link issues freely.
 - **Markdown tables:** `scripts/check-md-tables.sh` fails on a table row whose cell count differs from its header's. Markdown is formatted by hand, and a stray `|` moves the rest of its row into the wrong columns. As in GFM, every unescaped `|` splits cells, inside a code span too.
+- **Section references:** `scripts/check-section-refs.mjs` fails on a `§` reference that cites a Markdown file missing from the repository or names no heading of it, and on a `§` with no space before its number or word (`§10`). A heading moves and is renamed by hand, and nothing else notices the references it leaves behind. A reference passes when it starts with a heading, its number, or its part before `: ` or ` (` (`§ Checks`), so only the first heading of `§ WebDAV, Writes` is checked. A bare file name two files share is skipped. It is a Node script, not shell, because it resolves file names across the repository.
 - **Canary check:** `scripts/check-canary-check.sh` fails on an end-to-end test file that calls `launchWithExtension` without `useCanaryCheck` (§ Tests, Secret leaks). `harness.test.ts` is exempt, because it plants markers on purpose.
 
 ## Tests
@@ -121,7 +122,7 @@ One command: formatting check, lint, type checks, clippy, and three script check
 
 **Tiers**
 
-1. `pnpm test`: no browsers, no Docker. Rust unit + golden corpus, TS unit on fakes, contract suites against `FakeCore`. About one minute. **`pnpm check && pnpm test` is green before every pull request.**
+1. `pnpm test`: no browsers, no Docker. Rust unit + golden corpus, TS unit on fakes, contract suites against `FakeCore`. About one minute. **`pnpm check && pnpm test` is green before every pull request** (a diff only in Markdown: root `AGENTS.md` § Rules).
 2. `pnpm test:e2e`: headless Chrome and Firefox. Autofill fixtures, the end-to-end scenarios, the Core contract suite against real WASM, the wake-up benchmark.
 3. `pnpm test:webdav`, `pnpm test:interop`: Docker matrices.
 4. The manual pre-release checklist: Strongbox, KeePassDX, KeePass 2.x, Synology, a self-signed certificate, the live autofill corpus, the File System Access permission lifecycle and `FileSystemObserver`, the 200 ms gate on the owner's machine.

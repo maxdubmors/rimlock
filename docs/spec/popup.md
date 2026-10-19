@@ -1,6 +1,6 @@
 # The popup and the tab: one adaptive UI
 
-One Svelte app serves the toolbar popup, the same UI opened in a tab, and the options page. Interop rules behind every edit: [`interop.md`](interop.md). Core calls: [`core-api.md`](core-api.md) §4–§5.
+One Svelte app serves the toolbar popup, the same UI opened in a tab, and the options page. Interop rules behind every edit: [`interop.md`](interop.md). Core calls: [`core-api.md`](core-api.md) § 4–5.
 
 ## Surfaces
 

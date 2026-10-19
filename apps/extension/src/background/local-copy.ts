@@ -1,5 +1,5 @@
 // The Local copy of every Database: its encrypted `.kdbx` bytes in IndexedDB, keyed by Database id
-// (sources.md § Local copy). Never decrypted data: the bytes are the file as the Core verified it.
+// (sources.md § The Local copy). Never decrypted data: the bytes are the file as the Core verified it.
 
 const databaseName = 'rimlock';
 const store = 'local-copies';

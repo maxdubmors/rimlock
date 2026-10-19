@@ -26,9 +26,9 @@ Run from the repository root. A ticket that adds a root script adds its line her
 | Command | Does |
 |---|---|
 | `pnpm install` | Installs with the pinned pnpm; refuses packages younger than 7 days (`minimumReleaseAge`). |
-| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, the canary check in every end-to-end file that launches the bundle. Fails on any finding. |
+| `pnpm check` | Prettier (the app and the root `package.json`, `pnpm-workspace.yaml`; Markdown is formatted by hand), `tsc`, `svelte-check`, ESLint, `cargo fmt --check`, clippy on the host and on `wasm32`, no tracker issue named in a code comment, Markdown table cell counts, every `§` reference naming a heading that exists, the canary check in every end-to-end file that launches the bundle. Fails on any finding; ends on `pnpm check: green` when it passes. |
 | `pnpm format` | Writes what `pnpm check` checks for format: Prettier on the same files, `cargo fmt`. |
-| `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. |
+| `pnpm test` | `build:core`, Vitest, then `cargo test`. No browsers, no Docker. Ends on `pnpm test: green` when it passes. |
 | `pnpm test:e2e` | `build:core`, then Puppeteer runs the store bundle in pinned headless Chrome and Firefox (~700 MB downloaded on the first run), and the `CoreClient` contract suite runs against a `dev-wasm` Core built for the run. |
 | `pnpm build:core` | Core → WASM glue and `.d.ts` in `apps/extension/src/core-bindings/`. After every Rust edit; commit the changed `*.d.ts`. |
 | `pnpm check:core-bindings` | Fails if the `*.d.ts` in the working tree are stale; fresh uncommitted ones pass. |
@@ -42,7 +42,7 @@ One test file: `pnpm --filter @rimlock/extension exec vitest run <path>` (end-to
 ## Rules
 
 - Work on a `task/<issue>-<slug>` branch; `main` takes pull requests only.
-- `pnpm check && pnpm test` green before every pull request.
+- `pnpm check && pnpm test` green before every pull request. A diff only in Markdown needs `pnpm check` alone, plus `pnpm --filter @rimlock/extension exec vitest run tests/core-api` when it touches `docs/spec/core-api.md`, which that test reads; CI runs the rest.
 - A pull request must pass every job of `.github/workflows/pull-request.yml`.
 - Every behaviour change comes with a test; a bug fix starts with a failing test.
 - Test through a module's public interface (the folders of `engineering.md` § TypeScript modules), not its internals.

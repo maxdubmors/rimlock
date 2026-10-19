@@ -1,6 +1,6 @@
 # Databases, unlock and Lock
 
-Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (rebuild on every wake-up), [ADR-0006](../adr/0006-composite-key-only-in-popup-or-tab.md) (Composite key only in the popup or a tab), [ADR-0012](../adr/0012-quick-unlock-never-weaker-than-auto-lock.md) (Quick unlock post-MVP), [ADR-0015](../adr/0015-several-databases-one-unlocked.md) (several Databases, one Unlocked). Core calls: [`core-api.md`](core-api.md) §3 and §11.
+Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (rebuild on every wake-up), [ADR-0006](../adr/0006-composite-key-only-in-popup-or-tab.md) (Composite key only in the popup or a tab), [ADR-0012](../adr/0012-quick-unlock-never-weaker-than-auto-lock.md) (Quick unlock post-MVP), [ADR-0015](../adr/0015-several-databases-one-unlocked.md) (several Databases, one Unlocked). Core calls: [`core-api.md`](core-api.md) § 3 and § 11.
 
 ## Several Databases, one Unlocked
 
