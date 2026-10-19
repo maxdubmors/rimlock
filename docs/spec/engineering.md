@@ -29,8 +29,8 @@ docs/, GLOSSARY.md, AGENTS.md, PRIVACY.md, BUILDING.md, RELEASING.md, CHANGELOG.
 
 ```
 entrypoints/    # thin WXT entrypoints: background, popup, options, offscreen, content, inline-menu, welcome
-background/     # CoreClient, message router, Auto-lock, Sync, Database registry, pending saves
-sources/        # Source adapters: chrome-local, firefox-import, webdav
+background/     # CoreClient, message router, Auto-lock, Sync, Database registry, pending saves, Firefox Re-import… and Export…
+sources/        # Source adapters: chrome-local, webdav
 matching/       # URL matching (Bitwarden-derived), PSL
 autofill/       # FormDetector, shadow-root walk, Fill, submit detection (page side)
 generator/      # pure function
