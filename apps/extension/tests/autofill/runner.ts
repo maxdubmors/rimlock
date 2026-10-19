@@ -7,8 +7,8 @@ import { build } from 'rolldown';
 import type { BrowserName } from '../build-bundle.ts';
 import { launchBrowser } from '../e2e/browsers.ts';
 import {
-  detectEvent,
-  detectionEvent,
+  detectRequestEvent,
+  detectReplyEvent,
   type DetectRequest,
   type FrameDetection,
 } from './detection.ts';
@@ -67,8 +67,8 @@ export async function launchDetection(
           const reply = await frame.evaluate(
             ask,
             JSON.stringify(request),
-            detectEvent,
-            detectionEvent,
+            detectRequestEvent,
+            detectReplyEvent,
           );
           detections.push(JSON.parse(reply) as FrameDetection);
         }
@@ -85,7 +85,11 @@ export async function launchDetection(
  * Evaluated in a frame's own world: asks the content script for a detection and waits for the
  * reply. The content script may not be listening yet, so the request repeats until it answers.
  */
-function ask(request: string, detectEvent: string, detectionEvent: string): Promise<string> {
+function ask(
+  request: string,
+  detectRequestEvent: string,
+  detectReplyEvent: string,
+): Promise<string> {
   return new Promise((resolve) => {
     const giveUp = setTimeout(() => {
       clearInterval(repeat);
@@ -98,10 +102,11 @@ function ask(request: string, detectEvent: string, detectionEvent: string): Prom
         }),
       );
     }, 10_000);
-    const send = () => document.dispatchEvent(new CustomEvent(detectEvent, { detail: request }));
+    const send = () =>
+      document.dispatchEvent(new CustomEvent(detectRequestEvent, { detail: request }));
     const repeat = setInterval(send, 100);
     document.addEventListener(
-      detectionEvent,
+      detectReplyEvent,
       (event) => {
         clearTimeout(giveUp);
         clearInterval(repeat);

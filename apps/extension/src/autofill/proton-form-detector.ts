@@ -51,6 +51,7 @@ function predict<T extends string>(
   types: readonly T[],
   best: (a: Prediction<T>, b: Prediction<T>) => Prediction<T>,
 ): Prediction<T>[] {
+  // Runs the rules up to `base` (every form, or every field) before any type is read.
   bound.get(base);
   const out = new Map<HTMLElement, Prediction<T>>();
   for (const type of types) {

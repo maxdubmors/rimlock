@@ -354,7 +354,7 @@ export async function launchBrowser(
 
 async function launchChrome(
   executablePath: string,
-  bundleDir: string,
+  extensionDir: string,
 ): Promise<{ browser: Browser; origin: string }> {
   // Chrome installs unpacked extensions only over a pipe, not a WebSocket.
   const browser = await puppeteer.launch({
@@ -371,16 +371,16 @@ async function launchChrome(
       `--host-resolver-rules=${testHosts.map((host) => `MAP ${host} 127.0.0.1`).join(',')}`,
     ],
   });
-  const id = await browser.installExtension(bundleDir);
+  const id = await browser.installExtension(extensionDir);
   return { browser, origin: `chrome-extension://${id}` };
 }
 
 async function launchFirefox(
   executablePath: string,
-  bundleDir: string,
+  extensionDir: string,
 ): Promise<{ browser: Browser; origin: string }> {
   // Firefox gives every install a random moz-extension:// host; this pref fixes it in advance.
-  const geckoId = await readGeckoId(bundleDir);
+  const geckoId = await readGeckoId(extensionDir);
   const uuid = randomUUID();
   const browser = await puppeteer.launch({
     browser: 'firefox',
@@ -400,15 +400,15 @@ async function launchFirefox(
       'network.proxy.type': 0,
     },
   });
-  await browser.installExtension(bundleDir);
+  await browser.installExtension(extensionDir);
   return { browser, origin: `moz-extension://${uuid}` };
 }
 
-async function readGeckoId(bundleDir: string): Promise<string> {
-  const manifest = JSON.parse(await readFile(join(bundleDir, 'manifest.json'), 'utf8')) as {
+async function readGeckoId(extensionDir: string): Promise<string> {
+  const manifest = JSON.parse(await readFile(join(extensionDir, 'manifest.json'), 'utf8')) as {
     browser_specific_settings?: { gecko?: { id?: string } };
   };
   const id = manifest.browser_specific_settings?.gecko?.id;
-  if (id === undefined) throw new Error(`${bundleDir}/manifest.json names no gecko.id`);
+  if (id === undefined) throw new Error(`${extensionDir}/manifest.json names no gecko.id`);
   return id;
 }

@@ -7,8 +7,8 @@ import type { FieldLabel } from '../../../src/autofill/form-detector';
 import { createProtonFormDetector } from '../../../src/autofill/proton-form-detector';
 import { openOrClosedShadowRoot, type Root } from '../../../src/autofill/shadow-roots';
 import {
-  detectEvent,
-  detectionEvent,
+  detectRequestEvent,
+  detectReplyEvent,
   type DetectRequest,
   type FrameDetection,
   type StampedField,
@@ -90,7 +90,7 @@ function detect({ frameKey }: DetectRequest): FrameDetection {
 }
 
 let answered = false;
-document.addEventListener(detectEvent, (event) => {
+document.addEventListener(detectRequestEvent, (event) => {
   // The page's world made the event: in Firefox, an Xray of it, which `instanceof` may not see.
   const { detail } = event as CustomEvent<unknown>;
   if (answered || typeof detail !== 'string') return;
@@ -101,5 +101,5 @@ document.addEventListener(detectEvent, (event) => {
   } catch (error) {
     detection = { url: location.href, fields: [], labels: [], error: String(error) };
   }
-  document.dispatchEvent(new CustomEvent(detectionEvent, { detail: JSON.stringify(detection) }));
+  document.dispatchEvent(new CustomEvent(detectReplyEvent, { detail: JSON.stringify(detection) }));
 });

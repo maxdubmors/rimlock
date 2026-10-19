@@ -1,12 +1,15 @@
 import type { FieldLabel } from '../../src/autofill/form-detector';
 
+/** A field's label, or `none` for a field nothing is offered on. */
+export type ExpectedLabel = FieldLabel | 'none';
+
 /**
  * The runner and the test extension's content script talk through these events on `document`,
  * the one thing a page's world and a content script's isolated world share. The details are JSON
  * text, which crosses between the worlds unchanged.
  */
-export const detectEvent = 'rimlock-autofill-detect';
-export const detectionEvent = 'rimlock-autofill-detection';
+export const detectRequestEvent = 'rimlock-autofill-detect-request';
+export const detectReplyEvent = 'rimlock-autofill-detect-reply';
 
 export type DetectRequest = { frameKey: string };
 
@@ -22,7 +25,7 @@ export type StampedField = {
   ariaLabel: string | null;
   shadow: false | 'open' | 'closed';
   visible: boolean;
-  /** A fixture's expected label (`data-gt`, removed before detection), `none` included. */
+  /** A fixture's expected label (`data-gt`, removed before detection), as the page spells it. */
   expected: string | null;
 };
 

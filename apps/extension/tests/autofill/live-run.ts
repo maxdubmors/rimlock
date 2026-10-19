@@ -1,12 +1,6 @@
-// The manual live-corpus run (engineering.md § Tests, Autofill corpus), on every Proton bump: loads
-// each page of live-corpus.json in the pinned browser with the test extension and compares
-// FormDetector's labels on visible fields with the hand labels. Third-party pages change and may
-// show a bot challenge, so this never runs in CI; each miss becomes a synthetic fixture or a known
-// gap.
-//
-//   pnpm --filter @rimlock/extension autofill:live <chrome|firefox> [--fields] [name-filter]
-//
-// --fields also prints every visible field, to label a new page by.
+// The manual live-corpus run: each page of live-corpus.json in the pinned browser with the test
+// extension, FormDetector's labels on visible fields against the hand labels. How and when to run
+// it: apps/extension/AGENTS.md, Autofill fixtures.
 
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -17,7 +11,7 @@ import type { KeyInput, Page } from 'puppeteer-core';
 
 import type { BrowserName } from '../build-bundle.ts';
 import { installBrowser } from '../e2e/browsers.ts';
-import type { FrameDetection } from './detection.ts';
+import type { ExpectedLabel, FrameDetection } from './detection.ts';
 import { buildTestExtension, launchDetection } from './runner.ts';
 
 type Step = { type?: string; text?: string; press?: string; click?: string; wait?: number };
@@ -29,7 +23,7 @@ type LivePage = {
   wait?: number;
   /** A multi-step login's steps before detection; no password is ever typed. */
   steps?: Step[];
-  labels: Record<string, string>;
+  labels: Record<string, ExpectedLabel>;
 };
 
 const args = process.argv.slice(2);
