@@ -288,7 +288,7 @@ type CoreResult<T> = { ok: true; value: T } | { ok: false; error: CoreError | { 
 - One queue: calls on a handle never run concurrently.
 - A method called on a handle after its `free()` is `Internal`, a bug in the caller: `CoreClient` answers it without reaching the Core, so the Core stays usable. The bindings would throw a plain `Error` there, which § 8 reads as a panic. A second `free()` does nothing.
 - Every `SecretBytes` is wrapped into a `Secret` on arrival; every `Secret` input is unwrapped only at the call, into its UTF-8 bytes, and wiped after it. The generated bindings therefore take `SecretBytes` wherever this file says `Secret` (`KeyComponent`'s `Password` is `{ kind: 'Password'; value: SecretBytes }`).
-- **The Local copy is the source of truth; the in-memory Database is its cache.** A `Commit` is stored atomically in IndexedDB before the result is reported as saved. If storing fails, the handle is dropped and rebuilt from the Local copy; the edit is lost and the user sees an error.
+- The order of storing a `Commit` and reporting its result, and what a failed store does: [`sources.md`](sources.md) § The Local copy.
 - A new `cachedKey` replaces the one in `storage.session` through the single restore point of ADR-0012. One in a `Commit` (of `apply` or `merge`) replaces it only after the `Commit` is stored in the Local copy. If storing the `Commit` fails, the old `cachedKey` stays, and the rebuild from the Local copy uses it. The `cachedKey` of `unlock` comes without a `Commit` and is stored as soon as it arrives. Apart from an update that changed the `CachedKey` format, the only way to a stale `CachedKey` is then the background dying between the two writes, and that locks (§ 11).
 
 ## 10. Source adapter (TS)
