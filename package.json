@@ -23,6 +23,7 @@
     "test": "pnpm build:core && pnpm test:ts && pnpm test:rust && echo 'pnpm test: green'",
     "test:ts": "pnpm --filter @rimlock/extension test",
     "test:rust": "cargo test --locked",
-    "test:e2e": "pnpm build:core && pnpm --filter @rimlock/extension test:e2e"
+    "test:e2e": "pnpm build:core && pnpm --filter @rimlock/extension test:e2e",
+    "test:interop": "scripts/test-interop.mjs"
   }
 }
