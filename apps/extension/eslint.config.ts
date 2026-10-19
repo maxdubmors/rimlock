@@ -47,6 +47,23 @@ function onlyFrom(target: string[], allowed: string[], message: string) {
 const storageMessage =
   'Content code never touches storage (engineering.md § TypeScript modules); ask the background through protocol/.';
 
+const storageImports = {
+  paths: [
+    { name: 'wxt/utils/storage', message: storageMessage },
+    { name: '@wxt-dev/storage', message: storageMessage },
+  ],
+  patterns: [{ group: ['wxt/utils/storage/*', '@wxt-dev/storage/*'], message: storageMessage }],
+};
+
+/** The one module that imports Proton's classifier: everything else goes through FormDetector. */
+const protonImplementation = 'src/autofill/proton-form-detector.ts';
+
+const protonImports = {
+  group: ['@protontech/autofill', '@protontech/autofill/*'],
+  message:
+    "Only autofill/proton-form-detector.ts imports Proton's classifier; use FormDetector (autofill.md § Form detection).",
+};
+
 /** The whole rule set, rooted at `root` so the lint fixture tests can run it on a fixture tree. */
 export function createConfig(root: string): Linter.Config[] {
   const globsUnder = (dirs: string[]) => dirs.map((dir) => `${dir}/**`);
@@ -133,17 +150,20 @@ export function createConfig(root: string): Linter.Config[] {
         'no-restricted-globals': ['error', { name: 'storage', message: storageMessage }],
         'no-restricted-imports': [
           'error',
-          {
-            paths: [
-              { name: 'wxt/utils/storage', message: storageMessage },
-              { name: '@wxt-dev/storage', message: storageMessage },
-            ],
-            patterns: [
-              { group: ['wxt/utils/storage/*', '@wxt-dev/storage/*'], message: storageMessage },
-            ],
-          },
+          { ...storageImports, patterns: [...storageImports.patterns, protonImports] },
         ],
       },
+    },
+    {
+      // Replaces the content block's options for this one file: Proton allowed, storage still not.
+      files: [protonImplementation],
+      rules: { 'no-restricted-imports': ['error', storageImports] },
+    },
+    {
+      // The rest of src/, which no other block gives this rule.
+      files: ['src/**'],
+      ignores: globsUnder([...contentSide, ...sharedWithContent]),
+      rules: { 'no-restricted-imports': ['error', { patterns: [protonImports] }] },
     },
     {
       // A Secret's bytes leave it only where it is encoded for a message or unwrapped at a Core

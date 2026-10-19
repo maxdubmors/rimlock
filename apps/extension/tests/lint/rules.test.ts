@@ -106,6 +106,22 @@ describe('content code and storage', () => {
   });
 });
 
+describe("Proton's classifier", () => {
+  // Nothing but FormDetector's Proton implementation imports it (autofill.md § Form detection).
+  it.each([
+    ['other autofill code', 'src/autofill/imports-proton.ts'],
+    ['code outside content', 'src/background/imports-proton.ts'],
+    ['a type from a deep path', 'src/ui/imports-proton-model.ts'],
+  ])('is out of reach of %s', async (_, file) => {
+    expect(await rulesBrokenIn(file)).toContain('no-restricted-imports');
+  });
+
+  it('is in reach of FormDetector over Proton, which still never imports storage', async () => {
+    const broken = await rulesBrokenIn('src/autofill/proton-form-detector.ts');
+    expect(broken.filter((rule) => rule === 'no-restricted-imports')).toHaveLength(1);
+  });
+});
+
 describe('WXT builds in tests', () => {
   // Every build regenerates the same .wxt/ folder; only tests/manifest/ runs one file at a time.
   it('rejects buildBundle outside tests/manifest/', async () => {
