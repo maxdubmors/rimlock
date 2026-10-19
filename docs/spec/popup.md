@@ -16,7 +16,7 @@ One Svelte app serves the toolbar popup, the same UI opened in a tab, and the op
 - **Home** (search-first): the current site's Matches on top, then search. Focus starts in search. Home search never shows Recycle Bin contents.
 - **Browse:** the Group tree, with the Recycle Bin at the end.
 - **Generator:** its own tab ([`generator-and-copy.md`](generator-and-copy.md)).
-- **Status line**, always visible: the Sync status of the current Database ([`sources.md`](sources.md)), or for Firefox imports "Imported *date* · *N* changes not exported" with **Export…** / **Re-import…**.
+- **Status line**, always visible: the Sync status of the current Database ([`sources.md`](sources.md)), or for Firefox imports "Imported *date* · *N* changes not exported" with **Export…** / **Re-import…** ([`sources.md`](sources.md) § Firefox: imported copy, also for a missing Local copy).
 - Banners: "rimlock can't see this site" with **Allow on this site** / **Allow on all sites** ([`manifest-and-permissions.md`](manifest-and-permissions.md)); "Unsaved generated password for *site*" ([`autofill.md`](autofill.md)); notices after a lock.
 
 ## List rows (Home, search, Browse)
