@@ -12,16 +12,7 @@ Principles: [ADR-0005](../adr/0005-unlocked-state-rebuilt-on-every-wake-up.md) (
 
 ## The Source adapter
 
-```ts
-interface SourceAdapter {
-  stat(): Promise<SourceResult<Version>>;
-  read(): Promise<SourceResult<{ bytes: Uint8Array; version: Version }>>;
-  write(bytes: Uint8Array, ifVersion: Version): Promise<SourceResult<Version>>;
-  watch?(onChange: () => void): () => void;
-}
-```
-
-Full contract in [`core-api.md`](core-api.md) §10. Adapters move bytes only. Merge-before-write lives above them in the TypeScript `Sync` module. MVP adapters: `chrome-local` and `webdav`. A Firefox import is not an adapter.
+The contract every Source adapter implements, and which Sources have one: [`core-api.md`](core-api.md) § 10.
 
 ## Sync
 
